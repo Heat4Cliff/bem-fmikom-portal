@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><title>Admin Portal BEM FMIKOM UNUGHA</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-background": "#0b1c30", "outline": "#757682", "tertiary": "#222a3e", "on-tertiary-fixed": "#131b2e", "on-secondary-fixed": "#2f1500", "outline-variant": "#c5c5d3", "on-primary": "#ffffff", "surface-tint": "#4059aa", "error-container": "#ffdad6", "primary-fixed-dim": "#b6c4ff", "tertiary-container": "#384055", "on-primary-container": "#90a8ff", "on-secondary-fixed-variant": "#6e3900", "on-tertiary-fixed-variant": "#3f465c", "on-surface": "#0b1c30", "primary-fixed": "#dce1ff", "tertiary-fixed": "#dae2fd", "tertiary-fixed-dim": "#bec6e0", "on-tertiary-container": "#a4acc5", "surface-container-lowest": "#ffffff", "surface-variant": "#d3e4fe", "primary-container": "#1e3a8a", "on-surface-variant": "#444651", "surface-bright": "#f8f9ff", "on-error-container": "#93000a", "surface-container-highest": "#d3e4fe", "secondary-fixed": "#ffdcc3", "inverse-primary": "#b6c4ff", "secondary-container": "#fe932c", "secondary": "#904d00", "surface-dim": "#cbdbf5", "inverse-surface": "#213145", "secondary-fixed-dim": "#ffb77d", "background": "#f8f9ff", "on-primary-fixed-variant": "#264191", "surface-container-low": "#eff4ff", "on-error": "#ffffff", "primary": "#00236f", "surface": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "surface-container": "#e5eeff", "on-primary-fixed": "#00164e", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-secondary": "#ffffff", "on-secondary-container": "#663500", "surface-container-high": "#dce9ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1.5rem", "space-xl": "2.5rem", "margin-mobile": "1rem", "margin": "2rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "space-md": "1rem", "margin-desktop": "3rem", "space-sm": "0.5rem", "gutter-mobile": "1rem" }, "fontFamily": { "headline-sm": ["Plus Jakarta Sans"], "display-mobile": ["Plus Jakarta Sans"], "caption": ["Inter"], "display": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "headline-lg": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "label-md": ["Inter"], "label-sm": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Inter"], "headline-xl": ["Plus Jakarta Sans"] }, "fontSize": { "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.005em", "fontWeight": "600" }], "display-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "800" }], "caption": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "display": ["3.5rem", { "lineHeight": "4.25rem", "letterSpacing": "-0.03em", "fontWeight": "800" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-xl-mobile": ["1.875rem", { "lineHeight": "2.375rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0", "fontWeight": "400" }], "label-md": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "label-sm": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.03em", "fontWeight": "600" }], "headline-md": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-xl": ["2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col overflow-y-auto"><div class="p-5 flex items-center gap-3 bg-surface-container-low"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">BEM FMIKOM</span><span class="font-caption text-caption text-on-surface-variant font-medium">Admin Portal</span></div></div><div class="px-4 py-2"><div class="px-3 py-2 bg-surface-container rounded-lg flex items-center justify-between"><span class="font-caption text-caption text-on-surface-variant">Status Periode:</span><span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">2024/2025</span></div></div><nav class="flex-1 px-3 py-3 space-y-4" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Overview</span></a></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Content</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="berita-management" href="#"><span class="material-symbols-outlined text-[18px]">newspaper</span><span>Berita</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="kategori-management" href="#"><span class="material-symbols-outlined text-[18px]">category</span><span>Kategori</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="galeri-management" href="#"><span class="material-symbols-outlined text-[18px]">photo_library</span><span>Galeri</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengumuman-management" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span>Pengumuman</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Organization</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="struktur-organisasi-admin" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span>Struktur</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="divisi-management" href="#"><span class="material-symbols-outlined text-[18px]">groups</span><span>Divisi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengurus-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span>Pengurus</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="periode-management" href="#"><span class="material-symbols-outlined text-[18px]">history_edu</span><span>Periode</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Management</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pendaftaran-management" href="#"><span class="material-symbols-outlined text-[18px]">how_to_reg</span><span>Pendaftaran</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="aspirasi-management" href="#"><span class="material-symbols-outlined text-[18px]">forum</span><span>Aspirasi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="arsip-dokumen" href="#"><span class="material-symbols-outlined text-[18px]">folder</span><span>Arsip Dokumen</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">System</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="system-settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="users-management" href="#"><span class="material-symbols-outlined text-[18px]">manage_accounts</span><span>Users</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="activity-log" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Activity Log</span></a></div></div></nav><div class="p-4 bg-surface-container-low"><a class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm" data-path="beranda" href="#"><span class="material-symbols-outlined text-[18px]">open_in_new</span>Lihat Web Publik</a></div></aside><div class="pl-64 min-h-screen flex flex-col"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-6 lg:px-8"><div class="flex items-center gap-3"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><span class="font-label-md text-label-md text-on-surface-variant font-medium">Fakultas Matematika dan Ilmu Komputer</span></div><div class="flex items-center gap-4"><button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors relative"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary-container"></span></button><div class="h-6 w-px bg-outline-variant"></div><div class="flex items-center gap-3"><div class="text-right hidden sm:block"><p class="font-label-sm text-label-sm text-on-surface leading-tight font-semibold">Admin BEM</p><span class="font-caption text-caption text-primary font-medium">Superadministrator</span></div><img alt="Foto Profil Admin" class="h-9 w-9 rounded-full object-cover ring-2 ring-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkaINJpcRubsTXdXDHksfsqbChqqBxKHZBe17AySz3LBQte4ozJgwwmO0K97gBDOC3e6kF9cYQFyc4xK_TPq3vSjy-tT14ti2Sz0MZo4-inMETb3HX2fg5wNY0cAK6DBXgHegb84OZnS6KiAuyFqN9d4sq4srhGXU6y5BpzfvIU4LxHADmRLIDJqisWwAC79bLL9SP5iNGyLJ_dKiEiXjWqWAd4WN-VzVGpbor90"/><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-6 lg:px-8 py-6 bg-background flex-1"><div class="flex flex-col w-full space-y-8">
+<!-- Top Section: Breadcrumb & Title Bar -->
+<div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+<div class="space-y-2">
+<!-- Breadcrumb -->
+<nav class="flex items-center gap-2 font-caption text-caption text-outline">
+<span class="hover:text-primary transition-colors cursor-pointer">Dashboard</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="hover:text-primary transition-colors cursor-pointer">Sistem</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="font-label-sm text-label-sm text-primary font-semibold">Manajemen Pengguna</span>
+</nav>
+<!-- Main Headline & SuperAdmin Badge -->
+<div class="flex flex-wrap items-center gap-3">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Manajemen Pengguna &amp; Hak Akses</h1>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary text-on-primary shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary-container" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="font-label-sm text-label-sm tracking-wide">Hak Akses: Khusus Superadministrator</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl leading-relaxed">
+        Kelola akun administrator, delegasi hak akses per divisi, dan status kredensial login portal internal BEM FMIKOM UNUGHA.
+      </p>
+</div>
+<!-- Actions CTA -->
+<div class="flex items-center gap-3 shrink-0">
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-lowest text-on-surface shadow-sm hover:bg-surface-container-high transition-all font-label-md text-label-md font-medium">
+<span class="material-symbols-outlined text-[20px] text-outline">file_download</span>
+<span>Ekspor Daftar Akun</span>
+</button>
+<button class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary-container text-on-primary shadow-sm hover:bg-primary transition-all font-label-md text-label-md font-semibold focus:outline-none">
+<span class="material-symbols-outlined text-[20px] text-secondary-container">person_add</span>
+<span>+ Tambah Pengguna Baru</span>
+</button>
+</div>
+</div>
+<!-- Metric Summary Bento Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+<!-- Card 1: Total Users -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-lowest p-5 shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold tracking-wider">Total Akun</span>
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">group</span>
+</div>
+</div>
+<div class="mt-4">
+<div class="font-headline-xl text-headline-xl text-primary font-bold tracking-tight">12</div>
+<p class="font-caption text-caption text-on-surface-variant mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">verified</span>
+          Terdaftar resmi di server kampus
+        </p>
+</div>
+<div class="absolute -right-3 -bottom-3 w-16 h-16 rounded-full bg-primary/5 pointer-events-none"></div>
+</div>
+<!-- Card 2: Super Admin -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-lowest p-5 shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold tracking-wider">Super Admin</span>
+<div class="w-10 h-10 rounded-lg bg-primary text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">shield_person</span>
+</div>
+</div>
+<div class="mt-4">
+<div class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">2</div>
+<p class="font-caption text-caption text-primary font-medium mt-1">Akses Penuh Seluruh Modul</p>
+</div>
+</div>
+<!-- Card 3: BPH Presidium -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-lowest p-5 shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold tracking-wider">BPH Presidium</span>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[22px]">military_tech</span>
+</div>
+</div>
+<div class="mt-4">
+<div class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">4</div>
+<p class="font-caption text-caption text-on-surface-variant mt-1">Otoritas Lintas Divisi</p>
+</div>
+</div>
+<!-- Card 4: Kepala Bidang / Divisi -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-lowest p-5 shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold tracking-wider">Kepala Divisi</span>
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined text-[22px]">diversity_3</span>
+</div>
+</div>
+<div class="mt-4">
+<div class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">6</div>
+<p class="font-caption text-caption text-on-surface-variant mt-1">Scope Terbatas per Biro</p>
+</div>
+</div>
+<!-- Card 5: Akun Aktif & Health Ring -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-lowest p-5 shadow-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold tracking-wider">Status Akun</span>
+<div class="w-10 h-10 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">toggle_on</span>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<div>
+<div class="font-headline-xl text-headline-xl text-secondary font-bold tracking-tight">100%</div>
+<p class="font-caption text-caption text-on-surface-variant mt-1">12 Akun Aktif Normal</p>
+</div>
+<div class="relative w-12 h-12 shrink-0">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4"></path>
+<path class="text-secondary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="100, 100" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<!-- Search & Filter Controls Card -->
+<div class="rounded-xl bg-surface-container-lowest p-5 shadow-sm space-y-4">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+<!-- Search Input -->
+<div class="md:col-span-5 relative">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full pl-11 pr-4 py-2 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all" placeholder="Cari nama, email kampus, atau username admin..." type="text"/>
+</div>
+<!-- Filter Role -->
+<div class="md:col-span-2 relative">
+<select class="w-full px-3.5 py-2 appearance-none bg-surface-container-low rounded-lg font-label-md text-label-md text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all pr-8 cursor-pointer">
+<option value="">Semua Role</option>
+<option value="superadmin">Super Admin</option>
+<option value="bph">BPH (Presidium)</option>
+<option value="kabid">Kepala Bidang</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+<!-- Filter Divisi -->
+<div class="md:col-span-2 relative">
+<select class="w-full px-3.5 py-2 appearance-none bg-surface-container-low rounded-lg font-label-md text-label-md text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all pr-8 cursor-pointer">
+<option value="">Semua Divisi</option>
+<option value="kominfo">Biro Kominfo</option>
+<option value="psdm">Divisi PSDM</option>
+<option value="sosmas">Divisi Sosmas</option>
+<option value="mikat">Minat &amp; Bakat</option>
+<option value="ristek">Riset &amp; Iptek</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+<!-- Filter Status -->
+<div class="md:col-span-2 relative">
+<select class="w-full px-3.5 py-2 appearance-none bg-surface-container-low rounded-lg font-label-md text-label-md text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all pr-8 cursor-pointer">
+<option value="">Semua Status</option>
+<option value="active">Aktif</option>
+<option value="inactive">Nonaktif</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+<!-- Reset Filter Action -->
+<div class="md:col-span-1 flex justify-end">
+<button class="w-full py-2 flex items-center justify-center rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors font-label-sm text-label-sm" title="Reset Filter">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Standard Admin Data Table Panel -->
+<div class="rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left whitespace-nowrap">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3.5 px-4 w-12 text-center">
+<input class="rounded w-4 h-4 accent-primary cursor-pointer" type="checkbox"/>
+</th>
+<th class="py-3.5 px-6">Nama &amp; Pengguna</th>
+<th class="py-3.5 px-6">Email Kampus</th>
+<th class="py-3.5 px-6">Role Akses</th>
+<th class="py-3.5 px-6">Divisi / Scope Otoritas</th>
+<th class="py-3.5 px-6">Status Akun</th>
+<th class="py-3.5 px-6">Aktivitas Terakhir</th>
+<th class="py-3.5 px-6 text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm">
+<!-- Row 1: Arya Pratama -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-4 px-4 text-center">
+<input class="rounded w-4 h-4 accent-primary cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm shrink-0" data-alt="Close up studio portrait of an Indonesian male student university leader wearing a dark navy alma mater blazer and white formal collared shirt, clean background, confident academic expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLIQsIRIzF-k2NQU52uMJYbf6kowg-ivN12X15tjox6Au0AynnaIYoFwWSBk10i19H4bHhAulghJWX5MTJnI-HPkPzfl3RCCyM2FR9wdTcD5J4uhoMB_MDZL7AMgT8zitIOyp211ao5RrZO_73V8ymJIXxzXvbEwd_wWPduGptpsxno8rLEjzP890cJLf6npjr_dlnOjfLu_3lIgXlqcFmbolY4cUGz5lM6P8HWVc"/>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">Mochammad Arya Pratama</span>
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;" title="Superadmin Terverifikasi">stars</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant font-mono">@arya.pratama</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-1.5 font-mono text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-outline">mail</span>
+<span>arya.pratama@unugha.ac.id</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-primary text-on-primary font-label-sm text-label-sm font-semibold shadow-xs">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+                Super Admin
+              </span>
+</td>
+<td class="py-4 px-6">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container text-primary font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                Seluruh Sistem (Global)
+              </div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                Aktif
+              </span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">5 menit lalu</span>
+<span class="font-caption text-caption text-on-surface-variant">19 Mei 2025, 14:20 WIB</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<div class="relative inline-block text-left group">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+<div class="hidden group-hover:flex group-focus-within:flex absolute right-0 top-full mt-1 w-48 flex-col rounded-lg bg-surface-container-lowest shadow-lg py-1.5 z-20">
+<button class="w-full px-4 py-2 text-left font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">visibility</span> Detail Profil
+                  </button>
+<button class="w-full px-4 py-2 text-left font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">edit</span> Edit Akun
+                  </button>
+<button class="w-full px-4 py-2 text-left font-label-sm text-label-sm text-secondary hover:bg-surface-container-low flex items-center gap-2 font-medium" onclick="document.getElementById('pwdToast').classList.remove('hidden')">
+<span class="material-symbols-outlined text-[16px]">lock_reset</span> Reset Password
+                  </button>
+<div class="h-px bg-surface-container my-1"></div>
+<button class="w-full px-4 py-2 text-left font-label-sm text-label-sm text-error hover:bg-error-container/30 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">person_off</span> Nonaktifkan
+                  </button>
+</div>
+</div>
+</td>
+</tr>
+<!-- Row 2: Fajar Hidayatullah -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-4 px-4 text-center">
+<input class="rounded w-4 h-4 accent-primary cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm shrink-0" data-alt="Portrait photo of a young Indonesian male university secretary in crisp navy alma mater suit smiling cordially, soft warm indoor university library background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdXVHvG_IzqvZpdJPNrtwGiLUBNeUzW3hGj-XCMhI3qfAqMqHXxjsxQqbToBPGN_3xXrJJQzbXe7T0FoomotwXGHAomX20u8bn3iPS6ID9fICNPrvVzBxeV9zOsNMuun7jwFoGFsPY8pl5OZNOtfUn2brifOCe7TMVQxUsoC9jmSUXtBjssvm_FyWSDVB1hBBwlptF2AoostgM75WwViw-YO89q3p2_QOMvO3SyZk"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">Fajar Hidayatullah</span>
+<span class="font-caption text-caption text-on-surface-variant font-mono">@fajar.hidayat</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-1.5 font-mono text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-outline">mail</span>
+<span>fajar.hid@unugha.ac.id</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">assured_workload</span>
+                BPH
+              </span>
+</td>
+<td class="py-4 px-6">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span>Presidium &amp; Administrasi</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                Aktif
+              </span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">2 jam lalu</span>
+<span class="font-caption text-caption text-on-surface-variant">Hari ini, 12:15 WIB</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Dimas Aditya Pratama -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-4 px-4 text-center">
+<input class="rounded w-4 h-4 accent-primary cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm shrink-0" data-alt="Professional headshot of a young Southeast Asian male IT student leader with smart casual blazer, modern campus computer lab background with blue monitor lights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1NA_lILM53RPRoXci3qV2DrCS0YWUaZxd2xJslmphSiwkuSujl3aNRnKIRpO8WX51eIb1oXMJgBSSwh3uL-n6KT9ZKI1QnjbHaOvQJD7Dnegui0JXWC6UHRUkRC5lgMY3kDOdMWSSJf0j088tJitgIIMRc98qOSJsbA2xi8LGSeGpi-dmO9X0P_CUaKibVuRUCOVpR10bySo9F4JFob8bsN-hZpgrGbC5ykqOVZA"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">Dimas Aditya Pratama</span>
+<span class="font-caption text-caption text-on-surface-variant font-mono">@dimas.kominfo</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-1.5 font-mono text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-outline">mail</span>
+<span>dimas.kominfo@unugha.ac.id</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold">
+                Kepala Bidang
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+                Scope: Biro Kominfo
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                Aktif
+              </span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Hari ini, 09:15 WIB</span>
+<span class="font-caption text-caption text-on-surface-variant">IP: 10.14.22.8</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Wahyu Pratama -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-4 px-4 text-center">
+<input class="rounded w-4 h-4 accent-primary cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm shrink-0" data-alt="Portrait photo of a determined young Indonesian male student in dark navy blazer, smiling with friendly expression, soft daylight campus outdoor background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-ipTd7GbWG4PQjtDYW6a9AVV8r0wOdpFVAzCSx9H4rfFxCLgUC3CBA3yL-OgYa7pud4-iJl9S87rzCCE01FEljnT_zw35_xYxd8evSV4yj71F-30nVjzGpcLXYY9gbQuWrB-gnwN2rJzfzNqxBBATKYkZSMwoHuDMBZx8IuooE_iOrzcZnnZmj36AEBBYtvRadfIUwc-QrGJR8n_rJWwa5LAlmACmhEfVEY76nGk"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">Wahyu Pratama</span>
+<span class="font-caption text-caption text-on-surface-variant font-mono">@wahyu.psdm</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-1.5 font-mono text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-outline">mail</span>
+<span>wahyu.psdm@unugha.ac.id</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold">
+                Kepala Bidang
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+                Scope: Divisi PSDM
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                Aktif
+              </span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Kemarin, 16:40 WIB</span>
+<span class="font-caption text-caption text-on-surface-variant">18 Mei 2025</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Ratih Sekar Kinanti -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-4 px-4 text-center">
+<input class="rounded w-4 h-4 accent-primary cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm shrink-0" data-alt="Portrait photo of a young Indonesian female university student wearing modern pastel hijab and dark formal blazer, neat and confident academic pose with subtle lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgJSw6lkezHfY7N98aa_3h8SLdAneRJ_vibNbeaGEmrrzbltVtxt38JgnB-SLDgXYo0fLyr61E8hAyJ5tfJcOyZdVS5PVVuwUqwOiVZRQ-ZrC85kl5t-kXC8p1gIUPjX-P167qrZAzVQv48N7f-YyBsJxulVDQ0qdn7Ic3-GRSY5aMGefOOn7K1-IwM8ZZJYhlxY_qvqIjivcohEuaFS2KQQ1GsbruCV65JgqzAms"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">Ratih Sekar Kinanti</span>
+<span class="font-caption text-caption text-on-surface-variant font-mono">@ratih.sosmas</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-6">
+<div class="flex items-center gap-1.5 font-mono text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-outline">mail</span>
+<span>ratih.sosmas@unugha.ac.id</span>
+</div>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold">
+                Kepala Bidang
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+                Scope: Divisi Sosmas
+              </span>
+</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                Aktif
+              </span>
+</td>
+<td class="py-4 px-6">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">17 Mei 2025</span>
+<span class="font-caption text-caption text-on-surface-variant">10:04 WIB</span>
+</div>
+</td>
+<td class="py-4 px-6 text-right">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Controls -->
+<div class="p-4 bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-4 font-body-sm text-body-sm">
+<div class="text-on-surface-variant font-caption text-caption">
+        Menampilkan <span class="font-semibold text-on-surface">1 - 5</span> dari <span class="font-semibold text-on-surface">12</span> akun administrator
+      </div>
+<div class="flex items-center gap-1.5">
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-sm text-label-sm disabled:opacity-40" disabled="">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary text-on-primary font-label-sm text-label-sm font-semibold shadow-xs">
+          1
+        </button>
+<button class="w-8 h-8 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors">
+          2
+        </button>
+<button class="w-8 h-8 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors">
+          3
+        </button>
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Security Protocol & Password Reset Notice Panel -->
+<div class="rounded-xl bg-surface-container-low p-4 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4" id="pwdToast">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[22px]">lock_reset</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">Protokol Keamanan Reset Kredensial Akun</p>
+<p class="font-caption text-caption text-on-surface-variant">
+          Password sementara otomatis dibuatkan dan dikirim ke email resmi institusi (<code class="bg-surface-container px-1 py-0.5 rounded font-mono text-primary">@unugha.ac.id</code>) dengan masa kedaluwarsa 24 jam.
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-2 self-end md:self-auto shrink-0">
+<button class="px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors font-label-sm text-label-sm" onclick="document.getElementById('pwdToast').classList.add('hidden')">
+        Tutup
+      </button>
+<button class="px-4 py-1.5 rounded-lg bg-secondary text-on-secondary hover:bg-secondary-container transition-colors font-label-sm text-label-sm font-semibold">
+        Pelajari Log Audit
+      </button>
+</div>
+</div>
+</div></main></div></body></html>

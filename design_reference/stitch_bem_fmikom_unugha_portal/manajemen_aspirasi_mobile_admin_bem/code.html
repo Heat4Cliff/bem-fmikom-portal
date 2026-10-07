@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: 'class', theme: { extend: { colors: { 'surface-container-high': '#dce9ff', 'background': '#f8f9ff', 'surface-variant': '#d3e4fe', 'secondary-container': '#fe932c', 'secondary': '#904d00', 'outline-variant': '#c5c5d3', 'on-secondary-fixed-variant': '#6e3900', 'surface': '#f8f9ff', 'on-error': '#ffffff', 'on-tertiary-fixed-variant': '#3f465c', 'surface-container-lowest': '#ffffff', 'surface-tint': '#4059aa', 'surface-dim': '#cbdbf5', 'on-primary': '#ffffff', 'on-primary-container': '#90a8ff', 'primary': '#00236f', 'outline': '#757682', 'tertiary-fixed': '#dae2fd', 'on-secondary': '#ffffff', 'inverse-on-surface': '#eaf1ff', 'on-background': '#0b1c30', 'surface-bright': '#f8f9ff', 'secondary-fixed': '#ffdcc3', 'on-secondary-container': '#663500', 'tertiary': '#222a3e', 'tertiary-container': '#384055', 'surface-container-highest': '#d3e4fe', 'on-primary-fixed': '#00164e', 'secondary-fixed-dim': '#ffb77d', 'primary-fixed-dim': '#b6c4ff', 'error': '#ba1a1a', 'on-primary-fixed-variant': '#264191', 'on-secondary-fixed': '#2f1500', 'on-tertiary': '#ffffff', 'on-tertiary-container': '#a4acc5', 'surface-container': '#e5eeff', 'inverse-surface': '#213145', 'primary-container': '#1e3a8a', 'on-error-container': '#93000a', 'inverse-primary': '#b6c4ff', 'on-surface-variant': '#444651', 'surface-container-low': '#eff4ff', 'on-tertiary-fixed': '#131b2e', 'on-surface': '#0b1c30', 'primary-fixed': '#dce1ff', 'tertiary-fixed-dim': '#bec6e0', 'error-container': '#ffdad6' }, borderRadius: { 'DEFAULT': '0.25rem', 'lg': '0.5rem', 'xl': '0.75rem', 'full': '9999px' }, spacing: { 'margin': '2rem', 'space-md': '1rem', 'gutter': '1.5rem', 'margin-mobile': '1rem', 'margin-desktop': '3rem', 'space-lg': '1.5rem', 'space-xl': '2.5rem', 'gutter-mobile': '1rem', 'space-sm': '0.5rem', 'space-xs': '0.25rem' }, fontFamily: { 'headline-md': ['Plus Jakarta Sans'], 'display': ['Plus Jakarta Sans'], 'body-lg': ['Inter'], 'label-md': ['Inter'], 'headline-xl': ['Plus Jakarta Sans'], 'display-mobile': ['Plus Jakarta Sans'], 'body-sm': ['Inter'], 'headline-sm': ['Plus Jakarta Sans'], 'headline-xl-mobile': ['Plus Jakarta Sans'], 'caption': ['Inter'], 'label-sm': ['Inter'], 'body-md': ['Inter'], 'headline-lg': ['Plus Jakarta Sans'] }, fontSize: { 'headline-md': ['1.5rem', { lineHeight: '2rem', letterSpacing: '-0.01em', fontWeight: '600' }], 'display': ['3.5rem', { lineHeight: '4.25rem', letterSpacing: '-0.03em', fontWeight: '800' }], 'body-lg': ['1.125rem', { lineHeight: '1.75rem', letterSpacing: '0', fontWeight: '400' }], 'label-md': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0.01em', fontWeight: '500' }], 'headline-xl': ['2.5rem', { lineHeight: '3rem', letterSpacing: '-0.02em', fontWeight: '700' }], 'display-mobile': ['2.25rem', { lineHeight: '2.75rem', letterSpacing: '-0.02em', fontWeight: '800' }], 'body-sm': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0', fontWeight: '400' }], 'headline-sm': ['1.25rem', { lineHeight: '1.75rem', letterSpacing: '-0.005em', fontWeight: '600' }], 'headline-xl-mobile': ['1.875rem', { lineHeight: '2.375rem', letterSpacing: '-0.02em', fontWeight: '700' }], 'caption': ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.01em', fontWeight: '400' }], 'label-sm': ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.03em', fontWeight: '600' }], 'body-md': ['1rem', { lineHeight: '1.5rem', letterSpacing: '0', fontWeight: '400' }], 'headline-lg': ['2rem', { lineHeight: '2.5rem', letterSpacing: '-0.015em', fontWeight: '700' }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen flex flex-col selection:bg-secondary-fixed"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/90 backdrop-blur-xl shadow-[0_1px_12px_rgba(0,35,111,0.06)]"><div class="h-16 px-space-md flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><button aria-label="Buka Menu Panel Admin" class="w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center text-primary active:scale-95 transition-transform" id="admin-drawer-btn"><span class="material-symbols-outlined text-[24px]">menu_open</span></button><div class="flex flex-col"><h1 class="font-headline-sm text-headline-sm text-primary leading-tight truncate max-w-[150px]">Kelola Aspirasi</h1><span class="font-caption text-caption text-on-surface-variant">Admin Portal BEM</span></div></div><div class="flex items-center gap-space-xs"><button aria-label="Notifikasi Admin" class="relative w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-secondary-container"></span></button><div class="flex items-center gap-1.5 pl-1"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-caption font-label-sm uppercase hidden sm:inline">Kominfo</span></div></div></div></header><div class="fixed inset-0 z-50 bg-on-surface/40 backdrop-blur-sm hidden flex-row" id="admin-drawer"><aside class="bg-surface-container-lowest w-72 max-w-[85vw] h-full flex flex-col shadow-[4px_0_24px_rgba(0,35,111,0.12)] p-space-md gap-space-md overflow-y-auto"><div class="flex items-center justify-between pb-space-xs"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">admin_panel_settings</span></div><div><span class="font-headline-sm text-headline-sm text-primary">Panel BEM</span><p class="font-caption text-caption text-on-surface-variant">FMIKOM UNUGHA</p></div></div><button aria-label="Tutup Panel" class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-on-surface" id="admin-drawer-close"><span class="material-symbols-outlined text-[20px]">close</span></button></div><div class="px-space-sm py-space-xs rounded-xl bg-surface-container-low flex items-center justify-between"><span class="font-caption text-caption text-on-surface-variant">Role Aktif</span><span class="font-label-sm text-label-sm font-semibold text-primary">Super Admin / BPH</span></div><nav class="flex flex-col gap-space-sm" data-active-classes="bg-surface-container text-primary font-label-md"><div class="flex flex-col gap-0.5"><span class="text-caption font-label-sm text-outline px-space-sm py-1 uppercase tracking-wider">Overview</span><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="dashboard-admin" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard</a></div><div class="flex flex-col gap-0.5"><span class="text-caption font-label-sm text-outline px-space-sm py-1 uppercase tracking-wider">Content</span><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-berita" href="#"><span class="material-symbols-outlined text-[20px]">feed</span> Berita</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-kategori" href="#"><span class="material-symbols-outlined text-[20px]">category</span> Kategori</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-galeri" href="#"><span class="material-symbols-outlined text-[20px]">image</span> Galeri</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-pengumuman" href="#"><span class="material-symbols-outlined text-[20px]">campaign</span> Pengumuman</a></div><div class="flex flex-col gap-0.5"><span class="text-caption font-label-sm text-outline px-space-sm py-1 uppercase tracking-wider">Organisasi</span><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-struktur" href="#"><span class="material-symbols-outlined text-[20px]">lan</span> Struktur</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-divisi" href="#"><span class="material-symbols-outlined text-[20px]">diversity_3</span> Divisi</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-pengurus" href="#"><span class="material-symbols-outlined text-[20px]">badge</span> Pengurus</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-periode" href="#"><span class="material-symbols-outlined text-[20px]">date_range</span> Periode</a></div><div class="flex flex-col gap-0.5"><span class="text-caption font-label-sm text-outline px-space-sm py-1 uppercase tracking-wider">Manajemen</span><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-pendaftaran" href="#"><span class="material-symbols-outlined text-[20px]">how_to_reg</span> Pendaftaran</a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl bg-surface-container text-primary font-label-md" data-path="kelola-aspirasi" href="#"><span class="material-symbols-outlined text-[20px]">forum</span> Aspirasi</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="arsip-dokumen" href="#"><span class="material-symbols-outlined text-[20px]">folder_zip</span> Arsip Dokumen</a></div><div class="flex flex-col gap-0.5"><span class="text-caption font-label-sm text-outline px-space-sm py-1 uppercase tracking-wider">System</span><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="pengaturan-sistem" href="#"><span class="material-symbols-outlined text-[20px]">settings</span> Pengaturan</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-pengguna" href="#"><span class="material-symbols-outlined text-[20px]">manage_accounts</span> Pengguna</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="activity-log" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span> Activity Log</a></div></nav></aside><div class="flex-1" id="admin-drawer-backdrop"></div></div><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full">
+<div class="px-space-md pt-space-md pb-space-xs flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary tracking-tight">Manajemen Aspirasi</h2>
+<p class="font-caption text-caption text-on-surface-variant">Kanal dengar aspirasi &amp; respon mahasiswa FMIKOM</p>
+</div>
+<button aria-label="Buka Filter Lanjutan" class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary active:scale-95 transition-transform shadow-sm" id="open-filter-btn">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+<!-- Quick Metrics Highlight -->
+<div class="grid grid-cols-3 gap-space-xs pt-1">
+<div class="bg-surface-container-lowest p-2.5 rounded-xl shadow-sm flex flex-col">
+<span class="font-caption text-caption text-outline">Total Masuk</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-headline-sm text-headline-sm text-primary">19</span>
+<span class="font-caption text-[10px] text-primary font-label-sm">+3 baru</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-2.5 rounded-xl shadow-sm flex flex-col">
+<span class="font-caption text-caption text-secondary">Perlu Respon</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-headline-sm text-headline-sm text-secondary font-semibold">7</span>
+<span class="font-caption text-[10px] text-secondary font-label-sm">Kritis (2)</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-2.5 rounded-xl shadow-sm flex flex-col">
+<span class="font-caption text-caption text-on-surface-variant">Terselesaikan</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-headline-sm text-headline-sm text-on-surface">7</span>
+<span class="font-caption text-[10px] text-on-surface-variant font-label-sm">84% SLA</span>
+</div>
+</div>
+</div>
+<!-- Search Box -->
+<div class="relative w-full mt-1">
+<div class="absolute inset-y-0 left-3.5 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full h-11 pl-10 pr-10 rounded-xl bg-surface-container-lowest text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none shadow-sm transition-all" placeholder="Cari ID tiket, kata kunci, pengirim..." type="text"/>
+<button aria-label="Hapus Pencarian" class="absolute inset-y-0 right-3 flex items-center text-outline hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+</button>
+</div>
+<!-- Horizontal Pill Filter -->
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-1 -mx-space-md px-space-md">
+<button class="px-3.5 py-1.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm whitespace-nowrap shadow-sm active:scale-95 transition-all">
+        Semua (19)
+      </button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-secondary font-label-sm text-label-sm whitespace-nowrap shadow-sm active:scale-95 transition-all flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+        Menunggu (7)
+      </button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-primary-fixed-variant font-label-sm text-label-sm whitespace-nowrap shadow-sm active:scale-95 transition-all flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+        Dibaca (5)
+      </button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap shadow-sm active:scale-95 transition-all flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+        Selesai (7)
+      </button>
+</div>
+</div>
+<!-- Cards List Feed -->
+<div class="px-space-md flex flex-col gap-space-md py-space-sm">
+<!-- Card 1: Menunggu Telaah (Prioritas Tinggi) -->
+<div class="w-full bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-space-sm relative overflow-hidden transition-transform">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-secondary-container"></div>
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[14px]">hourglass_top</span> Menunggu Telaah
+          </span>
+<span class="px-2 py-0.5 rounded-md bg-error-container text-on-error-container font-label-sm text-label-sm flex items-center gap-0.5 font-bold">
+<span class="material-symbols-outlined text-[13px]">priority_high</span> Kritis
+          </span>
+</div>
+<span class="font-caption text-caption text-outline">18 Mei 2025</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-outline">
+<span class="font-caption text-caption font-semibold tracking-wide text-primary">ASP-2025-0842</span>
+<span>•</span>
+<span class="font-caption text-caption text-on-surface-variant">14:28 WIB</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface line-clamp-2">Penambahan Jam Operasional Laboratorium Komputer B untuk Praktikum Mandiri</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+          Banyak mahasiswa tingkat akhir yang kesulitan menyelesaikan tugas besar kecerdasan buatan karena keterbatasan jam buka lab komputasi dasar...
+        </p>
+</div>
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-md bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[15px]">meeting_room</span>
+</span>
+<span class="font-caption text-caption text-on-surface">Fasilitas &amp; Lab <span class="text-outline">→</span> <span class="text-primary font-medium">Lab &amp; Sarpras</span></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-md bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[15px]">lock</span>
+</span>
+<span class="font-caption text-caption text-on-surface-variant font-medium">Anonim (Privasi Terjaga)</span>
+</div>
+</div>
+<div class="pt-2 flex items-center gap-space-xs">
+<button class="flex-1 h-10 px-space-md rounded-xl bg-primary text-on-primary font-label-md text-label-md flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-transform" onclick="openDispositionModal('ASP-2025-0842', 'Penambahan Jam Lab Komputer B', 'Lab &amp; Sarpras')">
+<span class="material-symbols-outlined text-[18px]">assignment_turned_in</span>
+<span>Detail &amp; Disposisi</span>
+</button>
+<button aria-label="Opsi Tiket" class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-on-surface-variant active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Card 2: Selesai -->
+<div class="w-full bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-space-sm relative overflow-hidden transition-transform">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-tertiary"></div>
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-md bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Selesai
+          </span>
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+            Disposisi BPH
+          </span>
+</div>
+<span class="font-caption text-caption text-outline">16 Mei 2025</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-outline">
+<span class="font-caption text-caption font-semibold tracking-wide text-primary">ASP-2025-0840</span>
+<span>•</span>
+<span class="font-caption text-caption text-on-surface-variant">09:15 WIB</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface line-clamp-2">Kejelasan Alur Surat Rekomendasi Beasiswa Aspirasi Mahasiswa</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+          Surat edaran pendaftaran beasiswa Baznas dan pemda membutuhkan tandatangan dekanat, mohon formulir online BEM dipercepat validasinya.
+        </p>
+</div>
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-md bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[15px]">payments</span>
+</span>
+<span class="font-caption text-caption text-on-surface">Finansial &amp; Beasiswa <span class="text-outline">→</span> <span class="text-primary font-medium">Advokasi</span></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-md bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[15px]">badge</span>
+</span>
+<span class="font-caption text-caption text-on-surface font-medium truncate">M. Alif Pratama <span class="text-outline">(NIM: 22124009)</span></span>
+</div>
+</div>
+<!-- Respon Ringkas -->
+<div class="bg-surface-container-low p-2.5 rounded-lg flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary text-[16px] mt-0.5">reply</span>
+<p class="font-caption text-caption text-on-surface-variant">
+<span class="font-medium text-on-surface">Respon BEM:</span> Surat pengantar kolektif telah diteruskan ke Tata Usaha Dekanat per 17 Mei.
+        </p>
+</div>
+<div class="pt-2 flex items-center gap-space-xs">
+<button class="w-full h-10 px-space-md rounded-xl bg-surface-container text-primary font-label-md text-label-md flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-transform" onclick="openDispositionModal('ASP-2025-0840', 'Kejelasan Alur Beasiswa', 'Advokasi')">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+<span>Lihat Detail Laporan</span>
+</button>
+</div>
+</div>
+<!-- Card 3: Dibaca / Proses -->
+<div class="w-full bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-space-sm relative overflow-hidden transition-transform">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-primary-container"></div>
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-md bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[14px]">mark_email_read</span> Dibaca
+          </span>
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+            Program Kerja
+          </span>
+</div>
+<span class="font-caption text-caption text-outline">15 Mei 2025</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-outline">
+<span class="font-caption text-caption font-semibold tracking-wide text-primary">ASP-2025-0838</span>
+<span>•</span>
+<span class="font-caption text-caption text-on-surface-variant">16:40 WIB</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface line-clamp-2">Usulan Workshop Cloud Computing AWS &amp; DevOps untuk Mahasiswa TI</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+          Kami mengusulkan kolaborasi Hima TI dan BEM untuk mengadakan mini bootcamp praktis mengenai deployment container Docker dan cloud infrastructure...
+        </p>
+</div>
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-md bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[15px]">campaign</span>
+</span>
+<span class="font-caption text-caption text-on-surface">Pendidikan &amp; IPTEK <span class="text-outline">→</span> <span class="text-primary font-medium">Divisi Kominfo</span></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-md bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[15px]">person</span>
+</span>
+<span class="font-caption text-caption text-on-surface font-medium truncate">Siti Rahmawati <span class="text-outline">(Informatika '23)</span></span>
+</div>
+</div>
+<div class="pt-2 flex items-center gap-space-xs">
+<button class="flex-1 h-10 px-space-md rounded-xl bg-surface-container-high text-primary font-label-md text-label-md flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-transform" onclick="openDispositionModal('ASP-2025-0838', 'Workshop Cloud Computing &amp; DevOps', 'Divisi Kominfo')">
+<span class="material-symbols-outlined text-[18px]">forward</span>
+<span>Disposisikan</span>
+</button>
+<button aria-label="Tandai Selesai Cepat" class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-on-surface-variant active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Compact Pagination Controls -->
+<div class="px-space-md py-space-md flex items-center justify-between">
+<button aria-label="Halaman Sebelumnya" class="h-10 px-3 rounded-xl bg-surface-container text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+<span>Sebelumnya</span>
+</button>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant bg-surface-container-low px-3 py-1.5 rounded-xl">
+<span class="font-bold text-primary">1</span>
+<span>dari</span>
+<span class="font-bold text-on-surface">4</span>
+<span class="text-caption text-outline ml-1">(19 Tiket)</span>
+</div>
+<button aria-label="Halaman Berikutnya" class="h-10 px-3 rounded-xl bg-surface-container text-primary font-label-sm text-label-sm flex items-center gap-1 active:scale-95 transition-transform shadow-sm">
+<span>Selanjutnya</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+<!-- Quick Floating Action for Export/Summary -->
+<div class="px-space-md pb-space-lg flex items-center gap-space-sm">
+<div class="w-full bg-surface-container-high p-space-sm rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-primary font-semibold">Rekap Laporan Aspirasi</p>
+<p class="font-caption text-caption text-on-surface-variant">Format CSV &amp; PDF Sidang BEM</p>
+</div>
+</div>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-primary font-label-sm text-label-sm shadow-sm active:scale-95 transition-transform">
+        Unduh
+      </button>
+</div>
+</div>
+<!-- Filter Bottom Sheet Drawer Modal -->
+<div class="fixed inset-0 z-50 bg-on-surface/40 backdrop-blur-sm hidden flex-col justify-end" id="filter-sheet">
+<div class="bg-surface-container-lowest rounded-t-2xl max-h-[751px] overflow-y-auto flex flex-col p-space-md gap-space-md shadow-lg">
+<div class="w-12 h-1.5 bg-outline-variant rounded-full mx-auto self-center -mt-1"></div>
+<div class="flex items-center justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Filter Aspirasi</h3>
+<p class="font-caption text-caption text-on-surface-variant">Kustomisasi tampilan data masuk</p>
+</div>
+<button class="w-9 h-9 rounded-xl bg-surface-container flex items-center justify-center text-on-surface" id="close-filter-btn">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm">
+<label class="font-label-sm text-label-sm text-primary">Kategori Masalah</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-sm text-label-sm">Semua</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">Fasilitas &amp; Lab</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">Akademik &amp; Kurikulum</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">Finansial / Beasiswa</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm">Ormawa &amp; UKM</button>
+</div>
+</div>
+<div class="flex flex-col gap-space-sm">
+<label class="font-label-sm text-label-sm text-primary">Divisi Tujuan Disposisi</label>
+<div class="grid grid-cols-2 gap-2">
+<button class="px-3 py-2 rounded-lg bg-surface-container text-left text-on-surface font-label-sm text-label-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">check</span> Lab &amp; Sarpras
+          </button>
+<button class="px-3 py-2 rounded-lg bg-surface-container-low text-left text-on-surface font-label-sm text-label-sm">
+            Divisi Advokasi
+          </button>
+<button class="px-3 py-2 rounded-lg bg-surface-container-low text-left text-on-surface font-label-sm text-label-sm">
+            Divisi Kominfo
+          </button>
+<button class="px-3 py-2 rounded-lg bg-surface-container-low text-left text-on-surface font-label-sm text-label-sm">
+            BPH Inti
+          </button>
+</div>
+</div>
+<div class="flex flex-col gap-space-sm">
+<label class="font-label-sm text-label-sm text-primary">Tingkat Urgensi</label>
+<div class="flex gap-2">
+<button class="flex-1 py-2 rounded-lg bg-error-container text-on-error-container font-label-sm text-label-sm text-center font-semibold">
+            Kritis
+          </button>
+<button class="flex-1 py-2 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm text-center">
+            Normal
+          </button>
+<button class="flex-1 py-2 rounded-lg bg-surface-container text-on-surface font-label-sm text-label-sm text-center">
+            Rendah
+          </button>
+</div>
+</div>
+<div class="pt-2 flex items-center gap-space-sm">
+<button class="flex-1 h-11 rounded-xl bg-surface-container text-on-surface font-label-md text-label-md" id="reset-filter-btn">
+          Reset Filter
+        </button>
+<button class="flex-1 h-11 rounded-xl bg-primary text-on-primary font-label-md text-label-md shadow-sm" id="apply-filter-btn">
+          Terapkan (19)
+        </button>
+</div>
+</div>
+</div>
+<!-- Disposisi Action Drawer (Bottom Sheet) -->
+<div class="fixed inset-0 z-50 bg-on-surface/40 backdrop-blur-sm hidden flex-col justify-end" id="disposition-sheet">
+<div class="bg-surface-container-lowest rounded-t-2xl max-h-[795px] overflow-y-auto flex flex-col p-space-md gap-space-md shadow-xl">
+<div class="w-12 h-1.5 bg-outline-variant rounded-full mx-auto self-center -mt-1"></div>
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">alt_route</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Disposisi &amp; Tindak Lanjut</h3>
+<p class="font-caption text-caption text-outline font-semibold" id="disp-ticket-id">ASP-2025-0842</p>
+</div>
+</div>
+<button class="w-9 h-9 rounded-xl bg-surface-container flex items-center justify-center text-on-surface" id="close-disposition-btn">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-xl flex flex-col gap-1">
+<span class="font-caption text-caption text-outline">Judul Aspirasi:</span>
+<p class="font-label-md text-label-md text-on-surface font-semibold line-clamp-2" id="disp-ticket-title">
+          Penambahan Jam Operasional Laboratorium Komputer B untuk Praktikum Mandiri
+        </p>
+</div>
+<!-- Quick Status Toggle -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-primary">Ubah Status Tiket</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="py-2 rounded-lg bg-surface-container text-secondary font-label-sm text-label-sm font-semibold active:bg-secondary-fixed">
+            Menunggu
+          </button>
+<button class="py-2 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm font-semibold">
+            Proses/Telaah
+          </button>
+<button class="py-2 rounded-lg bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-semibold">
+            Selesai
+          </button>
+</div>
+</div>
+<!-- Divisi Penanggung Jawab -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-sm text-label-sm text-primary">Tugaskan Divisi Eksekutor</label>
+<div class="relative w-full">
+<select class="w-full h-11 px-3 rounded-xl bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none appearance-none" id="disp-divisi-select">
+<option value="Lab &amp; Sarpras">Departemen Lab &amp; Sarpras</option>
+<option value="Advokasi">Departemen Advokasi &amp; Kesejahteraan</option>
+<option value="Kominfo">Biro Kominfo &amp; Humas</option>
+<option value="PSDMO">Departemen PSDMO</option>
+<option value="BPH">BPH Inti (Ketua / Wakil)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 pointer-events-none text-outline text-[20px]">expand_more</span>
+</div>
+</div>
+<!-- Catatan Internal / Instruksi Disposisi -->
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-primary">Instruksi Tindak Lanjut</label>
+<span class="font-caption text-caption text-outline">Internal Admin</span>
+</div>
+<textarea class="w-full p-3 rounded-xl bg-surface-container-low text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none" placeholder="Tulis catatan arahan kepada koordinator divisi terkait..." rows="3"></textarea>
+</div>
+<!-- Kirim Tanggapan Langsung ke Pelapor -->
+<div class="flex items-start gap-2.5 bg-surface-container-low p-3 rounded-xl">
+<input checked="" class="w-4 h-4 rounded text-primary mt-0.5 accent-primary" id="send-notification" type="checkbox"/>
+<label class="font-caption text-caption text-on-surface cursor-pointer" for="send-notification">
+          Kirim notifikasi update status ke portal mahasiswa &amp; pelapor (jika non-anonim).
+        </label>
+</div>
+<div class="pt-1 flex items-center gap-space-sm">
+<button class="flex-1 h-11 rounded-xl bg-surface-container text-on-surface font-label-md text-label-md active:scale-95 transition-transform" id="cancel-disp-btn">
+          Batal
+        </button>
+<button class="flex-1 h-11 rounded-xl bg-primary text-on-primary font-label-md text-label-md shadow-sm active:scale-95 transition-transform flex items-center justify-center gap-1.5" id="save-disp-btn">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Simpan &amp; Disposisi</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Filter Drawer Behavior
+  const filterBtn = document.getElementById('open-filter-btn');
+  const filterSheet = document.getElementById('filter-sheet');
+  const closeFilterBtn = document.getElementById('close-filter-btn');
+  const resetFilterBtn = document.getElementById('reset-filter-btn');
+  const applyFilterBtn = document.getElementById('apply-filter-btn');
+
+  if (filterBtn && filterSheet) {
+    filterBtn.addEventListener('click', () => {
+      filterSheet.classList.remove('hidden');
+      filterSheet.classList.add('flex');
+    });
+  }
+
+  const hideFilter = () => {
+    if (filterSheet) {
+      filterSheet.classList.add('hidden');
+      filterSheet.classList.remove('flex');
+    }
+  };
+
+  if (closeFilterBtn) closeFilterBtn.addEventListener('click', hideFilter);
+  if (applyFilterBtn) applyFilterBtn.addEventListener('click', hideFilter);
+  if (resetFilterBtn) resetFilterBtn.addEventListener('click', hideFilter);
+
+  // Disposition Drawer Behavior
+  const dispSheet = document.getElementById('disposition-sheet');
+  const closeDispBtn = document.getElementById('close-disposition-btn');
+  const cancelDispBtn = document.getElementById('cancel-disp-btn');
+  const saveDispBtn = document.getElementById('save-disp-btn');
+  const dispTicketId = document.getElementById('disp-ticket-id');
+  const dispTicketTitle = document.getElementById('disp-ticket-title');
+  const dispDivisiSelect = document.getElementById('disp-divisi-select');
+
+  function openDispositionModal(id, title, divisi) {
+    if (dispTicketId) dispTicketId.textContent = id;
+    if (dispTicketTitle) dispTicketTitle.textContent = title;
+    if (dispDivisiSelect && divisi) dispDivisiSelect.value = divisi;
+    if (dispSheet) {
+      dispSheet.classList.remove('hidden');
+      dispSheet.classList.add('flex');
+    }
+  }
+
+  const hideDisp = () => {
+    if (dispSheet) {
+      dispSheet.classList.add('hidden');
+      dispSheet.classList.remove('flex');
+    }
+  };
+
+  if (closeDispBtn) closeDispBtn.addEventListener('click', hideDisp);
+  if (cancelDispBtn) cancelDispBtn.addEventListener('click', hideDisp);
+  if (saveDispBtn) {
+    saveDispBtn.addEventListener('click', () => {
+      // Mock feedback
+      const originalText = saveDispBtn.innerHTML;
+      saveDispBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span> Menyimpan...';
+      setTimeout(() => {
+        saveDispBtn.innerHTML = originalText;
+        hideDisp();
+      }, 400);
+    });
+  }
+
+  // Backdrop click dismissals
+  if (filterSheet) {
+    filterSheet.addEventListener('click', (e) => {
+      if (e.target === filterSheet) hideFilter();
+    });
+  }
+  if (dispSheet) {
+    dispSheet.addEventListener('click', (e) => {
+      if (e.target === dispSheet) hideDisp();
+    });
+  }
+</script></main><script>const ab=document.getElementById('admin-drawer-btn');const ad=document.getElementById('admin-drawer');const ac=document.getElementById('admin-drawer-close');const bd=document.getElementById('admin-drawer-backdrop');if(ab&&ad&&ac){ab.onclick=()=>ad.classList.toggle('hidden');ac.onclick=()=>ad.classList.add('hidden');if(bd)bd.onclick=()=>ad.classList.add('hidden');}</script></body></html>

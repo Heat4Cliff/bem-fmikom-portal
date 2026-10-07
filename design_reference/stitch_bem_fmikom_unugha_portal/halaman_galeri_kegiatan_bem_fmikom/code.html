@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>BEM FMIKOM UNUGHA</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-background": "#0b1c30", "outline": "#757682", "tertiary": "#222a3e", "on-tertiary-fixed": "#131b2e", "on-secondary-fixed": "#2f1500", "outline-variant": "#c5c5d3", "on-primary": "#ffffff", "surface-tint": "#4059aa", "error-container": "#ffdad6", "primary-fixed-dim": "#b6c4ff", "tertiary-container": "#384055", "on-primary-container": "#90a8ff", "on-secondary-fixed-variant": "#6e3900", "on-tertiary-fixed-variant": "#3f465c", "on-surface": "#0b1c30", "primary-fixed": "#dce1ff", "tertiary-fixed": "#dae2fd", "tertiary-fixed-dim": "#bec6e0", "on-tertiary-container": "#a4acc5", "surface-container-lowest": "#ffffff", "surface-variant": "#d3e4fe", "primary-container": "#1e3a8a", "on-surface-variant": "#444651", "surface-bright": "#f8f9ff", "on-error-container": "#93000a", "surface-container-highest": "#d3e4fe", "secondary-fixed": "#ffdcc3", "inverse-primary": "#b6c4ff", "secondary-container": "#fe932c", "secondary": "#904d00", "surface-dim": "#cbdbf5", "inverse-surface": "#213145", "secondary-fixed-dim": "#ffb77d", "background": "#f8f9ff", "on-primary-fixed-variant": "#264191", "surface-container-low": "#eff4ff", "on-error": "#ffffff", "primary": "#00236f", "surface": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "surface-container": "#e5eeff", "on-primary-fixed": "#00164e", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-secondary": "#ffffff", "on-secondary-container": "#663500", "surface-container-high": "#dce9ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1.5rem", "space-xl": "2.5rem", "margin-mobile": "1rem", "margin": "2rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "space-md": "1rem", "margin-desktop": "3rem", "space-sm": "0.5rem", "gutter-mobile": "1rem" }, "fontFamily": { "headline-sm": ["Plus Jakarta Sans"], "display-mobile": ["Plus Jakarta Sans"], "caption": ["Inter"], "display": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "headline-lg": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "label-md": ["Inter"], "label-sm": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Inter"], "headline-xl": ["Plus Jakarta Sans"] }, "fontSize": { "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.005em", "fontWeight": "600" }], "display-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "800" }], "caption": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "display": ["3.5rem", { "lineHeight": "4.25rem", "letterSpacing": "-0.03em", "fontWeight": "800" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-xl-mobile": ["1.875rem", { "lineHeight": "2.375rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0", "fontWeight": "400" }], "label-md": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "label-sm": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.03em", "fontWeight": "600" }], "headline-md": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-xl": ["2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 inset-x-0 z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between gap-4"><div class="flex items-center gap-3"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">BEM FMIKOM</span><span class="font-caption text-caption text-on-surface-variant font-medium leading-tight">UNUGHA Cilacap</span></div></div><nav class="hidden xl:flex items-center gap-1" data-active-classes="bg-surface-container-high text-primary font-semibold rounded-lg"><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="beranda" href="#">Beranda</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="tentang" href="#">Tentang</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="struktur" href="#">Struktur</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="berita" href="#">Berita</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="galeri" href="#">Galeri</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="pengumuman" href="#">Pengumuman</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="pendaftaran" href="#">Pendaftaran</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="aspirasi" href="#">Aspirasi</a></nav><div class="flex items-center gap-3"><a class="hidden sm:inline-flex items-center px-4 py-2 bg-secondary-container text-on-secondary-fixed hover:bg-secondary transition-colors hover:text-on-secondary rounded-lg font-label-md text-label-md shadow-[0_1px_2px_rgba(15,23,42,0.05)]" data-path="aspirasi" href="#">Kirim Aspirasi</a><a class="inline-flex items-center px-3.5 py-2 bg-primary text-on-primary hover:bg-tertiary transition-colors hover:text-on-tertiary rounded-lg font-label-md text-label-md shadow-[0_1px_2px_rgba(15,23,42,0.05)]" data-path="portal-login" href="#">Portal Admin</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-background"><div class="flex flex-col w-full">
+<!-- Top Ambient Banner & Breadcrumb Header -->
+<section class="relative w-full bg-surface-container-low overflow-hidden pb-12 lg:pb-16">
+<div class="absolute inset-0 opacity-40 pointer-events-none">
+<div class="absolute -top-32 -right-24 w-96 h-96 rounded-full bg-surface-container-highest blur-3xl"></div>
+<div class="absolute -bottom-24 left-1/4 w-80 h-80 rounded-full bg-secondary-fixed blur-3xl opacity-50"></div>
+</div>
+<div class="relative max-w-7xl mx-auto px-6 lg:px-12 pt-8">
+<!-- Breadcrumb -->
+<nav aria-label="Breadcrumb" class="flex items-center gap-2 font-caption text-caption text-on-surface-variant mb-6">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[16px]">home</span>
+<span>Beranda</span>
+</a>
+<span class="material-symbols-outlined text-[14px] text-outline-variant">chevron_right</span>
+<span aria-current="page" class="text-primary font-medium">Galeri Kegiatan</span>
+</nav>
+<!-- Editorial Title & Context -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+<div class="lg:col-span-8 space-y-4">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-highest text-primary font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+            Arsip Visual Resmi Kabinet
+          </div>
+<h1 class="font-headline-xl text-headline-xl text-primary tracking-tight">
+            Lensa &amp; Galeri Dokumentasi Aktivitas FMIKOM
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl leading-relaxed">
+            Kilas balik rekam jejak program kerja, workshop, seminar, aksi pengabdian masyarakat, dan perayaan sportivitas mahasiswa Fakultas Matematika dan Ilmu Komputer UNUGHA Cilacap.
+          </p>
+</div>
+<!-- Quick Stats Pill Bento -->
+<div class="lg:col-span-4 flex lg:justify-end">
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm flex items-center gap-6 w-full sm:w-auto">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">photo_library</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">317+</p>
+<p class="font-caption text-caption text-on-surface-variant">Dokumentasi HD</p>
+</div>
+</div>
+<div class="h-8 w-px bg-surface-container-high"></div>
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">6 Divisi</p>
+<p class="font-caption text-caption text-on-surface-variant">Terintegrasi</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Filter Toolbar -->
+<section class="relative z-20 -mt-6 max-w-7xl mx-auto px-6 lg:px-12 w-full">
+<div class="bg-surface-container-lowest rounded-xl p-4 sm:p-5 shadow-sm space-y-4">
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+<!-- Periode Dropdown & Type Selector -->
+<div class="flex flex-wrap items-center gap-3">
+<!-- Dropdown Periode -->
+<div class="relative min-w-[220px]">
+<label class="block font-caption text-caption text-on-surface-variant mb-1">Periode Kepengurusan</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg pl-3.5 pr-10 py-2.5 outline-none cursor-pointer hover:bg-surface-container transition-colors" id="period-filter">
+<option selected="" value="2024-2025">Periode 2024/2025 (Aktif)</option>
+<option value="2023-2024">Periode 2023/2024</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">expand_more</span>
+</div>
+</div>
+<!-- Kegiatan Dropdown / Chips -->
+<div class="relative min-w-[220px]">
+<label class="block font-caption text-caption text-on-surface-variant mb-1">Kategori Kegiatan</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low text-on-surface font-label-md text-label-md rounded-lg pl-3.5 pr-10 py-2.5 outline-none cursor-pointer hover:bg-surface-container transition-colors" id="type-filter">
+<option value="all">Semua Tipe Kegiatan</option>
+<option value="akademik">Akademik &amp; Workshop</option>
+<option value="kaderisasi">Kaderisasi</option>
+<option value="pengabdian">Pengabdian</option>
+<option value="kompetisi">Kompetisi</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">tune</span>
+</div>
+</div>
+</div>
+<!-- Search Bar -->
+<div class="lg:w-72">
+<label class="block font-caption text-caption text-on-surface-variant mb-1">Cari Kegiatan</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="w-full bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded-lg pl-9 pr-3.5 py-2.5 outline-none placeholder:text-outline focus:bg-surface-container-lowest transition-colors" id="search-input" placeholder="Ketik nama kegiatan..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Divisi Segmented Filter Tabs -->
+<div class="pt-2 flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
+<div class="flex items-center gap-1.5 py-1">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider mr-2 hidden md:inline">Divisi:</span>
+<button class="division-btn px-3.5 py-1.5 rounded-lg font-label-sm text-label-sm bg-primary text-on-primary transition-all shadow-sm" data-division="all">
+            Semua Divisi
+          </button>
+<button class="division-btn px-3.5 py-1.5 rounded-lg font-label-sm text-label-sm bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-division="kominfo">
+            Kominfo
+          </button>
+<button class="division-btn px-3.5 py-1.5 rounded-lg font-label-sm text-label-sm bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-division="psdm">
+            PSDM
+          </button>
+<button class="division-btn px-3.5 py-1.5 rounded-lg font-label-sm text-label-sm bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-division="sosmas">
+            Sosial Masyarakat
+          </button>
+<button class="division-btn px-3.5 py-1.5 rounded-lg font-label-sm text-label-sm bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-division="mikat">
+            Minat &amp; Bakat
+          </button>
+<button class="division-btn px-3.5 py-1.5 rounded-lg font-label-sm text-label-sm bg-surface-container-low text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-division="bph">
+            BPH
+          </button>
+</div>
+<div class="font-caption text-caption text-on-surface-variant shrink-0 hidden sm:block">
+          Menampilkan <span class="font-semibold text-primary">6</span> Album Terpilih
+        </div>
+</div>
+</div>
+</section>
+<!-- Gallery Grid (16:10 aspect ratio cards) -->
+<main class="max-w-7xl mx-auto px-6 lg:px-12 py-12 lg:py-16 w-full">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-container">
+<!-- Card 1 -->
+<article class="gallery-card group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1" data-division="kominfo" data-type="akademik">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A wide angle photograph of university students filling a modern academic hall at Universitas Nahdlatul Ulama Al Ghazali Cilacap, captivated by a massive luminous projector screen presenting artificial intelligence frameworks, dramatic auditorium stage lighting in subtle navy and amber, high realistic resolution, contemporary Indonesian campus setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMSFFIJUNg6zER8YPd1zJ-_obQFFyQsXkOR3ljbh4FbKxhdaD6xd2RxmtiXKQUpR68zAzm-y5TcQX4L-IdBrLckhtO8F3tR2AejwhEdw9mmy5SxpdEPOhYgPcCqqcT1Hv7ZdiFBemRCJ6FcDBlzffguJm7wGmRkPcHqz0I19ClKsjDG9WN4iyQem0r4ZcIswdpV7BXqmY_t6zT2iZQFrfIMCL7ZY6TYKVb3EGgJS8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-surface-container-lowest/90 backdrop-blur-md text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">terminal</span> Kominfo
+          </span>
+<span class="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-primary-container text-on-primary font-label-sm text-label-sm flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">photo_camera</span> 48 Foto
+          </span>
+</div>
+<div class="p-6 flex flex-col flex-1 justify-between gap-4">
+<div class="space-y-3">
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">calendar_today</span>
+<time datetime="2024-12-14">14 Des 2024</time>
+<span class="inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>Akademik &amp; Workshop</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2">
+              FMIKOM Tech Fest 2024 &amp; Seminar Artificial Intelligence
+            </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 leading-relaxed">
+              Gelaran festival teknologi tahunan fakultas bersama pakar AI nasional yang mengupas implementasi deep learning bagi mahasiswa.
+            </p>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<a class="inline-flex items-center gap-1 text-primary hover:text-secondary font-label-md text-label-md transition-colors group/btn" href="#">
+<span>Buka Dokumentasi</span>
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+</a>
+<span class="p-2 rounded-lg bg-surface-container-low text-on-surface-variant group-hover:bg-primary-fixed group-hover:text-on-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</span>
+</div>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="gallery-card group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1" data-division="psdm" data-type="kaderisasi">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="An energetic outdoor leadership training session in the misty pine foothills of Baturraden, central Java, Indonesian computer science college students wearing matching navy blue field uniforms engaged in an empowering teamwork obstacle challenge, cinematic natural morning light, vibrant camaraderie and grit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5MIb-QUXRSh8nxgnGs4lx08mThrkYbHyvXjRllPH171JnRvQYTeO-1BDC4CoFG5QUPHslbPjcgPw_BmmqWRrckk75ed1YVAumPv234-De_8fmIs9heJRYa2h9qkxJqAfF22wOk2m14gIvFRSMGVhDGckUBMGoPVDlbSYarKJQ_p4s0koFJqETajyg4rNaXc7yXZ6rqjJlUpVuDi5aaqNkdiBiMuzSkINwdmVw5Js"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-surface-container-lowest/90 backdrop-blur-md text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">groups</span> PSDM
+          </span>
+<span class="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-primary-container text-on-primary font-label-sm text-label-sm flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">photo_camera</span> 62 Foto
+          </span>
+</div>
+<div class="p-6 flex flex-col flex-1 justify-between gap-4">
+<div class="space-y-3">
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">calendar_today</span>
+<time datetime="2024-11-20">20 Nov 2024</time>
+<span class="inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>Kaderisasi</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2">
+              Latihan Dasar Kepemimpinan Mahasiswa (LKMM-TD) 2024
+            </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 leading-relaxed">
+              Penggemblengan karakter kepemimpinan transformatif dan manajemen organisasi terpadu di kawasan alam Baturraden.
+            </p>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<a class="inline-flex items-center gap-1 text-primary hover:text-secondary font-label-md text-label-md transition-colors group/btn" href="#">
+<span>Buka Dokumentasi</span>
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+</a>
+<span class="p-2 rounded-lg bg-surface-container-low text-on-surface-variant group-hover:bg-primary-fixed group-hover:text-on-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</span>
+</div>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="gallery-card group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1" data-division="sosmas" data-type="pengabdian">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Warm documentary photograph capturing Indonesian university students handing over refurbished desktop computers and books to a rural elementary school principal and smiling rural students in Cilacap regency, genuine warmth, bright natural classroom ambient sunlight, academic community service theme" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAglhxPd5n_60L_pK6SMDqIy9ahnfhG6Il-t0Z7u5MrEEtIukSt6AsOzHmrUsTXiNpvfPjLum-cxs7wpTQkxerT1iOPs8P6ZV1CB6BqUWARF2xhgEbvwaaao8_YTRsjdswblQwbnbJCGIJ3JkELJSJX11ibNXLy_qAc36t8pivsrx21YOmyJZLLFHEl9nzrlqh5uPPoffb310iH4Mkrm14oUSu8vcA6npBUEfoz3aY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-surface-container-lowest/90 backdrop-blur-md text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">volunteer_activism</span> Sosmas
+          </span>
+<span class="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-primary-container text-on-primary font-label-sm text-label-sm flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">photo_camera</span> 35 Foto
+          </span>
+</div>
+<div class="p-6 flex flex-col flex-1 justify-between gap-4">
+<div class="space-y-3">
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">calendar_today</span>
+<time datetime="2024-10-05">05 Okt 2024</time>
+<span class="inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>Pengabdian</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2">
+              Bakti Edukasi &amp; Donasi Perangkat Komputer Desa Binaan
+            </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 leading-relaxed">
+              Program literasi komputasi pedesaan dan penyaluran perangkat PC layak guna untuk mendukung sarana belajar murid sekolah dasar.
+            </p>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<a class="inline-flex items-center gap-1 text-primary hover:text-secondary font-label-md text-label-md transition-colors group/btn" href="#">
+<span>Buka Dokumentasi</span>
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+</a>
+<span class="p-2 rounded-lg bg-surface-container-low text-on-surface-variant group-hover:bg-primary-fixed group-hover:text-on-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</span>
+</div>
+</div>
+</article>
+<!-- Card 4 -->
+<article class="gallery-card group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1" data-division="kominfo" data-type="akademik">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="High tech campus computer laboratory setting at UNUGHA Cilacap, female and male college students coding frontend interfaces and Figma UI systems, warm interactive mentors guiding participants, rows of bright monitors with syntax highlighting and UI mockups, clean modern atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQnkQueQ3YI4iKq3hCtDNXk43RjF-BywOj8HoS8oTWqweaLMNV6Rs1t0IuGAuQiyLRf-eS7QZCwPrhDCPMtXNyPBRFMaI0RviSerQUBBju_9QDy2-W_jU96pCH1Y3jdAJAlN5PrWDja4ReEiF_1MUPr-i6PP3gU6CYZ1y0eeG3hJ4PYXZOHLxcIrIPnx8uM8R0sX2vK0yQxP3leA2e5o2lrGNsSybpcpY_dCt_8Fc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-surface-container-lowest/90 backdrop-blur-md text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">code</span> Kominfo
+          </span>
+<span class="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-primary-container text-on-primary font-label-sm text-label-sm flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">photo_camera</span> 28 Foto
+          </span>
+</div>
+<div class="p-6 flex flex-col flex-1 justify-between gap-4">
+<div class="space-y-3">
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">calendar_today</span>
+<time datetime="2025-05-18">18 Mei 2024</time>
+<span class="inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>Akademik &amp; Workshop</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2">
+              Workshop Desain Antarmuka &amp; Frontend Engineering
+            </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 leading-relaxed">
+              Pelatihan interaktif intensif merancang design system modern dan implementasi framework reaktif bersama praktisi industri.
+            </p>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<a class="inline-flex items-center gap-1 text-primary hover:text-secondary font-label-md text-label-md transition-colors group/btn" href="#">
+<span>Buka Dokumentasi</span>
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+</a>
+<span class="p-2 rounded-lg bg-surface-container-low text-on-surface-variant group-hover:bg-primary-fixed group-hover:text-on-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</span>
+</div>
+</div>
+</article>
+<!-- Card 5 -->
+<article class="gallery-card group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1" data-division="mikat" data-type="kompetisi">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Joyful collegiate sports victory celebration inside a covered sports stadium, student futsal champions and e-sports finalists holding a golden trophy high alongside the faculty dean and academic staff, confetti falling, enthusiastic crowd cheering in the background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGp-hnU5Zg4RwioaSN4-IJdOR43zWmAmpmV_Uh6ZjBoJ5xhTUfq25zsE3sUUIX9EVX5qU0IuTDLKZRFfqgMugDqPmNWAqd66e1iZYfZGmJT7rZBMdvOqtG2ESsQ5rKXhJEcOuMvhLt4fa4Qu9XAVZ8p1Df7e_noMN_LiBHjV3bFnnyvRAV_W5tZ-YOqdOzcQ0343wO_xf12xevZr8E5qWJNbTC1O5q3DubcoaFpg4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-surface-container-lowest/90 backdrop-blur-md text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">sports_soccer</span> Minat &amp; Bakat
+          </span>
+<span class="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-primary-container text-on-primary font-label-sm text-label-sm flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">photo_camera</span> 54 Foto
+          </span>
+</div>
+<div class="p-6 flex flex-col flex-1 justify-between gap-4">
+<div class="space-y-3">
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">calendar_today</span>
+<time datetime="2024-08-12">12 Agu 2024</time>
+<span class="inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>Kompetisi</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2">
+              FMIKOM Futsal &amp; E-Sport Championship Piala Dekan
+            </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 leading-relaxed">
+              Ajang unjuk ketangkasan dan solidaritas antar angkatan dalam turnamen futsal serta kompetisi gaming strategis fakultas.
+            </p>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<a class="inline-flex items-center gap-1 text-primary hover:text-secondary font-label-md text-label-md transition-colors group/btn" href="#">
+<span>Buka Dokumentasi</span>
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+</a>
+<span class="p-2 rounded-lg bg-surface-container-low text-on-surface-variant group-hover:bg-primary-fixed group-hover:text-on-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</span>
+</div>
+</div>
+</article>
+<!-- Card 6 -->
+<article class="gallery-card group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1" data-division="bph" data-type="kaderisasi">
+<div class="relative w-full aspect-[16/10] overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Grand university courtyard assembly during freshman orientation ceremony P2MB UNUGHA, hundreds of new students wearing green university almamater blazers performing a synchronized formation, celebratory colored smoke in sky, majestic campus building backdrop under blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4coGiQptZenjXmrjUUKYMA3p6Xry0JXG7XWeAqWZGqAO2-sAzHBByFOymshUsmJg9OVbv-EVFwgSPCUKIpK8gl8q2GmkJwxV2iv1Rl13CDOQ8ishLxfmm9_I1cGMi8YwLjPLXJgpfu_wqDpZHv2DPMQekYszQEZRAOL9tZ2MXbYiWFgw8O7FRogxb7kToHVsAjBr8JA2HOjuINU_pRzMGWWYp4vx7UkUfOBWtPlM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-surface-container-lowest/90 backdrop-blur-md text-primary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">account_balance</span> BPH
+          </span>
+<span class="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-primary-container text-on-primary font-label-sm text-label-sm flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">photo_camera</span> 90 Foto
+          </span>
+</div>
+<div class="p-6 flex flex-col flex-1 justify-between gap-4">
+<div class="space-y-3">
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">calendar_today</span>
+<time datetime="2024-09-01">01 Sep 2024</time>
+<span class="inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>Kaderisasi</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2">
+              Penyambutan Mahasiswa Baru (P2MB) FMIKOM 2024
+            </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 leading-relaxed">
+              Momen perayaan akbar flashmob serta seremonial penyematan almamater bagi putra-putri terbaik angkatan 2024.
+            </p>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<a class="inline-flex items-center gap-1 text-primary hover:text-secondary font-label-md text-label-md transition-colors group/btn" href="#">
+<span>Buka Dokumentasi</span>
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+</a>
+<span class="p-2 rounded-lg bg-surface-container-low text-on-surface-variant group-hover:bg-primary-fixed group-hover:text-on-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</span>
+</div>
+</div>
+</article>
+</div>
+<!-- Empty State (hidden by default) -->
+<div class="hidden text-center py-16 bg-surface-container-lowest rounded-xl shadow-sm mt-4" id="empty-state">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mx-auto mb-4 text-on-surface-variant">
+<span class="material-symbols-outlined text-[32px]">image_not_supported</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Dokumentasi Tidak Ditemukan</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mx-auto">
+        Tidak ada arsip kegiatan yang sesuai dengan kriteria filter divisi atau kata kunci yang Anda masukkan.
+      </p>
+<button class="mt-4 px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md" onclick="resetFilters()">
+        Reset Filter
+      </button>
+</div>
+<!-- Interactive Pagination -->
+<nav aria-label="Pagination" class="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4 pt-6">
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center sm:text-left">
+        Menampilkan halaman <span class="font-semibold text-primary">1</span> dari <span class="font-semibold text-primary">4</span> (Total 24 Agenda)
+      </p>
+<div class="flex items-center gap-1.5">
+<button aria-label="Halaman sebelumnya" class="w-10 h-10 rounded-lg flex items-center justify-center bg-surface-container-lowest text-outline hover:bg-surface-container-high transition-colors disabled:opacity-40" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button aria-current="page" class="w-10 h-10 rounded-lg flex items-center justify-center bg-primary text-on-primary font-label-md text-label-md shadow-sm">
+          1
+        </button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors">
+          2
+        </button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors">
+          3
+        </button>
+<span class="w-6 text-center text-on-surface-variant">…</span>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors">
+          4
+        </button>
+<button aria-label="Halaman berikutnya" class="w-10 h-10 rounded-lg flex items-center justify-center bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</nav>
+</main>
+<!-- Editorial Cloud Archive Callout Banner -->
+<section class="max-w-7xl mx-auto px-6 lg:px-12 pb-16 lg:pb-24 w-full">
+<div class="relative overflow-hidden bg-primary text-on-primary rounded-xl p-8 lg:p-10 shadow-md">
+<!-- Decorative radial highlights -->
+<div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-secondary-container/20 blur-3xl pointer-events-none"></div>
+<div class="absolute top-0 right-1/3 w-64 h-64 rounded-full bg-surface-tint/30 blur-2xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+<div class="flex items-start gap-4 max-w-3xl">
+<div class="w-12 h-12 rounded-xl bg-on-primary/10 flex items-center justify-center shrink-0 text-secondary-container">
+<span class="material-symbols-outlined text-[28px]">cloud_sync</span>
+</div>
+<div class="space-y-1.5">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-secondary text-on-secondary font-label-sm text-label-sm">Cloud Archive</span>
+<span class="font-caption text-caption text-primary-fixed-dim">Penyimpanan Terbuka</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-primary">
+              Akses Resolusi Penuh &amp; Master Drive
+            </h3>
+<p class="font-body-md text-body-md text-primary-fixed-dim leading-relaxed">
+              Semua arsip foto tersimpan dalam resolusi tinggi di cloud album Google Photos BEM FMIKOM UNUGHA yang dapat diakses terbuka oleh civitas akademika untuk kebutuhan laporan, publikasi himpunan, dan kenangan bersama.
+            </p>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto shrink-0">
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-secondary-container text-on-secondary-fixed hover:bg-secondary hover:text-on-secondary transition-all font-label-md text-label-md shadow-sm group" href="#">
+<span class="material-symbols-outlined text-[20px]">cloud_download</span>
+<span>Buka Google Photos</span>
+<span class="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-0.5">open_in_new</span>
+</a>
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-on-primary/10 hover:bg-on-primary/20 text-on-primary transition-all font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+<span>Panduan Hak Cipta</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive JavaScript for Tab Filtering, Type Selecting, and Search -->
+<script>
+    (function() {
+      const divisionBtns = document.querySelectorAll('.division-btn');
+      const typeSelect = document.getElementById('type-filter');
+      const searchInput = document.getElementById('search-input');
+      const cards = document.querySelectorAll('.gallery-card');
+      const emptyState = document.getElementById('empty-state');
+
+      let currentDivision = 'all';
+      let currentType = 'all';
+      let searchQuery = '';
+
+      function applyFilter() {
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const cardDiv = card.getAttribute('data-division');
+          const cardType = card.getAttribute('data-type');
+          const cardText = card.textContent.toLowerCase();
+
+          const matchesDiv = (currentDivision === 'all' || cardDiv === currentDivision);
+          const matchesType = (currentType === 'all' || cardType === currentType);
+          const matchesSearch = (!searchQuery || cardText.includes(searchQuery));
+
+          if (matchesDiv && matchesType && matchesSearch) {
+            card.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        if (visibleCount === 0) {
+          emptyState.classList.remove('hidden');
+        } else {
+          emptyState.classList.add('hidden');
+        }
+      }
+
+      divisionBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          divisionBtns.forEach(b => {
+            b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+            b.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+          });
+
+          btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+          btn.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+
+          currentDivision = btn.getAttribute('data-division');
+          applyFilter();
+        });
+      });
+
+      if (typeSelect) {
+        typeSelect.addEventListener('change', (e) => {
+          currentType = e.target.value;
+          applyFilter();
+        });
+      }
+
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          searchQuery = e.target.value.toLowerCase().trim();
+          applyFilter();
+        });
+      }
+
+      window.resetFilters = function() {
+        currentDivision = 'all';
+        currentType = 'all';
+        searchQuery = '';
+
+        if (typeSelect) typeSelect.value = 'all';
+        if (searchInput) searchInput.value = '';
+
+        divisionBtns.forEach(b => {
+          if (b.getAttribute('data-division') === 'all') {
+            b.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+            b.classList.remove('bg-surface-container-low', 'text-on-surface-variant');
+          } else {
+            b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+            b.classList.add('bg-surface-container-low', 'text-on-surface-variant');
+          }
+        });
+
+        applyFilter();
+      };
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-low shadow-[0_-1px_8px_rgba(0,0,0,0.02)] mt-auto"><div class="max-w-7xl mx-auto px-6 lg:px-12 py-12 lg:py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"><div class="space-y-4"><div class="flex items-center gap-3"><img alt="Logo BEM FMIKOM UNUGHA" class="h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">BEM FMIKOM</span><span class="font-caption text-caption text-on-surface-variant">UNUGHA Cilacap</span></div></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Badan Eksekutif Mahasiswa Fakultas Matematika dan Ilmu Komputer Universitas Nahdlatul Ulama Al Ghazali Cilacap. Bersinergi, Progresif, dan Berintegritas.</p></div><div class="space-y-3"><h4 class="font-headline-sm text-headline-sm text-primary">Tautan Penting</h4><ul class="space-y-2"><li class="font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" data-path="tentang" href="#">Profil Organisasi</a></li><li class="font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" data-path="struktur" href="#">Struktur Kepengurusan</a></li><li class="font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" data-path="berita" href="#">Warta &amp; Kegiatan</a></li><li class="font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" data-path="pendaftaran" href="#">Pendaftaran Kepengurusan &amp; Event</a></li></ul></div><div class="space-y-3"><h4 class="font-headline-sm text-headline-sm text-primary">Sekretariat &amp; Kontak</h4><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Gedung B Lt. 2, Kampus UNUGHA Cilacap<br/>Jl. Kemerdekaan Barat No.17, Kesugihan, Cilacap, Jawa Tengah 53274</p><p class="font-body-sm text-body-sm text-on-surface-variant">Email: bem.fmikom@unugha.ac.id</p></div><div class="space-y-3"><h4 class="font-headline-sm text-headline-sm text-primary">Kanal Aspirasi &amp; Media</h4><p class="font-body-sm text-body-sm text-on-surface-variant">Ikuti info resmi dan ajukan aspirasi mahasiswa secara daring.</p><div class="flex items-center gap-2 pt-2"><a class="px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors font-label-sm text-label-sm flex items-center gap-1.5" href="#"><span class="material-symbols-outlined text-[16px]">public</span>Instagram @bemfmikom_unugha</a></div></div></div><div class="w-full bg-surface-container py-4"><div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left"><p class="font-caption text-caption text-on-surface-variant">© 2025 BEM FMIKOM UNUGHA. Hak Cipta Dilindungi Undang-Undang.</p><p class="font-caption text-caption text-on-surface-variant">Universitas Nahdlatul Ulama Al Ghazali Cilacap</p></div></div></footer></body></html>

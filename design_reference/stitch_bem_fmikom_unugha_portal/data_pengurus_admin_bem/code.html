@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><title>Admin Portal BEM FMIKOM UNUGHA</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-background": "#0b1c30", "outline": "#757682", "tertiary": "#222a3e", "on-tertiary-fixed": "#131b2e", "on-secondary-fixed": "#2f1500", "outline-variant": "#c5c5d3", "on-primary": "#ffffff", "surface-tint": "#4059aa", "error-container": "#ffdad6", "primary-fixed-dim": "#b6c4ff", "tertiary-container": "#384055", "on-primary-container": "#90a8ff", "on-secondary-fixed-variant": "#6e3900", "on-tertiary-fixed-variant": "#3f465c", "on-surface": "#0b1c30", "primary-fixed": "#dce1ff", "tertiary-fixed": "#dae2fd", "tertiary-fixed-dim": "#bec6e0", "on-tertiary-container": "#a4acc5", "surface-container-lowest": "#ffffff", "surface-variant": "#d3e4fe", "primary-container": "#1e3a8a", "on-surface-variant": "#444651", "surface-bright": "#f8f9ff", "on-error-container": "#93000a", "surface-container-highest": "#d3e4fe", "secondary-fixed": "#ffdcc3", "inverse-primary": "#b6c4ff", "secondary-container": "#fe932c", "secondary": "#904d00", "surface-dim": "#cbdbf5", "inverse-surface": "#213145", "secondary-fixed-dim": "#ffb77d", "background": "#f8f9ff", "on-primary-fixed-variant": "#264191", "surface-container-low": "#eff4ff", "on-error": "#ffffff", "primary": "#00236f", "surface": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "surface-container": "#e5eeff", "on-primary-fixed": "#00164e", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-secondary": "#ffffff", "on-secondary-container": "#663500", "surface-container-high": "#dce9ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1.5rem", "space-xl": "2.5rem", "margin-mobile": "1rem", "margin": "2rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "space-md": "1rem", "margin-desktop": "3rem", "space-sm": "0.5rem", "gutter-mobile": "1rem" }, "fontFamily": { "headline-sm": ["Plus Jakarta Sans"], "display-mobile": ["Plus Jakarta Sans"], "caption": ["Inter"], "display": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "headline-lg": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "label-md": ["Inter"], "label-sm": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Inter"], "headline-xl": ["Plus Jakarta Sans"] }, "fontSize": { "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.005em", "fontWeight": "600" }], "display-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "800" }], "caption": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "display": ["3.5rem", { "lineHeight": "4.25rem", "letterSpacing": "-0.03em", "fontWeight": "800" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-xl-mobile": ["1.875rem", { "lineHeight": "2.375rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0", "fontWeight": "400" }], "label-md": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "label-sm": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.03em", "fontWeight": "600" }], "headline-md": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-xl": ["2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col overflow-y-auto"><div class="p-5 flex items-center gap-3 bg-surface-container-low"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">BEM FMIKOM</span><span class="font-caption text-caption text-on-surface-variant font-medium">Admin Portal</span></div></div><div class="px-4 py-2"><div class="px-3 py-2 bg-surface-container rounded-lg flex items-center justify-between"><span class="font-caption text-caption text-on-surface-variant">Status Periode:</span><span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">2024/2025</span></div></div><nav class="flex-1 px-3 py-3 space-y-4" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Overview</span></a></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Content</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="berita-management" href="#"><span class="material-symbols-outlined text-[18px]">newspaper</span><span>Berita</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="kategori-management" href="#"><span class="material-symbols-outlined text-[18px]">category</span><span>Kategori</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="galeri-management" href="#"><span class="material-symbols-outlined text-[18px]">photo_library</span><span>Galeri</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengumuman-management" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span>Pengumuman</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Organization</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="struktur-organisasi-admin" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span>Struktur</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="divisi-management" href="#"><span class="material-symbols-outlined text-[18px]">groups</span><span>Divisi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengurus-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span>Pengurus</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="periode-management" href="#"><span class="material-symbols-outlined text-[18px]">history_edu</span><span>Periode</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Management</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pendaftaran-management" href="#"><span class="material-symbols-outlined text-[18px]">how_to_reg</span><span>Pendaftaran</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="aspirasi-management" href="#"><span class="material-symbols-outlined text-[18px]">forum</span><span>Aspirasi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="arsip-dokumen" href="#"><span class="material-symbols-outlined text-[18px]">folder</span><span>Arsip Dokumen</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">System</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="system-settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="users-management" href="#"><span class="material-symbols-outlined text-[18px]">manage_accounts</span><span>Users</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="activity-log" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Activity Log</span></a></div></div></nav><div class="p-4 bg-surface-container-low"><a class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm" data-path="beranda" href="#"><span class="material-symbols-outlined text-[18px]">open_in_new</span>Lihat Web Publik</a></div></aside><div class="pl-64 min-h-screen flex flex-col"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-6 lg:px-8"><div class="flex items-center gap-3"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><span class="font-label-md text-label-md text-on-surface-variant font-medium">Fakultas Matematika dan Ilmu Komputer</span></div><div class="flex items-center gap-4"><button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors relative"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary-container"></span></button><div class="h-6 w-px bg-outline-variant"></div><div class="flex items-center gap-3"><div class="text-right hidden sm:block"><p class="font-label-sm text-label-sm text-on-surface leading-tight font-semibold">Admin BEM</p><span class="font-caption text-caption text-primary font-medium">Superadministrator</span></div><img alt="Foto Profil Admin" class="h-9 w-9 rounded-full object-cover ring-2 ring-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkaINJpcRubsTXdXDHksfsqbChqqBxKHZBe17AySz3LBQte4ozJgwwmO0K97gBDOC3e6kF9cYQFyc4xK_TPq3vSjy-tT14ti2Sz0MZo4-inMETb3HX2fg5wNY0cAK6DBXgHegb84OZnS6KiAuyFqN9d4sq4srhGXU6y5BpzfvIU4LxHADmRLIDJqisWwAC79bLL9SP5iNGyLJ_dKiEiXjWqWAd4WN-VzVGpbor90"/><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-6 lg:px-8 py-6 bg-background flex-1"><div class="flex flex-col w-full space-y-6">
+<!-- Top Context / Breadcrumb Bar -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<nav class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[16px]">dashboard</span>
+<span>Dashboard</span>
+</a>
+<span class="material-symbols-outlined text-[14px] text-outline-variant">chevron_right</span>
+<span>Organisasi</span>
+<span class="material-symbols-outlined text-[14px] text-outline-variant">chevron_right</span>
+<span class="text-on-surface font-semibold font-label-sm text-label-sm">Data Pengurus</span>
+</nav>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold shadow-sm">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+        Periode 2024/2025 (Aktif)
+      </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[14px] text-primary">verified_user</span>
+        Superadmin Access
+      </span>
+</div>
+</div>
+<!-- Page Header & Action Bar -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-2">
+<div class="space-y-1.5 max-w-3xl">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed text-[11px] font-semibold tracking-wider uppercase font-caption">Database BEM</span>
+<span class="text-outline-variant text-caption font-caption">/</span>
+<span class="text-on-surface-variant font-caption text-caption">Fakultas Matematika dan Ilmu Komputer UNUGHA</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Data Pengurus &amp; Anggota Organisasi</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Kelola data pengurus BEM FMIKOM UNUGHA pada setiap periode kepengurusan, pemetaan jabatan struktural, status aktif SK, serta sinkronisasi NIM mahasiswa.
+      </p>
+</div>
+<div class="flex flex-wrap items-center gap-2.5 shrink-0">
+<button class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-container transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-outline">description</span>
+<span>Cetak SK Kepengurusan</span>
+</button>
+<button class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-container transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">file_download</span>
+<span>Ekspor Data (.xlsx)</span>
+</button>
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md shadow-md hover:bg-primary transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span>+ Tambah Pengurus</span>
+</button>
+</div>
+</div>
+<!-- Metrics / KPI Overview -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Stat 1 -->
+<div class="relative overflow-hidden p-4 rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="space-y-1">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider font-semibold">Total Pengurus</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-on-surface font-bold">44</span>
+<span class="font-caption text-caption text-primary font-medium">Mahasiswa</span>
+</div>
+<p class="font-caption text-caption text-outline">100% Terdaftar SK Dekan</p>
+</div>
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">groups</span>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="relative overflow-hidden p-4 rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="space-y-1">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider font-semibold">Laki-Laki</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-on-surface font-bold">24</span>
+<span class="font-caption text-caption text-secondary font-medium">54.5%</span>
+</div>
+<div class="w-32 bg-surface-container rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary h-1.5 rounded-full" style="width: 54.5%"></div>
+</div>
+</div>
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[24px]">man</span>
+</div>
+</div>
+<!-- Stat 3 -->
+<div class="relative overflow-hidden p-4 rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="space-y-1">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider font-semibold">Perempuan</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-on-surface font-bold">20</span>
+<span class="font-caption text-caption text-secondary font-medium">45.5%</span>
+</div>
+<div class="w-32 bg-surface-container rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary-container h-1.5 rounded-full" style="width: 45.5%"></div>
+</div>
+</div>
+<div class="w-12 h-12 rounded-xl bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[24px]">woman</span>
+</div>
+</div>
+<!-- Stat 4 -->
+<div class="relative overflow-hidden p-4 rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="space-y-1">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider font-semibold">Distribusi Program Studi</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-on-surface font-bold">2</span>
+<span class="font-caption text-caption text-outline">Prodi Aktif</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant">26 S1 TI • 18 S1 SI</p>
+</div>
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">account_tree</span>
+</div>
+</div>
+</div>
+<!-- Filter & Utility Toolbar -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm space-y-3">
+<div class="flex flex-col xl:flex-row gap-3">
+<!-- Search Input -->
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[20px] text-outline">search</span>
+<input class="w-full pl-11 pr-4 py-2 bg-surface-container-low rounded-lg text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all" id="member-search" placeholder="Cari nama pengurus, NIM, atau program studi..." type="text"/>
+</div>
+<!-- Filters Row -->
+<div class="flex flex-wrap items-center gap-2.5">
+<!-- Filter Periode -->
+<div class="relative">
+<select class="appearance-none pl-3.5 pr-8 py-2 bg-surface-container-low rounded-lg text-on-surface font-label-sm text-label-sm focus:outline-none focus:bg-surface-container-lowest focus:shadow-md cursor-pointer transition-all">
+<option selected="">Periode 2024/2025 (Aktif)</option>
+<option>Periode 2023/2024</option>
+<option>Periode 2022/2023</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] pointer-events-none text-outline">expand_more</span>
+</div>
+<!-- Filter Divisi -->
+<div class="relative">
+<select class="appearance-none pl-3.5 pr-8 py-2 bg-surface-container-low rounded-lg text-on-surface font-label-sm text-label-sm focus:outline-none focus:bg-surface-container-lowest focus:shadow-md cursor-pointer transition-all">
+<option selected="">Semua Divisi (5 Divisi + BPH)</option>
+<option>Presidium Utama</option>
+<option>BPH (Badan Pengurus Harian)</option>
+<option>Komunikasi &amp; Informasi</option>
+<option>Pengembangan SDM (PSDM)</option>
+<option>Kajian Strategis &amp; Advokasi</option>
+<option>Minat, Bakat &amp; Keilmuan</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] pointer-events-none text-outline">expand_more</span>
+</div>
+<!-- Filter Jabatan -->
+<div class="relative">
+<select class="appearance-none pl-3.5 pr-8 py-2 bg-surface-container-low rounded-lg text-on-surface font-label-sm text-label-sm focus:outline-none focus:bg-surface-container-lowest focus:shadow-md cursor-pointer transition-all">
+<option selected="">Semua Jabatan</option>
+<option>Presidium / Pimpinan</option>
+<option>Koordinator Divisi</option>
+<option>Sekretaris / Bendahara</option>
+<option>Staf Ahli / Anggota</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] pointer-events-none text-outline">expand_more</span>
+</div>
+<!-- Filter Status -->
+<div class="relative">
+<select class="appearance-none pl-3.5 pr-8 py-2 bg-surface-container-low rounded-lg text-on-surface font-label-sm text-label-sm focus:outline-none focus:bg-surface-container-lowest focus:shadow-md cursor-pointer transition-all">
+<option selected="">Semua Status</option>
+<option>Aktif</option>
+<option>Tidak Aktif / Demisioner</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[16px] pointer-events-none text-outline">expand_more</span>
+</div>
+<button class="p-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant transition-colors flex items-center justify-center" title="Reset Filter" type="button">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+</button>
+</div>
+</div>
+<!-- Active Filter Quick Chips -->
+<div class="flex items-center gap-2 pt-1 overflow-x-auto text-caption font-caption">
+<span class="text-outline uppercase tracking-wider text-[11px] font-semibold shrink-0">Filter Aktif:</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container text-on-surface">
+        Periode: 2024/2025
+        <span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-error">close</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container text-on-surface">
+        Status: Aktif
+        <span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-error">close</span>
+</span>
+<button class="text-primary hover:underline text-[12px] font-medium shrink-0 ml-1" type="button">Hapus Semua</button>
+</div>
+</div>
+<!-- Main Table Section -->
+<div class="rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-container-low text-on-surface-variant uppercase font-label-sm text-label-sm tracking-wider">
+<tr>
+<th class="py-3.5 px-4 font-semibold" scope="col">
+<div class="flex items-center gap-2">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer accent-primary" type="checkbox"/>
+<span>Foto &amp; Profil Mahasiswa</span>
+</div>
+</th>
+<th class="py-3.5 px-4 font-semibold" scope="col">Jabatan</th>
+<th class="py-3.5 px-4 font-semibold" scope="col">Divisi</th>
+<th class="py-3.5 px-4 font-semibold" scope="col">Periode</th>
+<th class="py-3.5 px-4 font-semibold" scope="col">Status</th>
+<th class="py-3.5 px-4 font-semibold text-right" scope="col">Aksi</th>
+</tr>
+</thead>
+<tbody class="text-on-surface">
+<!-- Row 1: Ketua BEM -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3.5 min-w-[280px]">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer accent-primary shrink-0" type="checkbox"/>
+<div class="relative shrink-0">
+<img class="w-11 h-11 rounded-full object-cover shadow-sm bg-surface-container" data-alt="Formal university student ID headshot portrait of an Indonesian male student in a dark navy blue academic blazer with gold BEM lapel pin, smiling with neat hair and crisp white collar in front of a soft light gray professional campus studio backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADOFPR5e0WlDZMCidMhLNLSVGJI1TV6u9hKwJXOCr5wUWCaXd22KNQYZY_1sp7tz1Z1NnixhHcJN4eTmU0GkWytAValvhGt4nYA0ChK6ya-rxWvcHs8RGi9Zq5tWoOWigOszdZD7Wy0XlBqwTc22wYCSr-IKXM-NHDojYMrBimHDx00pkItl4C3FDmESsmqI5z4dEtRwlTefZdVcJ_HwIe7Z5fsWL9Y5H8ycjnNZc"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-600 ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-bold text-on-surface truncate">Muhammad Rizky Pratama</span>
+<div class="flex items-center gap-1.5 font-caption text-caption text-on-surface-variant">
+<span class="font-medium text-primary">NIM: 2210605012</span>
+<span>•</span>
+<span>S1 Teknik Informatika '22</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold">
+                Ketua BEM
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary shrink-0"></span>
+<span class="font-medium">Presidium Utama</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-caption text-caption font-semibold">
+                2024/2025
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Aktif
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Lihat Profil Lengkap" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary-container hover:bg-surface-container transition-colors" title="Edit Data Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container transition-colors" title="Hapus Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Wakil Ketua BEM -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3.5 min-w-[280px]">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer accent-primary shrink-0" type="checkbox"/>
+<div class="relative shrink-0">
+<img class="w-11 h-11 rounded-full object-cover shadow-sm bg-surface-container" data-alt="Professional studio portrait of an Indonesian female university student wearing modern clean cream hijab and deep navy blue institutional blazer, bright friendly intelligent look with gentle warm indoor illumination." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAL_VqrxUOgTcR0bg8TW6mBx6aLZ-Dqf26k0ZJvlpojws1q0dcrVkkRWMbKjuUNrBmtFW6cquaFAFxkXOInrOTvw9SKYCbweqPqoviFcRHqSwz3QvwitYxyRHvEWpv2LpgwzKDTWzfmgQRd-Ue-iBvMmjXdlV84Uheasp_XUtzrRxmnkPZcqBz5sCGHMJMqY3qYCGHkedcT9Nv71G9P5lMfVbrD3W-EqWvJY9wLkPQ"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-600 ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-bold text-on-surface truncate">Annisa Dwi Lestari</span>
+<div class="flex items-center gap-1.5 font-caption text-caption text-on-surface-variant">
+<span class="font-medium text-primary">NIM: 2210605044</span>
+<span>•</span>
+<span>S1 Sistem Informasi '22</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold">
+                Wakil Ketua BEM
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary shrink-0"></span>
+<span class="font-medium">Presidium Utama</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-caption text-caption font-semibold">
+                2024/2025
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Aktif
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Lihat Profil Lengkap" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary-container hover:bg-surface-container transition-colors" title="Edit Data Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container transition-colors" title="Hapus Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Sekretaris Umum -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3.5 min-w-[280px]">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer accent-primary shrink-0" type="checkbox"/>
+<div class="relative shrink-0">
+<img class="w-11 h-11 rounded-full object-cover shadow-sm bg-surface-container" data-alt="Close-up headshot of a confident young Indonesian male college student wearing glasses and dark university formal blazer over white polo shirt, clean collegiate lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1cjM0RFq4UEs5YNizSI2Bwgxh83RoLH0ydJBu7trvnbHGfM5dEXTZSTUFDcAQPthgV_BsF53GuepjKFsRGnZh4sE0C4-JoCpGfacrwKxEJ02B_ZYjM0T5DpEfTAI0VghA540-EhXVFwM8ipgRzXtIrPrNlfnOFknYdnLEHztznXDqzYrjQVn6ov9F9JmoslY90RtXfdann1GD7iLRpPTRxesk6GLOTSKw5lxlxw8"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-600 ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-bold text-on-surface truncate">Fajar Hidayatullah</span>
+<div class="flex items-center gap-1.5 font-caption text-caption text-on-surface-variant">
+<span class="font-medium text-primary">NIM: 2310605019</span>
+<span>•</span>
+<span>S1 Teknik Informatika '23</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">
+                Sekretaris Umum
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-container shrink-0"></span>
+<span class="font-medium">BPH (Badan Pengurus Harian)</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-caption text-caption font-semibold">
+                2024/2025
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Aktif
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Lihat Profil Lengkap" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary-container hover:bg-surface-container transition-colors" title="Edit Data Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container transition-colors" title="Hapus Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Bendahara Umum -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3.5 min-w-[280px]">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer accent-primary shrink-0" type="checkbox"/>
+<div class="relative shrink-0">
+<img class="w-11 h-11 rounded-full object-cover shadow-sm bg-surface-container" data-alt="Editorial portrait of an Indonesian female university student wearing pastel blue hijab and dark navy student government blazer with subtle gold crest, calm confident look against modern architectural university interior." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCX9qQ7TzYr8a5Ax3Hg94BenIVL9seZ6ikMya2WPI0RbrYFx9d1zIhFBXT9zCuPtYrsMBJbsDxmCpxuJb6cr9ERxo52HuVxnvwDPMx7ecBGSWpCSD5uj_1W1a8pKlXPjsafovH13Yzx_z-GJzk0hb0Tw0m1YIWnD6c9RbI52R3X4--8LW0bvw6sUvqIK2S9dZld9TQ94O3RDxUvTvs6RjX3pWwxaVRzp-VOw0NSwPM"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-600 ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-bold text-on-surface truncate">Siti Nurhaliza</span>
+<div class="flex items-center gap-1.5 font-caption text-caption text-on-surface-variant">
+<span class="font-medium text-primary">NIM: 2310605031</span>
+<span>•</span>
+<span>S1 Sistem Informasi '23</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">
+                Bendahara Umum
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary-container shrink-0"></span>
+<span class="font-medium">BPH (Badan Pengurus Harian)</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-caption text-caption font-semibold">
+                2024/2025
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Aktif
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Lihat Profil Lengkap" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary-container hover:bg-surface-container transition-colors" title="Edit Data Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container transition-colors" title="Hapus Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Koordinator Kominfo -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3.5 min-w-[280px]">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer accent-primary shrink-0" type="checkbox"/>
+<div class="relative shrink-0">
+<img class="w-11 h-11 rounded-full object-cover shadow-sm bg-surface-container" data-alt="Young Southeast Asian male student leader with neat fade haircut, wearing official university faculty dark blazer and white formal shirt, professional friendly expression in soft ambient daylight studio." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiwlMQNNcH_29Wb6zTNs-8RI-qWHQGlO3uhc655O7CYA6tqnJwDojfiNEm9wV8ew5HMpKXPYvN6DdXy_9VmoSdlj7gz57qYQXyYkqo3MecO619PN5uBjGlYEbYMFP2qgm1OD65qhaR5rmVkymzMFIR3NnSD_rgcCE9YD-fgWn9ix6Lfra0R4qupPPCcdW8Lkt7rKoEPh2eZlUPzI8ukNxF-jyDuoZQyNdJ5PPONTE"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-600 ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-bold text-on-surface truncate">Dimas Aditya Pratama</span>
+<div class="flex items-center gap-1.5 font-caption text-caption text-on-surface-variant">
+<span class="font-medium text-primary">NIM: 2210605008</span>
+<span>•</span>
+<span>S1 Teknik Informatika '22</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+                Koordinator Divisi
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container shrink-0"></span>
+<span class="font-medium">Komunikasi &amp; Informasi</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-caption text-caption font-semibold">
+                2024/2025
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Aktif
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Lihat Profil Lengkap" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary-container hover:bg-surface-container transition-colors" title="Edit Data Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container transition-colors" title="Hapus Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6: Koordinator PSDM -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3.5 min-w-[280px]">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer accent-primary shrink-0" type="checkbox"/>
+<div class="relative shrink-0">
+<img class="w-11 h-11 rounded-full object-cover shadow-sm bg-surface-container" data-alt="Formal academic student headshot of a polite Indonesian male student with modern slicked hair, wearing an authentic navy blue organization blazer with clean white shirt beneath, studio softbox portrait setup." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBinbeAq8FU2dH-FwizZ10OJNNphbGG1t30t5GNgzgvQwJDU1Owy5h4fsW3R_uKJqoITuFiiLZhLfM80uZ1a5WhKroBp5N8SthsB8U87KCVgsAcs0wR5sOptjqVEPvvDoKco2B_US6ksGkLBKIu_p47R_ljFizpSPYvms8WKLZTHy0p-GzGB9pqNFFo_B48C9D2IvdnfUi_5FiJMFYgAHasGysZAsV4zKfAQmFWV1M"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-600 ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-bold text-on-surface truncate">Wahyu Pratama</span>
+<div class="flex items-center gap-1.5 font-caption text-caption text-on-surface-variant">
+<span class="font-medium text-primary">NIM: 2210605027</span>
+<span>•</span>
+<span>S1 Teknik Informatika '22</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+                Koordinator Divisi
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary shrink-0"></span>
+<span class="font-medium">Pengembangan SDM (PSDM)</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-caption text-caption font-semibold">
+                2024/2025
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Aktif
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Lihat Profil Lengkap" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary-container hover:bg-surface-container transition-colors" title="Edit Data Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container transition-colors" title="Hapus Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 7: Staf Ahli Kominfo -->
+<tr class="hover:bg-surface-container-low/70 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3.5 min-w-[280px]">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer accent-primary shrink-0" type="checkbox"/>
+<div class="relative shrink-0">
+<img class="w-11 h-11 rounded-full object-cover shadow-sm bg-surface-container" data-alt="Modern close-up student portrait of a creative Indonesian female student in dark navy blue academic coat and elegant matching black hijab, warm campus lighting with professional demeanor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiWWvEoevwTyS1ul-4z1k8_y6onN-uY8FLeu_B7yM7-n8EgUUPss5ZY_3URv8VXtHFtsktvSGnP5sX5Mj2UxyigbRN3NSIQwp12fDil3EusRVtHN38Nvvyi5Pz-1x71EI0_2H01YGB3n3b-l0QFfpAQGkwbT21MrhFv8eN-WdNp2SzX4MSYs36t7ZOjcogwgJ9Q-xqSitGg3CFHHKttkm7OmruSBhOTooH39iCjVY"/>
+<span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-600 ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-bold text-on-surface truncate">Rere Rahmawati</span>
+<div class="flex items-center gap-1.5 font-caption text-caption text-on-surface-variant">
+<span class="font-medium text-primary">NIM: 2310605062</span>
+<span>•</span>
+<span>S1 Teknik Informatika '23</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold">
+                Staf Ahli
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container shrink-0"></span>
+<span class="font-medium">Komunikasi &amp; Informasi</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-caption text-caption font-semibold">
+                2024/2025
+              </span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Aktif
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" title="Lihat Profil Lengkap" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-primary-container hover:bg-surface-container transition-colors" title="Edit Data Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container transition-colors" title="Hapus Pengurus" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination & Row Control Footer -->
+<div class="p-4 bg-surface-container-lowest flex flex-col sm:flex-row items-center justify-between gap-4 font-caption text-caption text-on-surface-variant">
+<div class="flex items-center gap-4">
+<span>Menampilkan <strong class="text-on-surface font-semibold">1 - 7</strong> dari <strong class="text-on-surface font-semibold">44</strong> pengurus</span>
+<div class="flex items-center gap-2">
+<span>Baris:</span>
+<select class="px-2 py-1 rounded bg-surface-container-low text-on-surface focus:outline-none cursor-pointer">
+<option selected="">10 per halaman</option>
+<option>25 per halaman</option>
+<option>50 per halaman</option>
+</select>
+</div>
+</div>
+<!-- Pagination Buttons -->
+<div class="flex items-center gap-1 font-label-sm text-label-sm">
+<button class="p-1.5 rounded-lg text-outline-variant hover:bg-surface-container disabled:opacity-40 disabled:hover:bg-transparent" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary-container text-on-primary font-bold flex items-center justify-center" type="button">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container text-on-surface flex items-center justify-center transition-colors" type="button">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container text-on-surface flex items-center justify-center transition-colors" type="button">3</button>
+<span class="px-1 text-outline">...</span>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container text-on-surface flex items-center justify-center transition-colors" type="button">5</button>
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Empty State Preview Collapsible Drawer / Mockup -->
+<div class="p-6 rounded-xl bg-surface-container-low/60 flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-outline shrink-0">
+<span class="material-symbols-outlined text-[24px]">manage_search</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md font-bold text-on-surface">Pratinjau Keadaan Tanpa Hasil (Empty State)</h3>
+<p class="font-caption text-caption text-on-surface-variant">
+          Penyaringan kata kunci atau filter divisi dapat menghasilkan state kosong tanpa merusak struktur visual dashboard.
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface font-label-sm text-label-sm shadow-sm hover:bg-surface-container transition-colors" onclick="const el = document.getElementById('empty-state-preview'); el.classList.toggle('hidden');" type="button">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>Toggle Tampilan Kosong</span>
+</button>
+</div>
+</div>
+<!-- Dynamic Simulated Empty State (Hidden by Default) -->
+<div class="hidden p-12 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col items-center justify-center text-center space-y-4" id="empty-state-preview">
+<div class="w-20 h-20 rounded-full bg-surface-container-low flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[40px]">person_search</span>
+</div>
+<div class="space-y-1 max-w-sm">
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold">Data Pengurus Tidak Ditemukan</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        Tidak ada data anggota atau pengurus yang cocok dengan kriteria pencarian atau filter divisi yang Anda pilih.
+      </p>
+</div>
+<div class="flex items-center gap-3 pt-2">
+<button class="px-4 py-2 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm shadow-sm hover:bg-primary transition-all" type="button">
+        Reset Filter Pencarian
+      </button>
+<button class="px-4 py-2 rounded-lg bg-surface-container-low text-on-surface font-label-sm text-label-sm hover:bg-surface-container transition-all" type="button">
+        + Daftarkan Pengurus Baru
+      </button>
+</div>
+</div>
+</div>
+<script>
+  // Simple table interaction script for quick search feedback
+  const searchInput = document.getElementById('member-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      const rows = document.querySelectorAll('tbody tr');
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(term) ? '' : 'none';
+      });
+    });
+  }
+</script></main></div></body></html>

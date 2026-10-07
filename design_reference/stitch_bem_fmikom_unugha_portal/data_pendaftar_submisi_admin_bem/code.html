@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><title>Admin Portal BEM FMIKOM UNUGHA</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-background": "#0b1c30", "outline": "#757682", "tertiary": "#222a3e", "on-tertiary-fixed": "#131b2e", "on-secondary-fixed": "#2f1500", "outline-variant": "#c5c5d3", "on-primary": "#ffffff", "surface-tint": "#4059aa", "error-container": "#ffdad6", "primary-fixed-dim": "#b6c4ff", "tertiary-container": "#384055", "on-primary-container": "#90a8ff", "on-secondary-fixed-variant": "#6e3900", "on-tertiary-fixed-variant": "#3f465c", "on-surface": "#0b1c30", "primary-fixed": "#dce1ff", "tertiary-fixed": "#dae2fd", "tertiary-fixed-dim": "#bec6e0", "on-tertiary-container": "#a4acc5", "surface-container-lowest": "#ffffff", "surface-variant": "#d3e4fe", "primary-container": "#1e3a8a", "on-surface-variant": "#444651", "surface-bright": "#f8f9ff", "on-error-container": "#93000a", "surface-container-highest": "#d3e4fe", "secondary-fixed": "#ffdcc3", "inverse-primary": "#b6c4ff", "secondary-container": "#fe932c", "secondary": "#904d00", "surface-dim": "#cbdbf5", "inverse-surface": "#213145", "secondary-fixed-dim": "#ffb77d", "background": "#f8f9ff", "on-primary-fixed-variant": "#264191", "surface-container-low": "#eff4ff", "on-error": "#ffffff", "primary": "#00236f", "surface": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "surface-container": "#e5eeff", "on-primary-fixed": "#00164e", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-secondary": "#ffffff", "on-secondary-container": "#663500", "surface-container-high": "#dce9ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1.5rem", "space-xl": "2.5rem", "margin-mobile": "1rem", "margin": "2rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "space-md": "1rem", "margin-desktop": "3rem", "space-sm": "0.5rem", "gutter-mobile": "1rem" }, "fontFamily": { "headline-sm": ["Plus Jakarta Sans"], "display-mobile": ["Plus Jakarta Sans"], "caption": ["Inter"], "display": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "headline-lg": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "label-md": ["Inter"], "label-sm": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Inter"], "headline-xl": ["Plus Jakarta Sans"] }, "fontSize": { "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.005em", "fontWeight": "600" }], "display-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "800" }], "caption": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "display": ["3.5rem", { "lineHeight": "4.25rem", "letterSpacing": "-0.03em", "fontWeight": "800" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-xl-mobile": ["1.875rem", { "lineHeight": "2.375rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0", "fontWeight": "400" }], "label-md": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "label-sm": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.03em", "fontWeight": "600" }], "headline-md": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-xl": ["2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col overflow-y-auto"><div class="p-5 flex items-center gap-3 bg-surface-container-low"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">BEM FMIKOM</span><span class="font-caption text-caption text-on-surface-variant font-medium">Admin Portal</span></div></div><div class="px-4 py-2"><div class="px-3 py-2 bg-surface-container rounded-lg flex items-center justify-between"><span class="font-caption text-caption text-on-surface-variant">Status Periode:</span><span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">2024/2025</span></div></div><nav class="flex-1 px-3 py-3 space-y-4" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Overview</span></a></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Content</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="berita-management" href="#"><span class="material-symbols-outlined text-[18px]">newspaper</span><span>Berita</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="kategori-management" href="#"><span class="material-symbols-outlined text-[18px]">category</span><span>Kategori</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="galeri-management" href="#"><span class="material-symbols-outlined text-[18px]">photo_library</span><span>Galeri</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengumuman-management" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span>Pengumuman</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Organization</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="struktur-organisasi-admin" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span>Struktur</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="divisi-management" href="#"><span class="material-symbols-outlined text-[18px]">groups</span><span>Divisi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengurus-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span>Pengurus</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="periode-management" href="#"><span class="material-symbols-outlined text-[18px]">history_edu</span><span>Periode</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Management</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pendaftaran-management" href="#"><span class="material-symbols-outlined text-[18px]">how_to_reg</span><span>Pendaftaran</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="aspirasi-management" href="#"><span class="material-symbols-outlined text-[18px]">forum</span><span>Aspirasi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="arsip-dokumen" href="#"><span class="material-symbols-outlined text-[18px]">folder</span><span>Arsip Dokumen</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">System</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="system-settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="users-management" href="#"><span class="material-symbols-outlined text-[18px]">manage_accounts</span><span>Users</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="activity-log" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Activity Log</span></a></div></div></nav><div class="p-4 bg-surface-container-low"><a class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm" data-path="beranda" href="#"><span class="material-symbols-outlined text-[18px]">open_in_new</span>Lihat Web Publik</a></div></aside><div class="pl-64 min-h-screen flex flex-col"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-6 lg:px-8"><div class="flex items-center gap-3"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><span class="font-label-md text-label-md text-on-surface-variant font-medium">Fakultas Matematika dan Ilmu Komputer</span></div><div class="flex items-center gap-4"><button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors relative"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary-container"></span></button><div class="h-6 w-px bg-outline-variant"></div><div class="flex items-center gap-3"><div class="text-right hidden sm:block"><p class="font-label-sm text-label-sm text-on-surface leading-tight font-semibold">Admin BEM</p><span class="font-caption text-caption text-primary font-medium">Superadministrator</span></div><img alt="Foto Profil Admin" class="h-9 w-9 rounded-full object-cover ring-2 ring-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkaINJpcRubsTXdXDHksfsqbChqqBxKHZBe17AySz3LBQte4ozJgwwmO0K97gBDOC3e6kF9cYQFyc4xK_TPq3vSjy-tT14ti2Sz0MZo4-inMETb3HX2fg5wNY0cAK6DBXgHegb84OZnS6KiAuyFqN9d4sq4srhGXU6y5BpzfvIU4LxHADmRLIDJqisWwAC79bLL9SP5iNGyLJ_dKiEiXjWqWAd4WN-VzVGpbor90"/><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-6 lg:px-8 py-6 bg-background flex-1"><div class="flex flex-col w-full">
+<!-- Top Breadcrumb & Title Section -->
+<section class="flex flex-col gap-4 mb-6">
+<nav class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span class="hover:text-primary transition-colors cursor-pointer">Dashboard</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="hover:text-primary transition-colors cursor-pointer">Manajemen Pendaftaran</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-medium">Oprec Panitia FMIKOM Tech Fest 2025</span>
+</nav>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<div class="space-y-1">
+<div class="flex items-center gap-3">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+            Data Pendaftar: Oprec Panitia FMIKOM Tech Fest 2025
+          </h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+            Aktif
+          </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Kelola dan review 142 berkas pendaftaran mahasiswa masuk. Periode aktif 10 Mei – 25 Mei 2025.
+        </p>
+</div>
+<div class="flex items-center gap-3 self-start lg:self-center">
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-on-surface transition-all font-label-md text-label-md font-semibold shadow-sm" id="openExportModalBtn">
+<span class="material-symbols-outlined text-[18px] text-secondary">download</span>
+<span>Ekspor Excel (.xlsx)</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-primary hover:bg-tertiary text-on-primary transition-all font-label-md text-label-md font-semibold shadow-sm">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Pengaturan Formulir</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Metric Summary Bento Cards -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+<!-- Stat 1: Total Pendaftar -->
+<div class="relative overflow-hidden bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Total Pendaftar Masuk</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+</div>
+</div>
+<div>
+<p class="font-display-mobile text-display-mobile text-on-surface leading-none mb-1 font-bold">142</p>
+<span class="font-caption text-caption text-primary font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +14 berkas hari ini
+        </span>
+</div>
+</div>
+<!-- Stat 2: Divisi Terpadat -->
+<div class="relative overflow-hidden bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Divisi Terpadat</span>
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[20px]">local_fire_department</span>
+</div>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface leading-tight font-bold truncate">Divisi Acara</p>
+<span class="font-caption text-caption text-on-surface-variant font-medium">38 pendaftar (26.7%)</span>
+</div>
+</div>
+<!-- Stat 3: Menunggu Review -->
+<div class="relative overflow-hidden bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Menunggu Review</span>
+<div class="w-8 h-8 rounded-lg bg-surface-variant flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">pending_actions</span>
+</div>
+</div>
+<div>
+<p class="font-display-mobile text-display-mobile text-on-surface leading-none mb-1 font-bold">54</p>
+<span class="font-caption text-caption text-on-surface-variant font-medium">Perlu peninjauan asesor</span>
+</div>
+</div>
+<!-- Stat 4: Lolos Administrasi -->
+<div class="relative overflow-hidden bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Lolos Administrasi</span>
+<div class="w-8 h-8 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+</div>
+</div>
+<div>
+<p class="font-display-mobile text-display-mobile text-primary leading-none mb-1 font-bold">65</p>
+<span class="font-caption text-caption text-on-surface-variant font-medium">Siap tahap wawancara</span>
+</div>
+</div>
+<!-- Stat 5: Ditolak / TMS -->
+<div class="relative overflow-hidden bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Tidak Memenuhi Syarat</span>
+<div class="w-8 h-8 rounded-lg bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[20px]">cancel</span>
+</div>
+</div>
+<div>
+<p class="font-display-mobile text-display-mobile text-error leading-none mb-1 font-bold">23</p>
+<span class="font-caption text-caption text-error font-medium">Berkas diskualifikasi</span>
+</div>
+</div>
+</section>
+<!-- Filter & Action Toolbar -->
+<section class="bg-surface-container-lowest rounded-xl p-4 mb-4 shadow-sm flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+<!-- Search Bar -->
+<div class="relative flex-1 min-w-[280px]">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[20px] text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low rounded-lg text-on-surface placeholder:text-outline font-body-sm text-body-sm outline-none focus:bg-surface-container transition-all" placeholder="Cari nama pendaftar, NIM, atau email..." type="text"/>
+</div>
+<!-- Dropdown Filters & Date Range -->
+<div class="flex flex-wrap items-center gap-3">
+<!-- Filter Divisi -->
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg">
+<span class="material-symbols-outlined text-[18px] text-outline">workspaces</span>
+<select class="bg-transparent font-label-md text-label-md text-on-surface outline-none cursor-pointer pr-2">
+<option value="all">Semua Divisi</option>
+<option value="acara">Divisi Acara</option>
+<option value="pdd">Divisi PDD</option>
+<option value="humas">Divisi Humas &amp; Sponsorship</option>
+<option value="logistik">Divisi Logistik &amp; IT</option>
+</select>
+</div>
+<!-- Filter Status -->
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg">
+<span class="material-symbols-outlined text-[18px] text-outline">filter_list</span>
+<select class="bg-transparent font-label-md text-label-md text-on-surface outline-none cursor-pointer pr-2">
+<option value="all">Semua Status</option>
+<option value="menunggu">Menunggu Review</option>
+<option value="lolos">Lolos Berkas</option>
+<option value="wawancara">Wawancara</option>
+<option value="ditolak">Ditolak</option>
+</select>
+</div>
+<!-- Date Range Picker Mock -->
+<button class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px] text-outline">calendar_today</span>
+<span>10 Mei – 25 Mei 2025</span>
+<span class="material-symbols-outlined text-[16px] text-outline">expand_more</span>
+</button>
+<!-- Batch Actions (Disabled state representation) -->
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container text-on-surface-variant font-label-sm text-label-sm opacity-60 cursor-not-allowed">
+<span class="material-symbols-outlined text-[16px]">select_all</span>
+<span>Aksi Batch (0)</span>
+</button>
+</div>
+</section>
+<!-- Data Table Canvas -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm select-none">
+<th class="py-3.5 px-4 w-12 text-center">
+<input class="rounded accent-primary w-4 h-4 cursor-pointer" type="checkbox"/>
+</th>
+<th class="py-3.5 px-4">MAHASISWA</th>
+<th class="py-3.5 px-4">DIVISI PILIHAN (1 &amp; 2)</th>
+<th class="py-3.5 px-4">BERKAS PERSYARATAN</th>
+<th class="py-3.5 px-4">TANGGAL SUBMIT</th>
+<th class="py-3.5 px-4">STATUS REVIEW</th>
+<th class="py-3.5 px-4 text-right">AKSI</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low font-body-sm text-body-sm text-on-surface">
+<!-- Row 1: M. Ihsan Pratama -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3.5 px-4 text-center">
+<input class="rounded accent-primary w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Portrait photography of an Indonesian male student smiling with neat dark hair wearing an ivory shirt against a clean neutral university background, soft softbox studio lighting, sharp focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiqIHHO60vtdRw7ia5ugovoBp3hwfaJbBbygk1lcIEoX1hpF90mtxuHqxyvHt6M730Hw2UqWHYFgrlgz90oNTaNtUEu6en97t-X4VIhvjQfNcPp2ZFzjG4W-w6-32Yc-DLPKFVycZbfhBfJxxvrSKHliZ3SJVskaVUkf6atBVfmBQDmSrb2v8xxL-SvOHZY67_qcvMD8z5ipCMfUDiui__qqfKtHTOIq-lJWv3-bE"/>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[0.95rem] font-bold text-on-surface leading-snug">M. Ihsan Pratama</span>
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span class="font-semibold text-primary">221240019</span>
+<span>•</span>
+<span>S1 Teknik Informatika</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm font-semibold text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Divisi Acara &amp; Workshop
+                </span>
+<span class="font-caption text-caption text-on-surface-variant">Cadangan: PDD</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container text-primary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[16px] text-secondary">task_alt</span>
+                KTM &amp; CV Lengkap (PDF)
+              </span>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant font-caption text-caption">
+              18 Mei 2025, 14:20 WIB
+            </td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-fixed text-primary font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                LOLOS BERKAS
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold transition-colors">
+                  Review Berkas
+                </button>
+<div class="relative group">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</div>
+</td>
+</tr>
+<!-- Row 2: Siti Rahmawati -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3.5 px-4 text-center">
+<input class="rounded accent-primary w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Portrait of an Indonesian female university student wearing modern pastel hijab and dark blazer with a friendly expression, professional student administrative photo style, bright studio ambient light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_a3pxLAaH93pWtyDWgwY9t-emYDcrm2LnfZhSRO1nCOjQj973ZRe9PjH91F2ONAfqeBEF0xzaoo2YYQjFAWD0V0oJhZCyZNMLivR1qml2KMum6rmVWbSgm5AQfyqpWljSBP4JXvUuLA6QufCYtsWHe24pL1yBGHZHTJyLbaxS7Ck7aipfZDoseSBIi3JupDn4Lqy_MSnUDJjhVZkW1aluQAEG-1PxbTqLLR_sXVg"/>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[0.95rem] font-bold text-on-surface leading-snug">Siti Rahmawati</span>
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span class="font-semibold text-primary">231240045</span>
+<span>•</span>
+<span>S1 Sistem Informasi</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm font-semibold text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Divisi PDD
+                </span>
+<span class="font-caption text-caption text-on-surface-variant">Cadangan: Humas</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container text-primary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[16px] text-secondary">task_alt</span>
+                KTM &amp; CV Lengkap (PDF)
+              </span>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant font-caption text-caption">
+              18 Mei 2025, 11:05 WIB
+            </td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                MENUNGGU REVIEW
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold transition-colors">
+                  Review Berkas
+                </button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Fajar Alamsyah -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3.5 px-4 text-center">
+<input class="rounded accent-primary w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary font-headline-sm text-body-md font-bold">
+                  FA
+                </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[0.95rem] font-bold text-on-surface leading-snug">Fajar Alamsyah</span>
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span class="font-semibold text-primary">211240012</span>
+<span>•</span>
+<span>S1 Teknik Informatika</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm font-semibold text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Divisi Logistik &amp; IT
+                </span>
+<span class="font-caption text-caption text-on-surface-variant">Cadangan: Acara</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container text-primary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[16px] text-secondary">task_alt</span>
+                KTM &amp; CV Lengkap (PDF)
+              </span>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant font-caption text-caption">
+              17 Mei 2025, 20:44 WIB
+            </td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-fixed text-primary font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                LOLOS BERKAS
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold transition-colors">
+                  Review Berkas
+                </button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Anisa Putri -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3.5 px-4 text-center">
+<input class="rounded accent-primary w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Headshot of a young Southeast Asian female computer science student smiling confidently wearing round glasses and a navy college lanyard, editorial warm academic background with soft directional light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCteAqNk5_izjiqn4waC9Cd1Dm7Ge6oX92rUW6mG_w0QA996QM2BmzulZ7ymW2g7KcGhvBjWoYCstm1hmWopDPwFfzbQxvL4CsAf2yKc7cKDOMl3rxEh0XTJV5P4tONAwaUhxzBMDIlxs0Jbpv1TR7QOW3w9WAj7gXMy9ZW0ViZahW9n096vsk5fiq8-MsHNj4Pef_uxNMwBUwXinxGj-PBVaZ8u7q48SIWz50KpoA"/>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[0.95rem] font-bold text-on-surface leading-snug">Anisa Putri</span>
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span class="font-semibold text-primary">241240088</span>
+<span>•</span>
+<span>S1 Teknik Informatika</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm font-semibold text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Divisi Humas &amp; Sponsor
+                </span>
+<span class="font-caption text-caption text-on-surface-variant">Cadangan: Konsumsi</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container text-primary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[16px] text-secondary">task_alt</span>
+                KTM &amp; CV Lengkap (PDF)
+              </span>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant font-caption text-caption">
+              16 Mei 2025, 09:15 WIB
+            </td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">forum</span>
+                WAWANCARA
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold transition-colors">
+                  Review Berkas
+                </button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Rizky Mahendra -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3.5 px-4 text-center">
+<input class="rounded accent-primary w-4 h-4 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary font-headline-sm text-body-md font-bold">
+                  RM
+                </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-[0.95rem] font-bold text-on-surface leading-snug">Rizky Mahendra</span>
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span class="font-semibold text-primary">221240033</span>
+<span>•</span>
+<span>S1 Sistem Informasi</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm font-semibold text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Divisi Acara
+                </span>
+<span class="font-caption text-caption text-on-surface-variant">Cadangan: Logistik</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-error-container text-error font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[16px]">error</span>
+                KTM Tidak Valid
+              </span>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant font-caption text-caption">
+              15 Mei 2025, 17:30 WIB
+            </td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-error-container text-error font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">cancel</span>
+                DITOLAK
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold transition-colors">
+                  Review Berkas
+                </button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center hover:bg-surface-container text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination Footer -->
+<div class="p-4 bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-4 select-none">
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span>Menampilkan</span>
+<span class="font-bold text-on-surface">1 - 5</span>
+<span>dari total</span>
+<span class="font-bold text-on-surface">142</span>
+<span>pendaftar</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors disabled:opacity-50" disabled="">
+          Sebelumnya
+        </button>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-lg bg-primary text-on-primary font-label-sm text-label-sm font-semibold">1</button>
+<button class="w-8 h-8 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-sm text-label-sm">2</button>
+<button class="w-8 h-8 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-sm text-label-sm">3</button>
+<span class="px-1 text-on-surface-variant font-caption text-caption">...</span>
+<button class="w-8 h-8 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-sm text-label-sm">29</button>
+</div>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-sm text-label-sm transition-colors">
+          Selanjutnya
+        </button>
+</div>
+</div>
+</section>
+<!-- Modal Konfirmasi Ekspor Excel (Overlay) -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-on-background/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200" id="exportModalOverlay">
+<div class="relative w-full max-w-lg bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden p-6 transform scale-95 transition-transform duration-200 flex flex-col gap-5" id="exportModalContent">
+<!-- Modal Header -->
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-secondary-fixed flex-shrink-0 flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[28px]">shield</span>
+</div>
+<div class="space-y-1">
+<h2 class="font-headline-sm text-headline-sm text-on-surface leading-tight font-bold">
+            Peringatan Perlindungan Data Pribadi
+          </h2>
+<p class="font-caption text-caption text-outline font-medium tracking-wide uppercase">
+            Protokol Keamanan Administrasi BEM FMIKOM
+          </p>
+</div>
+</div>
+<!-- Warning Body -->
+<div class="bg-surface-container-low rounded-xl p-4 text-on-surface-variant font-body-sm text-body-sm leading-relaxed space-y-2">
+<p>
+          Data pendaftar memuat identitas sensitif (NIM, nomor telepon, dan berkas CV). Pastikan file hasil ekspor disimpan di lingkungan aman dan hanya digunakan untuk keperluan seleksi resmi BEM FMIKOM UNUGHA.
+        </p>
+<div class="flex items-center gap-2 pt-2 text-primary font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span>Terekam dalam Log Audit Superadministrator</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center justify-end gap-3 pt-2">
+<button class="px-4 py-2.5 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold transition-colors" id="cancelExportBtn">
+          Batal
+        </button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-tertiary text-on-primary font-label-md text-label-md font-semibold shadow-sm transition-all" id="confirmExportBtn">
+<span class="material-symbols-outlined text-[18px]">download_done</span>
+<span>Lanjutkan Ekspor Data</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+    (function() {
+      const openModalBtn = document.getElementById('openExportModalBtn');
+      const cancelModalBtn = document.getElementById('cancelExportBtn');
+      const confirmModalBtn = document.getElementById('confirmExportBtn');
+      const modalOverlay = document.getElementById('exportModalOverlay');
+      const modalContent = document.getElementById('exportModalContent');
+
+      function openModal() {
+        modalOverlay.classList.remove('opacity-0', 'pointer-events-none');
+        modalOverlay.classList.add('opacity-100', 'pointer-events-auto');
+        modalContent.classList.remove('scale-95');
+        modalContent.classList.add('scale-100');
+      }
+
+      function closeModal() {
+        modalOverlay.classList.add('opacity-0', 'pointer-events-none');
+        modalOverlay.classList.remove('opacity-100', 'pointer-events-auto');
+        modalContent.classList.add('scale-95');
+        modalContent.classList.remove('scale-100');
+      }
+
+      if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+      if (cancelModalBtn) cancelModalBtn.addEventListener('click', closeModal);
+      if (confirmModalBtn) {
+        confirmModalBtn.addEventListener('click', function() {
+          this.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">progress_activity</span><span>Memproses...</span>';
+          setTimeout(() => {
+            closeModal();
+            this.innerHTML = '<span class="material-symbols-outlined text-[18px]">download_done</span><span>Lanjutkan Ekspor Data</span>';
+          }, 1000);
+        });
+      }
+
+      modalOverlay.addEventListener('click', function(e) {
+        if (e.target === modalOverlay) closeModal();
+      });
+    })();
+  </script>
+</div></main></div></body></html>

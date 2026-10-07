@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><title>Admin Portal BEM FMIKOM UNUGHA</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-background": "#0b1c30", "outline": "#757682", "tertiary": "#222a3e", "on-tertiary-fixed": "#131b2e", "on-secondary-fixed": "#2f1500", "outline-variant": "#c5c5d3", "on-primary": "#ffffff", "surface-tint": "#4059aa", "error-container": "#ffdad6", "primary-fixed-dim": "#b6c4ff", "tertiary-container": "#384055", "on-primary-container": "#90a8ff", "on-secondary-fixed-variant": "#6e3900", "on-tertiary-fixed-variant": "#3f465c", "on-surface": "#0b1c30", "primary-fixed": "#dce1ff", "tertiary-fixed": "#dae2fd", "tertiary-fixed-dim": "#bec6e0", "on-tertiary-container": "#a4acc5", "surface-container-lowest": "#ffffff", "surface-variant": "#d3e4fe", "primary-container": "#1e3a8a", "on-surface-variant": "#444651", "surface-bright": "#f8f9ff", "on-error-container": "#93000a", "surface-container-highest": "#d3e4fe", "secondary-fixed": "#ffdcc3", "inverse-primary": "#b6c4ff", "secondary-container": "#fe932c", "secondary": "#904d00", "surface-dim": "#cbdbf5", "inverse-surface": "#213145", "secondary-fixed-dim": "#ffb77d", "background": "#f8f9ff", "on-primary-fixed-variant": "#264191", "surface-container-low": "#eff4ff", "on-error": "#ffffff", "primary": "#00236f", "surface": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "surface-container": "#e5eeff", "on-primary-fixed": "#00164e", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-secondary": "#ffffff", "on-secondary-container": "#663500", "surface-container-high": "#dce9ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1.5rem", "space-xl": "2.5rem", "margin-mobile": "1rem", "margin": "2rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "space-md": "1rem", "margin-desktop": "3rem", "space-sm": "0.5rem", "gutter-mobile": "1rem" }, "fontFamily": { "headline-sm": ["Plus Jakarta Sans"], "display-mobile": ["Plus Jakarta Sans"], "caption": ["Inter"], "display": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "headline-lg": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "label-md": ["Inter"], "label-sm": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Inter"], "headline-xl": ["Plus Jakarta Sans"] }, "fontSize": { "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.005em", "fontWeight": "600" }], "display-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "800" }], "caption": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "display": ["3.5rem", { "lineHeight": "4.25rem", "letterSpacing": "-0.03em", "fontWeight": "800" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-xl-mobile": ["1.875rem", { "lineHeight": "2.375rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0", "fontWeight": "400" }], "label-md": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "label-sm": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.03em", "fontWeight": "600" }], "headline-md": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-xl": ["2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col overflow-y-auto"><div class="p-5 flex items-center gap-3 bg-surface-container-low"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">BEM FMIKOM</span><span class="font-caption text-caption text-on-surface-variant font-medium">Admin Portal</span></div></div><div class="px-4 py-2"><div class="px-3 py-2 bg-surface-container rounded-lg flex items-center justify-between"><span class="font-caption text-caption text-on-surface-variant">Status Periode:</span><span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">2024/2025</span></div></div><nav class="flex-1 px-3 py-3 space-y-4" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Overview</span></a></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Content</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="berita-management" href="#"><span class="material-symbols-outlined text-[18px]">newspaper</span><span>Berita</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="kategori-management" href="#"><span class="material-symbols-outlined text-[18px]">category</span><span>Kategori</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="galeri-management" href="#"><span class="material-symbols-outlined text-[18px]">photo_library</span><span>Galeri</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengumuman-management" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span>Pengumuman</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Organization</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="struktur-organisasi-admin" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span>Struktur</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="divisi-management" href="#"><span class="material-symbols-outlined text-[18px]">groups</span><span>Divisi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengurus-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span>Pengurus</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="periode-management" href="#"><span class="material-symbols-outlined text-[18px]">history_edu</span><span>Periode</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Management</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pendaftaran-management" href="#"><span class="material-symbols-outlined text-[18px]">how_to_reg</span><span>Pendaftaran</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="aspirasi-management" href="#"><span class="material-symbols-outlined text-[18px]">forum</span><span>Aspirasi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="arsip-dokumen" href="#"><span class="material-symbols-outlined text-[18px]">folder</span><span>Arsip Dokumen</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">System</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="system-settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="users-management" href="#"><span class="material-symbols-outlined text-[18px]">manage_accounts</span><span>Users</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="activity-log" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Activity Log</span></a></div></div></nav><div class="p-4 bg-surface-container-low"><a class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm" data-path="beranda" href="#"><span class="material-symbols-outlined text-[18px]">open_in_new</span>Lihat Web Publik</a></div></aside><div class="pl-64 min-h-screen flex flex-col"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-6 lg:px-8"><div class="flex items-center gap-3"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><span class="font-label-md text-label-md text-on-surface-variant font-medium">Fakultas Matematika dan Ilmu Komputer</span></div><div class="flex items-center gap-4"><button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors relative"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary-container"></span></button><div class="h-6 w-px bg-outline-variant"></div><div class="flex items-center gap-3"><div class="text-right hidden sm:block"><p class="font-label-sm text-label-sm text-on-surface leading-tight font-semibold">Admin BEM</p><span class="font-caption text-caption text-primary font-medium">Superadministrator</span></div><img alt="Foto Profil Admin" class="h-9 w-9 rounded-full object-cover ring-2 ring-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkaINJpcRubsTXdXDHksfsqbChqqBxKHZBe17AySz3LBQte4ozJgwwmO0K97gBDOC3e6kF9cYQFyc4xK_TPq3vSjy-tT14ti2Sz0MZo4-inMETb3HX2fg5wNY0cAK6DBXgHegb84OZnS6KiAuyFqN9d4sq4srhGXU6y5BpzfvIU4LxHADmRLIDJqisWwAC79bLL9SP5iNGyLJ_dKiEiXjWqWAd4WN-VzVGpbor90"/><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-6 lg:px-8 py-6 bg-background flex-1"><div class="flex flex-col w-full">
+<!-- Sub-Header & Action Control Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 mb-6 border-b border-surface-container">
+<div>
+<nav class="flex items-center gap-2 mb-1.5 text-on-surface-variant font-caption text-caption">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Manajemen Pendaftaran</a>
+<span class="material-symbols-outlined text-[14px] text-outline">chevron_right</span>
+<span class="text-primary font-medium">Form Builder</span>
+</nav>
+<div class="flex items-center gap-3">
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tight">Open Recruitment Panitia Tech Fest 2025</h1>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold">Mode Penyuntingan</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center flex-wrap gap-2.5">
+<button class="px-3.5 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors font-label-md text-label-md font-medium flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>Batal</span>
+</button>
+<button class="px-3.5 py-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant transition-colors font-label-md text-label-md font-medium flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">save</span>
+<span>Simpan Draf</span>
+</button>
+<button class="px-3.5 py-2 rounded-lg bg-surface-variant text-primary hover:bg-surface-container-high transition-colors font-label-md text-label-md font-semibold flex items-center gap-1.5" onclick="quickAddField()" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>+ Tambah Field</span>
+</button>
+<button class="px-4 py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary transition-all font-label-md text-label-md font-semibold shadow-md hover:shadow-lg flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">publish</span>
+<span>Publikasikan Formulir</span>
+</button>
+</div>
+</div>
+<!-- Workspace Grid: Two-Column Split Architecture -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+<!-- LEFT / MAIN CANVAS: Interactive Form Preview (7 cols) -->
+<div class="xl:col-span-7 space-y-4">
+<!-- Top Form Hero Header -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-6 relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-primary via-primary-container to-secondary-container"></div>
+<div class="flex items-start justify-between gap-4">
+<div class="space-y-1.5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Divisi Kaderisasi &amp; PSDM
+            </span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Formulir Pendaftaran Panitia FMIKOM Tech Fest 2025</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Silakan lengkapi seluruh biodata, data akademik, serta preferensi divisi Anda untuk seleksi kepanitiaan tahunan akbar FMIKOM UNUGHA.
+            </p>
+</div>
+<button class="p-2 rounded-lg hover:bg-surface-container text-on-surface-variant transition-colors" title="Ubah Deskripsi Utama">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+</button>
+</div>
+<div class="mt-4 pt-4 flex flex-wrap items-center gap-4 text-outline font-caption text-caption border-t border-surface-container-low">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">schedule</span> Batas Akhir: 15 Maret 2025</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">groups</span> Target Kuota: 45 Mahasiswa</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">lock_clock</span> Durasi Pengisian: ~5 Menit</span>
+</div>
+</div>
+<!-- Form Elements Draggable Stack -->
+<div class="space-y-3" id="previewElementsContainer">
+<!-- 1. FIELD: Nama Lengkap (ACTIVE SELECTED STATE) -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-5 shadow-md ring-2 ring-primary transition-all cursor-pointer" onclick="selectField(1)">
+<!-- Floating Action Bar -->
+<div class="absolute top-3 right-3 flex items-center gap-1 bg-surface-container-lowest shadow-sm rounded-lg p-1 transition-opacity">
+<span class="px-2 py-0.5 rounded bg-primary text-on-primary font-label-sm text-label-sm font-bold mr-1">Aktif</span>
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant transition-colors" title="Duplikat Elemen">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+<button class="p-1 hover:bg-error-container hover:text-error rounded text-on-surface-variant transition-colors" title="Hapus Elemen">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+<div class="flex items-start gap-3">
+<div class="mt-1 text-outline cursor-grab active:cursor-grabbing hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex items-center gap-2">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Nama Lengkap</label>
+<span class="text-error font-bold text-label-md">*</span>
+<span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Teks Singkat</span>
+</div>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm cursor-not-allowed shadow-inner" disabled="" placeholder="Masukkan nama lengkap sesuai KTM" type="text" value="Mochammad Arya Pratama"/>
+<p class="font-caption text-caption text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-outline">info</span>
+                Gunakan huruf kapital di awal setiap kata.
+              </p>
+</div>
+</div>
+</div>
+<!-- 2. FIELD: NIM -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-5 shadow-sm hover:shadow-md transition-all cursor-pointer" onclick="selectField(2)">
+<div class="absolute top-3 right-3 hidden group-hover:flex items-center gap-1 bg-surface-container-lowest shadow-sm rounded-lg p-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant" title="Duplikat"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+<button class="p-1 hover:bg-error-container hover:text-error rounded text-on-surface-variant" title="Hapus"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+<div class="flex items-start gap-3">
+<div class="mt-1 text-outline hover:text-primary cursor-grab">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex items-center gap-2">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Nomor Induk Mahasiswa (NIM)</label>
+<span class="text-error font-bold text-label-md">*</span>
+<span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Angka / Text</span>
+</div>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm cursor-not-allowed" disabled="" placeholder="Contoh: 21102049" type="text"/>
+<p class="font-caption text-caption text-on-surface-variant">Pastikan NIM terdaftar aktif di PDDikti UNUGHA.</p>
+</div>
+</div>
+</div>
+<!-- 3. FIELD: Alamat Email -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-5 shadow-sm hover:shadow-md transition-all cursor-pointer" onclick="selectField(3)">
+<div class="absolute top-3 right-3 hidden group-hover:flex items-center gap-1 bg-surface-container-lowest shadow-sm rounded-lg p-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+<button class="p-1 hover:bg-error-container hover:text-error rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+<div class="flex items-start gap-3">
+<div class="mt-1 text-outline hover:text-primary cursor-grab">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex items-center gap-2">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Alamat Email Aktif</label>
+<span class="text-error font-bold text-label-md">*</span>
+<span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Email</span>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-[20px] text-outline">mail</span>
+<input class="w-full pl-10 pr-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm cursor-not-allowed" disabled="" placeholder="nama@student.unugha.ac.id" type="email"/>
+</div>
+</div>
+</div>
+</div>
+<!-- 4. FIELD: Program Studi (Select Dropdown) -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-5 shadow-sm hover:shadow-md transition-all cursor-pointer" onclick="selectField(4)">
+<div class="absolute top-3 right-3 hidden group-hover:flex items-center gap-1 bg-surface-container-lowest shadow-sm rounded-lg p-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+<button class="p-1 hover:bg-error-container hover:text-error rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+<div class="flex items-start gap-3">
+<div class="mt-1 text-outline hover:text-primary cursor-grab">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex items-center gap-2">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Program Studi</label>
+<span class="text-error font-bold text-label-md">*</span>
+<span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Select Dropdown</span>
+</div>
+<div class="relative">
+<select class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm appearance-none cursor-not-allowed" disabled="">
+<option>Pilih Program Studi Anda...</option>
+<option selected="">Teknik Informatika (TI)</option>
+<option>Sistem Informasi (SI)</option>
+<option>Matematika (MAT)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-[20px] text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 5. FIELD: Pilihan Divisi Utama (Radio Cards) -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-5 shadow-sm hover:shadow-md transition-all cursor-pointer" onclick="selectField(5)">
+<div class="absolute top-3 right-3 hidden group-hover:flex items-center gap-1 bg-surface-container-lowest shadow-sm rounded-lg p-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+<button class="p-1 hover:bg-error-container hover:text-error rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+<div class="flex items-start gap-3">
+<div class="mt-1 text-outline hover:text-primary cursor-grab">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1 space-y-2.5">
+<div class="flex items-center gap-2">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Pilihan Divisi Utama</label>
+<span class="text-error font-bold text-label-md">*</span>
+<span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Pilihan Tunggal (Radio)</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+<label class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<input checked="" class="w-4 h-4 text-primary accent-primary" name="divisi" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Acara &amp; Konseptor</span>
+<span class="font-caption text-caption text-on-surface-variant">Perancangan rundown &amp; speakers</span>
+</div>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<input class="w-4 h-4 text-primary accent-primary" name="divisi" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Humas &amp; Kemitraan</span>
+<span class="font-caption text-caption text-on-surface-variant">Sponsor dan komunikasi peserta</span>
+</div>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<input class="w-4 h-4 text-primary accent-primary" name="divisi" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Publikasi &amp; Desain (PDD)</span>
+<span class="font-caption text-caption text-on-surface-variant">Visual identitas &amp; media sosial</span>
+</div>
+</label>
+<label class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<input class="w-4 h-4 text-primary accent-primary" name="divisi" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Logistik &amp; Perlengkapan</span>
+<span class="font-caption text-caption text-on-surface-variant">Hardware, venue, dan teknis</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- 6. FIELD: Motivasi & Pengalaman -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-5 shadow-sm hover:shadow-md transition-all cursor-pointer" onclick="selectField(6)">
+<div class="absolute top-3 right-3 hidden group-hover:flex items-center gap-1 bg-surface-container-lowest shadow-sm rounded-lg p-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+<button class="p-1 hover:bg-error-container hover:text-error rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+<div class="flex items-start gap-3">
+<div class="mt-1 text-outline hover:text-primary cursor-grab">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex items-center gap-2">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Motivasi &amp; Pengalaman Organisasi</label>
+<span class="text-error font-bold text-label-md">*</span>
+<span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Paragraf / Textarea</span>
+</div>
+<textarea class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm resize-none cursor-not-allowed" disabled="" placeholder="Tuliskan alasan mendaftar dan pengalaman relevan sebelumnya..." rows="3"></textarea>
+<div class="flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span>Minimal 100 kata</span>
+<span>0 / 500 Kata</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 7. FIELD: File Upload CV -->
+<div class="group relative bg-surface-container-lowest rounded-xl p-5 shadow-sm hover:shadow-md transition-all cursor-pointer" onclick="selectField(7)">
+<div class="absolute top-3 right-3 hidden group-hover:flex items-center gap-1 bg-surface-container-lowest shadow-sm rounded-lg p-1">
+<button class="p-1 hover:bg-surface-container rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">content_copy</span></button>
+<button class="p-1 hover:bg-error-container hover:text-error rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+<div class="flex items-start gap-3">
+<div class="mt-1 text-outline hover:text-primary cursor-grab">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex items-center gap-2">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Upload Curriculum Vitae (PDF)</label>
+<span class="text-error font-bold text-label-md">*</span>
+<span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Dokumen PDF</span>
+</div>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-6 flex flex-col items-center justify-center bg-surface-container-low/40">
+<span class="material-symbols-outlined text-primary text-[36px] mb-1">upload_file</span>
+<p class="font-label-md text-label-md font-medium text-on-surface">Tarik &amp; lepaskan file CV di sini, atau cari berkas</p>
+<p class="font-caption text-caption text-outline mt-0.5">Format .pdf dengan ukuran maksimal 5 MB</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Add Element Button Dropzone -->
+<button class="w-full py-4 rounded-xl border-2 border-dashed border-primary/30 hover:border-primary bg-surface-container-low hover:bg-surface-container-high transition-all flex items-center justify-center gap-2 text-primary font-label-md text-label-md font-semibold group shadow-sm" onclick="quickAddField()" type="button">
+<span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-110">add_circle</span>
+<span>+ Tambahkan Elemen Baru di Sini</span>
+</button>
+<!-- Submit Button Simulation in Preview -->
+<div class="pt-4 flex justify-end">
+<button class="px-6 py-2.5 rounded-lg bg-primary/70 text-on-primary font-label-md text-label-md font-semibold cursor-not-allowed" disabled="">
+          Kirim Formulir Pendaftaran
+        </button>
+</div>
+</div>
+<!-- RIGHT PANEL: Field Configuration & Settings (5 cols) -->
+<div class="xl:col-span-5 sticky top-20">
+<div class="bg-surface-container-lowest rounded-xl shadow-md p-6 space-y-6">
+<!-- Header Panel -->
+<div class="flex items-start justify-between pb-4 border-b border-surface-container">
+<div class="space-y-1">
+<span class="font-caption text-caption uppercase tracking-wider text-outline font-bold">Panel Konfigurasi</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface" id="configHeaderTitle">Elemen: Nama Lengkap</h3>
+</div>
+<span class="p-2 rounded-lg bg-surface-variant text-primary">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</span>
+</div>
+<!-- Type Selector Pills -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Tipe Elemen Input</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="flex flex-col items-center gap-1 p-2.5 rounded-lg bg-primary text-on-primary font-label-sm text-label-sm font-medium shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">short_text</span>
+<span>Teks Singkat</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">subject</span>
+<span>Textarea</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+<span>Email</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">123</span>
+<span>Angka</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">list</span>
+<span>Select</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">radio_button_checked</span>
+<span>Radio</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">check_box</span>
+<span>Checkbox</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>Tanggal</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+<span>Upload File</span>
+</button>
+</div>
+</div>
+<!-- Input: Label Field -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md font-semibold text-on-surface flex items-center justify-between">
+<span>Label Field</span>
+<span class="font-caption text-caption text-outline">Tampil di pengguna</span>
+</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm ring-1 ring-outline-variant focus:ring-2 focus:ring-primary focus:outline-none transition-all shadow-sm" id="cfgLabel" type="text" value="Nama Lengkap"/>
+</div>
+<!-- Input: Slug / ID API -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md font-semibold text-on-surface flex items-center justify-between">
+<span>Field Key / ID API</span>
+<span class="font-caption text-caption text-primary">Unik</span>
+</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-[18px] text-outline">code</span>
+<input class="w-full pl-9 pr-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface-variant font-body-sm text-body-sm font-mono cursor-not-allowed select-all" readonly="" type="text" value="nama_lengkap"/>
+</div>
+<p class="font-caption text-caption text-outline">Dipergunakan sebagai kunci JSON dan identifier kolom basis data pendaftar.</p>
+</div>
+<!-- Input: Placeholder Text -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Placeholder Text</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm ring-1 ring-outline-variant focus:ring-2 focus:ring-primary focus:outline-none transition-all shadow-sm" id="cfgPlaceholder" type="text" value="Masukkan nama lengkap sesuai KTM"/>
+</div>
+<!-- Input: Helper Text -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Teks Bantuan (Helper Text)</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm ring-1 ring-outline-variant focus:ring-2 focus:ring-primary focus:outline-none transition-all shadow-sm" id="cfgHelper" type="text" value="Gunakan huruf kapital di awal setiap kata"/>
+</div>
+<!-- Required Switch / Toggle -->
+<div class="p-3.5 rounded-xl bg-surface-container-low flex items-center justify-between">
+<div>
+<p class="font-label-md text-label-md font-semibold text-on-surface">Wajib Diisi (Required)</p>
+<p class="font-caption text-caption text-on-surface-variant">Pendaftar tidak dapat submit jika kosong</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Dynamic Options Section (Shown for Select / Radio type contexts) -->
+<div class="space-y-2 pt-2 border-t border-surface-container">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Daftar Opsi Nilai (Preset)</label>
+<button class="text-primary hover:text-primary-container font-label-sm text-label-sm font-semibold flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span> Tambah Opsi
+            </button>
+</div>
+<div class="space-y-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline">drag_indicator</span>
+<input class="flex-1 px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm ring-1 ring-outline-variant" type="text" value="Teknik Informatika"/>
+<button class="p-1 text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline">drag_indicator</span>
+<input class="flex-1 px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm ring-1 ring-outline-variant" type="text" value="Sistem Informasi"/>
+<button class="p-1 text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-outline">drag_indicator</span>
+<input class="flex-1 px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm ring-1 ring-outline-variant" type="text" value="Matematika"/>
+<button class="p-1 text-outline hover:text-error transition-colors"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+</div>
+</div>
+<!-- Extra Validations (Min / Max Length) -->
+<div class="space-y-2 pt-2 border-t border-surface-container">
+<label class="font-label-md text-label-md font-semibold text-on-surface">Validasi Karakter</label>
+<div class="grid grid-cols-2 gap-3">
+<div class="space-y-1">
+<span class="font-caption text-caption text-outline">Min. Karakter</span>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm ring-1 ring-outline-variant" type="number" value="3"/>
+</div>
+<div class="space-y-1">
+<span class="font-caption text-caption text-outline">Maks. Karakter</span>
+<input class="w-full px-3 py-2 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm ring-1 ring-outline-variant" type="number" value="120"/>
+</div>
+</div>
+</div>
+<!-- Footer Control Buttons -->
+<div class="pt-4 flex items-center justify-end gap-3 border-t border-surface-container">
+<button class="px-4 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-medium transition-colors" type="button">
+            Reset Default
+          </button>
+<button class="px-5 py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md font-semibold transition-all shadow-md" onclick="applyFieldChanges()" type="button">
+            Terapkan Perubahan
+          </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function selectField(id) {
+    const titleMap = {
+      1: "Elemen: Nama Lengkap",
+      2: "Elemen: Nomor Induk Mahasiswa (NIM)",
+      3: "Elemen: Alamat Email Aktif",
+      4: "Elemen: Program Studi",
+      5: "Elemen: Pilihan Divisi Utama",
+      6: "Elemen: Motivasi & Pengalaman",
+      7: "Elemen: Upload Curriculum Vitae"
+    };
+
+    const labelInput = document.getElementById("cfgLabel");
+    const headerTitle = document.getElementById("configHeaderTitle");
+
+    if (titleMap[id]) {
+      headerTitle.innerText = titleMap[id];
+      labelInput.value = titleMap[id].replace("Elemen: ", "");
+    }
+  }
+
+  function applyFieldChanges() {
+    const feedbackToast = document.createElement("div");
+    feedbackToast.className = "fixed bottom-5 right-5 z-50 bg-primary text-on-primary px-4 py-3 rounded-lg shadow-lg flex items-center gap-2 font-label-md text-label-md transition-all";
+    feedbackToast.innerHTML = '<span class="material-symbols-outlined text-[20px]">check_circle</span> Konfigurasi elemen berhasil diperbarui!';
+    document.body.appendChild(feedbackToast);
+    setTimeout(() => feedbackToast.remove(), 2500);
+  }
+
+  function quickAddField() {
+    const container = document.getElementById("previewElementsContainer");
+    const count = container.children.length + 1;
+    const newDiv = document.createElement("div");
+    newDiv.className = "group relative bg-surface-container-lowest rounded-xl p-5 shadow-sm hover:shadow-md transition-all cursor-pointer";
+    newDiv.innerHTML = `
+      <div class="flex items-start gap-3">
+        <div class="mt-1 text-outline cursor-grab"><span class="material-symbols-outlined text-[20px]">drag_indicator</span></div>
+        <div class="flex-1 space-y-2">
+          <div class="flex items-center gap-2">
+            <label class="font-label-md text-label-md font-semibold text-on-surface">Field Kustom Baru #${count}</label>
+            <span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">Teks Singkat</span>
+          </div>
+          <input type="text" disabled placeholder="Ketikkan jawaban..." class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm cursor-not-allowed" />
+        </div>
+      </div>
+    `;
+    container.appendChild(newDiv);
+    newDiv.scrollIntoView({ behavior: 'smooth' });
+  }
+</script></main></div></body></html>

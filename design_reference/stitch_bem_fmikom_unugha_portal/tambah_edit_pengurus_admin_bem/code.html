@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><title>Admin Portal BEM FMIKOM UNUGHA</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-background": "#0b1c30", "outline": "#757682", "tertiary": "#222a3e", "on-tertiary-fixed": "#131b2e", "on-secondary-fixed": "#2f1500", "outline-variant": "#c5c5d3", "on-primary": "#ffffff", "surface-tint": "#4059aa", "error-container": "#ffdad6", "primary-fixed-dim": "#b6c4ff", "tertiary-container": "#384055", "on-primary-container": "#90a8ff", "on-secondary-fixed-variant": "#6e3900", "on-tertiary-fixed-variant": "#3f465c", "on-surface": "#0b1c30", "primary-fixed": "#dce1ff", "tertiary-fixed": "#dae2fd", "tertiary-fixed-dim": "#bec6e0", "on-tertiary-container": "#a4acc5", "surface-container-lowest": "#ffffff", "surface-variant": "#d3e4fe", "primary-container": "#1e3a8a", "on-surface-variant": "#444651", "surface-bright": "#f8f9ff", "on-error-container": "#93000a", "surface-container-highest": "#d3e4fe", "secondary-fixed": "#ffdcc3", "inverse-primary": "#b6c4ff", "secondary-container": "#fe932c", "secondary": "#904d00", "surface-dim": "#cbdbf5", "inverse-surface": "#213145", "secondary-fixed-dim": "#ffb77d", "background": "#f8f9ff", "on-primary-fixed-variant": "#264191", "surface-container-low": "#eff4ff", "on-error": "#ffffff", "primary": "#00236f", "surface": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "surface-container": "#e5eeff", "on-primary-fixed": "#00164e", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-secondary": "#ffffff", "on-secondary-container": "#663500", "surface-container-high": "#dce9ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1.5rem", "space-xl": "2.5rem", "margin-mobile": "1rem", "margin": "2rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "space-md": "1rem", "margin-desktop": "3rem", "space-sm": "0.5rem", "gutter-mobile": "1rem" }, "fontFamily": { "headline-sm": ["Plus Jakarta Sans"], "display-mobile": ["Plus Jakarta Sans"], "caption": ["Inter"], "display": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "headline-lg": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "label-md": ["Inter"], "label-sm": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Inter"], "headline-xl": ["Plus Jakarta Sans"] }, "fontSize": { "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.005em", "fontWeight": "600" }], "display-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "800" }], "caption": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "display": ["3.5rem", { "lineHeight": "4.25rem", "letterSpacing": "-0.03em", "fontWeight": "800" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-xl-mobile": ["1.875rem", { "lineHeight": "2.375rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0", "fontWeight": "400" }], "label-md": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "label-sm": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.03em", "fontWeight": "600" }], "headline-md": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-xl": ["2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col overflow-y-auto"><div class="p-5 flex items-center gap-3 bg-surface-container-low"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">BEM FMIKOM</span><span class="font-caption text-caption text-on-surface-variant font-medium">Admin Portal</span></div></div><div class="px-4 py-2"><div class="px-3 py-2 bg-surface-container rounded-lg flex items-center justify-between"><span class="font-caption text-caption text-on-surface-variant">Status Periode:</span><span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">2024/2025</span></div></div><nav class="flex-1 px-3 py-3 space-y-4" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Overview</span></a></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Content</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="berita-management" href="#"><span class="material-symbols-outlined text-[18px]">newspaper</span><span>Berita</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="kategori-management" href="#"><span class="material-symbols-outlined text-[18px]">category</span><span>Kategori</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="galeri-management" href="#"><span class="material-symbols-outlined text-[18px]">photo_library</span><span>Galeri</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengumuman-management" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span>Pengumuman</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Organization</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="struktur-organisasi-admin" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span>Struktur</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="divisi-management" href="#"><span class="material-symbols-outlined text-[18px]">groups</span><span>Divisi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengurus-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span>Pengurus</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="periode-management" href="#"><span class="material-symbols-outlined text-[18px]">history_edu</span><span>Periode</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Management</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pendaftaran-management" href="#"><span class="material-symbols-outlined text-[18px]">how_to_reg</span><span>Pendaftaran</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="aspirasi-management" href="#"><span class="material-symbols-outlined text-[18px]">forum</span><span>Aspirasi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="arsip-dokumen" href="#"><span class="material-symbols-outlined text-[18px]">folder</span><span>Arsip Dokumen</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">System</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="system-settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="users-management" href="#"><span class="material-symbols-outlined text-[18px]">manage_accounts</span><span>Users</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="activity-log" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Activity Log</span></a></div></div></nav><div class="p-4 bg-surface-container-low"><a class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm" data-path="beranda" href="#"><span class="material-symbols-outlined text-[18px]">open_in_new</span>Lihat Web Publik</a></div></aside><div class="pl-64 min-h-screen flex flex-col"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-6 lg:px-8"><div class="flex items-center gap-3"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><span class="font-label-md text-label-md text-on-surface-variant font-medium">Fakultas Matematika dan Ilmu Komputer</span></div><div class="flex items-center gap-4"><button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors relative"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary-container"></span></button><div class="h-6 w-px bg-outline-variant"></div><div class="flex items-center gap-3"><div class="text-right hidden sm:block"><p class="font-label-sm text-label-sm text-on-surface leading-tight font-semibold">Admin BEM</p><span class="font-caption text-caption text-primary font-medium">Superadministrator</span></div><img alt="Foto Profil Admin" class="h-9 w-9 rounded-full object-cover ring-2 ring-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkaINJpcRubsTXdXDHksfsqbChqqBxKHZBe17AySz3LBQte4ozJgwwmO0K97gBDOC3e6kF9cYQFyc4xK_TPq3vSjy-tT14ti2Sz0MZo4-inMETb3HX2fg5wNY0cAK6DBXgHegb84OZnS6KiAuyFqN9d4sq4srhGXU6y5BpzfvIU4LxHADmRLIDJqisWwAC79bLL9SP5iNGyLJ_dKiEiXjWqWAd4WN-VzVGpbor90"/><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-6 lg:px-8 py-6 bg-background flex-1"><div class="flex flex-col w-full">
+<!-- Breadcrumbs & Quick Meta Bar -->
+<div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-surface-container-high/60">
+<nav aria-label="Breadcrumb" class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[16px]">home</span>
+<span>Dashboard</span>
+</a>
+<span class="text-outline-variant font-light">/</span>
+<span class="hover:text-on-surface transition-colors">Organisasi</span>
+<span class="text-outline-variant font-light">/</span>
+<a class="hover:text-primary transition-colors" href="#">Data Pengurus</a>
+<span class="text-outline-variant font-light">/</span>
+<span class="text-primary font-semibold">Tambah Pengurus Baru</span>
+</nav>
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Sistem Terkoneksi PDDikti &amp; Struktur Organisasi
+      </span>
+<span class="px-2.5 py-1 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold">
+        Superadministrator
+      </span>
+</div>
+</div>
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-6 pb-8">
+<div class="space-y-1.5 max-w-3xl">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-on-primary shadow-sm">
+<span class="material-symbols-outlined text-[24px]">person_add</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tight leading-tight">Formulir Data Pengurus Organisasi</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Lengkapi profil pengurus, penugasan divisi, struktur jabatan, dan status keanggotaan BEM FMIKOM UNUGHA periode aktif.</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 self-start md:self-auto shrink-0">
+<a class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-all shadow-sm font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+        Kembali ke Data Pengurus
+      </a>
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-dim text-on-surface transition-all font-label-md text-label-md" type="button">
+        Batal
+      </button>
+</div>
+</div>
+<!-- Interactive Simulation State Alerts (Driven by mini-switch panel) -->
+<div class="space-y-4 mb-6 hidden" id="sim-state-container">
+<!-- Error State Preview -->
+<div class="hidden p-4 rounded-xl bg-error-container text-on-error-container shadow-sm flex items-start gap-3 transition-all" id="sim-state-error">
+<span class="material-symbols-outlined text-error text-[22px] shrink-0 mt-0.5">error</span>
+<div class="space-y-1 text-sm flex-1">
+<p class="font-headline-sm text-label-md font-semibold text-error">Validasi Formulir Gagal (2 Kesalahan)</p>
+<p class="font-body-sm text-body-sm">Mohon periksa kolom bertanda merah: Program Studi wajib dipilih dan Jabatan Kepala Bidang mewajibkan pemilihan Divisi / Biro.</p>
+</div>
+<button class="p-1 hover:bg-black/5 rounded-lg text-on-error-container" onclick="dismissStateAlert()"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+<!-- Uploading State Preview -->
+<div class="hidden p-4 rounded-xl bg-surface-container text-on-surface shadow-sm flex items-center gap-4 transition-all" id="sim-state-uploading">
+<div class="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin shrink-0"></div>
+<div class="flex-1 space-y-1">
+<div class="flex justify-between font-label-md text-label-md">
+<span class="font-semibold text-primary">Mengunggah Berkas Pasfoto Almamater...</span>
+<span class="text-on-surface-variant font-mono">68%</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-variant overflow-hidden">
+<div class="w-[68%] h-full bg-primary rounded-full transition-all duration-300"></div>
+</div>
+</div>
+</div>
+<!-- Success State Preview -->
+<div class="hidden p-4 rounded-xl bg-surface-container-low text-primary shadow-sm flex items-start gap-3 transition-all" id="sim-state-success">
+<span class="material-symbols-outlined text-secondary-container text-[24px] shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="space-y-1 flex-1">
+<p class="font-headline-sm text-label-md font-bold text-primary">Data Pengurus Berhasil Diperbarui!</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Profil telah disinkronkan ke laman publik BEM FMIKOM UNUGHA dan bagan bagan Struktural Organisasi 2024/2025.</p>
+</div>
+<button class="p-1 hover:bg-black/5 rounded-lg text-on-surface-variant" onclick="dismissStateAlert()"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+</div>
+<!-- Form Layout Grid (35% Left Column, 65% Right Column) -->
+<form class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start" id="pengurus-form" onsubmit="event.preventDefault(); simulateSave();">
+<!-- ==================== KOLOM KIRI (Upload Foto & Dokumen Pendukung, 35% ~ lg:col-span-4 atau lg:col-span-5) ==================== -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Card: Foto Profil Resmi -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm flex flex-col items-center text-center relative overflow-hidden">
+<div class="w-full flex items-center justify-between pb-4 border-b border-surface-container-high/60 mb-5">
+<div class="text-left">
+<h2 class="font-headline-sm text-label-md font-bold text-on-surface">Foto Profil Resmi</h2>
+<p class="font-caption text-caption text-on-surface-variant">Tampil di portal publik &amp; kartu anggota</p>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-caption font-semibold text-primary">Wajib</span>
+</div>
+<!-- Preview Box -->
+<div class="relative group w-48 h-56 rounded-2xl bg-surface-container-low flex flex-col items-center justify-center overflow-hidden transition-all shadow-inner">
+<img alt="Preview Foto Mahasiswa" class="w-full h-full object-cover rounded-2xl" data-alt="Official formal student portrait wearing UNUGHA blue blazer almamater with university crest badge, clean white collar shirt, neutral plain studio backdrop, crisp studio lighting, academic executive portrait representation." id="photo-preview-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjijqEh-Q85LTpdEV64cQnh4FJd-pVkyc-NF2X_69_SUt7ZBQMZOE2VnKiCwbNOp8_zq_elX6Xbszl0JEURl-TRTzNL7jJL_vaux42GdJ5TVtd3_L0b3Jq_tQHZYcheIS618N931BeQeJ6ySiQlKkL6GIQLbbSs5BYCl0exWap5oEWEot8j-fuL0NHm3JlYk8oBU9NatnrcNCrrsG47eLyA5oBN1L5jpP7Nm4HT4g"/>
+<!-- Hover Overlay Actions -->
+<div class="absolute inset-0 bg-primary/70 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 p-4 text-on-primary backdrop-blur-xs">
+<span class="material-symbols-outlined text-[28px]">photo_camera</span>
+<span class="font-label-sm text-label-sm font-semibold">Ganti Pasfoto</span>
+<span class="font-caption text-caption text-surface-container-high">Klik tombol di bawah</span>
+</div>
+<!-- Empty State (hidden by default since preview is active) -->
+<div class="hidden flex-col items-center justify-center p-6 text-on-surface-variant" id="photo-empty-state">
+<span class="material-symbols-outlined text-[48px] text-outline mb-2">account_box</span>
+<p class="font-label-sm text-label-sm font-medium">Belum ada foto dipilih</p>
+</div>
+</div>
+<!-- Action Upload Buttons -->
+<div class="flex items-center gap-2 mt-5 w-full">
+<label class="flex-1 cursor-pointer">
+<input accept="image/png, image/jpeg, image/jpg" class="sr-only" id="file-input-almamater" onchange="handleFileChange(this)" type="file"/>
+<div class="w-full py-2.5 px-3 rounded-lg bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-label-md text-label-md font-medium text-center transition-all shadow-sm flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">upload</span>
+              Pilih Foto
+            </div>
+</label>
+<button class="p-2.5 rounded-lg bg-surface-container-high hover:bg-error-container hover:text-error text-on-surface-variant transition-colors flex items-center justify-center" onclick="removePhoto()" title="Hapus Foto" type="button">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<!-- Helper Guidance Text -->
+<div class="mt-4 p-3.5 rounded-xl bg-surface-container-low text-left w-full space-y-1.5">
+<div class="flex items-center gap-1.5 text-primary font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[16px]">info</span>
+            Standar Pasfoto Jas BEM
+          </div>
+<p class="font-caption text-caption text-on-surface-variant leading-relaxed">
+            Format diperbolehkan <strong>JPG, JPEG, PNG</strong>. Maksimal <strong>2MB</strong>. Disarankan foto resmi memakai jas almamater berlatar belakang polos warna netral/biru.
+          </p>
+</div>
+</div>
+<!-- Card: Ketentuan SK Penetapan -->
+<div class="bg-surface-container-low rounded-2xl p-5 shadow-sm space-y-3">
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="space-y-1">
+<h3 class="font-headline-sm text-label-md font-bold text-on-surface">Ketentuan SK &amp; Integrasi Data</h3>
+<p class="font-caption text-caption text-on-surface-variant leading-relaxed">
+              Penetapan jabatan ini secara otomatis terintegrasi langsung dengan bagan <strong>Struktur Organisasi Interaktif</strong>, sertifikat digital internal, serta halaman profil pengurus di portal publik BEM FMIKOM UNUGHA.
+            </p>
+</div>
+</div>
+<div class="pt-2 flex items-center justify-between text-caption font-caption text-outline">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">history</span> Sync Real-time</span>
+<span class="font-mono text-primary font-medium">SK-BEM-2024-V.02</span>
+</div>
+</div>
+<!-- Card: UI State Simulation Controller (Interactive preview tool) -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-wider">Preview UI States</span>
+<span class="font-caption text-caption px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-semibold">Demo Bar</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant">Uji coba simulasi interaktif tampilan sistem:</p>
+<div class="grid grid-cols-3 gap-2 pt-1">
+<button class="px-2.5 py-2 rounded-lg bg-surface-container-high hover:bg-error-container hover:text-error text-on-surface font-label-sm text-label-sm font-medium transition-all text-center" onclick="setSimState('error')" type="button">
+            Error
+          </button>
+<button class="px-2.5 py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-medium transition-all text-center" onclick="setSimState('uploading')" type="button">
+            Uploading
+          </button>
+<button class="px-2.5 py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-low hover:text-primary text-on-surface font-label-sm text-label-sm font-medium transition-all text-center" onclick="setSimState('success')" type="button">
+            Success
+          </button>
+</div>
+</div>
+</div>
+<!-- ==================== KOLOM KANAN (Formulir Detail Pengurus, 65% ~ lg:col-span-8) ==================== -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Primary Form Container -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 sm:p-8 shadow-sm space-y-6">
+<!-- Section Header -->
+<div class="flex items-center justify-between pb-4 border-b border-surface-container-high/60">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Biodata &amp; Penugasan Organisasi</h2>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5">Tanda bintang (*) mengindikasikan kolom yang wajib diisi.</p>
+</div>
+<div class="h-8 w-8 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+</div>
+</div>
+<!-- 1. Input: Nama Lengkap Mahasiswa -->
+<div class="space-y-1.5" id="group-nama">
+<label class="block font-label-md text-label-md font-semibold text-on-surface" for="nama_lengkap">
+            Nama Lengkap Mahasiswa <span class="text-error">*</span>
+</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">person</span>
+</span>
+<input class="w-full pl-11 pr-4 py-2.5 bg-surface-container-lowest rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="nama_lengkap" name="nama_lengkap" placeholder="Contoh: Mochammad Arya Pratama" required="" type="text" value="Mochammad Arya Pratama"/>
+</div>
+<span class="hidden text-error font-caption text-caption" id="err-nama">Nama lengkap tidak boleh kosong.</span>
+</div>
+<!-- 2. Input: NIM -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="block font-label-md text-label-md font-semibold text-on-surface" for="nim">
+              Nomor Induk Mahasiswa (NIM) <span class="text-error">*</span>
+</label>
+<span class="font-caption text-caption text-primary flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[14px]">link</span>
+              Sinkronisasi PDDikti
+            </span>
+</div>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">pin</span>
+</span>
+<input class="w-full pl-11 pr-4 py-2.5 bg-surface-container-lowest rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all focus:outline-none focus:ring-2 focus:ring-primary shadow-sm font-mono" id="nim" name="nim" placeholder="2210605012" required="" type="text" value="2210605012"/>
+</div>
+<p class="font-caption text-caption text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-outline">info</span>
+            Pastikan NIM terdaftar aktif di PDDikti UNUGHA untuk verifikasi kepengurusan.
+          </p>
+</div>
+<!-- 3. Dropdown Grid 2 Kolom: Program Studi & Angkatan Kuliah -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+<!-- Program Studi -->
+<div class="space-y-1.5" id="group-prodi">
+<label class="block font-label-md text-label-md font-semibold text-on-surface" for="prodi">
+              Program Studi <span class="text-error">*</span>
+</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</span>
+<select class="w-full pl-11 pr-10 py-2.5 bg-surface-container-lowest rounded-lg font-body-md text-body-md text-on-surface transition-all focus:outline-none focus:ring-2 focus:ring-primary shadow-sm appearance-none cursor-pointer" id="prodi" name="prodi" required="">
+<option value="">Pilih Program Studi</option>
+<option selected="" value="IF">S1 Teknik Informatika</option>
+<option value="SI">S1 Sistem Informasi</option>
+</select>
+<span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</span>
+</div>
+<span class="hidden text-error font-caption text-caption" id="err-prodi">Program Studi wajib dipilih.</span>
+</div>
+<!-- Angkatan Kuliah -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md font-semibold text-on-surface" for="angkatan">
+              Angkatan Kuliah <span class="text-error">*</span>
+</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+</span>
+<select class="w-full pl-11 pr-10 py-2.5 bg-surface-container-lowest rounded-lg font-body-md text-body-md text-on-surface transition-all focus:outline-none focus:ring-2 focus:ring-primary shadow-sm appearance-none cursor-pointer" id="angkatan" name="angkatan" required="">
+<option selected="" value="2022">2022</option>
+<option value="2023">2023</option>
+<option value="2024">2024</option>
+</select>
+<span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</span>
+</div>
+</div>
+</div>
+<!-- 4. Dropdown Grid 2 Kolom: Jabatan Struktural & Divisi/Biro -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-1">
+<!-- Jabatan Struktural -->
+<div class="space-y-1.5" id="group-jabatan">
+<label class="block font-label-md text-label-md font-semibold text-on-surface" for="jabatan">
+              Jabatan Struktural <span class="text-error">*</span>
+</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">military_tech</span>
+</span>
+<select class="w-full pl-11 pr-10 py-2.5 bg-surface-container-lowest rounded-lg font-body-md text-body-md text-on-surface transition-all focus:outline-none focus:ring-2 focus:ring-primary shadow-sm appearance-none cursor-pointer" id="jabatan" name="jabatan" onchange="handleJabatanChange(this)" required="">
+<option value="Ketua BEM">Ketua BEM</option>
+<option value="Wakil Ketua BEM">Wakil Ketua BEM</option>
+<option value="Sekretaris">Sekretaris Umum</option>
+<option value="Bendahara">Bendahara Umum</option>
+<option selected="" value="Kepala Bidang">Kepala Bidang</option>
+<option value="Staf Ahli">Staf Ahli</option>
+<option value="Anggota">Anggota Departemen</option>
+</select>
+<span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</span>
+</div>
+</div>
+<!-- Divisi / Biro -->
+<div class="space-y-1.5" id="group-divisi">
+<label class="block font-label-md text-label-md font-semibold text-on-surface" for="divisi">
+              Divisi / Biro <span class="text-error" id="divisi-required-mark">*</span>
+</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+</span>
+<select class="w-full pl-11 pr-10 py-2.5 bg-surface-container-lowest rounded-lg font-body-md text-body-md text-on-surface transition-all focus:outline-none focus:ring-2 focus:ring-primary shadow-sm appearance-none cursor-pointer" id="divisi" name="divisi" required="">
+<option value="">Pilih Divisi / Biro</option>
+<option value="bph">Biro BPH (Badan Pengurus Harian)</option>
+<option selected="" value="kominfo">Komunikasi &amp; Informasi (KOMINFO)</option>
+<option value="psdm">Pengembangan Sumber Daya Mahasiswa (PSDM)</option>
+<option value="sosmas">Sosial Masyarakat (SOSMAS)</option>
+<option value="mikat">Minat &amp; Bakat (MIKAT)</option>
+<option value="iptek">Riset &amp; IPTEK</option>
+</select>
+<span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant" id="helper-divisi">
+              Jika Jabatan = Kepala Bidang atau Anggota, divisi wajib dipilih.
+            </p>
+</div>
+</div>
+<!-- 5. Dropdown Grid 2 Kolom: Periode Kepengurusan & Status Keanggotaan -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-1">
+<!-- Periode Kepengurusan -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md font-semibold text-on-surface" for="periode">
+              Periode Kepengurusan <span class="text-error">*</span>
+</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">event_repeat</span>
+</span>
+<select class="w-full pl-11 pr-10 py-2.5 bg-surface-container-lowest rounded-lg font-body-md text-body-md text-on-surface transition-all focus:outline-none focus:ring-2 focus:ring-primary shadow-sm appearance-none cursor-pointer" id="periode" name="periode" required="">
+<option selected="" value="2024/2025">2024/2025 (Periode Aktif)</option>
+<option value="2023/2024">2023/2024 (Arsip Demisioner)</option>
+</select>
+<span class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</span>
+</div>
+</div>
+<!-- Status Keanggotaan (Radio cards aesthetic) -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md font-semibold text-on-surface">
+              Status Keanggotaan <span class="text-error">*</span>
+</label>
+<div class="grid grid-cols-2 gap-2.5 pt-0.5">
+<label class="relative flex items-center justify-center gap-2 p-2.5 rounded-lg bg-surface-container-low cursor-pointer transition-all hover:bg-surface-container has-[:checked]:bg-primary has-[:checked]:text-on-primary shadow-xs">
+<input checked="" class="sr-only" name="status_keanggotaan" type="radio" value="aktif"/>
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span class="font-label-md text-label-md font-semibold">Aktif</span>
+</label>
+<label class="relative flex items-center justify-center gap-2 p-2.5 rounded-lg bg-surface-container-low cursor-pointer transition-all hover:bg-surface-container has-[:checked]:bg-tertiary-container has-[:checked]:text-on-tertiary shadow-xs">
+<input class="sr-only" name="status_keanggotaan" type="radio" value="demisioner"/>
+<span class="material-symbols-outlined text-[18px]">pause_circle</span>
+<span class="font-label-md text-label-md font-semibold">Demisioner</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Section Divider: Kontak & Jejak Sosial -->
+<div class="pt-4 border-t border-surface-container-high/60">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm text-label-sm font-semibold uppercase tracking-wider mb-4">
+<span class="material-symbols-outlined text-[16px]">contact_mail</span>
+<span>Kontak &amp; Portofolio Digital Mahasiswa (Opsional)</span>
+</div>
+<!-- 6. Input Kontak & Media Sosial -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+<!-- WhatsApp -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md font-semibold text-on-surface" for="kontak_wa">
+                Nomor WhatsApp / Kontak
+              </label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</span>
+<input class="w-full pl-11 pr-4 py-2.5 bg-surface-container-lowest rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all focus:outline-none focus:ring-2 focus:ring-primary shadow-sm font-mono" id="kontak_wa" name="kontak_wa" placeholder="0812-3456-7890" type="tel" value="0812-3456-7890"/>
+</div>
+</div>
+<!-- LinkedIn / Instagram -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md font-semibold text-on-surface" for="social_handle">
+                Akun LinkedIn / Instagram
+              </label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</span>
+<input class="w-full pl-11 pr-4 py-2.5 bg-surface-container-lowest rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline-variant transition-all focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="social_handle" name="social_handle" placeholder="@arya.pratama" type="text" value="@arya.pratama"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Buttons Footer -->
+<div class="pt-6 border-t border-surface-container-high/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-2 text-on-surface-variant font-caption text-caption order-2 sm:order-1">
+<span class="material-symbols-outlined text-[16px] text-emerald-600">lock</span>
+            Data tersimpan terenkripsi pada server UNUGHA Cloud
+          </div>
+<div class="flex items-center gap-3 w-full sm:w-auto order-1 sm:order-2 justify-end">
+<button class="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-dim text-on-surface font-label-md text-label-md transition-all" type="button">
+              Batal
+            </button>
+<button class="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-label-md text-label-md font-semibold transition-all shadow-md flex items-center justify-center gap-2" id="btn-submit-pengurus" type="submit">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+              Simpan Data Pengurus
+            </button>
+</div>
+</div>
+</div>
+<!-- Quick Summary Card (Visual Richness / Audit Badge) -->
+<div class="bg-surface-container-low rounded-2xl p-5 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-highest text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">history_edu</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-label-md font-bold text-on-surface">Riwayat Perubahan &amp; Audit Trail</h4>
+<p class="font-caption text-caption text-on-surface-variant">Tercatat oleh Superadministrator (Admin BEM) pada 24 Okt 2024 14:20 WIB</p>
+</div>
+</div>
+<a class="font-label-sm text-label-sm text-primary font-semibold hover:underline flex items-center gap-1 shrink-0" href="#">
+<span>Lihat Log Aktivitas</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</div>
+</form>
+<!-- Inline Micro-interactions Script -->
+<script>
+    function handleFileChange(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        if (file.size > 2 * 1024 * 1024) {
+          alert('Ukuran file melebihi batas maksimal 2MB.');
+          input.value = '';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById('photo-preview-img');
+          img.src = e.target.result;
+          img.classList.remove('hidden');
+          document.getElementById('photo-empty-state').classList.add('hidden');
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function removePhoto() {
+      const img = document.getElementById('photo-preview-img');
+      img.src = '';
+      img.classList.add('hidden');
+      document.getElementById('photo-empty-state').classList.remove('hidden');
+      document.getElementById('file-input-almamater').value = '';
+    }
+
+    function handleJabatanChange(select) {
+      const val = select.value;
+      const divisiSelect = document.getElementById('divisi');
+      const reqMark = document.getElementById('divisi-required-mark');
+      const helper = document.getElementById('helper-divisi');
+
+      if (val === 'Kepala Bidang' || val === 'Anggota') {
+        divisiSelect.required = true;
+        reqMark.classList.remove('hidden');
+        helper.classList.remove('text-on-surface-variant');
+        helper.classList.add('text-primary');
+      } else {
+        divisiSelect.required = false;
+        reqMark.classList.add('hidden');
+        helper.classList.add('text-on-surface-variant');
+        helper.classList.remove('text-primary');
+      }
+    }
+
+    function setSimState(state) {
+      const container = document.getElementById('sim-state-container');
+      const errorBox = document.getElementById('sim-state-error');
+      const uploadBox = document.getElementById('sim-state-uploading');
+      const successBox = document.getElementById('sim-state-success');
+
+      container.classList.remove('hidden');
+      errorBox.classList.add('hidden');
+      uploadBox.classList.add('hidden');
+      successBox.classList.add('hidden');
+
+      // Reset error styling
+      document.getElementById('nama_lengkap').classList.remove('ring-2', 'ring-error');
+      document.getElementById('prodi').classList.remove('ring-2', 'ring-error');
+      document.getElementById('err-nama').classList.add('hidden');
+      document.getElementById('err-prodi').classList.add('hidden');
+
+      if (state === 'error') {
+        errorBox.classList.remove('hidden');
+        document.getElementById('prodi').value = '';
+        document.getElementById('prodi').classList.add('ring-2', 'ring-error');
+        document.getElementById('err-prodi').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (state === 'uploading') {
+        uploadBox.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (state === 'success') {
+        successBox.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function dismissStateAlert() {
+      document.getElementById('sim-state-container').classList.add('hidden');
+      document.getElementById('sim-state-error').classList.add('hidden');
+      document.getElementById('sim-state-uploading').classList.add('hidden');
+      document.getElementById('sim-state-success').classList.add('hidden');
+    }
+
+    function simulateSave() {
+      const btn = document.getElementById('btn-submit-pengurus');
+      btn.innerHTML = `<span class="material-symbols-outlined text-[20px] animate-spin">progress_activity</span> Menyimpan...`;
+      btn.disabled = true;
+
+      setTimeout(() => {
+        btn.innerHTML = `<span class="material-symbols-outlined text-[20px]">check_circle</span> Simpan Data Pengurus`;
+        btn.disabled = false;
+        setSimState('success');
+      }, 900);
+    }
+  </script>
+</div></main></div></body></html>

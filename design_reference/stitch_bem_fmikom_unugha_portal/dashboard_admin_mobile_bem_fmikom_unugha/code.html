@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: 'class', theme: { extend: { colors: { 'surface-container-high': '#dce9ff', 'background': '#f8f9ff', 'surface-variant': '#d3e4fe', 'secondary-container': '#fe932c', 'secondary': '#904d00', 'outline-variant': '#c5c5d3', 'on-secondary-fixed-variant': '#6e3900', 'surface': '#f8f9ff', 'on-error': '#ffffff', 'on-tertiary-fixed-variant': '#3f465c', 'surface-container-lowest': '#ffffff', 'surface-tint': '#4059aa', 'surface-dim': '#cbdbf5', 'on-primary': '#ffffff', 'on-primary-container': '#90a8ff', 'primary': '#00236f', 'outline': '#757682', 'tertiary-fixed': '#dae2fd', 'on-secondary': '#ffffff', 'inverse-on-surface': '#eaf1ff', 'on-background': '#0b1c30', 'surface-bright': '#f8f9ff', 'secondary-fixed': '#ffdcc3', 'on-secondary-container': '#663500', 'tertiary': '#222a3e', 'tertiary-container': '#384055', 'surface-container-highest': '#d3e4fe', 'on-primary-fixed': '#00164e', 'secondary-fixed-dim': '#ffb77d', 'primary-fixed-dim': '#b6c4ff', 'error': '#ba1a1a', 'on-primary-fixed-variant': '#264191', 'on-secondary-fixed': '#2f1500', 'on-tertiary': '#ffffff', 'on-tertiary-container': '#a4acc5', 'surface-container': '#e5eeff', 'inverse-surface': '#213145', 'primary-container': '#1e3a8a', 'on-error-container': '#93000a', 'inverse-primary': '#b6c4ff', 'on-surface-variant': '#444651', 'surface-container-low': '#eff4ff', 'on-tertiary-fixed': '#131b2e', 'on-surface': '#0b1c30', 'primary-fixed': '#dce1ff', 'tertiary-fixed-dim': '#bec6e0', 'error-container': '#ffdad6' }, borderRadius: { 'DEFAULT': '0.25rem', 'lg': '0.5rem', 'xl': '0.75rem', 'full': '9999px' }, spacing: { 'margin': '2rem', 'space-md': '1rem', 'gutter': '1.5rem', 'margin-mobile': '1rem', 'margin-desktop': '3rem', 'space-lg': '1.5rem', 'space-xl': '2.5rem', 'gutter-mobile': '1rem', 'space-sm': '0.5rem', 'space-xs': '0.25rem' }, fontFamily: { 'headline-md': ['Plus Jakarta Sans'], 'display': ['Plus Jakarta Sans'], 'body-lg': ['Inter'], 'label-md': ['Inter'], 'headline-xl': ['Plus Jakarta Sans'], 'display-mobile': ['Plus Jakarta Sans'], 'body-sm': ['Inter'], 'headline-sm': ['Plus Jakarta Sans'], 'headline-xl-mobile': ['Plus Jakarta Sans'], 'caption': ['Inter'], 'label-sm': ['Inter'], 'body-md': ['Inter'], 'headline-lg': ['Plus Jakarta Sans'] }, fontSize: { 'headline-md': ['1.5rem', { lineHeight: '2rem', letterSpacing: '-0.01em', fontWeight: '600' }], 'display': ['3.5rem', { lineHeight: '4.25rem', letterSpacing: '-0.03em', fontWeight: '800' }], 'body-lg': ['1.125rem', { lineHeight: '1.75rem', letterSpacing: '0', fontWeight: '400' }], 'label-md': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0.01em', fontWeight: '500' }], 'headline-xl': ['2.5rem', { lineHeight: '3rem', letterSpacing: '-0.02em', fontWeight: '700' }], 'display-mobile': ['2.25rem', { lineHeight: '2.75rem', letterSpacing: '-0.02em', fontWeight: '800' }], 'body-sm': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0', fontWeight: '400' }], 'headline-sm': ['1.25rem', { lineHeight: '1.75rem', letterSpacing: '-0.005em', fontWeight: '600' }], 'headline-xl-mobile': ['1.875rem', { lineHeight: '2.375rem', letterSpacing: '-0.02em', fontWeight: '700' }], 'caption': ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.01em', fontWeight: '400' }], 'label-sm': ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.03em', fontWeight: '600' }], 'body-md': ['1rem', { lineHeight: '1.5rem', letterSpacing: '0', fontWeight: '400' }], 'headline-lg': ['2rem', { lineHeight: '2.5rem', letterSpacing: '-0.015em', fontWeight: '700' }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen flex flex-col selection:bg-secondary-fixed"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/90 backdrop-blur-xl shadow-[0_1px_12px_rgba(0,35,111,0.06)]"><div class="h-16 px-space-md flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><button aria-label="Buka Menu Panel Admin" class="w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center text-primary active:scale-95 transition-transform" id="admin-drawer-btn"><span class="material-symbols-outlined text-[24px]">menu_open</span></button><div class="flex flex-col"><h1 class="font-headline-sm text-headline-sm text-primary leading-tight truncate max-w-[150px]">Dashboard Admin</h1><span class="font-caption text-caption text-on-surface-variant">Admin Portal BEM</span></div></div><div class="flex items-center gap-space-xs"><button aria-label="Notifikasi Admin" class="relative w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-secondary-container"></span></button><div class="flex items-center gap-1.5 pl-1"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-caption font-label-sm uppercase hidden sm:inline">Kominfo</span></div></div></div></header><div class="fixed inset-0 z-50 bg-on-surface/40 backdrop-blur-sm hidden flex-row" id="admin-drawer"><aside class="bg-surface-container-lowest w-72 max-w-[85vw] h-full flex flex-col shadow-[4px_0_24px_rgba(0,35,111,0.12)] p-space-md gap-space-md overflow-y-auto"><div class="flex items-center justify-between pb-space-xs"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[20px]">admin_panel_settings</span></div><div><span class="font-headline-sm text-headline-sm text-primary">Panel BEM</span><p class="font-caption text-caption text-on-surface-variant">FMIKOM UNUGHA</p></div></div><button aria-label="Tutup Panel" class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-on-surface" id="admin-drawer-close"><span class="material-symbols-outlined text-[20px]">close</span></button></div><div class="px-space-sm py-space-xs rounded-xl bg-surface-container-low flex items-center justify-between"><span class="font-caption text-caption text-on-surface-variant">Role Aktif</span><span class="font-label-sm text-label-sm font-semibold text-primary">Super Admin / BPH</span></div><nav class="flex flex-col gap-space-sm" data-active-classes="bg-surface-container text-primary font-label-md"><div class="flex flex-col gap-0.5"><span class="text-caption font-label-sm text-outline px-space-sm py-1 uppercase tracking-wider">Overview</span><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl bg-surface-container text-primary font-label-md" data-path="dashboard-admin" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span> Dashboard</a></div><div class="flex flex-col gap-0.5"><span class="text-caption font-label-sm text-outline px-space-sm py-1 uppercase tracking-wider">Content</span><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-berita" href="#"><span class="material-symbols-outlined text-[20px]">feed</span> Berita</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-kategori" href="#"><span class="material-symbols-outlined text-[20px]">category</span> Kategori</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-galeri" href="#"><span class="material-symbols-outlined text-[20px]">image</span> Galeri</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-pengumuman" href="#"><span class="material-symbols-outlined text-[20px]">campaign</span> Pengumuman</a></div><div class="flex flex-col gap-0.5"><span class="text-caption font-label-sm text-outline px-space-sm py-1 uppercase tracking-wider">Organisasi</span><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-struktur" href="#"><span class="material-symbols-outlined text-[20px]">lan</span> Struktur</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-divisi" href="#"><span class="material-symbols-outlined text-[20px]">diversity_3</span> Divisi</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-pengurus" href="#"><span class="material-symbols-outlined text-[20px]">badge</span> Pengurus</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-periode" href="#"><span class="material-symbols-outlined text-[20px]">date_range</span> Periode</a></div><div class="flex flex-col gap-0.5"><span class="text-caption font-label-sm text-outline px-space-sm py-1 uppercase tracking-wider">Manajemen</span><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-pendaftaran" href="#"><span class="material-symbols-outlined text-[20px]">how_to_reg</span> Pendaftaran</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-aspirasi" href="#"><span class="material-symbols-outlined text-[20px]">forum</span> Aspirasi</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="arsip-dokumen" href="#"><span class="material-symbols-outlined text-[20px]">folder_zip</span> Arsip Dokumen</a></div><div class="flex flex-col gap-0.5"><span class="text-caption font-label-sm text-outline px-space-sm py-1 uppercase tracking-wider">System</span><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="pengaturan-sistem" href="#"><span class="material-symbols-outlined text-[20px]">settings</span> Pengaturan</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="kelola-pengguna" href="#"><span class="material-symbols-outlined text-[20px]">manage_accounts</span> Pengguna</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-xl text-on-surface-variant hover:text-on-surface font-label-md text-label-md" data-path="activity-log" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span> Activity Log</a></div></nav></aside><div class="flex-1" id="admin-drawer-backdrop"></div></div><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full px-space-md py-space-sm gap-space-md">
+<!-- 1. Top Section: Banner Sambutan Mahasiswa & Info Kabinet -->
+<section class="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary via-primary-container to-primary text-on-primary p-space-md shadow-md">
+<div class="absolute -right-6 -bottom-8 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-[130px]">account_balance</span>
+</div>
+<div class="relative z-10 flex flex-col gap-space-xs">
+<div class="flex items-center justify-between gap-space-xs">
+<div class="flex items-center gap-1.5 bg-surface-container-lowest/15 backdrop-blur-md px-2.5 py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-secondary-fixed font-semibold tracking-wide uppercase">Super Admin</span>
+</div>
+<div class="flex items-center gap-1 text-on-primary-container font-caption text-caption">
+<span class="material-symbols-outlined text-[15px]">verified</span>
+<span>FMIKOM UNUGHA</span>
+</div>
+</div>
+<div class="mt-1">
+<p class="font-caption text-caption text-primary-fixed-dim">Halo Rekan Mahasiswa,</p>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-primary tracking-tight">Selamat Datang, Arya Pratama</h2>
+</div>
+<div class="mt-2 pt-2 border-t border-primary-fixed-dim/20 flex items-center justify-between">
+<div class="flex items-center gap-1.5 min-w-0">
+<span class="material-symbols-outlined text-[16px] text-secondary-fixed">event_seat</span>
+<span class="font-caption text-caption text-on-primary truncate">Periode 2024/2025</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary-fixed font-medium truncate max-w-[170px] text-right">Kabinet Sinergi Progresif</span>
+</div>
+</div>
+</section>
+<!-- 3. Quick Action Bar (Horizontal Scrollable Carousel) -->
+<section class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between px-0.5">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Aksi Cepat</span>
+<span class="font-caption text-caption text-primary">Shortcut Panel</span>
+</div>
+<div class="flex items-center gap-2 overflow-x-auto pb-1 scroll-smooth -mx-space-md px-space-md">
+<button class="h-11 px-3.5 rounded-xl bg-primary text-on-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform shrink-0">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+<span>+ Tulis Berita</span>
+</button>
+<button class="h-11 px-3.5 rounded-xl bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform shrink-0">
+<span class="material-symbols-outlined text-[18px]">post_add</span>
+<span>+ Buat Form</span>
+</button>
+<button class="h-11 px-3.5 rounded-xl bg-surface-container text-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform shrink-0">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+<span>Upload SK</span>
+</button>
+<button class="h-11 px-3.5 rounded-xl bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform shrink-0">
+<span class="material-symbols-outlined text-[18px]">ios_share</span>
+<span>Ekspor Laporan</span>
+</button>
+</div>
+</section>
+<!-- 2. Stat Metric Cards: 2-Column Compact Grid -->
+<section class="grid grid-cols-2 gap-space-sm">
+<!-- Stat 1: Total Berita -->
+<div class="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant font-medium">Total Berita</span>
+<div class="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[16px]">newspaper</span>
+</div>
+</div>
+<div class="mt-2">
+<div class="font-headline-md text-headline-md text-primary font-bold">14</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-caption text-caption mt-0.5">
+<span class="text-secondary font-semibold">+2</span>
+<span>edisi bulan ini</span>
+</div>
+</div>
+</div>
+<!-- Stat 2: Pendaftaran -->
+<div class="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant font-medium">Pendaftaran</span>
+<div class="w-7 h-7 rounded-lg bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[16px]">how_to_reg</span>
+</div>
+</div>
+<div class="mt-2">
+<div class="font-headline-md text-headline-md text-on-secondary-container font-bold">142</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-caption text-caption mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+<span>Berkas masuk</span>
+</div>
+</div>
+</div>
+<!-- Stat 3: Aspirasi -->
+<div class="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant font-medium">Aspirasi</span>
+<div class="w-7 h-7 rounded-lg bg-surface-container-high flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[16px]">forum</span>
+</div>
+</div>
+<div class="mt-2">
+<div class="font-headline-md text-headline-md text-primary font-bold">19</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-caption text-caption mt-0.5">
+<span class="text-error font-semibold font-label-sm">3 butuh aksi</span>
+</div>
+</div>
+</div>
+<!-- Stat 4: Arsip Dokumen -->
+<div class="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant font-medium">Dokumen</span>
+<div class="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[16px]">folder</span>
+</div>
+</div>
+<div class="mt-2">
+<div class="font-headline-md text-headline-md text-tertiary font-bold">46</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-caption text-caption mt-0.5">
+<span>Tersimpan rapi</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Section Pendaftaran Aktif (Mobile Card List) -->
+<section class="flex flex-col gap-2">
+<div class="flex items-center justify-between px-0.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[20px] text-primary">assignment_turned_in</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Pendaftaran Aktif</h3>
+</div>
+<a class="font-label-sm text-label-sm text-secondary font-semibold hover:underline" href="#">Semua (3)</a>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-2">
+<div class="min-w-0 flex-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-primary font-label-sm text-label-sm mb-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+            Dibuka
+          </span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface leading-snug">Oprec Panitia FMIKOM Tech Fest 2025</h4>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5">Divisi Acara, Humas, Logistik &amp; Medkraf</p>
+</div>
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+</div>
+</div>
+<!-- Quota Progress Indicator -->
+<div class="flex flex-col gap-1.5 bg-surface-container-low p-space-sm rounded-lg">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Status Kuota</span>
+<span class="font-semibold text-primary">65/100 Lolos Berkas</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-secondary-container rounded-full" style="width: 65%;"></div>
+</div>
+<div class="flex items-center justify-between font-caption text-caption text-outline">
+<span>Target: 100 Peserta</span>
+<span>Tersisa 35 slot</span>
+</div>
+</div>
+<button class="w-full h-11 rounded-lg bg-primary text-on-primary font-label-md text-label-md flex items-center justify-center gap-2 active:scale-[0.99] transition-transform shadow-sm">
+<span class="material-symbols-outlined text-[18px]">manage_accounts</span>
+<span>Kelola Pendaftar</span>
+</button>
+</div>
+</section>
+<!-- 5. Section Aspirasi Mendesak (Mobile Card List) -->
+<section class="flex flex-col gap-2">
+<div class="flex items-center justify-between px-0.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[20px] text-error">priority_high</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Aspirasi Mendesak</h3>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">1 Kritis</span>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+            Kritis Amber
+          </span>
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-caption text-caption">
+            Menunggu Telaah
+          </span>
+</div>
+<span class="font-caption text-caption text-outline">18 Mei</span>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="font-label-md text-label-md font-semibold text-on-surface leading-tight">Penambahan Jam Operasional Lab Komputer B</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+          Mahasiswa semester 4 dan 6 terkendala akses perangkat komputasi tinggi untuk praktikum pemrograman web dan machine learning di luar jam reguler perkuliahan.
+        </p>
+</div>
+<div class="pt-2 border-t border-surface-container flex items-center justify-between gap-2">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[16px]">school</span>
+<span>TI Mahasiswa Reguler</span>
+</div>
+<button class="h-11 px-4 rounded-lg bg-surface-container-high text-primary font-label-md text-label-md flex items-center gap-1.5 active:scale-95 transition-transform">
+<span>Detail</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 6. Aktivitas Log Terbaru: Compact Timeline -->
+<section class="flex flex-col gap-2">
+<div class="flex items-center justify-between px-0.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[20px] text-primary">history</span>
+<h3 class="font-headline-sm text-headline-sm text-primary">Aktivitas Terkini</h3>
+</div>
+<a class="font-label-sm text-label-sm text-outline hover:text-primary" href="#">Lihat Log</a>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-md">
+<!-- Activity 1 -->
+<div class="flex items-start gap-space-sm relative">
+<div class="w-8 h-8 rounded-full bg-surface-container text-primary flex items-center justify-center shrink-0 z-10">
+<span class="material-symbols-outlined text-[18px]">edit_document</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-label-md text-label-md text-on-surface leading-tight">
+<span class="font-semibold text-primary">Dimas</span> mengedit artikel Berita BEM
+          </p>
+<span class="font-caption text-caption text-outline">10 menit yang lalu · Div. Kominfo</span>
+</div>
+</div>
+<!-- Activity 2 -->
+<div class="flex items-start gap-space-sm relative">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center shrink-0 z-10">
+<span class="material-symbols-outlined text-[18px]">cloud_upload</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-label-md text-label-md text-on-surface leading-tight">
+<span class="font-semibold text-on-secondary-container">Siti</span> mengunggah LPJ Pelatihan Desain
+          </p>
+<span class="font-caption text-caption text-outline">45 menit yang lalu · Bendahara</span>
+</div>
+</div>
+<!-- Activity 3 -->
+<div class="flex items-start gap-space-sm relative">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-primary-container flex items-center justify-center shrink-0 z-10">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-label-md text-label-md text-on-surface leading-tight">
+            Pendaftaran baru: <span class="font-semibold text-primary">Ahmad Fauzi</span>
+</p>
+<span class="font-caption text-caption text-outline">2 jam yang lalu · FMIKOM Tech Fest</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. Bottom Navigation / Quick Switch: Link Pratinjau Web Publik -->
+<section class="pb-space-md">
+<a class="w-full h-11 rounded-xl bg-surface-container-high text-primary font-label-md text-label-md flex items-center justify-center gap-2 shadow-sm hover:bg-surface-variant active:scale-[0.99] transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">public</span>
+<span>Pratinjau Web Publik</span>
+<span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</a>
+</section>
+</div>
+<script>
+  // Micro-interaction untuk tombol aksi cepat
+  document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('touchstart', function() {
+      this.classList.add('opacity-90');
+    });
+    btn.addEventListener('touchend', function() {
+      this.classList.remove('opacity-90');
+    });
+  });
+</script></main><script>const ab=document.getElementById('admin-drawer-btn');const ad=document.getElementById('admin-drawer');const ac=document.getElementById('admin-drawer-close');const bd=document.getElementById('admin-drawer-backdrop');if(ab&&ad&&ac){ab.onclick=()=>ad.classList.toggle('hidden');ac.onclick=()=>ad.classList.add('hidden');if(bd)bd.onclick=()=>ad.classList.add('hidden');}</script></body></html>

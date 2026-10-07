@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: 'class', theme: { extend: { colors: { 'surface-container-high': '#dce9ff', 'background': '#f8f9ff', 'surface-variant': '#d3e4fe', 'secondary-container': '#fe932c', 'secondary': '#904d00', 'outline-variant': '#c5c5d3', 'on-secondary-fixed-variant': '#6e3900', 'surface': '#f8f9ff', 'on-error': '#ffffff', 'on-tertiary-fixed-variant': '#3f465c', 'surface-container-lowest': '#ffffff', 'surface-tint': '#4059aa', 'surface-dim': '#cbdbf5', 'on-primary': '#ffffff', 'on-primary-container': '#90a8ff', 'primary': '#00236f', 'outline': '#757682', 'tertiary-fixed': '#dae2fd', 'on-secondary': '#ffffff', 'inverse-on-surface': '#eaf1ff', 'on-background': '#0b1c30', 'surface-bright': '#f8f9ff', 'secondary-fixed': '#ffdcc3', 'on-secondary-container': '#663500', 'tertiary': '#222a3e', 'tertiary-container': '#384055', 'surface-container-highest': '#d3e4fe', 'on-primary-fixed': '#00164e', 'secondary-fixed-dim': '#ffb77d', 'primary-fixed-dim': '#b6c4ff', 'error': '#ba1a1a', 'on-primary-fixed-variant': '#264191', 'on-secondary-fixed': '#2f1500', 'on-tertiary': '#ffffff', 'on-tertiary-container': '#a4acc5', 'surface-container': '#e5eeff', 'inverse-surface': '#213145', 'primary-container': '#1e3a8a', 'on-error-container': '#93000a', 'inverse-primary': '#b6c4ff', 'on-surface-variant': '#444651', 'surface-container-low': '#eff4ff', 'on-tertiary-fixed': '#131b2e', 'on-surface': '#0b1c30', 'primary-fixed': '#dce1ff', 'tertiary-fixed-dim': '#bec6e0', 'error-container': '#ffdad6' }, borderRadius: { 'DEFAULT': '0.25rem', 'lg': '0.5rem', 'xl': '0.75rem', 'full': '9999px' }, spacing: { 'margin': '2rem', 'space-md': '1rem', 'gutter': '1.5rem', 'margin-mobile': '1rem', 'margin-desktop': '3rem', 'space-lg': '1.5rem', 'space-xl': '2.5rem', 'gutter-mobile': '1rem', 'space-sm': '0.5rem', 'space-xs': '0.25rem' }, fontFamily: { 'headline-md': ['Plus Jakarta Sans'], 'display': ['Plus Jakarta Sans'], 'body-lg': ['Inter'], 'label-md': ['Inter'], 'headline-xl': ['Plus Jakarta Sans'], 'display-mobile': ['Plus Jakarta Sans'], 'body-sm': ['Inter'], 'headline-sm': ['Plus Jakarta Sans'], 'headline-xl-mobile': ['Plus Jakarta Sans'], 'caption': ['Inter'], 'label-sm': ['Inter'], 'body-md': ['Inter'], 'headline-lg': ['Plus Jakarta Sans'] }, fontSize: { 'headline-md': ['1.5rem', { lineHeight: '2rem', letterSpacing: '-0.01em', fontWeight: '600' }], 'display': ['3.5rem', { lineHeight: '4.25rem', letterSpacing: '-0.03em', fontWeight: '800' }], 'body-lg': ['1.125rem', { lineHeight: '1.75rem', letterSpacing: '0', fontWeight: '400' }], 'label-md': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0.01em', fontWeight: '500' }], 'headline-xl': ['2.5rem', { lineHeight: '3rem', letterSpacing: '-0.02em', fontWeight: '700' }], 'display-mobile': ['2.25rem', { lineHeight: '2.75rem', letterSpacing: '-0.02em', fontWeight: '800' }], 'body-sm': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0', fontWeight: '400' }], 'headline-sm': ['1.25rem', { lineHeight: '1.75rem', letterSpacing: '-0.005em', fontWeight: '600' }], 'headline-xl-mobile': ['1.875rem', { lineHeight: '2.375rem', letterSpacing: '-0.02em', fontWeight: '700' }], 'caption': ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.01em', fontWeight: '400' }], 'label-sm': ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.03em', fontWeight: '600' }], 'body-md': ['1rem', { lineHeight: '1.5rem', letterSpacing: '0', fontWeight: '400' }], 'headline-lg': ['2rem', { lineHeight: '2.5rem', letterSpacing: '-0.015em', fontWeight: '700' }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen flex flex-col selection:bg-secondary-fixed"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_12px_rgba(0,35,111,0.06)]"><div class="h-16 px-space-md flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><button aria-label="Buka Menu Navigasi" class="w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center text-primary active:scale-95 transition-transform" id="public-drawer-btn"><span class="material-symbols-outlined text-[24px]">menu</span></button><div class="flex flex-col"><div class="flex items-center gap-1.5"><span class="font-headline-sm text-headline-sm text-primary tracking-tight">BEM FMIKOM</span><span class="px-1.5 py-0.5 rounded-lg bg-secondary-fixed text-on-secondary-fixed text-caption font-label-sm uppercase tracking-wider">UNUGHA</span></div><span class="text-caption font-caption text-on-surface-variant truncate max-w-[170px]">Universitas Nahdlatul Ulama</span></div></div><div class="flex items-center gap-space-sm"><span class="text-label-md font-headline-sm text-primary hidden">Pendaftaran</span><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><div class="fixed inset-0 z-50 bg-on-surface/40 backdrop-blur-sm hidden flex-col justify-end" id="public-drawer"><div class="bg-surface-container-lowest rounded-t-xl max-h-[751px] w-full flex flex-col shadow-[0_-4px_24px_rgba(0,35,111,0.12)] p-space-lg gap-space-md overflow-y-auto"><div class="flex items-center justify-between pb-space-sm"><div class="flex items-center gap-space-sm"><div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary">school</span></div><div><h2 class="font-headline-sm text-headline-sm text-primary">BEM FMIKOM UNUGHA</h2><p class="font-caption text-caption text-on-surface-variant">Kabinet Akselerasi Digital &amp; Saintifik</p></div></div><button aria-label="Tutup Menu" class="w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center text-on-surface" id="public-drawer-close"><span class="material-symbols-outlined">close</span></button></div><div class="grid grid-cols-2 gap-space-xs"><a class="flex items-center gap-space-sm p-space-sm rounded-xl text-on-surface font-label-md text-label-md hover:bg-surface-container" data-path="beranda" href="#"><span class="material-symbols-outlined text-primary text-[20px]">home</span> Beranda</a><a class="flex items-center gap-space-sm p-space-sm rounded-xl text-on-surface font-label-md text-label-md hover:bg-surface-container" data-path="tentang" href="#"><span class="material-symbols-outlined text-primary text-[20px]">info</span> Tentang</a><a class="flex items-center gap-space-sm p-space-sm rounded-xl text-on-surface font-label-md text-label-md hover:bg-surface-container" data-path="struktur-organisasi" href="#"><span class="material-symbols-outlined text-primary text-[20px]">account_tree</span> Struktur</a><a class="flex items-center gap-space-sm p-space-sm rounded-xl text-on-surface font-label-md text-label-md hover:bg-surface-container" data-path="berita" href="#"><span class="material-symbols-outlined text-primary text-[20px]">newspaper</span> Berita</a><a class="flex items-center gap-space-sm p-space-sm rounded-xl text-on-surface font-label-md text-label-md hover:bg-surface-container" data-path="galeri" href="#"><span class="material-symbols-outlined text-primary text-[20px]">photo_library</span> Galeri</a><a class="flex items-center gap-space-sm p-space-sm rounded-xl text-on-surface font-label-md text-label-md hover:bg-surface-container" data-path="pengumuman" href="#"><span class="material-symbols-outlined text-primary text-[20px]">campaign</span> Pengumuman</a><a class="flex items-center gap-space-sm p-space-sm rounded-xl text-on-surface font-label-md text-label-md hover:bg-surface-container" data-path="pendaftaran" href="#"><span class="material-symbols-outlined text-primary text-[20px]">how_to_reg</span> Pendaftaran</a><a class="flex items-center gap-space-sm p-space-sm rounded-xl text-on-surface font-label-md text-label-md hover:bg-surface-container" data-path="portal-aspirasi" href="#"><span class="material-symbols-outlined text-primary text-[20px]">chat</span> Aspirasi</a></div><div class="pt-space-xs"><a class="w-full h-11 bg-primary text-on-primary rounded-xl font-label-md text-label-md flex items-center justify-center gap-space-sm shadow-[0_2px_8px_rgba(0,35,111,0.2)]" data-path="portal-aspirasi" href="#"><span class="material-symbols-outlined text-[20px]">send</span> Kirim Aspirasi Mahasiswa</a></div></div></div><main class="flex-1 flex flex-col relative w-full pt-16 bg-surface"><div class="flex flex-col w-full pb-8">
+<!-- Interactive Form Container -->
+<div class="w-full max-w-[390px] mx-auto px-4 flex flex-col gap-5 pt-3">
+<!-- Header Banner Card -->
+<section class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-3 relative overflow-hidden">
+<div class="flex items-center justify-between gap-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-caption">
+<span class="material-symbols-outlined text-[14px]">groups</span>
+          Divisi Kaderisasi &amp; PSDM
+        </span>
+<span class="inline-flex items-center gap-1 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[14px] text-secondary">schedule</span>
+          ~5 Menit
+        </span>
+</div>
+<div class="flex flex-col gap-1">
+<h1 class="font-headline-sm text-headline-sm text-primary tracking-tight">
+          Pendaftaran Panitia FMIKOM Tech Fest 2025
+        </h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+          Wadah kolaborasi karya dan inovasi saintifik teknologi mahasiswa Fakultas MIKOM UNUGHA.
+        </p>
+</div>
+<div class="flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low text-primary">
+<span class="material-symbols-outlined text-[18px]">event_available</span>
+<span class="font-label-sm text-caption">Batas Akhir: <strong class="font-label-md">15 Maret 2025, 23:59 WIB</strong></span>
+</div>
+</section>
+<!-- Visual Registration Stage Imagery Placeholder -->
+<div class="w-full h-28 rounded-xl overflow-hidden relative shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Energetic Indonesian university students collaborating on tech project laptops inside modern computer laboratory at UNUGHA campus with deep navy blue ambient lighting and warm amber highlights, high resolution portrait style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdZJA9xJ21EhLbyBbWrVvrMKeuVIM-qrO6DB7coiIeti8ojbxSYDrpzE4dtLUT1nW9AG7-oF7wCUIaFrgrdnFwmKnY8jnmJAAQe5twcqkJ_8WniEeAtS0LKSvrLxdb6uZ6laRO3vM7rzG2QTaG5g1P6Fv45rJROAeS8MlbM5ZlJa53eFbJ7v7BqMIaQmmmwNlGCfWkgHijKpNvWAP2ZpoE2nZHmgQON2rAibLTwJc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent flex items-end p-3">
+<span class="text-on-primary font-label-sm text-caption flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></span>
+          Gelombang 1 - Perekrutan Terbuka Terpadu
+        </span>
+</div>
+</div>
+<!-- Stepper Indicator -->
+<nav aria-label="Tahapan Formulir" class="bg-surface-container-lowest rounded-xl p-3 shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-primary font-semibold">Langkah 1 dari 3</span>
+<span class="font-caption text-caption text-on-surface-variant">Biodata Diri</span>
+</div>
+<!-- Progress Track -->
+<div class="grid grid-cols-3 gap-1.5 w-full">
+<div class="h-1.5 rounded-full bg-primary transition-all duration-300"></div>
+<div class="h-1.5 rounded-full bg-surface-variant transition-all duration-300"></div>
+<div class="h-1.5 rounded-full bg-surface-variant transition-all duration-300"></div>
+</div>
+<div class="flex justify-between items-center text-caption font-caption pt-1 text-on-surface-variant">
+<span class="text-primary font-medium flex items-center gap-1">
+<span class="w-4 h-4 rounded-full bg-primary text-on-primary text-[10px] flex items-center justify-center font-bold">1</span>
+          Biodata
+        </span>
+<span class="flex items-center gap-1 opacity-70">
+<span class="w-4 h-4 rounded-full bg-surface-container text-on-surface-variant text-[10px] flex items-center justify-center font-bold">2</span>
+          Divisi
+        </span>
+<span class="flex items-center gap-1 opacity-70">
+<span class="w-4 h-4 rounded-full bg-surface-container text-on-surface-variant text-[10px] flex items-center justify-center font-bold">3</span>
+          Berkas
+        </span>
+</div>
+</nav>
+<!-- Main Registration Form -->
+<form class="flex flex-col gap-5 w-full" id="techfest-form" novalidate="">
+<!-- Section: Biodata Diri -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-4">
+<div class="flex items-center gap-2 pb-1">
+<span class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+</span>
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-body-lg text-primary font-semibold">Data Diri Mahasiswa</h2>
+<span class="font-caption text-caption text-on-surface-variant">Pastikan data sesuai identitas akademik aktif</span>
+</div>
+</div>
+<!-- Field: Nama Lengkap -->
+<div class="flex flex-col gap-1.5 w-full">
+<label class="font-label-md text-label-md text-on-surface flex items-center justify-between" for="nama_lengkap">
+<span>Nama Lengkap <span class="text-error font-bold">*</span></span>
+<span class="font-caption text-caption text-on-surface-variant">KTP / KTM</span>
+</label>
+<div class="relative w-full">
+<input class="w-full h-11 px-3.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-outline-variant focus:bg-surface-container-lowest focus:outline-none transition-all uppercase" id="nama_lengkap" name="nama_lengkap" placeholder="CONTOH: ARYA PRATAMA KUSUMA" required="" type="text" value="ARYA PRATAMA KUSUMA"/>
+</div>
+<span class="font-caption text-caption text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">info</span>
+            Gunakan format HURUF KAPITAL sesuai data universitas
+          </span>
+</div>
+<!-- Field: NIM with PDDikti Verification Pill -->
+<div class="flex flex-col gap-1.5 w-full">
+<label class="font-label-md text-label-md text-on-surface" for="nim">
+            Nomor Induk Mahasiswa (NIM) <span class="text-error font-bold">*</span>
+</label>
+<div class="relative w-full flex items-center">
+<input class="w-full h-11 pl-3.5 pr-28 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-outline-variant focus:bg-surface-container-lowest focus:outline-none transition-all font-mono tracking-wider" id="nim" inputmode="numeric" maxlength="12" name="nim" placeholder="Contoh: 23110045" required="" type="text" value="23110045"/>
+<div class="absolute right-2.5 flex items-center gap-1 px-2 py-1 rounded-md bg-secondary-fixed text-on-secondary-fixed text-[11px] font-label-sm font-semibold select-none">
+<span class="material-symbols-outlined text-[13px] text-secondary">verified</span>
+              PDDikti Sync
+            </div>
+</div>
+<span class="font-caption text-caption text-secondary font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">check_circle</span>
+            Mahasiswa Aktif FMIKOM UNUGHA Terverifikasi
+          </span>
+</div>
+<!-- Field: Email Kampus -->
+<div class="flex flex-col gap-1.5 w-full">
+<label class="font-label-md text-label-md text-on-surface" for="email_kampus">
+            Email Kampus Mahasiswa <span class="text-error font-bold">*</span>
+</label>
+<div class="relative w-full flex items-center">
+<input class="w-full h-11 pl-10 pr-3.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-outline-variant focus:bg-surface-container-lowest focus:outline-none transition-all" id="email_kampus" name="email_kampus" placeholder="nama.nim@student.unugha.ac.id" required="" type="email" value="arya.pratama@student.unugha.ac.id"/>
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[20px]">mail</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Konfirmasi jadwal wawancara dikirim ke email institusi ini.</span>
+</div>
+<!-- Field: Program Studi (Native Styled Select) -->
+<div class="flex flex-col gap-1.5 w-full">
+<label class="font-label-md text-label-md text-on-surface" for="prodi">
+            Program Studi <span class="text-error font-bold">*</span>
+</label>
+<div class="relative w-full">
+<select class="w-full h-11 pl-3.5 pr-10 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md appearance-none focus:bg-surface-container-lowest focus:outline-none transition-all cursor-pointer" id="prodi" name="prodi" required="">
+<option disabled="" value="">-- Pilih Program Studi --</option>
+<option selected="" value="ti">S1 Teknik Informatika</option>
+<option value="si">S1 Sistem Informasi</option>
+<option value="mat">S1 Matematika</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant pointer-events-none text-[20px]">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Section: Pilihan Divisi Kepanitiaan -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-3.5">
+<div class="flex items-center gap-2 pb-1">
+<span class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">category</span>
+</span>
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-body-lg text-primary font-semibold">Pilihan Divisi Utama</h2>
+<span class="font-caption text-caption text-on-surface-variant">Pilih 1 divisi paling sesuai passion &amp; kompetensi Anda</span>
+</div>
+</div>
+<!-- Vertical Stack Radio Cards -->
+<div class="flex flex-col gap-2.5 w-full" id="division-selector" role="radiogroup">
+<!-- Divisi Acara -->
+<label class="relative flex items-start gap-3 p-3 rounded-xl bg-surface-container-low cursor-pointer transition-all active:scale-[0.99] select-none">
+<input checked="" class="mt-0.5 w-4 h-4 accent-primary cursor-pointer" name="divisi" type="radio" value="acara"/>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Divisi Acara</span>
+<span class="text-caption font-label-sm text-secondary bg-secondary-fixed px-1.5 py-0.5 rounded">Prioritas</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant pt-0.5 leading-snug">Konseptor rundwon, kurasi narasumber talkshow tech, dan timekeeper panggung utama.</p>
+</div>
+</label>
+<!-- Humas & Sponsorship -->
+<label class="relative flex items-start gap-3 p-3 rounded-xl bg-surface-container-low cursor-pointer transition-all active:scale-[0.99] select-none">
+<input class="mt-0.5 w-4 h-4 accent-primary cursor-pointer" name="divisi" type="radio" value="humas"/>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Humas &amp; Sponsorship</span>
+<span class="text-caption font-label-sm text-on-surface-variant">Luar Kampus</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant pt-0.5 leading-snug">Negosiasi mitra industri digital, media partner, serta perizinan institusional.</p>
+</div>
+</label>
+<!-- Publikasi & Dokumentasi -->
+<label class="relative flex items-start gap-3 p-3 rounded-xl bg-surface-container-low cursor-pointer transition-all active:scale-[0.99] select-none">
+<input class="mt-0.5 w-4 h-4 accent-primary cursor-pointer" name="divisi" type="radio" value="pubdok"/>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Publikasi &amp; Dokumentasi</span>
+<span class="text-caption font-label-sm text-on-surface-variant">Kreatif UI/UX</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant pt-0.5 leading-snug">Produksi feed Instagram, reels video teaser, dokumentasi foto, dan visual branding event.</p>
+</div>
+</label>
+<!-- Logistik & Perlengkapan -->
+<label class="relative flex items-start gap-3 p-3 rounded-xl bg-surface-container-low cursor-pointer transition-all active:scale-[0.99] select-none">
+<input class="mt-0.5 w-4 h-4 accent-primary cursor-pointer" name="divisi" type="radio" value="logistik"/>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Logistik &amp; IT Hardware</span>
+<span class="text-caption font-label-sm text-on-surface-variant">Operasional</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant pt-0.5 leading-snug">Pengadaan server lokal lab, sound system, proyektor, serta tata ruang aula kampus.</p>
+</div>
+</label>
+</div>
+</div>
+<!-- Section: Motivasi & Berkas CV -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-4">
+<div class="flex items-center gap-2 pb-1">
+<span class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">description</span>
+</span>
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-body-lg text-primary font-semibold">Motivasi &amp; Lampiran CV</h2>
+<span class="font-caption text-caption text-on-surface-variant">Deskripsikan visi kontribusi Anda</span>
+</div>
+</div>
+<!-- Motivasi Textarea -->
+<div class="flex flex-col gap-1.5 w-full">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface" for="motivasi">
+              Motivasi Bergabung <span class="text-error font-bold">*</span>
+</label>
+<span class="font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-on-surface-variant" id="word-count-badge">
+              108 kata (Memenuhi syarat)
+            </span>
+</div>
+<textarea class="w-full p-3 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm leading-relaxed placeholder:text-outline-variant focus:bg-surface-container-lowest focus:outline-none transition-all resize-none" id="motivasi" name="motivasi" placeholder="Tuliskan pengalaman organisasi Anda, ide inovasi untuk FMIKOM Tech Fest 2025, serta bagaimana kepanitiaan ini mengasah soft skills Anda..." required="" rows="4">Saya berkeinginan kuat berkontribusi sebagai tim Acara FMIKOM Tech Fest 2025 karena memiliki pengalaman memandu webinar regional informatika dan mengelola alur teknis kompetisi pemrograman tahun lalu. Melalui kepanitiaan ini, saya ingin menghadirkan format workshop interaktif berbasis AI dan cloud computing yang relevan dengan kebutuhan dunia industri, sekaligus mempererat jejaring antar mahasiswa Fakultas MIKOM UNUGHA Cilacap.</textarea>
+<span class="font-caption text-caption text-on-surface-variant flex items-center justify-between">
+<span>Rekomendasi minimal 100 kata</span>
+<span class="text-secondary font-medium">Status: Valid</span>
+</span>
+</div>
+<!-- Upload CV PDF File Area -->
+<div class="flex flex-col gap-2 w-full">
+<label class="font-label-md text-label-md text-on-surface flex items-center justify-between">
+<span>Curriculum Vitae (PDF) <span class="text-error font-bold">*</span></span>
+<span class="font-caption text-caption text-on-surface-variant">Maksimal 5MB</span>
+</label>
+<!-- Upload Status Card (Active/Uploaded View) -->
+<div class="p-3.5 rounded-xl bg-surface-container-low flex flex-col gap-2.5 relative">
+<div class="flex items-center justify-between gap-3">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-10 h-10 rounded-lg bg-error-container text-on-error-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">picture_as_pdf</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">CV_Arya_Pratama.pdf</span>
+<span class="font-caption text-caption text-on-surface-variant">1.2 MB • Diperbarui 10 Menit lalu</span>
+</div>
+</div>
+<!-- Action button: Ganti file -->
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container text-primary font-label-sm text-caption active:scale-95 transition-transform flex items-center gap-1 shrink-0" id="btn-reupload" type="button">
+<span class="material-symbols-outlined text-[15px]">sync</span>
+                Ganti
+              </button>
+</div>
+<div class="w-full bg-surface-container rounded-full h-1 overflow-hidden">
+<div class="bg-primary h-1 rounded-full w-full"></div>
+</div>
+<div class="flex items-center justify-between text-caption font-caption text-secondary">
+<span class="flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[15px]">task_alt</span>
+                Siap Dikirim ke Panitia Seleksi
+              </span>
+<span class="text-on-surface-variant">Terverifikasi PDF/A</span>
+</div>
+</div>
+<!-- Hidden Native File Input for Mobile accessibility -->
+<input accept=".pdf" class="hidden" id="cv_file" name="cv_file" type="file"/>
+</div>
+</div>
+<!-- Privacy & Integrity Notice -->
+<section class="p-3.5 rounded-xl bg-surface-container text-on-surface flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[22px] shrink-0 mt-0.5">verified_user</span>
+<div class="flex flex-col gap-0.5">
+<h3 class="font-label-md text-label-md text-primary font-semibold">Integritas &amp; Privasi Data</h3>
+<p class="font-caption text-caption text-on-surface-variant leading-relaxed">
+            Data pribadi dan berkas yang Anda kirimkan terenkripsi aman, hanya digunakan untuk proses seleksi internal kepanitiaan BEM FMIKOM UNUGHA, dan tidak akan dibagikan kepada pihak ketiga.
+          </p>
+</div>
+</section>
+<!-- Bottom Actions (Mobile Ergonomic Sticky-Aware) -->
+<div class="flex flex-col gap-2.5 pt-2">
+<!-- Submit Button (Deep Navy Primary) -->
+<button class="w-full h-12 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform" id="btn-submit" type="submit">
+<span class="material-symbols-outlined text-[20px]">how_to_reg</span>
+          Kirim Pendaftaran Panitia
+        </button>
+<!-- Secondary Action: Simpan Draf -->
+<button class="w-full h-11 rounded-xl bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center gap-2 active:scale-[0.98] transition-transform" id="btn-draft" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+          Simpan Draf Formulir
+        </button>
+</div>
+<!-- Toast Feedback Message (Hidden Initially) -->
+<div class="fixed bottom-20 left-4 right-4 max-w-[358px] mx-auto bg-surface-container-highest text-on-surface p-3.5 rounded-xl shadow-lg flex items-center gap-3 transition-opacity duration-300 opacity-0 pointer-events-none z-50" id="toast-notif">
+<span class="material-symbols-outlined text-secondary text-[24px]" id="toast-icon">cloud_done</span>
+<div class="flex flex-col flex-1">
+<span class="font-label-md text-label-md font-semibold text-primary" id="toast-title">Draf Berhasil Disimpan</span>
+<span class="font-caption text-caption text-on-surface-variant" id="toast-desc">Perubahan tersimpan otomatis pada penyimpanan lokal ponsel.</span>
+</div>
+</div>
+</form>
+</div>
+</div>
+<script>
+  // Simple client-side micro-interactions
+  (function() {
+    const form = document.getElementById('techfest-form');
+    const motivasiInput = document.getElementById('motivasi');
+    const wordCountBadge = document.getElementById('word-count-badge');
+    const draftBtn = document.getElementById('btn-draft');
+    const toast = document.getElementById('toast-notif');
+    const toastTitle = document.getElementById('toast-title');
+    const toastDesc = document.getElementById('toast-desc');
+    const toastIcon = document.getElementById('toast-icon');
+    const reuploadBtn = document.getElementById('btn-reupload');
+    const fileInput = document.getElementById('cv_file');
+
+    // Trigger local file selector
+    if(reuploadBtn && fileInput) {
+      reuploadBtn.addEventListener('click', () => {
+        fileInput.click();
+      });
+      fileInput.addEventListener('change', () => {
+        if(fileInput.files.length > 0) {
+          showToast('Berkas Terpilih', fileInput.files[0].name + ' siap diunggah.', 'upload_file');
+        }
+      });
+    }
+
+    // Word counter recalculation
+    if(motivasiInput && wordCountBadge) {
+      const updateWordCount = () => {
+        const text = motivasiInput.value.trim();
+        const words = text ? text.split(/\s+/).length : 0;
+        if(words >= 100) {
+          wordCountBadge.textContent = words + ' kata (Memenuhi syarat)';
+          wordCountBadge.className = 'font-caption text-caption px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-medium';
+        } else {
+          wordCountBadge.textContent = words + ' kata (Kurang ' + (100 - words) + ')';
+          wordCountBadge.className = 'font-caption text-caption px-2 py-0.5 rounded bg-surface-container text-on-surface-variant';
+        }
+      };
+      motivasiInput.addEventListener('input', updateWordCount);
+    }
+
+    // Toast messenger helper
+    function showToast(title, desc, iconName) {
+      if(!toast) return;
+      toastTitle.textContent = title;
+      toastDesc.textContent = desc;
+      toastIcon.textContent = iconName || 'check_circle';
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 3500);
+    }
+
+    // Handle draft saving
+    if(draftBtn) {
+      draftBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast('Draf Tersimpan', 'Data Anda aman dan dapat dilanjutkan sewaktu-waktu.', 'bookmark_added');
+      });
+    }
+
+    // Handle form submit with celebratory feedback
+    if(form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('btn-submit');
+        if(submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">progress_activity</span> Mengirim Berkas...';
+          setTimeout(() => {
+            submitBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">verified</span> Berhasil Terkirim!';
+            submitBtn.classList.remove('bg-primary');
+            submitBtn.classList.add('bg-secondary');
+            showToast('Pendaftaran Berhasil!', 'Email konfirmasi ID tiket telah dikirim ke akun kampus Anda.', 'celebration');
+          }, 1200);
+        }
+      });
+    }
+  })();
+</script><footer class="w-full bg-surface-container-low mt-space-xl p-space-lg flex flex-col gap-space-md"><div class="flex flex-col gap-space-xs"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-primary">account_balance</span><span class="font-headline-sm text-headline-sm text-primary">Sekretariat BEM FMIKOM</span></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Gedung D Lantai 2, Kampus UNUGHA Cilacap, Jl. Kemerdekaan Barat No.17, Kesugihan, Cilacap, Jawa Tengah 53274.</p></div><div class="flex items-center gap-space-md"><a aria-label="Instagram BEM FMIKOM" class="w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center text-primary" href="#"><span class="material-symbols-outlined text-[20px]">alternate_email</span></a><a aria-label="YouTube BEM FMIKOM" class="w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center text-primary" href="#"><span class="material-symbols-outlined text-[20px]">smart_display</span></a><a aria-label="Email Resmi BEM FMIKOM" class="w-11 h-11 rounded-xl bg-surface-container flex items-center justify-center text-primary" href="#"><span class="material-symbols-outlined text-[20px]">mail</span></a></div><div class="pt-space-sm"><p class="font-caption text-caption text-on-surface-variant text-center">© 2025 BEM FMIKOM UNUGHA Cilacap. Seluruh hak cipta dilindungi.</p></div></footer></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,35,111,0.06)]" data-active-classes="text-primary font-label-md"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center gap-1 w-14 h-12 text-on-surface-variant transition-colors" data-path="beranda" href="#"><span class="material-symbols-outlined text-[22px]">home</span><span class="text-caption font-label-sm">Beranda</span></a><a class="flex flex-col items-center justify-center gap-1 w-14 h-12 text-on-surface-variant transition-colors" data-path="berita" href="#"><span class="material-symbols-outlined text-[22px]">newspaper</span><span class="text-caption font-label-sm">Berita</span></a><a aria-current="page" class="flex flex-col items-center justify-center gap-1 w-14 h-12 transition-colors text-primary font-label-md" data-path="pendaftaran" href="#"><span class="material-symbols-outlined text-[22px]">assignment</span><span class="text-caption font-label-sm">Daftar</span></a><a class="flex flex-col items-center justify-center gap-1 w-14 h-12 text-on-surface-variant transition-colors" data-path="portal-aspirasi" href="#"><span class="material-symbols-outlined text-[22px]">record_voice_over</span><span class="text-caption font-label-sm">Aspirasi</span></a><a class="flex flex-col items-center justify-center gap-1 w-14 h-12 text-on-surface-variant transition-colors" data-path="tentang" href="#"><span class="material-symbols-outlined text-[22px]">group</span><span class="text-caption font-label-sm">Profil</span></a></div></nav><script>const b=document.getElementById('public-drawer-btn');const d=document.getElementById('public-drawer');const c=document.getElementById('public-drawer-close');if(b&&d&&c){b.onclick=()=>d.classList.toggle('hidden');c.onclick=()=>d.classList.add('hidden');}</script></body></html>

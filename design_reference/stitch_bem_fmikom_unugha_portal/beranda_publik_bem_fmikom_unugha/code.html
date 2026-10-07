@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>BEM FMIKOM UNUGHA</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-background": "#0b1c30", "outline": "#757682", "tertiary": "#222a3e", "on-tertiary-fixed": "#131b2e", "on-secondary-fixed": "#2f1500", "outline-variant": "#c5c5d3", "on-primary": "#ffffff", "surface-tint": "#4059aa", "error-container": "#ffdad6", "primary-fixed-dim": "#b6c4ff", "tertiary-container": "#384055", "on-primary-container": "#90a8ff", "on-secondary-fixed-variant": "#6e3900", "on-tertiary-fixed-variant": "#3f465c", "on-surface": "#0b1c30", "primary-fixed": "#dce1ff", "tertiary-fixed": "#dae2fd", "tertiary-fixed-dim": "#bec6e0", "on-tertiary-container": "#a4acc5", "surface-container-lowest": "#ffffff", "surface-variant": "#d3e4fe", "primary-container": "#1e3a8a", "on-surface-variant": "#444651", "surface-bright": "#f8f9ff", "on-error-container": "#93000a", "surface-container-highest": "#d3e4fe", "secondary-fixed": "#ffdcc3", "inverse-primary": "#b6c4ff", "secondary-container": "#fe932c", "secondary": "#904d00", "surface-dim": "#cbdbf5", "inverse-surface": "#213145", "secondary-fixed-dim": "#ffb77d", "background": "#f8f9ff", "on-primary-fixed-variant": "#264191", "surface-container-low": "#eff4ff", "on-error": "#ffffff", "primary": "#00236f", "surface": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "surface-container": "#e5eeff", "on-primary-fixed": "#00164e", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-secondary": "#ffffff", "on-secondary-container": "#663500", "surface-container-high": "#dce9ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1.5rem", "space-xl": "2.5rem", "margin-mobile": "1rem", "margin": "2rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "space-md": "1rem", "margin-desktop": "3rem", "space-sm": "0.5rem", "gutter-mobile": "1rem" }, "fontFamily": { "headline-sm": ["Plus Jakarta Sans"], "display-mobile": ["Plus Jakarta Sans"], "caption": ["Inter"], "display": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "headline-lg": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "label-md": ["Inter"], "label-sm": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Inter"], "headline-xl": ["Plus Jakarta Sans"] }, "fontSize": { "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.005em", "fontWeight": "600" }], "display-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "800" }], "caption": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "display": ["3.5rem", { "lineHeight": "4.25rem", "letterSpacing": "-0.03em", "fontWeight": "800" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-xl-mobile": ["1.875rem", { "lineHeight": "2.375rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0", "fontWeight": "400" }], "label-md": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "label-sm": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.03em", "fontWeight": "600" }], "headline-md": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-xl": ["2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 inset-x-0 z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between gap-4"><div class="flex items-center gap-3"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">BEM FMIKOM</span><span class="font-caption text-caption text-on-surface-variant font-medium leading-tight">UNUGHA Cilacap</span></div></div><nav class="hidden xl:flex items-center gap-1" data-active-classes="bg-surface-container-high text-primary font-semibold rounded-lg"><a aria-current="page" class="px-3 py-2 transition-colors bg-surface-container-high text-primary font-semibold rounded-lg" data-path="beranda" href="#">Beranda</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="tentang" href="#">Tentang</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="struktur" href="#">Struktur</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="berita" href="#">Berita</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="galeri" href="#">Galeri</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="pengumuman" href="#">Pengumuman</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="pendaftaran" href="#">Pendaftaran</a><a class="px-3 py-2 text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md rounded-lg" data-path="aspirasi" href="#">Aspirasi</a></nav><div class="flex items-center gap-3"><a class="hidden sm:inline-flex items-center px-4 py-2 bg-secondary-container text-on-secondary-fixed hover:bg-secondary transition-colors hover:text-on-secondary rounded-lg font-label-md text-label-md shadow-[0_1px_2px_rgba(15,23,42,0.05)]" data-path="aspirasi" href="#">Kirim Aspirasi</a><a class="inline-flex items-center px-3.5 py-2 bg-primary text-on-primary hover:bg-tertiary transition-colors hover:text-on-tertiary rounded-lg font-label-md text-label-md shadow-[0_1px_2px_rgba(15,23,42,0.05)]" data-path="portal-login" href="#">Portal Admin</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-background"><div class="flex flex-col w-full">
+<!-- Announcement Floating Toast / Modal in bottom right -->
+<aside class="fixed bottom-6 right-6 z-40 max-w-sm w-[calc(100vw-3rem)] sm:w-96 bg-surface-container-lowest shadow-xl rounded-xl p-5 border-l-4 border-secondary-container transition-all duration-300 transform translate-y-0 opacity-100 flex flex-col gap-3" id="floating-announcement">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-secondary-fixed text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[16px]">campaign</span>
+</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold tracking-wide uppercase">Pengumuman Terkini</span>
+</div>
+<button aria-label="Tutup Notifikasi" class="text-outline hover:text-on-surface p-1 rounded-lg transition-colors" onclick="document.getElementById('floating-announcement').classList.add('hidden')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="space-y-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-snug">Open Recruitment Panitia FMIKOM TECH FESTIVAL 2025</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Pendaftaran resmi panitia divisi Acara, Sponsorship, Desain, dan Humas dibuka hingga 28 Mei 2025.</p>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-caption text-caption text-outline">Batas Waktu: 4 Hari Lagi</span>
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-semibold hover:text-primary-container transition-colors" href="#pendaftaran">
+        Baca Selengkapnya
+        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</aside>
+<!-- Hero Section -->
+<section class="relative overflow-hidden py-12 lg:py-20 px-6 lg:px-12 max-w-7xl mx-auto w-full">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+<!-- Text Area -->
+<div class="lg:col-span-7 flex flex-col items-start gap-6">
+<!-- Badge -->
+<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-container-high text-primary">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold">Kabinet Sinergi Progresif 2024/2025</span>
+</div>
+<!-- Headline -->
+<h1 class="font-display text-display lg:text-[3.25rem] lg:leading-[3.75rem] text-primary tracking-tight">
+          Sistem Informasi &amp; Wadah Sinergi Mahasiswa <span class="text-secondary">FMIKOM UNUGHA</span>
+</h1>
+<!-- Subheadline -->
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+          Pusat informasi resmi, transparansi program kerja, advokasi aspirasi, dan dokumentasi aktivitas mahasiswa Fakultas Matematika dan Ilmu Komputer UNUGHA Cilacap.
+        </p>
+<!-- CTA Action Buttons -->
+<div class="flex flex-wrap items-center gap-4 pt-2 w-full sm:w-auto">
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-primary text-on-primary hover:bg-tertiary transition-all rounded-lg font-label-md text-label-md shadow-md hover:shadow-lg" href="#program-kerja">
+<span>Jelajahi Program Kerja</span>
+<span class="material-symbols-outlined text-[18px]">arrow_downward</span>
+</a>
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-secondary-fixed text-on-secondary-fixed hover:bg-secondary-container hover:text-on-secondary-fixed transition-all rounded-lg font-label-md text-label-md shadow-sm" href="#aspirasi">
+<span class="material-symbols-outlined text-[18px]">campaign</span>
+<span>Kirim Aspirasi Mahasiswa</span>
+</a>
+</div>
+<!-- Meta Assurance -->
+<div class="flex items-center gap-6 pt-4 text-on-surface-variant font-caption text-caption">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+<span>Organisasi Kemahasiswaan Resmi</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">school</span>
+<span>Informatika &amp; Sistem Informasi</span>
+</div>
+</div>
+</div>
+<!-- Visual Bento Canvas -->
+<div class="lg:col-span-5 relative">
+<div class="relative w-full aspect-square max-w-md mx-auto">
+<!-- Ambient blurred decorative backdrops -->
+<div class="absolute -top-6 -right-6 w-64 h-64 bg-surface-variant rounded-full filter blur-3xl opacity-70"></div>
+<div class="absolute -bottom-6 -left-6 w-64 h-64 bg-secondary-fixed-dim rounded-full filter blur-3xl opacity-50"></div>
+<!-- Primary Profile Visual Card -->
+<div class="relative z-10 w-full h-full rounded-2xl overflow-hidden shadow-xl bg-surface-container-lowest flex flex-col justify-between">
+<div class="relative w-full h-[62%] overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Mahasiswa FMIKOM UNUGHA sedang berkolaborasi di lab komputer modern, mengenakan almamater navy formal dengan latar layar kode dan diagram arsitektur sistem informatika, pencahayaan studio lembut bernuansa hangat dan akademis profesional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNFrbvUn7ItxndLPVhx20cRvYNknzcudUmuFJJz0FkRRCHgbvmrN0IdaV2rHIUgt9flUCntOhQLiO35jIZjgpm-a8huM66R90HbnyuaBqd_vtux3Glv0Bpy0NsYHymHsYjz8Qlf3pYDJtjoz9T3xSucZ0AuQYoe3gvQBKdo4-CNgGxkw0cfUKkaSCtItG2eIdWOuufCxoKXjUaCmQkMh9nzjxbUFb3veXtX95OBiM"/>
+<div class="absolute top-4 left-4 px-3 py-1 bg-surface-container-lowest/90 backdrop-blur-md rounded-lg text-primary font-label-sm text-label-sm font-semibold flex items-center gap-1.5 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                Sekretariat BEM FMIKOM
+              </div>
+</div>
+<div class="p-6 bg-surface-container-lowest flex flex-col justify-between flex-1">
+<div>
+<span class="font-caption text-caption text-outline uppercase font-semibold tracking-wider">Fakultas MIPA &amp; Komputer</span>
+<h2 class="font-headline-sm text-headline-sm text-primary">Inovasi Kolaboratif Berbasis Ahlussunnah Wal Jama'ah</h2>
+</div>
+<div class="flex items-center justify-between pt-2">
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-caption text-caption font-bold">IF</div>
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-caption text-caption font-bold">SI</div>
+<div class="w-8 h-8 rounded-full bg-tertiary text-on-tertiary flex items-center justify-center font-caption text-caption font-bold">+2</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">UNUGHA Kampus Kesugihan</span>
+</div>
+</div>
+</div>
+<!-- Floating Micro Card -->
+<div class="absolute -bottom-4 -left-6 z-20 bg-surface-container-lowest shadow-lg rounded-xl p-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">developer_board</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-primary leading-none">100%</p>
+<p class="font-caption text-caption text-on-surface-variant">Layanan Digital Mahasiswa</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Stats Bar -->
+<section class="w-full bg-surface-container-low py-10 px-6 lg:px-12">
+<div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
+<div class="flex flex-col items-center sm:items-start p-4 rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="flex items-center gap-2 text-secondary mb-1">
+<span class="material-symbols-outlined text-[20px]">task_alt</span>
+<span class="font-caption text-caption font-bold uppercase tracking-wider">Realisasi</span>
+</div>
+<p class="font-headline-xl text-headline-xl text-primary font-bold">12+</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center sm:text-left">Program Kerja Terealisasi</p>
+</div>
+<div class="flex flex-col items-center sm:items-start p-4 rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="flex items-center gap-2 text-secondary mb-1">
+<span class="material-symbols-outlined text-[20px]">account_tree</span>
+<span class="font-caption text-caption font-bold uppercase tracking-wider">Struktur</span>
+</div>
+<p class="font-headline-xl text-headline-xl text-primary font-bold">5</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center sm:text-left">Divisi Strategis Aktif</p>
+</div>
+<div class="flex flex-col items-center sm:items-start p-4 rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="flex items-center gap-2 text-secondary mb-1">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+<span class="font-caption text-caption font-bold uppercase tracking-wider">Konstituen</span>
+</div>
+<p class="font-headline-xl text-headline-xl text-primary font-bold">850+</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center sm:text-left">Mahasiswa FMIKOM Terfasilitasi</p>
+</div>
+<div class="flex flex-col items-center sm:items-start p-4 rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="flex items-center gap-2 text-secondary mb-1">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span class="font-caption text-caption font-bold uppercase tracking-wider">Masa Bakti</span>
+</div>
+<p class="font-headline-xl text-headline-xl text-primary font-bold">2024/25</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center sm:text-left">Periode Kepengurusan Aktif</p>
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section class="py-16 lg:py-24 px-6 lg:px-12 max-w-7xl mx-auto w-full" id="tentang">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-5 space-y-6">
+<div class="space-y-2">
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-widest text-secondary">Profil Eksekutif</span>
+<h2 class="font-headline-xl text-headline-xl text-primary">Lembaga Eksekutif Tertinggi FMIKOM UNUGHA</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Badan Eksekutif Mahasiswa Fakultas Matematika dan Ilmu Komputer (BEM FMIKOM) Universitas Nahdlatul Ulama Al Ghazali Cilacap bertindak sebagai motor penggerak keilmuan, sosial, dan advokasi mahasiswa. 
+        </p>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Menaungi Program Studi Informatika (S1) dan Sistem Informasi (S1), kami berikhtiar menciptakan sinergi kolaboratif berorientasi teknologi digital berbasis nilai-nilai keluhuran Islam Nusantara.
+        </p>
+<div class="p-4 bg-surface-container-high rounded-xl flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-[32px]">hub</span>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-primary">Sinergi Terpadu Dua Prodi</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Mengharmonisasikan riset informatika dan implementasi sistem terintegrasi.</p>
+</div>
+</div>
+</div>
+<!-- 3 Pilar Gerakan -->
+<div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+<div class="space-y-4">
+<div class="w-12 h-12 rounded-xl bg-surface-variant text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">biotech</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Inovasi Teknologi</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Mendorong budaya coding, riset AI, komputasi terapan, serta digitalisasi kemahasiswaan yang solutif bagi masyarakat.
+            </p>
+</div>
+<span class="pt-6 font-label-sm text-label-sm text-secondary font-semibold">Pilar 01</span>
+</div>
+<div class="p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+<div class="space-y-4">
+<div class="w-12 h-12 rounded-xl bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">balance</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Advokasi Solutif</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Menjembatani komunikasi transparan antara dekanat, dosen, dan mahasiswa dengan pendekatan dialog bermartabat.
+            </p>
+</div>
+<span class="pt-6 font-label-sm text-label-sm text-secondary font-semibold">Pilar 02</span>
+</div>
+<div class="p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+<div class="space-y-4">
+<div class="w-12 h-12 rounded-xl bg-primary-fixed text-on-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">psychology</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Karakter Mahasiswa</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Membentuk intelektual muda berpikiran kritis, berintegritas moral tinggi, dan berjiwa kepemimpinan progresif.
+            </p>
+</div>
+<span class="pt-6 font-label-sm text-label-sm text-secondary font-semibold">Pilar 03</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Visi & Misi Section -->
+<section class="py-16 lg:py-20 px-6 lg:px-12 bg-surface-container-low w-full">
+<div class="max-w-7xl mx-auto space-y-12">
+<div class="text-center max-w-3xl mx-auto space-y-3">
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-widest text-secondary">Arah Perjuangan</span>
+<h2 class="font-headline-xl text-headline-xl text-primary">Visi &amp; Misi Kabinet Sinergi Progresif</h2>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+<!-- Visi Card -->
+<div class="lg:col-span-5 bg-primary text-on-primary rounded-2xl p-8 lg:p-10 shadow-lg flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-12 -bottom-12 w-48 h-48 bg-surface-tint opacity-20 rounded-full blur-2xl"></div>
+<div class="space-y-4 relative z-10">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container-highest/20 rounded-md text-secondary-fixed font-label-sm text-label-sm uppercase font-semibold">
+              Visi Utama 2024/2025
+            </div>
+<h3 class="font-headline-lg text-headline-lg leading-snug">
+              "Terwujudnya BEM FMIKOM UNUGHA sebagai katalisator gerakan mahasiswa yang kolaboratif, unggul dalam teknologi, serta berdaya saing berlandaskan akhlak mulia."
+            </h3>
+</div>
+<div class="pt-8 relative z-10">
+<p class="font-caption text-caption text-on-primary-container">Ditetapkan melalui Musyawarah Mahasiswa FMIKOM UNUGHA</p>
+</div>
+</div>
+<!-- Misi List -->
+<div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col justify-start gap-3">
+<span class="w-8 h-8 rounded-lg bg-surface-container text-primary font-headline-sm text-headline-sm flex items-center justify-center font-bold">1</span>
+<h4 class="font-headline-sm text-headline-sm text-primary">Akselerasi Kompetensi Digital</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Menyelenggarakan pelatihan komputasi, bootcamp software engineering, dan workshop data science berkala.</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col justify-start gap-3">
+<span class="w-8 h-8 rounded-lg bg-surface-container text-primary font-headline-sm text-headline-sm flex items-center justify-center font-bold">2</span>
+<h4 class="font-headline-sm text-headline-sm text-primary">Sistem Advokasi Responsif</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Menyediakan portal aspirasi daring yang terstruktur, tanggap, dan terukur dalam menindaklanjuti kebutuhan fasilitas perkuliahan.</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col justify-start gap-3">
+<span class="w-8 h-8 rounded-lg bg-surface-container text-primary font-headline-sm text-headline-sm flex items-center justify-center font-bold">3</span>
+<h4 class="font-headline-sm text-headline-sm text-primary">Jejaring Mitra Strategis</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Membangun kolaborasi eksternal bersama industri teknologi, instansi pemerintahan, dan universitas di wilayah Barlingmascakeb.</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm flex flex-col justify-start gap-3">
+<span class="w-8 h-8 rounded-lg bg-surface-container text-primary font-headline-sm text-headline-sm flex items-center justify-center font-bold">4</span>
+<h4 class="font-headline-sm text-headline-sm text-primary">Kaderisasi &amp; Nilai Aswaja</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Menguatkan kepemimpinan mahasiswa yang berintegritas tinggi dengan berpegang teguh pada nilai moderasi dan etika keislaman.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Struktur Kepengurusan (BPH Preview) -->
+<section class="py-16 lg:py-24 px-6 lg:px-12 max-w-7xl mx-auto w-full" id="struktur">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div class="space-y-2">
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-widest text-secondary">Kepemimpinan</span>
+<h2 class="font-headline-xl text-headline-xl text-primary">Badan Pengurus Harian (BPH)</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">Pilar pengarah dan eksekutif penggerak ritme roda organisasi BEM FMIKOM UNUGHA Cilacap.</p>
+</div>
+<div class="flex items-center gap-2">
+<a class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-surface-container-high text-primary hover:bg-primary hover:text-on-primary transition-colors font-label-md text-label-md font-semibold" href="#struktur-lengkap">
+<span>Lihat Struktur Lengkap</span>
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+</a>
+</div>
+</div>
+<!-- BPH Card Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1: Ketua -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group">
+<div class="h-64 overflow-hidden relative bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Potret formal pria mahasiswa Indonesia mengenakan jas almamater universitas biru navy dengan latar belakang studio foto bersih, tatapan percaya diri dan ramah, pencahayaan lembut profesional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtgku1Oc1gXvtHTOXdTK6C4HXXZSR2dM6QvAXfdUKXdYrIvDFv7CJWT7aeJ_S-RnhDtINUMIJeVFQ_pUHBjp1PbrQ2DOBIUd8F1TWvf4VGRGuJCzJ1py84wo4xHGShLoc-APWa8P729p2OOjoMEPUCPaXHzANAmEmypPTBdEF90th-WXGMhgzRS266c3S59DdZJ1b3eoUoibQQ0Dyl6RpBsHmZhqX-_fPmbChBUTE"/>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-primary text-on-primary font-label-sm text-label-sm font-semibold">Ketua BEM</span>
+</div>
+<div class="p-5 space-y-1">
+<h3 class="font-headline-sm text-headline-sm text-primary">Muhammad Rizky Pratama</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-medium">Informatika '22</p>
+<div class="pt-3 flex items-center justify-between text-caption font-caption text-outline">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">mail</span> rizky@unugha.ac.id</span>
+<span class="material-symbols-outlined text-[18px] text-primary">verified_user</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Wakil Ketua -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group">
+<div class="h-64 overflow-hidden relative bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Potret formal mahasiswi berhijab Indonesia mengenakan jas almamater navy formal dengan kemeja putih di studio akademis modern berlatar belakang abu-abu terang profesional" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCl_woBtJy4nfNM-ruKPu4MsJJgnkwxzV1PB9F8zBStaWf-_X6yDawHo3PFiXDYei1gY-GTygvzBk5V2jcxFzv9JdTfCs_1RgySmEwIBg9UkBj-zs009qZ26x9Z9XOHGaGoUTPhF0CWgZjxkVp-w40G7q1URXYR1K-Wha3VE0wvHaBHkgHgYbuoormxSisdvEHxU2nrOIVp2uJ9wP2dkYNPLFn9uY9afGnXU5CH3c"/>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-secondary-container text-on-secondary-fixed font-label-sm text-label-sm font-semibold">Wakil Ketua BEM</span>
+</div>
+<div class="p-5 space-y-1">
+<h3 class="font-headline-sm text-headline-sm text-primary">Annisa Dwi Lestari</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-medium">Sistem Informasi '22</p>
+<div class="pt-3 flex items-center justify-between text-caption font-caption text-outline">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">mail</span> annisa@unugha.ac.id</span>
+<span class="material-symbols-outlined text-[18px] text-primary">verified_user</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Sekretaris Umum -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group">
+<div class="h-64 overflow-hidden relative bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Potret mahasiswa pria muda berprestasi mengenakan jas almamater biru navy rapi memegang map arsip di koridor kampus universitas modern pencahayaan alami" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnjKQCzgoNF-4yOh7-fNJVsQXiZhdGzGxqhrIj_X88HX3zGI1XY6XDcCm4I10T-Bjthyrsugfvw2o52Xf7TCIRvdulnXte5BdhPgtTXf59t8w1DfffEvKoqYxFP9LybpOIPPbCqv4VkkbL7dM8uN4KC2BdvdlivX6OvJO37BF_6p2DMOap63G7_w8Ud302WskbfeMcZ7llpP_REiG0OE1tQHjM-jVof1KJi7fbIxc"/>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-surface-container-highest text-primary font-label-sm text-label-sm font-semibold">Sekretaris Umum</span>
+</div>
+<div class="p-5 space-y-1">
+<h3 class="font-headline-sm text-headline-sm text-primary">Fajar Hidayatullah</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-medium">Informatika '23</p>
+<div class="pt-3 flex items-center justify-between text-caption font-caption text-outline">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">mail</span> fajar@unugha.ac.id</span>
+<span class="material-symbols-outlined text-[18px] text-primary">verified_user</span>
+</div>
+</div>
+</div>
+<!-- Card 4: Bendahara Umum -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group">
+<div class="h-64 overflow-hidden relative bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Potret mahasiswi ceria berhijab formal mengenakan almamater navy di depan perpustakaan digital kampus tersenyum ramah dan penuh dedikasi" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDNUivwADt_OpJkHgeZBnO7BqWHfHsqqWLTlalsxWPB8ZIICZ95h0ouCw_6pid44QenDRmFIVXmwuiCU3pl3wxsPjDkLtckLu9ANnWOqBDlroAXfpClPAHN5CmjXSZZL5cZDtmXC9mGRxEsnqka7-LqhD0uOjpvftH8ZwbmBnnYO3OlNCsZZ_L25O1Q6edhvkkJjXaGryzxOqKaRA_CpnEuvA_rz-kti99c3BjwTU"/>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded bg-surface-container-highest text-primary font-label-sm text-label-sm font-semibold">Bendahara Umum</span>
+</div>
+<div class="p-5 space-y-1">
+<h3 class="font-headline-sm text-headline-sm text-primary">Siti Nurhaliza</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant font-medium">Sistem Informasi '23</p>
+<div class="pt-3 flex items-center justify-between text-caption font-caption text-outline">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">mail</span> siti@unugha.ac.id</span>
+<span class="material-symbols-outlined text-[18px] text-primary">verified_user</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Urgent Notice Banner Section -->
+<section class="px-6 lg:px-12 max-w-7xl mx-auto w-full mb-12" id="pengumuman">
+<div class="bg-secondary-fixed text-on-secondary-fixed p-6 lg:p-8 rounded-2xl shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-secondary-container text-on-secondary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[28px]">notification_important</span>
+</div>
+<div class="space-y-1">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-on-secondary-fixed/10 font-label-sm text-label-sm font-bold">
+            PENGUMUMAN AKADEMIK &amp; BEASISWA
+          </div>
+<h3 class="font-headline-md text-headline-md font-bold">Jadwal Pengisian KRS Semester Ganjil &amp; Pengajuan Beasiswa Aspirasi 2025</h3>
+<p class="font-body-sm text-body-sm opacity-90 max-w-3xl">Batas akhir validasi dosen pembimbing akademik dan pengajuan berkas beasiswa advokasi melalui BEM FMIKOM ditutup pada 30 Agustus 2025.</p>
+</div>
+</div>
+<a class="shrink-0 px-5 py-2.5 bg-on-secondary-fixed text-secondary-fixed font-label-md text-label-md font-semibold rounded-lg hover:opacity-90 transition-opacity flex items-center gap-1.5" href="#">
+<span>Unduh Panduan</span>
+<span class="material-symbols-outlined text-[18px]">download</span>
+</a>
+</div>
+</section>
+<!-- Berita & Kegiatan Terbaru -->
+<section class="py-12 lg:py-16 px-6 lg:px-12 max-w-7xl mx-auto w-full" id="berita">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+<div class="space-y-2">
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-widest text-secondary">Warta Terkini</span>
+<h2 class="font-headline-xl text-headline-xl text-primary">Berita &amp; Aktivitas Mahasiswa</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">Liputan program, seminar keilmuan, dan aktivitas kemahasiswaan terkini FMIKOM.</p>
+</div>
+<a class="inline-flex items-center gap-1.5 font-label-md text-label-md text-primary font-semibold hover:text-secondary transition-colors" href="#semua-berita">
+<span>Lihat Semua Berita</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Berita 1 -->
+<article class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col h-full">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="Suasana workshop UI UX design di auditorium kampus mahasiswa sedang membuka laptop menampilkan Figma dan coding Next.js bersama pembicara di panggung utama" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp0rUJBQLtm5K-yK6KwmS3IUV9EDIO5QzNhhWLHa0leEtq1Kg_BrRHvEdWSwhu0vPz7YZ2QJg24V5UcmtUIm3PF5BK1wzZ6CmDQUVkZgbGSpK7m-CcUuvCzJTw95ZCp9FEiuPEdNTCNSgdHxtoQ2hPUDwRqft9ODHXuJZ3Rp-mmIuzDYQ0M9VeQ18tft7OLi-yZj4KjgXvJpazC4BmiTntn3MJlV35mlh08VIckJI"/>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-surface-container-lowest/90 backdrop-blur-md text-primary font-label-sm text-label-sm font-bold">Kominfo</span>
+</div>
+<div class="p-6 flex flex-col justify-between flex-1 gap-4">
+<div class="space-y-2">
+<span class="font-caption text-caption text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> 18 Mei 2025
+            </span>
+<h3 class="font-headline-sm text-headline-sm text-primary line-clamp-2 hover:text-secondary transition-colors cursor-pointer">
+              Workshop UI/UX Design &amp; Next.js Bersama Praktisi Industri
+            </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3">
+              Meningkatkan kesiapan mahasiswa menghadapi standar industri software house dengan praktik mendalam seputar Atomic Design dan Fullstack Next.js.
+            </p>
+</div>
+<a class="font-label-md text-label-md text-primary font-semibold flex items-center gap-1 hover:text-secondary pt-2" href="#">
+            Baca Berita <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</article>
+<!-- Berita 2 -->
+<article class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col h-full">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="Rombongan delegasi mahasiswa universitas berfoto bersama jajaran pimpinan perusahaan telekomunikasi di lobby modern Telkom Jateng mengenakan seragam almamater" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpNyfjth6Qbvcy8eu36f5E682_-2RejIIw61_N7jYLXxIpYNaP4IWbSmKpJg3lNtjPbGF-a6_EOWnnUJaGrW-Vfzhz7jItslfqlxqV2560n5Qd4RlG9PDS1ggZCxwVwxscfl5JIcT4DvQuzc-2TuGdJIg9T22OMb_6nEaknZlVwNluxjsW1EDFXNR3Zbn2ESAMESaIfsro2wYAVkcO8Fxu4-OSEmWGdMlC_gfuYIk"/>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-surface-container-lowest/90 backdrop-blur-md text-primary font-label-sm text-label-sm font-bold">Humas &amp; Eksternal</span>
+</div>
+<div class="p-6 flex flex-col justify-between flex-1 gap-4">
+<div class="space-y-2">
+<span class="font-caption text-caption text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> 10 Mei 2025
+            </span>
+<h3 class="font-headline-sm text-headline-sm text-primary line-clamp-2 hover:text-secondary transition-colors cursor-pointer">
+              Kunjungan Industri BEM FMIKOM ke Telkom Regional Jateng
+            </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3">
+              Mempelajari implementasi infrastruktur cloud fiber optik dan peluang magang bersertifikat bagi talenta muda FMIKOM UNUGHA di era digital.
+            </p>
+</div>
+<a class="font-label-md text-label-md text-primary font-semibold flex items-center gap-1 hover:text-secondary pt-2" href="#">
+            Baca Berita <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</article>
+<!-- Berita 3 -->
+<article class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col h-full">
+<div class="h-48 overflow-hidden relative">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" data-alt="Kegiatan pelatihan kepemimpinan mahasiswa di aula terbuka dengan dinamika kelompok forum diskusi dan presentasi strategi organisasi kepemudaan" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXKE0l0PWUkM7fNQy-HG7hnEg-Tj5EIPLCoCTWNEOc8yeDJ4RYFq_ZnKAT24COFtAVNpXkOCTvlC_Z8Li8zpQeHmY9g-0mBnBIzKYQG6kPc-qcY-nmuAgj_FB76asI7GyO16ypEvAC_AJTxmCzaz98ZhvwDq0rbOXy6hHAvVdjYTEC8QsW6drgS_DsfZJT1p1B2aa1NdB8_xrN5of_uhSeytB-sNlMvMCP-aUaT4s"/>
+<span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-surface-container-lowest/90 backdrop-blur-md text-primary font-label-sm text-label-sm font-bold">PSDM</span>
+</div>
+<div class="p-6 flex flex-col justify-between flex-1 gap-4">
+<div class="space-y-2">
+<span class="font-caption text-caption text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span> 02 Mei 2025
+            </span>
+<h3 class="font-headline-sm text-headline-sm text-primary line-clamp-2 hover:text-secondary transition-colors cursor-pointer">
+              Latihan Keterampilan Manajemen Mahasiswa Tingkat Dasar (LKMM-TD)
+            </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3">
+              Mencetak calon-calon organisatoris berdaya juang tangguh, solutif menyelesaikan dinamika kampus, serta cakap manajemen waktu akademik.
+            </p>
+</div>
+<a class="font-label-md text-label-md text-primary font-semibold flex items-center gap-1 hover:text-secondary pt-2" href="#">
+            Baca Berita <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</article>
+</div>
+</section>
+<!-- Galeri Kegiatan Preview -->
+<section class="py-12 lg:py-16 px-6 lg:px-12 bg-surface-container-low w-full" id="galeri">
+<div class="max-w-7xl mx-auto space-y-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-widest text-secondary">Dokumentasi Lensa</span>
+<h2 class="font-headline-xl text-headline-xl text-primary">Galeri Kegiatan Fakultas</h2>
+</div>
+<a class="inline-flex items-center gap-2 px-4 py-2 bg-surface-container-lowest text-primary rounded-lg font-label-md text-label-md font-semibold hover:bg-primary hover:text-on-primary transition-colors shadow-sm" href="#album">
+<span>Buka Album Kegiatan</span>
+<span class="material-symbols-outlined text-[18px]">photo_library</span>
+</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="relative h-48 sm:h-64 rounded-xl overflow-hidden group shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Dokumentasi pelantikan pengurus BEM FMIKOM UNUGHA di auditorium kampus dengan jajaran dekan dan bendera ormawa universitas megah" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_Swe38eXWA6lsdQbE28Q48-WL0dlEiDPPweLJGsjj-NRKoxkLqOadF89lfjyBws0xKjNiBy59w5mtA5UzrNLVCMo3ggp76rrIx17mFMrrhQH8ro_RDlrNpmtYGwo53IB2b0nZypkqDaXFVTl0Z53YCM-0y2cEHXYLpSV1NP0s8Zh5tIzKDZOTDb632IchgLyZttNikAI363do5zgYGRRqJT1TbTnSsPW4nr1pUyc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end">
+<span class="font-label-sm text-label-sm text-on-primary font-medium">Pelantikan Pengurus 2024</span>
+</div>
+</div>
+<div class="relative h-48 sm:h-64 rounded-xl overflow-hidden group shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Suasana kompetisi programming hackathon mahasiswa informatika mengetik di depan layar multi-monitor dengan suasana kompetitif dan fokus tinggi" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ7cByWb0kIeWar5HSQHeO5ZtrkrsjevVthMqKEl65Jk_1Ug3-jO2KnkRsaFsykmWe3ecYA9hG039-C7BSCR2DjdF6TZGMIjg8SPep0CA_wU31U7Zs7tTasTm6VmVrVBCOjzzDCTrkJm8PFm3bEMlqn49hhyubZ9Jnofhjy-GOD1T8VXPls-ddb77kY6ZIIXovnQznZfGao7l_gDhqQI8fIgW-_a3LmpWttQ6Crm8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end">
+<span class="font-label-sm text-label-sm text-on-primary font-medium">FMIKOM Hackathon 2024</span>
+</div>
+</div>
+<div class="relative h-48 sm:h-64 rounded-xl overflow-hidden group shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Aksi bakti sosial mahasiswa komputer mengajar dasar teknologi dan literasi digital kepada anak-anak sekolah dasar di pelosok desa Cilacap" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8Aqw3WBi5seeFjd5ikAkTerdZlvtEaOtn3sgC5uxBuJuAXo5nfNXomOnk3nyrwU1sPUNdG0KKM1F8ZS5zjLHmdD6znk5bzaDVZIZzdkuwcpi7wqDh2FHHQ2OqUQl6lWZPA8mRAQm_qDSiifSQvwERsjCwN4AzUxi8neuxE50TNqSohgTWqMzvDu3jeKF38XC-6O6y4n0BFKgKYfBdZ40F2eZjBTgVB9O55W_HwsM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end">
+<span class="font-label-sm text-label-sm text-on-primary font-medium">FMIKOM Mengabdi Cilacap</span>
+</div>
+</div>
+<div class="relative h-48 sm:h-64 rounded-xl overflow-hidden group shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Diskusi santai sarasehan mahasiswa bersama para alumni informatika sukses yang bekerja di startup unicorn bertempat di gazebo kampus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzvV4pmt8eSmxawMjsr4jKrVmL8kILC9EaptRskLT0amPcpwvTeyFPI6FNn6zKav0J8HAkd_137jny5O5NBBb7GoTLyCSl_mSldprzCE5mXcf9uKJ6wlVPMOIZaou72NSQo5e7AAi0R0sqJRLKZVxAV7abMCMzTpwqepNp6x2EntJLUfYwVdE4Xrx7fRmlcweu5pODr3aihOZN0YfykIqy6V-uwIMjAG7LPwRWKdE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-4 flex items-end">
+<span class="font-label-sm text-label-sm text-on-primary font-medium">Temu Alumni &amp; Sarasehan</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pendaftaran Aktif (Open Recruitment Card) -->
+<section class="py-16 lg:py-20 px-6 lg:px-12 max-w-7xl mx-auto w-full" id="pendaftaran">
+<div class="bg-gradient-to-br from-surface-container-lowest to-surface-container-high rounded-3xl p-8 lg:p-12 shadow-sm border border-outline-variant/30 relative overflow-hidden">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<div class="lg:col-span-8 space-y-4">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 bg-surface-variant text-primary font-label-sm text-label-sm font-bold rounded-full">
+              REKRUTMEN RESMI
+            </span>
+<span class="px-3 py-1 bg-surface-container-highest text-secondary font-label-sm text-label-sm font-bold rounded-full flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+              STATUS: BUKA
+            </span>
+</div>
+<h2 class="font-headline-xl text-headline-xl text-primary">
+            Open Recruitment Staf Magang &amp; Panitia Event FMIKOM 2025
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed max-w-2xl">
+            Tingkatkan keahlian berorganisasi, perluas jejaring lintas angkatan, dan berikan kontribusi nyata dalam kepanitiaan FMIKOM Tech Fest serta staf magang BEM.
+          </p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+<div class="p-3 bg-surface-container-lowest rounded-xl shadow-xs">
+<span class="font-caption text-caption text-outline">Batas Waktu</span>
+<p class="font-label-md text-label-md font-bold text-on-surface">28 Mei 2025</p>
+</div>
+<div class="p-3 bg-surface-container-lowest rounded-xl shadow-xs">
+<span class="font-caption text-caption text-outline">Persyaratan</span>
+<p class="font-label-md text-label-md font-bold text-on-surface">Mhs Aktif IF / SI</p>
+</div>
+<div class="p-3 bg-surface-container-lowest rounded-xl shadow-xs">
+<span class="font-caption text-caption text-outline">Posisi Dibuka</span>
+<p class="font-label-md text-label-md font-bold text-on-surface">6 Divisi</p>
+</div>
+<div class="p-3 bg-surface-container-lowest rounded-xl shadow-xs">
+<span class="font-caption text-caption text-outline">Benefit</span>
+<p class="font-label-md text-label-md font-bold text-on-surface">SK &amp; Sertifikat</p>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col items-center lg:items-end justify-center">
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-md w-full max-w-sm flex flex-col gap-4 text-center">
+<div class="space-y-1">
+<span class="font-caption text-caption text-outline uppercase font-semibold">Tersisa Waktu Seleksi</span>
+<div class="flex items-center justify-center gap-2 text-primary font-headline-lg text-headline-lg font-bold">
+<span class="px-2.5 py-1 bg-surface-container rounded-lg">04</span> :
+                <span class="px-2.5 py-1 bg-surface-container rounded-lg">18</span> :
+                <span class="px-2.5 py-1 bg-surface-container rounded-lg">45</span>
+</div>
+<span class="font-caption text-caption text-outline">Hari : Jam : Menit</span>
+</div>
+<a class="w-full py-3.5 bg-primary text-on-primary hover:bg-tertiary transition-colors rounded-xl font-label-md text-label-md font-bold shadow-md" href="#">
+              Daftar Sekarang
+            </a>
+<p class="font-caption text-caption text-on-surface-variant">Pastikan menyiapkan CV &amp; KHS Terakhir.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Aspirasi Mahasiswa Section -->
+<section class="py-16 lg:py-20 px-6 lg:px-12 bg-surface-container-high w-full" id="aspirasi">
+<div class="max-w-4xl mx-auto text-center space-y-6">
+<div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-secondary-container text-on-secondary-fixed mx-auto shadow-sm">
+<span class="material-symbols-outlined text-[32px]">record_voice_over</span>
+</div>
+<div class="space-y-3">
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-widest text-secondary">Kanal Partisipasi</span>
+<h2 class="font-headline-xl text-headline-xl text-primary">Suara Anda Membangun Fakultas Lebih Baik</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
+          Kirim aspirasi, keluhan fasilitas laboratorium komputer, saran kurikulum, atau ide program kerja secara bebas, konstruktif, dan <span class="font-semibold text-primary">terjamin 100% anonim</span>.
+        </p>
+</div>
+<div class="pt-2 flex flex-wrap items-center justify-center gap-4">
+<a class="px-8 py-4 bg-primary text-on-primary hover:bg-tertiary transition-all rounded-xl font-headline-sm text-headline-sm shadow-md flex items-center gap-2" href="#form-aspirasi">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+<span>Buka Form Aspirasi Mahasiswa</span>
+</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 text-left">
+<div class="p-4 rounded-xl bg-surface-container-lowest/80 backdrop-blur-sm">
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md font-semibold mb-1">
+<span class="material-symbols-outlined text-[18px]">security</span>
+            Privasi Terlindungi
+          </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Identitas pelapor bersifat opsional demi kenyamanan penyampaian.</p>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-lowest/80 backdrop-blur-sm">
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md font-semibold mb-1">
+<span class="material-symbols-outlined text-[18px]">sync_alt</span>
+            Auditorium Advokasi
+          </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Disampaikan langsung pada forum audiensi dekanat bulanan.</p>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-lowest/80 backdrop-blur-sm">
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md font-semibold mb-1">
+<span class="material-symbols-outlined text-[18px]">query_stats</span>
+            Tracking Transparan
+          </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Status penanganan aspirasi dipublikasikan secara bertahap.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Kontak & Sekretariat Quick View -->
+<section class="py-16 px-6 lg:px-12 max-w-7xl mx-auto w-full">
+<div class="bg-surface-container-lowest rounded-2xl p-8 lg:p-12 shadow-sm">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<div class="lg:col-span-5 space-y-4">
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-widest text-secondary">Hubungi Kami</span>
+<h2 class="font-headline-lg text-headline-lg text-primary">Sekretariat BEM FMIKOM UNUGHA</h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+            Terbuka untuk diskusi kolaborasi ormawa, audiensi mahasiswa, dan kemitraan eksternal industri teknologi.
+          </p>
+<div class="space-y-3 pt-2">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">location_on</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Gedung B Lt. 2, Kampus UNUGHA Cilacap, Jl. Kemerdekaan Barat No.17, Kesugihan, Cilacap 53274</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0">mail</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">bem.fmikom@unugha.ac.id</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0">tag</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Instagram: @bemfmikom_unugha</p>
+</div>
+</div>
+</div>
+<div class="lg:col-span-7">
+<div class="w-full h-72 rounded-xl bg-cover bg-center shadow-inner relative flex items-end p-4" data-location="Universitas Nahdlatul Ulama Al Ghazali Cilacap" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA9KJ-ywAiX95aWBbJ-RQ-fkRlVCMdxQm6NQ-JCG9Z1uMgxKkR6a-oWBeJlO4qpXZD-emSTEW0TfKDXJQDsUpZ2ACEvnfBwevG1BBlYPjrnn43bujY5xWYtOSu-vd1NchKG49oTQ1OreVlU7aYdN196pugsh8VQ815YCQRWbK9ORMwirKWPNLLp1KB9-p_DPYyrGQAR97M5cO8FDgcNtBIaG4zEMaOolSN8-5dtzKM')">
+<div class="bg-surface-container-lowest/90 backdrop-blur-md px-4 py-2.5 rounded-lg shadow-sm flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px]">pin_drop</span>
+<div>
+<p class="font-label-md text-label-md font-bold text-primary">Kampus UNUGHA Kesugihan</p>
+<p class="font-caption text-caption text-on-surface-variant">Pusat Aktivitas Mahasiswa Komputer</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div></main><footer class="w-full bg-surface-container-low shadow-[0_-1px_8px_rgba(0,0,0,0.02)] mt-auto"><div class="max-w-7xl mx-auto px-6 lg:px-12 py-12 lg:py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"><div class="space-y-4"><div class="flex items-center gap-3"><img alt="Logo BEM FMIKOM UNUGHA" class="h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">BEM FMIKOM</span><span class="font-caption text-caption text-on-surface-variant">UNUGHA Cilacap</span></div></div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Badan Eksekutif Mahasiswa Fakultas Matematika dan Ilmu Komputer Universitas Nahdlatul Ulama Al Ghazali Cilacap. Bersinergi, Progresif, dan Berintegritas.</p></div><div class="space-y-3"><h4 class="font-headline-sm text-headline-sm text-primary">Tautan Penting</h4><ul class="space-y-2"><li class="font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" data-path="tentang" href="#">Profil Organisasi</a></li><li class="font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" data-path="struktur" href="#">Struktur Kepengurusan</a></li><li class="font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" data-path="berita" href="#">Warta &amp; Kegiatan</a></li><li class="font-body-sm text-body-sm text-on-surface-variant"><a class="hover:text-primary transition-colors" data-path="pendaftaran" href="#">Pendaftaran Kepengurusan &amp; Event</a></li></ul></div><div class="space-y-3"><h4 class="font-headline-sm text-headline-sm text-primary">Sekretariat &amp; Kontak</h4><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Gedung B Lt. 2, Kampus UNUGHA Cilacap<br/>Jl. Kemerdekaan Barat No.17, Kesugihan, Cilacap, Jawa Tengah 53274</p><p class="font-body-sm text-body-sm text-on-surface-variant">Email: bem.fmikom@unugha.ac.id</p></div><div class="space-y-3"><h4 class="font-headline-sm text-headline-sm text-primary">Kanal Aspirasi &amp; Media</h4><p class="font-body-sm text-body-sm text-on-surface-variant">Ikuti info resmi dan ajukan aspirasi mahasiswa secara daring.</p><div class="flex items-center gap-2 pt-2"><a class="px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface hover:bg-primary hover:text-on-primary transition-colors font-label-sm text-label-sm flex items-center gap-1.5" href="#"><span class="material-symbols-outlined text-[16px]">public</span>Instagram @bemfmikom_unugha</a></div></div></div><div class="w-full bg-surface-container py-4"><div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left"><p class="font-caption text-caption text-on-surface-variant">© 2025 BEM FMIKOM UNUGHA. Hak Cipta Dilindungi Undang-Undang.</p><p class="font-caption text-caption text-on-surface-variant">Universitas Nahdlatul Ulama Al Ghazali Cilacap</p></div></div></footer></body></html>

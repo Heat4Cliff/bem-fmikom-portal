@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><title>Admin Portal BEM FMIKOM UNUGHA</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-background": "#0b1c30", "outline": "#757682", "tertiary": "#222a3e", "on-tertiary-fixed": "#131b2e", "on-secondary-fixed": "#2f1500", "outline-variant": "#c5c5d3", "on-primary": "#ffffff", "surface-tint": "#4059aa", "error-container": "#ffdad6", "primary-fixed-dim": "#b6c4ff", "tertiary-container": "#384055", "on-primary-container": "#90a8ff", "on-secondary-fixed-variant": "#6e3900", "on-tertiary-fixed-variant": "#3f465c", "on-surface": "#0b1c30", "primary-fixed": "#dce1ff", "tertiary-fixed": "#dae2fd", "tertiary-fixed-dim": "#bec6e0", "on-tertiary-container": "#a4acc5", "surface-container-lowest": "#ffffff", "surface-variant": "#d3e4fe", "primary-container": "#1e3a8a", "on-surface-variant": "#444651", "surface-bright": "#f8f9ff", "on-error-container": "#93000a", "surface-container-highest": "#d3e4fe", "secondary-fixed": "#ffdcc3", "inverse-primary": "#b6c4ff", "secondary-container": "#fe932c", "secondary": "#904d00", "surface-dim": "#cbdbf5", "inverse-surface": "#213145", "secondary-fixed-dim": "#ffb77d", "background": "#f8f9ff", "on-primary-fixed-variant": "#264191", "surface-container-low": "#eff4ff", "on-error": "#ffffff", "primary": "#00236f", "surface": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "surface-container": "#e5eeff", "on-primary-fixed": "#00164e", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-secondary": "#ffffff", "on-secondary-container": "#663500", "surface-container-high": "#dce9ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1.5rem", "space-xl": "2.5rem", "margin-mobile": "1rem", "margin": "2rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "space-md": "1rem", "margin-desktop": "3rem", "space-sm": "0.5rem", "gutter-mobile": "1rem" }, "fontFamily": { "headline-sm": ["Plus Jakarta Sans"], "display-mobile": ["Plus Jakarta Sans"], "caption": ["Inter"], "display": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "headline-lg": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "label-md": ["Inter"], "label-sm": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Inter"], "headline-xl": ["Plus Jakarta Sans"] }, "fontSize": { "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.005em", "fontWeight": "600" }], "display-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "800" }], "caption": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "display": ["3.5rem", { "lineHeight": "4.25rem", "letterSpacing": "-0.03em", "fontWeight": "800" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-xl-mobile": ["1.875rem", { "lineHeight": "2.375rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0", "fontWeight": "400" }], "label-md": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "label-sm": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.03em", "fontWeight": "600" }], "headline-md": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-xl": ["2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col overflow-y-auto"><div class="p-5 flex items-center gap-3 bg-surface-container-low"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">BEM FMIKOM</span><span class="font-caption text-caption text-on-surface-variant font-medium">Admin Portal</span></div></div><div class="px-4 py-2"><div class="px-3 py-2 bg-surface-container rounded-lg flex items-center justify-between"><span class="font-caption text-caption text-on-surface-variant">Status Periode:</span><span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">2024/2025</span></div></div><nav class="flex-1 px-3 py-3 space-y-4" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Overview</span></a></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Content</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="berita-management" href="#"><span class="material-symbols-outlined text-[18px]">newspaper</span><span>Berita</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="kategori-management" href="#"><span class="material-symbols-outlined text-[18px]">category</span><span>Kategori</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="galeri-management" href="#"><span class="material-symbols-outlined text-[18px]">photo_library</span><span>Galeri</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengumuman-management" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span>Pengumuman</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Organization</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="struktur-organisasi-admin" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span>Struktur</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="divisi-management" href="#"><span class="material-symbols-outlined text-[18px]">groups</span><span>Divisi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengurus-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span>Pengurus</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="periode-management" href="#"><span class="material-symbols-outlined text-[18px]">history_edu</span><span>Periode</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Management</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pendaftaran-management" href="#"><span class="material-symbols-outlined text-[18px]">how_to_reg</span><span>Pendaftaran</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="aspirasi-management" href="#"><span class="material-symbols-outlined text-[18px]">forum</span><span>Aspirasi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="arsip-dokumen" href="#"><span class="material-symbols-outlined text-[18px]">folder</span><span>Arsip Dokumen</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">System</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="system-settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="users-management" href="#"><span class="material-symbols-outlined text-[18px]">manage_accounts</span><span>Users</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="activity-log" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Activity Log</span></a></div></div></nav><div class="p-4 bg-surface-container-low"><a class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm" data-path="beranda" href="#"><span class="material-symbols-outlined text-[18px]">open_in_new</span>Lihat Web Publik</a></div></aside><div class="pl-64 min-h-screen flex flex-col"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-6 lg:px-8"><div class="flex items-center gap-3"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><span class="font-label-md text-label-md text-on-surface-variant font-medium">Fakultas Matematika dan Ilmu Komputer</span></div><div class="flex items-center gap-4"><button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors relative"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary-container"></span></button><div class="h-6 w-px bg-outline-variant"></div><div class="flex items-center gap-3"><div class="text-right hidden sm:block"><p class="font-label-sm text-label-sm text-on-surface leading-tight font-semibold">Admin BEM</p><span class="font-caption text-caption text-primary font-medium">Superadministrator</span></div><img alt="Foto Profil Admin" class="h-9 w-9 rounded-full object-cover ring-2 ring-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkaINJpcRubsTXdXDHksfsqbChqqBxKHZBe17AySz3LBQte4ozJgwwmO0K97gBDOC3e6kF9cYQFyc4xK_TPq3vSjy-tT14ti2Sz0MZo4-inMETb3HX2fg5wNY0cAK6DBXgHegb84OZnS6KiAuyFqN9d4sq4srhGXU6y5BpzfvIU4LxHADmRLIDJqisWwAC79bLL9SP5iNGyLJ_dKiEiXjWqWAd4WN-VzVGpbor90"/><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-6 lg:px-8 py-6 bg-background flex-1"><div class="flex flex-col w-full space-y-6 pb-12">
+<!-- Breadcrumb & Top Actions Header -->
+<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+<div class="space-y-1">
+<nav class="flex items-center gap-2 font-caption text-caption text-outline">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[15px]">home</span> Dashboard
+        </a>
+<span>/</span>
+<span class="text-on-surface-variant">Konten</span>
+<span>/</span>
+<span class="text-primary font-semibold">Manajemen Galeri</span>
+</nav>
+<div class="flex items-center gap-3">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Manajemen Galeri Kegiatan</h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+          Periode Aktif 2024/2025
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-2xl">
+        Kelola album dokumentasi, arsip foto kegiatan ormawa, dan sinkronisasi tautan Google Photos resmi untuk publikasi web BEM FMIKOM UNUGHA.
+      </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-3 shrink-0">
+<button class="px-4 py-2.5 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-variant transition-colors flex items-center gap-2 font-label-md text-label-md font-semibold shadow-sm" onclick="document.getElementById('album-modal').classList.remove('hidden')">
+<span class="material-symbols-outlined text-[19px] text-secondary">add_photo_alternate</span>
+        + Tambah Item Foto
+      </button>
+<button class="px-4 py-2.5 rounded-lg bg-primary-container text-on-primary hover:bg-primary transition-colors flex items-center gap-2 font-label-md text-label-md font-semibold shadow-md" onclick="document.getElementById('album-modal').classList.remove('hidden')">
+<span class="material-symbols-outlined text-[19px]">create_new_folder</span>
+        + Tambah Album Baru
+      </button>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex items-center gap-2 border-b border-surface-container-high pb-px">
+<button class="flex items-center gap-2.5 px-4 py-2.5 font-label-md text-label-md font-semibold text-primary border-b-2 border-primary-container bg-surface-container-low/60 rounded-t-lg">
+<span class="material-symbols-outlined text-[19px]">photo_library</span>
+      Kategori &amp; Album Kegiatan
+      <span class="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-caption text-caption font-bold">8</span>
+</button>
+<button class="flex items-center gap-2.5 px-4 py-2.5 font-label-md text-label-md font-medium text-outline hover:text-on-surface hover:bg-surface-container-low/40 rounded-t-lg transition-colors">
+<span class="material-symbols-outlined text-[19px]">cloud_sync</span>
+      Item Foto &amp; Google Photos
+      <span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-caption text-caption font-medium">317+ foto</span>
+</button>
+</div>
+<!-- KPI Metric Cards Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+<!-- Stat 1 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="space-y-1">
+<span class="font-caption text-caption uppercase tracking-wider text-outline font-semibold">Total Album Kegiatan</span>
+<div class="flex items-baseline gap-2">
+<p class="font-headline-lg text-headline-lg text-primary leading-none">8</p>
+<span class="font-caption text-caption text-on-surface-variant">Album Resmi</span>
+</div>
+<p class="font-caption text-caption text-outline">Semua divisi terdata</p>
+</div>
+<div class="w-12 h-12 rounded-xl bg-primary-fixed flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[26px]">folder_special</span>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="space-y-1">
+<span class="font-caption text-caption uppercase tracking-wider text-outline font-semibold">Total Dokumentasi HD</span>
+<div class="flex items-baseline gap-2">
+<p class="font-headline-lg text-headline-lg text-on-surface leading-none">317+</p>
+<span class="font-caption text-caption text-on-surface-variant">Foto Terkurasi</span>
+</div>
+<p class="font-caption text-caption text-secondary font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +48 foto bulan ini
+        </p>
+</div>
+<div class="w-12 h-12 rounded-xl bg-secondary-fixed flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[26px]">high_density</span>
+</div>
+</div>
+<!-- Stat 3 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="space-y-1">
+<span class="font-caption text-caption uppercase tracking-wider text-outline font-semibold">Sinkronisasi Cloud</span>
+<div class="flex items-center gap-2">
+<p class="font-headline-sm text-headline-sm text-on-surface leading-none">Google Photos</p>
+</div>
+<div class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container-high text-primary font-caption text-caption font-semibold">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          Status API: Online
+        </div>
+</div>
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined text-[26px]">cloud_done</span>
+</div>
+</div>
+<!-- Stat 4 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="space-y-1">
+<span class="font-caption text-caption uppercase tracking-wider text-outline font-semibold">Divisi Teraktif</span>
+<p class="font-label-md text-label-md font-bold text-on-surface line-clamp-1">Biro Kominfo &amp; Hubungan Media</p>
+<span class="font-caption text-caption text-primary font-semibold">4 Album Publikasi (50%)</span>
+</div>
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[26px]">stars</span>
+</div>
+</div>
+</div>
+<!-- Filter & Search Toolbar -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+<div class="flex-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+<!-- Search Input -->
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low rounded-lg text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary-container" placeholder="Cari album kegiatan atau divisi..." type="text"/>
+</div>
+<!-- Divisi Dropdown -->
+<div class="relative min-w-[200px]">
+<select class="w-full appearance-none px-3.5 py-2 pr-9 bg-surface-container-low rounded-lg text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary-container">
+<option value="">Semua Divisi</option>
+<option selected="" value="kominfo">Kominfo &amp; Hubungan Media</option>
+<option value="psdm">PSDM (Kaderisasi)</option>
+<option value="sosmas">Sosial Masyarakat</option>
+<option value="miba">Minat &amp; Bakat</option>
+<option value="riset">Riset &amp; Iptek</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-outline text-[18px]">expand_more</span>
+</div>
+<!-- Periode Dropdown -->
+<div class="relative min-w-[170px]">
+<select class="w-full appearance-none px-3.5 py-2 pr-9 bg-surface-container-low rounded-lg text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary-container">
+<option value="2024">Periode 2024/2025</option>
+<option value="2023">Periode 2023/2024</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-outline text-[18px]">calendar_today</span>
+</div>
+</div>
+<div class="flex items-center gap-2 justify-end shrink-0">
+<button class="px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-label-sm text-label-sm flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+        Reset Filter
+      </button>
+<div class="h-5 w-px bg-surface-container-high hidden sm:block"></div>
+<button class="px-3 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-label-sm text-label-sm flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+        Ekspor
+      </button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">
+<th class="py-3.5 px-4 w-14 text-center">No</th>
+<th class="py-3.5 px-4 min-w-[280px]">Nama Kegiatan &amp; Album</th>
+<th class="py-3.5 px-4 min-w-[180px]">Divisi Penyelenggara</th>
+<th class="py-3.5 px-4 w-28">Periode</th>
+<th class="py-3.5 px-4 w-32">Koleksi Foto</th>
+<th class="py-3.5 px-4 min-w-[220px]">Google Photos Resmi</th>
+<th class="py-3.5 px-4 min-w-[170px]">Dibuat Oleh</th>
+<th class="py-3.5 px-4 w-32 text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body-sm text-body-sm text-on-surface">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 px-4 text-center text-outline font-medium">1</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img class="w-14 h-11 object-cover rounded-lg shrink-0 shadow-sm" data-alt="Modern indoor technology symposium hall packed with university students attending an AI and robotics lecture, illuminated by dramatic blue stage lighting and clean corporate presentation screens, conveying professional academic IT seminar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPo6Bj8YvGybcx3JdcT5GITLW6c99_XNRIf13evgR-9HDnFXRfFU7oPYj2VWVdHTz9Tnl4hA2M-zddPPuhF1HvvkgEC-GLWwhNEUQgz-p7txAFFrOZAEQ5R39_b0_K_Aljihaz-yMAn2t48KOYx_G2g8GcDCtnjZBFwsqVt0ecNKkBQgqfnWs90siJbJkl1HN-01rSD7172bUnYX_NuMpJ1XLbC6MX0HDIk7j-Bu8"/>
+<div class="space-y-0.5">
+<a class="font-label-md text-label-md font-semibold text-primary group-hover:text-primary-container hover:underline line-clamp-1" href="#">
+                    FMIKOM Tech Fest 2024 &amp; Seminar AI
+                  </a>
+<div class="flex items-center gap-2 text-outline font-caption text-caption">
+<span class="inline-flex items-center gap-1 text-secondary font-medium">
+<span class="material-symbols-outlined text-[14px]">event</span> 15 Des 2024
+                    </span>
+<span>•</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container font-medium text-on-surface-variant">Publik</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container-high text-on-surface font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                Kominfo &amp; Hubungan Media
+              </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-caption text-caption font-semibold px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">2024/2025</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[15px]">photo_library</span>
+                48 Foto HD
+              </div>
+</td>
+<td class="py-3.5 px-4">
+<a class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-variant text-primary font-label-sm text-label-sm transition-colors group/link" href="https://photos.app.goo.gl/fmikom-techfest24" target="_blank">
+<span class="material-symbols-outlined text-[16px] text-secondary">cloud_done</span>
+<span class="font-semibold">Album Terhubung</span>
+<span class="text-outline font-caption text-caption truncate max-w-[90px]">(goo.gl/...)</span>
+<span class="material-symbols-outlined text-[14px] group-hover/link:translate-x-0.5 transition-transform">open_in_new</span>
+</a>
+</td>
+<td class="py-3.5 px-4">
+<div class="space-y-0.5">
+<p class="font-label-sm text-label-sm font-semibold text-on-surface">Dimas Aditya</p>
+<p class="font-caption text-caption text-outline">16 Des 2024, 14:20</p>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg text-outline hover:text-primary hover:bg-surface-container transition-colors" title="Lihat Pratinjau Album">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-secondary hover:bg-surface-container transition-colors" title="Sinkronkan Ulang Google Photos">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container transition-colors" onclick="document.getElementById('album-modal').classList.remove('hidden')" title="Edit Album">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-error hover:bg-error-container transition-colors" title="Hapus Album">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 px-4 text-center text-outline font-medium">2</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img class="w-14 h-11 object-cover rounded-lg shrink-0 shadow-sm" data-alt="Outdoor university student leadership camp in pine forest highlands, students standing in disciplined team circles wearing matching navy jackets and organizational lanyards under bright morning sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANyHx0h9BRAZpVhAN-jL5xs3XBqwc6zTNU9jx_Q9m5XqrMqn5XLDdY3yG_wpTb4s5Et0h4n5d5hzvog8IRYI3V1X5S8UVdfuZxrswe0EXjLCgaCDUAQvoooWkv714m_lYLboM2puCDc4oCs76hFSNunclkRbtObTaAJZfhGcdV50WAgIY4Bgzr8UtTALMis-urmojNDb_qmpH96FYd1KtSDQrKByUCmiErf0LpVfU"/>
+<div class="space-y-0.5">
+<a class="font-label-md text-label-md font-semibold text-primary group-hover:text-primary-container hover:underline line-clamp-1" href="#">
+                    Latihan Dasar Kepemimpinan Mahasiswa (LKMM-TD) 2024
+                  </a>
+<div class="flex items-center gap-2 text-outline font-caption text-caption">
+<span class="inline-flex items-center gap-1 text-secondary font-medium">
+<span class="material-symbols-outlined text-[14px]">event</span> 20-22 Nov 2024
+                    </span>
+<span>•</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container font-medium text-on-surface-variant">Publik</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container-high text-on-surface font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                PSDM (Kaderisasi)
+              </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-caption text-caption font-semibold px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">2024/2025</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[15px]">photo_library</span>
+                62 Foto HD
+              </div>
+</td>
+<td class="py-3.5 px-4">
+<a class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-variant text-primary font-label-sm text-label-sm transition-colors group/link" href="https://photos.app.goo.gl/lkmm-td-2024" target="_blank">
+<span class="material-symbols-outlined text-[16px] text-secondary">cloud_done</span>
+<span class="font-semibold">Album Terhubung</span>
+<span class="text-outline font-caption text-caption truncate max-w-[90px]">(goo.gl/...)</span>
+<span class="material-symbols-outlined text-[14px] group-hover/link:translate-x-0.5 transition-transform">open_in_new</span>
+</a>
+</td>
+<td class="py-3.5 px-4">
+<div class="space-y-0.5">
+<p class="font-label-sm text-label-sm font-semibold text-on-surface">Wahyu Pratama</p>
+<p class="font-caption text-caption text-outline">22 Nov 2024, 18:05</p>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg text-outline hover:text-primary hover:bg-surface-container transition-colors" title="Lihat Pratinjau Album">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-secondary hover:bg-surface-container transition-colors" title="Sinkronkan Ulang Google Photos">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container transition-colors" onclick="document.getElementById('album-modal').classList.remove('hidden')" title="Edit Album">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-error hover:bg-error-container transition-colors" title="Hapus Album">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 px-4 text-center text-outline font-medium">3</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img class="w-14 h-11 object-cover rounded-lg shrink-0 shadow-sm" data-alt="Indonesian university students teaching elementary village schoolchildren basic computer skills and typing inside a community hall, warm natural daylight through windows, friendly educational atmosphere with smiles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6WENmfHDAjuE7wQTXgZUjlrX7LShG2Um6UNkEcVgGENNCHcj0-oGZXJEasQFTc6Zufrq___WAMx4zLtNfLlB5rI588bZC15NuPcEPEI8lAa3FJMvp9A-oOtdWaKVU1Ith6KVnypcKj5nBkwJLXeqLph6ypxz0b4cIAebGwEwdJrrIysQF9r0mqP1bPUC4NEy5hkdClZuen13Iihm6vdDPuzfCz3S4zkFYLQjICFE"/>
+<div class="space-y-0.5">
+<a class="font-label-md text-label-md font-semibold text-primary group-hover:text-primary-container hover:underline line-clamp-1" href="#">
+                    Bakti Edukasi &amp; Donasi Perangkat Komputer Desa Binaan
+                  </a>
+<div class="flex items-center gap-2 text-outline font-caption text-caption">
+<span class="inline-flex items-center gap-1 text-secondary font-medium">
+<span class="material-symbols-outlined text-[14px]">event</span> 06 Okt 2024
+                    </span>
+<span>•</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container font-medium text-on-surface-variant">Publik</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container-high text-on-surface font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Sosial Masyarakat
+              </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-caption text-caption font-semibold px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">2024/2025</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[15px]">photo_library</span>
+                35 Foto HD
+              </div>
+</td>
+<td class="py-3.5 px-4">
+<a class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-variant text-primary font-label-sm text-label-sm transition-colors group/link" href="https://photos.app.goo.gl/bakti-edukasi-2024" target="_blank">
+<span class="material-symbols-outlined text-[16px] text-secondary">cloud_done</span>
+<span class="font-semibold">Album Terhubung</span>
+<span class="text-outline font-caption text-caption truncate max-w-[90px]">(goo.gl/...)</span>
+<span class="material-symbols-outlined text-[14px] group-hover/link:translate-x-0.5 transition-transform">open_in_new</span>
+</a>
+</td>
+<td class="py-3.5 px-4">
+<div class="space-y-0.5">
+<p class="font-label-sm text-label-sm font-semibold text-on-surface">Farhan Yudha</p>
+<p class="font-caption text-caption text-outline">07 Okt 2024, 09:12</p>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg text-outline hover:text-primary hover:bg-surface-container transition-colors" title="Lihat Pratinjau Album">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-secondary hover:bg-surface-container transition-colors" title="Sinkronkan Ulang Google Photos">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container transition-colors" onclick="document.getElementById('album-modal').classList.remove('hidden')" title="Edit Album">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-error hover:bg-error-container transition-colors" title="Hapus Album">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="py-3.5 px-4 text-center text-outline font-medium">4</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img class="w-14 h-11 object-cover rounded-lg shrink-0 shadow-sm" data-alt="Intense university indoor futsal tournament championship final match, players celebrating with gold trophy in front of deanery banners, vibrant university sporting hall with spectators cheering in stands" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdU-5jStZ0wjkp-dMVfMc-tAgvkX2a2uh8RCrpMKU30x9SAMhCTsWTSDPLGr8yzi2xnNtqjm8LCHJXKGuRBw-c2v_rg3tWnD8_N0NTka_oQladVCbU1Gnpy8JWzCnq32EvaQ0fyqrPwjj6sxYk3jlEBXlpzOB95-gmIhGbQoI9giofFTeR-TuGcM9S1j3sAhtiAI4-xDe29w-serIIamoJgXoJ9eU8WbYfNRJZROw"/>
+<div class="space-y-0.5">
+<a class="font-label-md text-label-md font-semibold text-primary group-hover:text-primary-container hover:underline line-clamp-1" href="#">
+                    FMIKOM Futsal &amp; E-Sport Championship Piala Dekan
+                  </a>
+<div class="flex items-center gap-2 text-outline font-caption text-caption">
+<span class="inline-flex items-center gap-1 text-secondary font-medium">
+<span class="material-symbols-outlined text-[14px]">event</span> 12-14 Agu 2024
+                    </span>
+<span>•</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container font-medium text-on-surface-variant">Publik</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-container-high text-on-surface font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+                Minat &amp; Bakat
+              </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-caption text-caption font-semibold px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">2024/2025</span>
+</td>
+<td class="py-3.5 px-4">
+<div class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[15px]">photo_library</span>
+                54 Foto HD
+              </div>
+</td>
+<td class="py-3.5 px-4">
+<a class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container-high hover:bg-surface-variant text-primary font-label-sm text-label-sm transition-colors group/link" href="https://photos.app.goo.gl/piala-dekan-2024" target="_blank">
+<span class="material-symbols-outlined text-[16px] text-secondary">cloud_done</span>
+<span class="font-semibold">Album Terhubung</span>
+<span class="text-outline font-caption text-caption truncate max-w-[90px]">(goo.gl/...)</span>
+<span class="material-symbols-outlined text-[14px] group-hover/link:translate-x-0.5 transition-transform">open_in_new</span>
+</a>
+</td>
+<td class="py-3.5 px-4">
+<div class="space-y-0.5">
+<p class="font-label-sm text-label-sm font-semibold text-on-surface">Dimas Maulana</p>
+<p class="font-caption text-caption text-outline">14 Agu 2024, 21:30</p>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 rounded-lg text-outline hover:text-primary hover:bg-surface-container transition-colors" title="Lihat Pratinjau Album">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-secondary hover:bg-surface-container transition-colors" title="Sinkronkan Ulang Google Photos">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container transition-colors" onclick="document.getElementById('album-modal').classList.remove('hidden')" title="Edit Album">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-error hover:bg-error-container transition-colors" title="Hapus Album">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination Footer -->
+<div class="p-4 bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-3 text-on-surface-variant">
+<p class="font-caption text-caption">Menampilkan <span class="font-semibold text-on-surface">1 - 4</span> dari <span class="font-semibold text-on-surface">8</span> album kegiatan</p>
+<div class="flex items-center gap-1.5">
+<button class="px-2.5 py-1.5 rounded-md bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-caption text-caption disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-md bg-primary-container text-on-primary font-caption text-caption font-bold flex items-center justify-center">1</button>
+<button class="w-8 h-8 rounded-md bg-surface-container text-on-surface hover:bg-surface-container-high font-caption text-caption font-medium flex items-center justify-center">2</button>
+<button class="px-2.5 py-1.5 rounded-md bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-caption text-caption">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Modal / Drawer Preview Form for Album & Google Photos Integration -->
+<!-- Note: Pre-rendered active state for immediate UI inspection -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-on-background/40 backdrop-blur-sm transition-opacity" id="album-modal">
+<div class="bg-surface-container-lowest rounded-2xl shadow-xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[942px]">
+<!-- Modal Header -->
+<div class="px-6 py-4 bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary-fixed flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[22px]">add_photo_alternate</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-tight">Tambah / Edit Album Kegiatan</h3>
+<p class="font-caption text-caption text-on-surface-variant">Konfigurasi metadata kegiatan dan integrasi tautan album Google Photos</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container transition-colors" onclick="document.getElementById('album-modal').classList.add('hidden')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<div class="p-6 space-y-5 overflow-y-auto">
+<!-- Input Grid: Nama & Tanggal -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="md:col-span-2 space-y-1.5">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold flex items-center gap-1">
+              Judul Album Kegiatan <span class="text-error">*</span>
+</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary-container" type="text" value="Workshop Desain Antarmuka &amp; Frontend Next.js"/>
+</div>
+<div class="space-y-1.5">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold flex items-center gap-1">
+              Tanggal Pelaksanaan <span class="text-error">*</span>
+</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary-container" type="date" value="2024-05-18"/>
+</div>
+</div>
+<!-- Input Grid: Divisi & Periode -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="space-y-1.5">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold flex items-center gap-1">
+              Divisi Penyelenggara <span class="text-error">*</span>
+</label>
+<div class="relative">
+<select class="w-full appearance-none px-3.5 py-2.5 pr-9 bg-surface-container-low rounded-lg text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary-container">
+<option selected="" value="kominfo">Biro Kominfo &amp; Hubungan Media</option>
+<option value="psdm">PSDM (Kaderisasi)</option>
+<option value="sosmas">Sosial Masyarakat</option>
+<option value="miba">Minat &amp; Bakat</option>
+<option value="riset">Riset &amp; Iptek</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline text-[18px]">expand_more</span>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold">Tahun Periode Organisasi</label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-surface-container text-on-surface-variant font-body-sm text-body-sm cursor-not-allowed" readonly="" type="text" value="2024/2025"/>
+</div>
+</div>
+<!-- Google Photos URL Section -->
+<div class="space-y-2">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[17px] text-secondary">link</span>
+              Google Photos Shared Album URL <span class="text-error">*</span>
+</label>
+<a class="font-caption text-caption text-primary hover:underline flex items-center gap-0.5" href="https://photos.google.com" target="_blank">
+              Panduan Buat Album Bersama <span class="material-symbols-outlined text-[13px]">north_east</span>
+</a>
+</div>
+<div class="relative flex items-center">
+<input class="w-full pl-3.5 pr-28 py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary-container" placeholder="https://photos.app.goo.gl/..." type="url" value="https://photos.app.goo.gl/BEM-FMIKOM-WorkshopUIUX2024"/>
+<button class="absolute right-2 px-3 py-1.5 bg-primary-container text-on-primary rounded-md font-label-sm text-label-sm hover:bg-primary transition-colors flex items-center gap-1 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[15px]">verified</span>
+              Validasi
+            </button>
+</div>
+<p class="font-caption text-caption text-outline">
+            Pastikan opsi tautan di Google Photos telah disetel ke "Dapat dilihat siapa saja yang memiliki link".
+          </p>
+</div>
+<!-- Verified Preview Box (As requested) -->
+<div class="p-4 rounded-xl bg-surface-container-low flex items-start gap-4 shadow-sm">
+<div class="w-16 h-16 rounded-lg bg-surface-container-high overflow-hidden shrink-0 relative">
+<img class="w-full h-full object-cover" data-alt="Digital classroom of computer science students working intensely on Figma UI UX wireframes and clean Next.js coding screens, collaborative university lab atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNn7UsWyHH7yL4KK82zhkSFQJUy42TqivjOzWKIJWjPD5QVrqsDksAuaGMFgpftbKM0bMh_vLAYvPKUXiUoSB2k-kehmD3jF9vWZFWDrDPww5H2PzI4c11E9dXBEkXddFMZsECeZsET8V9e6b95y1OSX_Sbr3TikY3FxXgp6XOH1vkmiizT67Mq0DmQ5JjYYn61DE1w8mUUWxbCw_vEKOl9XF-QdS6Hfx04Af6OBU"/>
+<span class="absolute bottom-1 right-1 bg-primary text-on-primary text-[10px] px-1 rounded font-bold">HD</span>
+</div>
+<div class="flex-1 space-y-1">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">Album BEM FMIKOM - Terverifikasi</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container-highest text-primary font-caption text-caption font-semibold">
+<span class="material-symbols-outlined text-[13px] text-emerald-600">check_circle</span>
+                28 Foto Siap Sinkron
+              </span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant line-clamp-1">
+              Google Account: bem.fmikom@unugha.ac.id • Resolusi Maksimal Terdeteksi 3840x2160
+            </p>
+<div class="flex items-center gap-3 pt-1">
+<span class="font-caption text-caption text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">storage</span> 184 MB Cloud Storage
+              </span>
+<span class="font-caption text-caption text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">visibility</span> Publik Terverifikasi
+              </span>
+</div>
+</div>
+</div>
+<!-- Deskripsi Kegiatan -->
+<div class="space-y-1.5">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold">Deskripsi Singkat Kegiatan</label>
+<textarea class="w-full p-3 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary-container resize-none" placeholder="Ringkasan singkat kegiatan pelatihan, pemateri, jumlah peserta dan tujuan acara ormawa..." rows="3">Workshop praktis perancangan antarmuka pengguna digital modern dan implementasi Next.js Tailwind CSS yang diikuti oleh 45 mahasiswa lintas prodi FMIKOM UNUGHA bersama praktisi industri.</textarea>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="px-6 py-4 bg-surface-container-low flex items-center justify-end gap-3">
+<button class="px-4 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md font-semibold" onclick="document.getElementById('album-modal').classList.add('hidden')">
+          Batal
+        </button>
+<button class="px-5 py-2 rounded-lg bg-primary-container text-on-primary hover:bg-primary transition-colors font-label-md text-label-md font-semibold flex items-center gap-1.5 shadow-md" onclick="document.getElementById('album-modal').classList.add('hidden')">
+<span class="material-symbols-outlined text-[18px]">save</span>
+          Simpan Album &amp; Sinkronkan
+        </button>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

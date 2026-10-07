@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><title>Admin Portal BEM FMIKOM UNUGHA</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-background": "#0b1c30", "outline": "#757682", "tertiary": "#222a3e", "on-tertiary-fixed": "#131b2e", "on-secondary-fixed": "#2f1500", "outline-variant": "#c5c5d3", "on-primary": "#ffffff", "surface-tint": "#4059aa", "error-container": "#ffdad6", "primary-fixed-dim": "#b6c4ff", "tertiary-container": "#384055", "on-primary-container": "#90a8ff", "on-secondary-fixed-variant": "#6e3900", "on-tertiary-fixed-variant": "#3f465c", "on-surface": "#0b1c30", "primary-fixed": "#dce1ff", "tertiary-fixed": "#dae2fd", "tertiary-fixed-dim": "#bec6e0", "on-tertiary-container": "#a4acc5", "surface-container-lowest": "#ffffff", "surface-variant": "#d3e4fe", "primary-container": "#1e3a8a", "on-surface-variant": "#444651", "surface-bright": "#f8f9ff", "on-error-container": "#93000a", "surface-container-highest": "#d3e4fe", "secondary-fixed": "#ffdcc3", "inverse-primary": "#b6c4ff", "secondary-container": "#fe932c", "secondary": "#904d00", "surface-dim": "#cbdbf5", "inverse-surface": "#213145", "secondary-fixed-dim": "#ffb77d", "background": "#f8f9ff", "on-primary-fixed-variant": "#264191", "surface-container-low": "#eff4ff", "on-error": "#ffffff", "primary": "#00236f", "surface": "#f8f9ff", "inverse-on-surface": "#eaf1ff", "surface-container": "#e5eeff", "on-primary-fixed": "#00164e", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-secondary": "#ffffff", "on-secondary-container": "#663500", "surface-container-high": "#dce9ff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter": "1.5rem", "space-xl": "2.5rem", "margin-mobile": "1rem", "margin": "2rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "space-md": "1rem", "margin-desktop": "3rem", "space-sm": "0.5rem", "gutter-mobile": "1rem" }, "fontFamily": { "headline-sm": ["Plus Jakarta Sans"], "display-mobile": ["Plus Jakarta Sans"], "caption": ["Inter"], "display": ["Plus Jakarta Sans"], "body-lg": ["Inter"], "headline-lg": ["Plus Jakarta Sans"], "headline-xl-mobile": ["Plus Jakarta Sans"], "body-sm": ["Inter"], "label-md": ["Inter"], "label-sm": ["Inter"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Inter"], "headline-xl": ["Plus Jakarta Sans"] }, "fontSize": { "headline-sm": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.005em", "fontWeight": "600" }], "display-mobile": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "800" }], "caption": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "display": ["3.5rem", { "lineHeight": "4.25rem", "letterSpacing": "-0.03em", "fontWeight": "800" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-xl-mobile": ["1.875rem", { "lineHeight": "2.375rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0", "fontWeight": "400" }], "label-md": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "label-sm": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.03em", "fontWeight": "600" }], "headline-md": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "0", "fontWeight": "400" }], "headline-xl": ["2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col overflow-y-auto"><div class="p-5 flex items-center gap-3 bg-surface-container-low"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">BEM FMIKOM</span><span class="font-caption text-caption text-on-surface-variant font-medium">Admin Portal</span></div></div><div class="px-4 py-2"><div class="px-3 py-2 bg-surface-container rounded-lg flex items-center justify-between"><span class="font-caption text-caption text-on-surface-variant">Status Periode:</span><span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">2024/2025</span></div></div><nav class="flex-1 px-3 py-3 space-y-4" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><div class="space-y-1"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Overview</span></a></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Content</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="berita-management" href="#"><span class="material-symbols-outlined text-[18px]">newspaper</span><span>Berita</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="kategori-management" href="#"><span class="material-symbols-outlined text-[18px]">category</span><span>Kategori</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="galeri-management" href="#"><span class="material-symbols-outlined text-[18px]">photo_library</span><span>Galeri</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengumuman-management" href="#"><span class="material-symbols-outlined text-[18px]">campaign</span><span>Pengumuman</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Organization</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="struktur-organisasi-admin" href="#"><span class="material-symbols-outlined text-[18px]">account_tree</span><span>Struktur</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="divisi-management" href="#"><span class="material-symbols-outlined text-[18px]">groups</span><span>Divisi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pengurus-management" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span>Pengurus</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="periode-management" href="#"><span class="material-symbols-outlined text-[18px]">history_edu</span><span>Periode</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">Management</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="pendaftaran-management" href="#"><span class="material-symbols-outlined text-[18px]">how_to_reg</span><span>Pendaftaran</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="aspirasi-management" href="#"><span class="material-symbols-outlined text-[18px]">forum</span><span>Aspirasi</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="arsip-dokumen" href="#"><span class="material-symbols-outlined text-[18px]">folder</span><span>Arsip Dokumen</span></a></div></div><div><p class="px-3 mb-1 font-caption text-caption uppercase tracking-wider text-outline font-semibold">System</p><div class="space-y-0.5"><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="system-settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="users-management" href="#"><span class="material-symbols-outlined text-[18px]">manage_accounts</span><span>Users</span></a><a class="flex items-center gap-3 px-3 py-1.5 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all rounded-lg font-label-md text-label-md" data-path="activity-log" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Activity Log</span></a></div></div></nav><div class="p-4 bg-surface-container-low"><a class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm" data-path="beranda" href="#"><span class="material-symbols-outlined text-[18px]">open_in_new</span>Lihat Web Publik</a></div></aside><div class="pl-64 min-h-screen flex flex-col"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-6 lg:px-8"><div class="flex items-center gap-3"><img alt="Logo BEM FMIKOM UNUGHA" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1U78AR9Yec55jyILsWcnLDXZXuhg8TVyRktMFuKZxejlEQTvq0B06DpcS9BruveZfdGGz1Rs550DKKUWPcyNqmlaNA-OSov7YTI1RcY2ukpMvAraIXouAkqqcEb5oaooJZmKGg6WsMkjvSyqlps83tTuvO8GS5QPFocQ03MNZXE7lLpnKsIW9zEALPfljMa2aqSCNX9THdvv8ZhpCCL1HtwzgbuZpGIyqwqJAqUZvU"/><span class="font-label-md text-label-md text-on-surface-variant font-medium">Fakultas Matematika dan Ilmu Komputer</span></div><div class="flex items-center gap-4"><button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors relative"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary-container"></span></button><div class="h-6 w-px bg-outline-variant"></div><div class="flex items-center gap-3"><div class="text-right hidden sm:block"><p class="font-label-sm text-label-sm text-on-surface leading-tight font-semibold">Admin BEM</p><span class="font-caption text-caption text-primary font-medium">Superadministrator</span></div><img alt="Foto Profil Admin" class="h-9 w-9 rounded-full object-cover ring-2 ring-surface-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTkaINJpcRubsTXdXDHksfsqbChqqBxKHZBe17AySz3LBQte4ozJgwwmO0K97gBDOC3e6kF9cYQFyc4xK_TPq3vSjy-tT14ti2Sz0MZo4-inMETb3HX2fg5wNY0cAK6DBXgHegb84OZnS6KiAuyFqN9d4sq4srhGXU6y5BpzfvIU4LxHADmRLIDJqisWwAC79bLL9SP5iNGyLJ_dKiEiXjWqWAd4WN-VzVGpbor90"/><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-6 lg:px-8 py-6 bg-background flex-1"><div class="flex flex-col w-full space-y-6 pb-12">
+<!-- Top Breadcrumbs & Page Metadata -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="space-y-1">
+<div class="flex items-center gap-2 font-caption text-caption text-outline">
+<span>Dashboard</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Sistem</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-medium">Pengaturan Landing Page</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Pengaturan &amp; Konten Landing Page</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-3xl">
+        Sesuaikan teks hero, profil visi misi kabinet, saluran kontak resmi, serta tautan media sosial yang tayang pada beranda publik BEM FMIKOM UNUGHA.
+      </p>
+</div>
+<!-- Actions & Sync Indicator -->
+<div class="flex flex-wrap items-center gap-3">
+<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+<span>Tersinkronisasi dengan Beranda Publik</span>
+</div>
+<a class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md shadow-sm" href="#" target="_blank">
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+<span>Pratinjau Live</span>
+</a>
+<button class="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-primary text-on-primary hover:bg-primary-container transition-all shadow-sm font-label-md text-label-md" id="save-btn">
+<span class="material-symbols-outlined text-[18px]">save</span>
+<span>Simpan Perubahan</span>
+</button>
+</div>
+</div>
+<!-- Unsaved Changes Alert Bar -->
+<div class="p-4 rounded-xl bg-secondary-fixed text-on-secondary-fixed flex items-center justify-between shadow-sm" id="unsaved-alert">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[24px]">warning</span>
+<div>
+<p class="font-label-md text-label-md font-semibold leading-tight">Perubahan Draf Terdeteksi</p>
+<p class="font-caption text-caption text-on-secondary-fixed-variant">Terdapat penyesuaian konten teks hero dan poin misi yang belum dipublikasikan ke server produksi.</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1 text-on-secondary-fixed hover:bg-secondary-fixed-dim rounded font-label-sm text-label-sm transition-colors">Batal</button>
+<button class="px-3 py-1 bg-secondary text-on-secondary rounded font-label-sm text-label-sm shadow-sm transition-transform active:scale-95">Terapkan Segera</button>
+</div>
+</div>
+<!-- Horizontal Navigation Tabs -->
+<div class="flex items-center gap-2 overflow-x-auto pb-1 bg-surface-container-low p-1.5 rounded-xl">
+<button class="px-4 py-2 rounded-lg bg-surface-container-lowest text-primary font-label-md text-label-md shadow-sm flex items-center gap-2 shrink-0">
+<span class="material-symbols-outlined text-[18px]">photo_camera_front</span>
+<span>Hero Banner</span>
+</button>
+<button class="px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md flex items-center gap-2 shrink-0">
+<span class="material-symbols-outlined text-[18px]">analytics</span>
+<span>Tentang &amp; Statistik</span>
+</button>
+<button class="px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md flex items-center gap-2 shrink-0">
+<span class="material-symbols-outlined text-[18px]">flag</span>
+<span>Visi &amp; Misi Kabinet</span>
+</button>
+<button class="px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md flex items-center gap-2 shrink-0">
+<span class="material-symbols-outlined text-[18px]">contact_support</span>
+<span>Kontak &amp; Sekretariat</span>
+</button>
+<button class="px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors font-label-md text-label-md flex items-center gap-2 shrink-0">
+<span class="material-symbols-outlined text-[18px]">share</span>
+<span>Media Sosial &amp; Kanal Informasi</span>
+</button>
+</div>
+<!-- SECTION 1: HERO BANNER SETTINGS (Grid 2 Kolom: Form + Live Desktop Mockup Preview) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+<!-- Form Settings (7 Cols) -->
+<div class="xl:col-span-7 bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Konfigurasi Hero Section</h2>
+<p class="font-caption text-caption text-on-surface-variant">Tampilan perdana saat mahasiswa atau pengunjung membuka beranda portal.</p>
+</div>
+<span class="px-2.5 py-1 rounded bg-surface-container-high font-label-sm text-label-sm text-primary font-semibold">Tampil di Beranda</span>
+</div>
+<div class="space-y-4">
+<!-- Tagline Pill -->
+<div class="space-y-1.5">
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold" for="tagline-input">Tagline Badge / Pill</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low text-on-surface px-3.5 py-2 rounded-lg text-body-sm font-body-sm focus:outline-none focus:bg-surface-container-lowest shadow-sm" id="tagline-input" type="text" value="KABINET SINERGI PROGRESIF 2024/2025"/>
+</div>
+<p class="font-caption text-caption text-outline">Tampil tepat di atas judul tajuk utama beranda.</p>
+</div>
+<!-- Headline Input -->
+<div class="space-y-1.5">
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold" for="headline-input">Headline Utama</label>
+<input class="w-full bg-surface-container-low text-on-surface px-3.5 py-2 rounded-lg text-body-sm font-body-sm focus:outline-none focus:bg-surface-container-lowest shadow-sm" id="headline-input" type="text" value="Sistem Informasi &amp; Wadah Sinergi Mahasiswa FMIKOM UNUGHA"/>
+</div>
+<!-- Subheadline Textarea -->
+<div class="space-y-1.5">
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold" for="subheadline-input">Subheadline / Keterangan Pembuka</label>
+<textarea class="w-full bg-surface-container-low text-on-surface px-3.5 py-2 rounded-lg text-body-sm font-body-sm focus:outline-none focus:bg-surface-container-lowest shadow-sm" id="subheadline-input" rows="3">Pusat informasi resmi, transparansi program kerja, advokasi aspirasi, dan dokumentasi aktivitas mahasiswa Fakultas Matematika dan Ilmu Komputer UNUGHA Cilacap.</textarea>
+</div>
+<!-- CTA Buttons Config (2 cols) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+<!-- Primary CTA -->
+<div class="p-3.5 rounded-lg bg-surface-container-low space-y-3">
+<div class="flex items-center gap-1.5 text-primary font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[16px]">touch_app</span>
+<span>Tombol Aksi Utama (Primary CTA)</span>
+</div>
+<div class="space-y-1">
+<label class="font-caption text-caption text-outline">Label Tombol</label>
+<input class="w-full bg-surface-container-lowest text-on-surface px-3 py-1.5 rounded text-body-sm font-body-sm focus:outline-none shadow-sm" type="text" value="Jelajahi Program"/>
+</div>
+<div class="space-y-1">
+<label class="font-caption text-caption text-outline">Tautan Target (URL)</label>
+<input class="w-full bg-surface-container-lowest text-on-surface px-3 py-1.5 rounded text-body-sm font-body-sm focus:outline-none shadow-sm" type="text" value="/program-kerja"/>
+</div>
+</div>
+<!-- Secondary CTA -->
+<div class="p-3.5 rounded-lg bg-surface-container-low space-y-3">
+<div class="flex items-center gap-1.5 text-secondary font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[16px]">record_voice_over</span>
+<span>Tombol Aksi Kedua (Secondary CTA)</span>
+</div>
+<div class="space-y-1">
+<label class="font-caption text-caption text-outline">Label Tombol</label>
+<input class="w-full bg-surface-container-lowest text-on-surface px-3 py-1.5 rounded text-body-sm font-body-sm focus:outline-none shadow-sm" type="text" value="Kirim Aspirasi"/>
+</div>
+<div class="space-y-1">
+<label class="font-caption text-caption text-outline">Tautan Target (URL)</label>
+<input class="w-full bg-surface-container-lowest text-on-surface px-3 py-1.5 rounded text-body-sm font-body-sm focus:outline-none shadow-sm" type="text" value="/aspirasi"/>
+</div>
+</div>
+</div>
+<!-- Banner Media Dropzone -->
+<div class="space-y-2 pt-2">
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold">Gambar Latar / Showcase Hero</label>
+<div class="flex flex-col sm:flex-row items-center gap-4 p-4 rounded-xl bg-surface-container-low">
+<img class="w-32 h-20 object-cover rounded-lg shadow-sm shrink-0" data-alt="Indonesian university computer science students working collaboratively in the FMIKOM campus computer laboratory room at UNUGHA with modern workstations, navy jackets, warm collegiate ambient lighting, high realism photographic style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLu-NKbhzekscEduSOOuq6wARkruqAbhwjP2904NykvlvfhZ7j9I96W2oBEXwr20DELh6ErXt0FakoatH_VX-8jaWO0dv7Qem5L5OOmELKBnO523ilBy6V15dQIHkhDbtPYRuVs3RlaE64s470AvmfquvtLgWWyS_1wPzPP7qUGMWljn_YoJdssb30In41tQKOMyisqof-VnbCpa7j7q9Gx8QAKUBmtq_zugVPePk"/>
+<div class="flex-1 space-y-1 text-center sm:text-left">
+<p class="font-label-sm text-label-sm text-on-surface font-semibold">hero-fmikom-unugha-synced.webp</p>
+<p class="font-caption text-caption text-outline">Resolusi rekomendasi: 1920x1080px (Max 2MB, WEBP/JPG/PNG).</p>
+<div class="flex flex-wrap items-center gap-2 pt-1 justify-center sm:justify-start">
+<button class="px-3 py-1 bg-surface-container-highest text-primary hover:bg-surface-container text-label-sm font-label-sm rounded transition-colors inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">upload_file</span>
+<span>Ganti Gambar</span>
+</button>
+<button class="px-3 py-1 text-error hover:bg-error-container text-label-sm font-label-sm rounded transition-colors inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">delete</span>
+<span>Hapus</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Mini Live Desktop Mockup Preview (5 Cols) -->
+<div class="xl:col-span-5 bg-surface-container-lowest p-5 rounded-xl shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">preview</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Pratinjau Langsung (Live Preview)</span>
+</div>
+<div class="flex items-center gap-1 text-outline font-caption text-caption">
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+<span>Desktop 1440px View</span>
+</div>
+</div>
+<!-- Browser Frame Wrapper -->
+<div class="rounded-lg overflow-hidden bg-surface-container shadow-md">
+<!-- Mockup Browser Bar -->
+<div class="px-3 py-2 bg-surface-container-high flex items-center gap-2">
+<div class="flex items-center gap-1">
+<span class="w-2.5 h-2.5 rounded-full bg-error inline-block"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container inline-block"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-outline-variant inline-block"></span>
+</div>
+<div class="flex-1 bg-surface-container-lowest rounded px-2.5 py-0.5 text-center text-outline font-caption text-[11px] truncate">
+            https://fmikom-unugha.ac.id/bem
+          </div>
+</div>
+<!-- Rendered Mini Landing Screen -->
+<div class="relative bg-primary-container text-on-primary p-6 overflow-hidden min-h-[380px] flex flex-col justify-between">
+<!-- Ambient Radial Background -->
+<div class="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-secondary-container opacity-20 blur-3xl pointer-events-none"></div>
+<div class="absolute -left-10 bottom-0 w-48 h-48 rounded-full bg-primary opacity-30 blur-2xl pointer-events-none"></div>
+<!-- Mini Top Nav Mockup -->
+<div class="relative z-10 flex items-center justify-between pb-4">
+<div class="flex items-center gap-2">
+<span class="w-5 h-5 rounded bg-secondary-fixed flex items-center justify-center font-bold text-on-secondary-fixed text-[10px]">U</span>
+<span class="font-bold text-[12px] tracking-tight">BEM FMIKOM</span>
+</div>
+<div class="flex items-center gap-2 text-[10px] text-surface-variant font-medium">
+<span>Beranda</span>
+<span>Struktur</span>
+<span>Program</span>
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-semibold">Suara Mahasiswa</span>
+</div>
+</div>
+<!-- Hero Content Rendering -->
+<div class="relative z-10 space-y-3 my-auto max-w-sm">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-lowest/15 backdrop-blur-sm text-secondary-fixed text-[10px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+<span>KABINET SINERGI PROGRESIF 2024/2025</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-primary font-bold leading-tight">
+              Sistem Informasi &amp; Wadah Sinergi Mahasiswa FMIKOM UNUGHA
+            </h3>
+<p class="font-caption text-caption text-surface-variant leading-relaxed line-clamp-3">
+              Pusat informasi resmi, transparansi program kerja, advokasi aspirasi, dan dokumentasi aktivitas mahasiswa Fakultas Matematika dan Ilmu Komputer UNUGHA Cilacap.
+            </p>
+<div class="flex items-center gap-2 pt-2">
+<div class="px-3 py-1.5 rounded bg-secondary-container text-on-secondary-container font-semibold text-[11px] shadow-sm">
+                Jelajahi Program
+              </div>
+<div class="px-3 py-1.5 rounded bg-surface-container-lowest/20 backdrop-blur text-on-primary font-medium text-[11px]">
+                Kirim Aspirasi
+              </div>
+</div>
+</div>
+<!-- Floating Stats Pill at Hero Bottom -->
+<div class="relative z-10 pt-4 flex items-center justify-between text-[10px] text-surface-variant bg-surface-container-lowest/10 backdrop-blur-md rounded-lg p-2.5">
+<div class="text-center">
+<span class="block font-bold text-on-primary text-[12px]">5 Divisi</span>
+<span>Fungsionaris</span>
+</div>
+<div class="h-5 w-px bg-surface-variant/30"></div>
+<div class="text-center">
+<span class="block font-bold text-on-primary text-[12px]">24 Proker</span>
+<span>Terencana</span>
+</div>
+<div class="h-5 w-px bg-surface-variant/30"></div>
+<div class="text-center">
+<span class="block font-bold text-on-primary text-[12px]">100%</span>
+<span>Transparansi</span>
+</div>
+</div>
+</div>
+</div>
+<p class="font-caption text-caption text-outline text-center">Tampilan visual ini mensimulasikan rendering aktual pada layar desktop pengunjung umum.</p>
+</div>
+</div>
+<!-- SECTION 2: QUICK SECTION PENGATURAN VISI & MISI KABINET -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-6">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Visi &amp; Misi Kabinet</h2>
+<p class="font-caption text-caption text-on-surface-variant">Doktrin kerja dan roadmap pengabdian BEM FMIKOM periode berjalan yang tampil di segmen profil.</p>
+</div>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-low text-primary hover:bg-surface-container text-label-sm font-label-sm rounded-lg transition-colors self-start">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>Lihat Format di Web</span>
+</button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Visi Section (5 Cols) -->
+<div class="lg:col-span-5 space-y-3">
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold" for="visi-input">Visi Utama Kabinet</label>
+<textarea class="w-full bg-surface-container-low text-on-surface p-3.5 rounded-xl text-body-sm font-body-sm focus:outline-none focus:bg-surface-container-lowest shadow-sm leading-relaxed" id="visi-input" rows="6">Terwujudnya BEM FMIKOM UNUGHA sebagai katalisator sinergi kemahasiswaan yang progresif, unggul dalam kompetensi sains-teknologi, berintegritas tinggi, berdaya advokasi solutif, serta berakar kokoh pada nilai-nilai luhur Ahlussunnah wal Jama'ah.</textarea>
+<div class="p-3 bg-surface-container-low rounded-lg flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">lightbulb</span>
+<span class="font-caption text-caption text-on-surface-variant">Visi akan disorot dengan tipografi display tebal beraksen midnight navy pada landing page publik.</span>
+</div>
+</div>
+<!-- Misi Section Repeater (7 Cols) -->
+<div class="lg:col-span-7 space-y-3">
+<div class="flex items-center justify-between">
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold">Poin Misi Strategis (Repeater List)</label>
+<span class="font-caption text-caption text-outline">4 Butir Misi Aktif</span>
+</div>
+<div class="space-y-2.5">
+<!-- Item 1 -->
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl group hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-outline cursor-grab text-[20px]">drag_indicator</span>
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold shrink-0">1</div>
+<div class="flex-1 font-body-sm text-body-sm text-on-surface font-medium truncate">
+              Akselerasi Kompetensi Digital melalui program bootcamp, workshop riset, dan sertifikasi keahlian teknologi informatika.
+            </div>
+<div class="flex items-center gap-1 opacity-80 group-hover:opacity-100">
+<button class="w-8 h-8 rounded flex items-center justify-center text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded flex items-center justify-center text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl group hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-outline cursor-grab text-[20px]">drag_indicator</span>
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold shrink-0">2</div>
+<div class="flex-1 font-body-sm text-body-sm text-on-surface font-medium truncate">
+              Membangun Sistem Advokasi Responsif dan transparan untuk memperjuangkan hak akademik serta kesejahteraan mahasiswa.
+            </div>
+<div class="flex items-center gap-1 opacity-80 group-hover:opacity-100">
+<button class="w-8 h-8 rounded flex items-center justify-center text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded flex items-center justify-center text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl group hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-outline cursor-grab text-[20px]">drag_indicator</span>
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold shrink-0">3</div>
+<div class="flex-1 font-body-sm text-body-sm text-on-surface font-medium truncate">
+              Menjalin Jejaring Mitra Strategis lintas kampus, industri piranti lunak, komunitas open-source, dan alumni nasional.
+            </div>
+<div class="flex items-center gap-1 opacity-80 group-hover:opacity-100">
+<button class="w-8 h-8 rounded flex items-center justify-center text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded flex items-center justify-center text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl group hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-outline cursor-grab text-[20px]">drag_indicator</span>
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold shrink-0">4</div>
+<div class="flex-1 font-body-sm text-body-sm text-on-surface font-medium truncate">
+              Menyelenggarakan Kaderisasi &amp; Penguatan Nilai Aswaja untuk mencetak organisatoris berkarakter moderat dan tangguh.
+            </div>
+<div class="flex items-center gap-1 opacity-80 group-hover:opacity-100">
+<button class="w-8 h-8 rounded flex items-center justify-center text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded flex items-center justify-center text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Add Button -->
+<button class="w-full py-2.5 rounded-xl bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span>Tambah Poin Misi Strategis</span>
+</button>
+</div>
+</div>
+</div>
+<!-- SECTION 3: QUICK SECTION KONTAK & MEDIA SOSIAL -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-6">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Kontak Sekretariat &amp; Kanal Media Sosial</h2>
+<p class="font-caption text-caption text-on-surface-variant">Informasi ini dimuat pada footer landing page serta panel bantuan advokasi mahasiswa.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Email Resmi -->
+<div class="p-4 rounded-xl bg-surface-container-low space-y-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+<span class="font-label-md text-label-md font-semibold">Email Resmi</span>
+</div>
+<input class="w-full bg-surface-container-lowest text-on-surface px-3 py-1.5 rounded-lg text-body-sm font-body-sm focus:outline-none shadow-sm" type="email" value="bem.fmikom@unugha.ac.id"/>
+<p class="font-caption text-caption text-outline">Untuk korespondensi kedinasan dan proposal luar.</p>
+</div>
+<!-- Alamat Sekretariat -->
+<div class="p-4 rounded-xl bg-surface-container-low space-y-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+<span class="font-label-md text-label-md font-semibold">Alamat Sekretariat</span>
+</div>
+<input class="w-full bg-surface-container-lowest text-on-surface px-3 py-1.5 rounded-lg text-body-sm font-body-sm focus:outline-none shadow-sm" type="text" value="Gedung B Lt. 2 Kampus UNUGHA Cilacap"/>
+<p class="font-caption text-caption text-outline">Jl. Kemerdekaan Barat No. 17, Kesugihan, Cilacap.</p>
+</div>
+<!-- Akun Instagram -->
+<div class="p-4 rounded-xl bg-surface-container-low space-y-2">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">photo_camera</span>
+<span class="font-label-md text-label-md font-semibold">Instagram Resmi</span>
+</div>
+<input class="w-full bg-surface-container-lowest text-on-surface px-3 py-1.5 rounded-lg text-body-sm font-body-sm focus:outline-none shadow-sm" type="text" value="@bemfmikom_unugha"/>
+<p class="font-caption text-caption text-outline">Kanal publikasi primer kegiatan organisasi.</p>
+</div>
+<!-- WhatsApp Hotline & YouTube -->
+<div class="p-4 rounded-xl bg-surface-container-low space-y-2">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+<span class="font-label-md text-label-md font-semibold">Hotline &amp; YouTube</span>
+</div>
+<input class="w-full bg-surface-container-lowest text-on-surface px-3 py-1.5 rounded-lg text-body-sm font-body-sm focus:outline-none shadow-sm" type="text" value="+62 858-1234-5678"/>
+<p class="font-caption text-caption text-outline">Layanan respons cepat aspirasi mahasiswa.</p>
+</div>
+</div>
+</div>
+<!-- SECTION 4: AUDIT LOG & FEEDBACK BAR -->
+<div class="p-4 rounded-xl bg-surface-container flex flex-col sm:flex-row items-center justify-between gap-3 text-on-surface">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm font-semibold text-on-surface">Audit Pembaruan Landing Page</p>
+<p class="font-caption text-caption text-on-surface-variant">Perubahan terakhir berhasil disimpan pada 18 Mei 2025 pukul 16:30 WIB oleh Superadministrator.</p>
+</div>
+</div>
+<div class="flex items-center gap-2 text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<a class="hover:underline font-semibold" href="#">Lihat Riwayat Versi (Changelog)</a>
+</div>
+</div>
+</div>
+<script>
+  // Simple micro-interaction for simulated draft saving state
+  const saveBtn = document.getElementById('save-btn');
+  const alertBanner = document.getElementById('unsaved-alert');
+  
+  if (saveBtn && alertBanner) {
+    saveBtn.addEventListener('click', function() {
+      const originalText = saveBtn.innerHTML;
+      saveBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>Menyimpan...</span>';
+      saveBtn.disabled = true;
+      
+      setTimeout(() => {
+        saveBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span><span>Tersimpan!</span>';
+        alertBanner.classList.add('hidden');
+        
+        setTimeout(() => {
+          saveBtn.innerHTML = originalText;
+          saveBtn.disabled = false;
+        }, 1800);
+      }, 700);
+    });
+  }
+</script></main></div></body></html>
