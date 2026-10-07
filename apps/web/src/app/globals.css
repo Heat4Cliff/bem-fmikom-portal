@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+@theme inline {
+  --breakpoint-lg: 64.0625rem;
+  --color-background: var(--surface-canvas);
+  --color-foreground: var(--text-heading);
+  --color-primary: var(--brand-primary);
+  --color-primary-foreground: var(--brand-on-primary);
+  --color-primary-container: var(--brand-primary-container);
+  --color-primary-container-foreground: var(--brand-on-primary-container);
+  --color-secondary: var(--brand-accent);
+  --color-secondary-foreground: var(--brand-on-accent);
+  --color-tertiary: var(--brand-midnight);
+  --color-surface: var(--surface-default);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-soft: var(--surface-soft);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border-default);
+  --color-muted: var(--text-muted);
+  --color-body: var(--text-body);
+  --color-success: var(--status-success);
+  --color-warning: var(--status-warning);
+  --color-danger: var(--status-danger);
+  --color-info: var(--status-info);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-jakarta);
+  --radius-sm: var(--radius-control);
+  --radius-md: var(--radius-card-sm);
+  --radius-lg: var(--radius-card);
+  --radius-xl: var(--radius-feature);
+  --shadow-card: var(--shadow-subtle);
+  --shadow-raised: var(--shadow-elevated);
+  --shadow-float: var(--shadow-floating);
+}
+
+:root {
+  color-scheme: light;
+  --brand-primary: #00236f;
+  --brand-on-primary: #ffffff;
+  --brand-primary-container: #1e3a8a;
+  --brand-on-primary-container: #90a8ff;
+  --brand-accent: #d97706;
+  --brand-on-accent: #ffffff;
+  --brand-accent-bright: #f59e0b;
+  --brand-midnight: #0f172a;
+  --surface-canvas: #f8f9ff;
+  --surface-default: #ffffff;
+  --surface-muted: #eff4ff;
+  --surface-soft: #e5eeff;
+  --surface-raised: #dce9ff;
+  --text-heading: #0b1c30;
+  --text-body: #334155;
+  --text-muted: #64748b;
+  --text-on-muted: #444651;
+  --border-default: #c5c5d3;
+  --status-success: #10b981;
+  --status-warning: #f59e0b;
+  --status-danger: #ef4444;
+  --status-info: #0284c7;
+  --radius-control: 0.5rem;
+  --radius-card-sm: 0.75rem;
+  --radius-card: 1rem;
+  --radius-feature: 1.5rem;
+  --space-gutter: 1.5rem;
+  --space-gutter-mobile: 1rem;
+  --space-section: 3rem;
+  --container-public: 80rem;
+  --sidebar-width: 17.875rem;
+  --sidebar-width-collapsed: 4.5rem;
+  --shadow-subtle: 0 1px 2px rgb(15 23 42 / 5%);
+  --shadow-elevated: 0 4px 6px -1px rgb(15 23 42 / 7%), 0 2px 4px -2px rgb(15 23 42 / 5%);
+  --shadow-floating: 0 10px 15px -3px rgb(15 23 42 / 8%), 0 4px 6px -4px rgb(15 23 42 / 4%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--surface-canvas);
+  color: var(--text-heading);
+  font-family: var(--font-inter), Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a,
+input,
+select,
+textarea,
+[tabindex]:not([tabindex="-1"]) {
+  outline-color: var(--brand-accent-bright);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-accent-bright);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: #dce1ff;
+  color: var(--brand-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

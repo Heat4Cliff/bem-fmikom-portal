@@ -1,0 +1,28 @@
+# Dependencies and build output
+node_modules/
+.pnpm-store/
+.next/
+out/
+dist/
+coverage/
+build/
+bin/
+
+# Local configuration (keep examples)
+.env*
+!.env.example
+apps/**/.env*
+!apps/**/.env.example
+
+# Go
+*.test
+*.out
+
+# Local tooling and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+npm-debug.log*
+pnpm-debug.log*

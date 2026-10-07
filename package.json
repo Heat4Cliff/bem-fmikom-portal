@@ -1,0 +1,24 @@
+{
+  "name": "bem-fmikom-portal",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @bem-fmikom/web dev",
+    "build": "pnpm --filter @bem-fmikom/web build",
+    "start": "pnpm --filter @bem-fmikom/web start",
+    "lint": "pnpm --filter @bem-fmikom/web lint",
+    "format": "pnpm --filter @bem-fmikom/web format:check",
+    "typecheck": "pnpm --filter @bem-fmikom/web typecheck",
+    "test": "pnpm --filter @bem-fmikom/web test",
+    "api:fmt": "node scripts/gofmt-check.mjs",
+    "api:dev": "go -C apps/api run ./cmd/server",
+    "api:vet": "go -C apps/api vet ./...",
+    "api:test": "go -C apps/api test ./...",
+    "api:build": "go -C apps/api build ./...",
+    "verify": "pnpm lint && pnpm format && pnpm typecheck && pnpm test && pnpm build && pnpm api:fmt && pnpm api:vet && pnpm api:test && pnpm api:build"
+  }
+}

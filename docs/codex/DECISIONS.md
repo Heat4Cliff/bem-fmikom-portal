@@ -27,3 +27,16 @@
 ## Not decided here
 
 See GAPS_AND_QUESTIONS.md. Phase 0 does not choose new endpoint behavior, role access, analytics provider, retention policy, rate limit thresholds, or unprovided visual design.
+
+## Phase 1 — Foundation choices
+
+| Area | Decision | Reason / boundary |
+|---|---|---|
+| Workspace | pnpm 11.25.0 workspace with `apps/*` and `packages/*`; exact direct dependency versions are recorded in manifests and `pnpm-lock.yaml`. | Frozen lockfile install passed. A later offline supply-chain metadata check lacked a cached `@babel/helpers` record, so the final install check used the configured registry. |
+| Frontend | Next.js 16.4.0 App Router, React 19.2.8, TypeScript 6.0.3 strict, Tailwind CSS 4.3.3, Biome 2.5.15 for lint/format. | ESLint 9 is out of support and ESLint 10 is outside the peer ranges of the Next React/import/a11y plugins. Biome keeps lint and format on a supported, peer-clean toolchain. TypeScript 7 was rejected after typescript-eslint reported its compiler API was unsupported. |
+| Fonts | Inter and Plus Jakarta Sans are bundled from Fontsource 5.3.0 and loaded with `next/font/local`. | Keeps the specified typefaces while allowing offline builds without fetching Google Fonts. |
+| Build bundler | Production build script uses `next build --webpack`; `next dev` keeps the Next.js default. | Turbopack's Windows worker failed to spawn under the restricted local build environment; Webpack production build passed. |
+| Backend | Go 1.26.1 module with Gin 1.12.0, `slog` JSON logging, request ID, recovery, common JSON envelope, JSON 404, and operational `GET /healthz`. | Operational foundation only; `/healthz` is not a product API contract route. |
+| Runtime pin | `.node-version` is 24.19.0 and `.go-version` is 1.26.1. | CI installs the declared versions. This workstation executed Node commands on Node 25.2.1; record the mismatch when interpreting local verification. |
+
+These choices do not resolve Phase 0 product/API/security gaps or introduce authentication, authorization, database schema, migrations, or business endpoints.

@@ -12,14 +12,14 @@
 - [ ] Do **not** start Phase 1 in the same run.
 
 ## Phase 1 — Repository Foundation & Design System
-- [ ] Scaffold monorepo structure `apps/web`, `apps/api`, `packages/contracts`, `scripts`, `infra`.
-- [ ] Initialize Next.js TypeScript strict + Tailwind.
-- [ ] Initialize Go module + Gin + config + structured logging.
-- [ ] Establish environment templates (`.env.example`) without secrets.
-- [ ] Implement design tokens from Stitch `DESIGN.md`.
-- [ ] Implement core reusable UI primitives and public/admin shells.
-- [ ] Add lint/format/typecheck/test scripts.
-- [ ] Add baseline CI workflow.
+- [x] Scaffold monorepo structure `apps/web`, `apps/api`, `packages/contracts`, `scripts`, `infra`.
+- [x] Initialize Next.js TypeScript strict + Tailwind.
+- [x] Initialize Go module + Gin + config + structured logging.
+- [x] Establish environment templates (`.env.example`) without secrets.
+- [x] Implement design tokens from Stitch `DESIGN.md`.
+- [x] Implement core reusable UI primitives and public/admin shells.
+- [x] Add lint/format/typecheck/test scripts.
+- [x] Add baseline CI workflow.
 
 ## Phase 2 — Database, Auth & Authorization Foundation
 - [ ] Finalize migrations for users, periods, divisions, members, articles/categories, galleries, announcements, aspirations, registration forms/fields/submissions, documents, landing settings, activity logs.

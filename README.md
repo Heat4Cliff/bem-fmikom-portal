@@ -1,33 +1,78 @@
 # BEM FMIKOM UNUGHA Portal
 
-Repository terpisah untuk pembangunan portal publik dan dashboard admin BEM FMIKOM UNUGHA. Repository ini memulai **Phase 0 — Source Audit** saja.
+Repository foundation for the BEM FMIKOM UNUGHA portal. This repository currently contains the Phase 0 audit and Phase 1 technical foundation. Business features, database migrations, authentication, authorization, and contract APIs have not started.
 
-## Status
+## Source of truth
 
-- Phase 0 report: `docs/codex/SOURCE_AUDIT.md`
-- Phase 0 status: **PASS**
-- Phase 1 has not started. No application scaffold, feature, or migration was created.
+- `docs/PRD_SUMMARY.md` defines behavior and scope.
+- `docs/backend/API_CONTRACT.md` and `docs/backend/SECURITY_CONTRACT.md` define API and authorization contracts.
+- `design_reference/` contains the read-only Stitch material. `screen.png` is the visual target; `DESIGN.md` defines design tokens; `code.html` is a layout/style reference only and is not production architecture.
+- `docs/codex/` contains the audit, decisions, gaps, implementation matrix, and phase reports.
 
-## Source material
+Do not edit `source_docs/` or `design_reference/` as part of implementation.
 
-`source_docs/` dan `design_reference/` disalin apa adanya dari folder persiapan agar repository ini mandiri. Keduanya adalah read-only evidence; jangan edit atau rapikan file sumber. PRD v1.4 mengatur behavior dan scope. Stitch `screen.png` adalah visual target; `code.html` hanya referensi struktur/style, bukan production architecture. Token ada di `design_reference/stitch_bem_fmikom_unugha_portal/modern_academic_horizon/DESIGN.md`.
+## Repository architecture
 
-Dokumen baseline produk, API, keamanan, desain, workflow, `AGENTS.md`, dan `PLANS.md` juga tersedia pada salinan folder ini. Checklist Phase 1+ tetap sama dengan sumber.
+```text
+apps/web/                 Next.js public and admin shells, reusable UI, tokens
+apps/api/                 Gin server foundation, typed config, HTTP middleware
+packages/contracts/       Reserved for resolved OpenAPI/shared contracts
+scripts/                  Cross-platform repository verification helpers
+infra/                    Reserved for later local infrastructure decisions
+docs/codex/                Audit, implementation matrix, gaps, and phase reports
+source_docs/              Read-only copies of source documents
+design_reference/         Read-only Stitch screenshots and references
+```
 
-## Phase 0 deliverables
+## Stack and prerequisites
 
-- `docs/codex/SOURCE_AUDIT.md`
-- `docs/codex/DECISIONS.md`
-- `docs/codex/GAPS_AND_QUESTIONS.md`
-- `docs/codex/IMPLEMENTATION_MATRIX.md`
+- Node.js 24.19.0 and pnpm 11.25.0
+- Go 1.26.1
+- Next.js App Router, TypeScript strict, Tailwind CSS v4
+- Go, Gin, REST foundation
+- MySQL/MariaDB is a later phase; no database is required to run the Phase 1 health server.
 
-Belum ada aplikasi yang bisa dijalankan. Lihat report untuk audit API, role/scope, 37 Stitch screens, responsive coverage, keamanan, risiko dan rekomendasi.
+Install dependencies and copy environment templates as needed:
 
-## Stack baseline untuk fase berikutnya
+```powershell
+pnpm install
+Copy-Item apps/web/.env.example apps/web/.env.local
+Copy-Item apps/api/.env.example apps/api/.env
+```
 
-- Frontend: Next.js App Router, TypeScript strict, Tailwind CSS
-- Backend: Go, Gin, REST
-- Database: MySQL/MariaDB
-- Authentication: JWT access token + Secure HttpOnly refresh-token cookie
+The templates contain placeholders only. Do not commit local `.env` files or real secrets.
 
-Ikuti `AGENTS.md` dan jalankan satu phase pada satu waktu. Tunggu instruksi sebelum memulai Phase 1.
+## Run locally
+
+```powershell
+pnpm dev
+```
+
+The public shell runs at `http://localhost:3000`. To run the API foundation separately:
+
+```powershell
+pnpm api:dev
+```
+
+The API listens on port 8080 by default and exposes only `GET /healthz` at this stage.
+
+## Verification
+
+```powershell
+pnpm lint
+pnpm format
+pnpm typecheck
+pnpm test
+pnpm build
+pnpm api:fmt
+pnpm api:vet
+pnpm api:test
+pnpm api:build
+pnpm verify
+```
+
+CI runs the same aggregate verification command after a frozen pnpm install.
+
+## Phase status
+
+See `docs/codex/PHASE_1_REPORT.md` for the verified scope and any manual visual-review limitations. Follow `PLANS.md` one phase at a time. Phase 2 has not begun.
