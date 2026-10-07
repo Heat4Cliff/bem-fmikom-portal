@@ -50,7 +50,7 @@ The typed API client keeps access JWT only in module memory, includes credential
 - Frontend login route, API client, auth provider/guard/helpers, auth tests, and role-aware admin shell/navigation under `apps/web/`.
 - MariaDB Compose and initialization files under `infra/`; CI database service and root DB/auth commands in `.github/workflows/ci.yml` and `package.json`.
 - Updated `.env.example`, `apps/api/.env.example`, `.gitignore`, `README.md`, `docs/codex/DECISIONS.md`, `docs/codex/GAPS_AND_QUESTIONS.md`, and `docs/codex/IMPLEMENTATION_MATRIX.md`.
-- Added this report. Phase 1 snapshot is commit `6bdf2ba` (`chore: complete phase 1 foundation`); Phase 2 changes remain a separate working-tree change set.
+- Added this report. Phase 1 snapshot is commit `6bdf2ba` (`chore: complete phase 1 foundation`); Phase 2 was committed separately as `0286b0e` after Phase 2B verification.
 
 ## Decisions Made
 
@@ -166,13 +166,46 @@ This section supersedes the earlier BLOCKED attempt above. All database work use
 - KEPALA_BIDANG with Divisi A saw the scoped-role navigation and did not see Landing Settings, User Management, or Activity Log: **PASS**. The Phase 2 dashboard shell does not yet render a human-readable division label; `/auth/me` division data and division authorization were verified by the DB integration. This is a UI visibility gap to address when a division-aware module is implemented, not a cross-division authorization failure.
 - Logout returned to login; reload remained unauthenticated: **PASS**.
 
-### Checklist and remaining boundaries
+### Checklist and remaining boundaries at Phase 2B
 
 - `PLANS.md` Phase 2 auth, current-status/role/division, and authorization-policy test items are checked after live DB verification. Broad product-table migrations and a committed deterministic developer seed remain unchecked because Phase 2 scope only creates the five foundation tables and no checked-in seed command was added. Phase 3 and later checklist content was not changed.
 - `README.md` now shows the tested `pnpm api:create-admin` argument syntax (without forwarding a literal `--`).
 - Remaining implementation risks: division scope is not yet exercised through CRUD/resource endpoints because those routes are not part of Phase 2; rate limiting is in-memory and per process; the dashboard does not display the KB division name; remote GitHub Actions CI was not run.
 - No Phase 3 work was started.
 
-## Phase Result
+## Phase 2C — Visible Division Scope Verification
 
-**PHASE 2: BLOCKED** — database integration ran without skips and full `pnpm verify` passed, with no critical backend auth/RBAC failure. The requested browser UAT criterion “KEPALA_BIDANG: division scope terlihat” is not met: the current Phase 2 shell does not display the assigned division name/scope. `/auth/me` and the database-backed policy matrix prove the division assignment and enforcement, but not visible scope in the UI. Resolve this UI evidence gap in a separately authorized follow-up; Phase 3 was not started.
+### Files changed
+
+- `apps/web/src/components/admin/admin-shell.tsx` — show the current division name in an amber design-system badge in the admin topbar only for `KEPALA_BIDANG`; use a safe fallback when the division is absent and truncate long names without widening the header.
+- `apps/web/src/lib/auth/auth-provider.test.tsx` — cover Kominfo and a second division name, role-specific badge visibility, and the missing-division fallback. Existing role navigation assertions remain in place.
+- This report — record Phase 2C implementation and verification evidence.
+
+The existing `AuthUser.division` type already matches `GET /api/v1/auth/me` (`{ id, name } | null`). The UI reads this current-user value; no new endpoint, JWT authority, backend policy, migration, or schema change was introduced.
+
+### Automated verification
+
+- `pnpm test`: **PASS**, 2 files / 11 tests.
+- `pnpm verify`: **PASS**, exit code 0. Biome lint and format, typecheck, frontend tests, Next.js production build, Go fmt, Go vet, Go tests, and Go build passed.
+- `pnpm api:integration`: **PASS**, explicit fresh run with `-count=1` against MariaDB 11.4; the database auth/RBAC integration test and all six division-matrix cases passed without skip. The Go package shown as cached within `pnpm verify` was also exercised freshly with this command.
+
+### Browser UAT
+
+- Against the local MariaDB-backed API and Next.js production preview, login as `KEPALA_BIDANG` opened the dashboard and showed `Scope: Kominfo` from the database division record. The role still did not see Landing Page Settings, User Management, or Activity Log.
+- After renaming the test database division to `Komunikasi dan Informasi Digital Fakultas`, reloading the session refreshed the current-user profile and displayed the current name, confirming the label is not hardcoded. The session and scope remained available after reload.
+- BPH login showed no division scope badge. SUPER_ADMIN login showed no division scope badge and retained its privileged navigation.
+- Reload persistence for KEPALA_BIDANG: **PASS**.
+
+### Responsive check
+
+- Desktop viewport 1440×900: badge is visible in the existing topbar identity area; no header or page overflow observed.
+- Mobile viewport 390×844: compact badge remains visible beside the identity/avatar controls; long division name truncates within the badge. Measured document width equals viewport width (390 px), with no horizontal overflow.
+- The temporary browser viewport override was reset after checking.
+
+### Checklist and final result
+
+- Existing Phase 2 auth, active-account, role/division policy, and authorization test checkboxes remain complete. The broader generic product-table migration and committed deterministic developer-seed items remain unchecked because Phase 2 scope explicitly limits schema to five auth/foundation tables and this UI-only follow-up does not add those artifacts. No Phase 3 checklist item was changed.
+- Git history: Phase 2 was already committed as `0286b0e`; this fix is a separate follow-up commit with no history rewrite.
+- The Phase 2B visible-scope UAT gap is resolved. No backend authorization or auth regression was found.
+
+**PHASE 2: PASS** — live database integration, full verification, role-specific browser UAT, responsive checks, and the visible division-scope requirement all passed. Phase 2C is complete; Phase 3 was not started.

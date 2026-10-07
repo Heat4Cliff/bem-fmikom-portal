@@ -189,7 +189,7 @@ describe("Phase 2 authentication UI and API client", () => {
     expect(getMemoryAccessToken()).toBeNull();
   });
 
-  it("hides super-admin-only navigation for BPH and division roles", () => {
+  it("shows the current division scope only for KEPALA_BIDANG", () => {
     const kepala = { ...activeUser, role: "KEPALA_BIDANG" as const, division: { id: 3, name: "Akademik" } };
     const { rerender } = render(
       <AdminShell user={kepala} context={{ role: kepala.role, divisionId: 3 }} onLogout={() => {}}>
@@ -200,6 +200,20 @@ describe("Phase 2 authentication UI and API client", () => {
     expect(screen.queryByRole("link", { name: "Activity Log" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Pengaturan Landing Page" })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Berita" })).toBeInTheDocument();
+    expect(screen.getByText("Scope: Akademik")).toBeInTheDocument();
+
+    const kepalaKominfo = { ...kepala, division: { id: 4, name: "Kominfo" } };
+    rerender(
+      <AdminShell
+        user={kepalaKominfo}
+        context={{ role: kepalaKominfo.role, divisionId: 4 }}
+        onLogout={() => {}}
+      >
+        <div>content</div>
+      </AdminShell>,
+    );
+    expect(screen.getByText("Scope: Kominfo")).toBeInTheDocument();
+    expect(screen.queryByText("Scope: Akademik")).not.toBeInTheDocument();
 
     rerender(
       <AdminShell user={activeUser} context={{ role: "BPH" }} onLogout={() => {}}>
@@ -210,5 +224,34 @@ describe("Phase 2 authentication UI and API client", () => {
     expect(screen.queryByRole("link", { name: "Activity Log" })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Pengaturan Landing Page" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Periode Kepengurusan" })).toBeInTheDocument();
+    expect(screen.queryByText(/^Scope:/)).not.toBeInTheDocument();
+
+    const superAdmin = { ...activeUser, role: "SUPER_ADMIN" as const, division: null };
+    rerender(
+      <AdminShell user={superAdmin} context={{ role: superAdmin.role }} onLogout={() => {}}>
+        <div>content</div>
+      </AdminShell>,
+    );
+    expect(screen.queryByText(/^Scope:/)).not.toBeInTheDocument();
+  });
+
+  it("uses a safe scope fallback when a KEPALA_BIDANG division is unavailable", () => {
+    const kepalaWithoutDivision = {
+      ...activeUser,
+      role: "KEPALA_BIDANG" as const,
+      division: null,
+    };
+    render(
+      <AdminShell
+        user={kepalaWithoutDivision}
+        context={{ role: kepalaWithoutDivision.role, divisionId: null }}
+        onLogout={() => {}}
+      >
+        <div>content</div>
+      </AdminShell>,
+    );
+
+    expect(screen.getByText("Scope divisi tidak tersedia")).toBeInTheDocument();
+    expect(screen.queryByText("Scope: Semua Divisi")).not.toBeInTheDocument();
   });
 });

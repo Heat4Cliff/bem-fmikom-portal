@@ -22,7 +22,7 @@ import {
   UsersRound,
   LogOut,
 } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/primitives";
+import { Avatar, AvatarFallback, Badge } from "@/components/ui/primitives";
 import { Button } from "@/components/ui/button";
 import { Drawer } from "@/components/ui/overlays";
 import { cn } from "@/lib/utils/cn";
@@ -161,6 +161,9 @@ export function AdminTopbar({
   user: AuthUser;
   onLogout: () => void;
 }) {
+  const divisionName = user.division?.name.trim();
+  const divisionScope = divisionName ? `Scope: ${divisionName}` : "Scope divisi tidak tersedia";
+
   return (
     <header className="sticky top-0 z-30 flex h-[4.5rem] items-center justify-between border-b border-border/70 bg-surface px-4 md:px-6">
       <div className="flex min-w-0 items-center gap-3">
@@ -183,7 +186,17 @@ export function AdminTopbar({
           <p className="hidden text-xs text-muted sm:block">Fakultas Matematika dan Ilmu Komputer</p>
         </div>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3">
+        {user.role === "KEPALA_BIDANG" ? (
+          <Badge
+            aria-label={divisionScope}
+            className="max-w-[34vw] min-w-0 shrink border border-secondary/25 bg-warning/15 px-2 text-primary sm:max-w-56 sm:px-2.5"
+            title={divisionScope}
+            variant="warning"
+          >
+            <span className="block min-w-0 truncate">{divisionScope}</span>
+          </Badge>
+        ) : null}
         <span className="hidden items-center gap-1.5 rounded-full bg-surface-muted px-3 py-1.5 text-xs font-medium text-muted sm:inline-flex">
           <ShieldCheck aria-hidden="true" className="size-3.5 text-primary" />
           Preview fondasi
