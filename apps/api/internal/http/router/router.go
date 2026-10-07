@@ -1,21 +1,48 @@
 package router
 
 import (
+	"database/sql"
 	"log/slog"
 
+	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/config"
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/http/handler"
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/http/middleware"
+	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/service"
 	"github.com/gin-gonic/gin"
 )
 
-func New(logger *slog.Logger) *gin.Engine {
+func New(logger *slog.Logger) *gin.Engine { return newEngine(logger, nil) }
+
+func NewWithDependencies(logger *slog.Logger, cfg config.Config, db *sql.DB) (*gin.Engine, error) {
+	authService, err := service.NewAuthService(db, cfg, logger)
+	if err != nil {
+		return nil, err
+	}
+	engine := newEngine(logger, cfg.FrontendOrigins)
+	auth := handler.NewAuth(authService, cfg, logger)
+	limiter := middleware.NewLoginLimiter(cfg.LoginLimitCount, cfg.LoginLimitWindow)
+	group := engine.Group("/api/v1/auth")
+	group.Use(middleware.RequireTrustedOrigin(cfg.FrontendOrigins))
+	group.POST("/login", limiter.Middleware(), auth.Login)
+	group.POST("/refresh", auth.Refresh)
+	group.POST("/logout", auth.Logout)
+	group.GET("/me", middleware.RequireAuth(authService), auth.Me)
+	return engine, nil
+}
+
+func newEngine(logger *slog.Logger, origins []string) *gin.Engine {
+	if logger == nil {
+		logger = slog.Default()
+	}
 	engine := gin.New()
+	_ = engine.SetTrustedProxies(nil)
 	engine.Use(middleware.RequestID())
 	engine.Use(middleware.Recovery(logger))
 	engine.Use(middleware.RequestLogger(logger))
+	engine.Use(middleware.CORS(origins))
 	engine.GET("/healthz", handler.Healthz)
 	engine.NoRoute(func(c *gin.Context) {
-		c.JSON(404, handler.Failure("Resource not found", nil))
+		c.JSON(404, handler.FailureCode("NOT_FOUND", "Resource not found", nil))
 	})
 	return engine
 }

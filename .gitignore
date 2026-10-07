@@ -17,6 +17,7 @@ apps/**/.env*
 # Go
 *.test
 *.out
+*.tsbuildinfo
 
 # Local tooling and editor files
 .DS_Store

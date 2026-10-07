@@ -1,37 +1,73 @@
 package config
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
-func TestLoadUsesSafeDevelopmentDefaults(t *testing.T) {
-	t.Setenv("APP_ENV", "")
-	t.Setenv("APP_PORT", "")
-	t.Setenv("FRONTEND_URL", "")
-	t.Setenv("DATABASE_URL", "")
-	t.Setenv("JWT_SECRET", "")
-	t.Setenv("STORAGE_DIR", "")
-
-	got, err := Load()
-	if err != nil {
-		t.Fatalf("Load() error = %v", err)
+func testEnv(overrides map[string]string) func(string) string {
+	values := map[string]string{
+		"APP_ENV": "development", "DATABASE_URL": "test:test@tcp(127.0.0.1:3306)/bem_fmikom_test",
+		"JWT_SECRET": strings.Repeat("x", 32), "FRONTEND_ORIGINS": "http://localhost:3000",
 	}
-	if got.AppEnv != "development" || got.AppPort != 8080 || got.FrontendURL != "http://localhost:3000" {
+	for key, value := range overrides {
+		values[key] = value
+	}
+	return func(key string) string { return values[key] }
+}
+
+func TestLoadUsesSecureDevelopmentDefaults(t *testing.T) {
+	got, err := LoadFrom(testEnv(nil))
+	if err != nil {
+		t.Fatalf("LoadFrom() error = %v", err)
+	}
+	if got.AppEnv != "development" || got.AppPort != 8080 || got.AccessTokenTTL.String() != "15m0s" || got.RefreshTokenTTL.String() != "168h0m0s" {
 		t.Fatalf("unexpected defaults: %+v", got)
 	}
-	if got.DatabaseURL != "" || got.JWTSecret != "" {
-		t.Fatal("optional credentials should remain empty")
+	if got.Cookie.Secure || got.Cookie.SameSite != "lax" || got.Cookie.Path != "/api/v1/auth" {
+		t.Fatalf("unexpected development cookie defaults: %+v", got.Cookie)
+	}
+	if got.BcryptCost != 12 || len(got.FrontendOrigins) != 1 {
+		t.Fatalf("unexpected auth defaults: %+v", got)
 	}
 }
 
-func TestLoadRejectsInvalidPort(t *testing.T) {
-	t.Setenv("APP_PORT", "70000")
-	if _, err := Load(); err == nil {
-		t.Fatal("Load() should reject an out-of-range port")
+func TestLoadRejectsInvalidSecuritySettings(t *testing.T) {
+	tests := []struct {
+		name      string
+		overrides map[string]string
+	}{
+		{"weak secret", map[string]string{"JWT_SECRET": "short"}},
+		{"wildcard origin", map[string]string{"FRONTEND_ORIGINS": "*"}},
+		{"origin path", map[string]string{"FRONTEND_ORIGINS": "https://portal.example/path"}},
+		{"none without secure", map[string]string{"AUTH_REFRESH_COOKIE_SAMESITE": "none"}},
+		{"invalid same site", map[string]string{"AUTH_REFRESH_COOKIE_SAMESITE": "invalid"}},
+		{"invalid duration", map[string]string{"AUTH_ACCESS_TOKEN_TTL": "soon"}},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			if _, err := LoadFrom(testEnv(test.overrides)); err == nil {
+				t.Fatal("LoadFrom() expected validation error")
+			}
+		})
 	}
 }
 
-func TestLoadRejectsNonHTTPFrontendURL(t *testing.T) {
-	t.Setenv("FRONTEND_URL", "ftp://example.test")
-	if _, err := Load(); err == nil {
-		t.Fatal("Load() should reject a non-HTTP frontend URL")
+func TestLoadProductionSecureCookieDefaultAndMultipleOrigins(t *testing.T) {
+	got, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "https://portal.example, https://admin.example"}))
+	if err != nil {
+		t.Fatalf("LoadFrom() error = %v", err)
+	}
+	if !got.Cookie.Secure || len(got.FrontendOrigins) != 2 {
+		t.Fatalf("unexpected production settings: %+v", got)
+	}
+}
+
+func TestProductionRejectsWeakSecretPlaceholder(t *testing.T) {
+	if _, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": "LOCAL_ONLY_GENERATE_A_RANDOM_32_BYTE_SECRET"})); err == nil {
+		t.Fatal("production should reject the checked-in local secret marker")
+	}
+	if _, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": strings.Repeat("x", 32)})); err == nil {
+		t.Fatal("production should reject a low-diversity secret")
 	}
 }

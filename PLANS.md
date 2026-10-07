@@ -24,9 +24,9 @@
 ## Phase 2 — Database, Auth & Authorization Foundation
 - [ ] Finalize migrations for users, periods, divisions, members, articles/categories, galleries, announcements, aspirations, registration forms/fields/submissions, documents, landing settings, activity logs.
 - [ ] Seed deterministic local dev data for SUPER_ADMIN, BPH, KEPALA_BIDANG.
-- [ ] Implement login/refresh/logout/me.
-- [ ] Implement account-active checks, role policy, division scoping.
-- [ ] Security tests: 401, 403, cross-division IDOR denial.
+- [x] Implement login/refresh/logout/me.
+- [x] Implement account-active checks, role policy, division scoping.
+- [x] Security tests: 401, 403, cross-division denial at the authorization-policy layer (real CRUD IDOR routes remain out of Phase 2 scope).
 
 ## Phase 3 — Public Foundation & Landing
 - [ ] Public layout/nav/footer responsive.

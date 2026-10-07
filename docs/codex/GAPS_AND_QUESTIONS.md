@@ -32,3 +32,10 @@ Before implementing affected APIs, update docs/backend/API_CONTRACT.md in this r
 - SCREEN_INDEX.md claims 37 mapped references and inventory confirms 37 pairs, but the list has no explicit /admin/login or article-category reference.
 - Exactly 8 screens have explicit mobile reference names; absence of a separate mobile screen is not evidence that the route is desktop-only.
 - This report did not claim human visual review of the screens or run UAT.
+
+## Phase 2 disposition
+
+- **G-13 — Resolved for the authentication foundation.** Phase 2 fixes access JWT lifetime at 15 minutes and refresh lifetime at seven days; refresh tokens are opaque, hashed with SHA-256, rotated transactionally, and replay revokes the session family. Cookie defaults/configuration, production Secure behavior, trusted-origin checks, active-user reload, and `/api/v1/auth/*` route prefix are recorded in `DECISIONS.md`. The API Contract's example `expires_in: 1800` conflicts with the user-fixed 900 seconds; implementation uses 900 and the conflict is explicit.
+- **G-07 — Carried forward as a visual evidence limitation.** `/admin/login` uses the established design tokens and form primitives (`DESIGN SYSTEM CONSISTENT`); there is no dedicated Stitch login image and no pixel-parity claim.
+- **Other Phase 0 gaps remain open.** Gallery/article-category routes, analytics, registration duplicate/snapshot rules, document retention, 403/404 disclosure, public write thresholds, mobile evidence, announcement visibility, and upload configuration do not block the Phase 2 database/auth/RBAC foundation and were not silently decided here.
+- **Database integration is unverified in this workstation.** The suite and CI MariaDB service are configured, but Docker is not installed in the local environment; no live MySQL/MariaDB result is claimed.

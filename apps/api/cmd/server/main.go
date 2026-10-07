@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/config"
+	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/database"
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/http/router"
 	"github.com/gin-gonic/gin"
 )
@@ -24,6 +25,9 @@ func main() {
 }
 
 func run() error {
+	if err := config.LoadDevelopmentFiles(); err != nil {
+		return fmt.Errorf("load local environment files")
+	}
 	cfg, err := config.Load()
 	if err != nil {
 		return fmt.Errorf("load configuration: %w", err)
@@ -33,10 +37,19 @@ func run() error {
 	if cfg.AppEnv == "production" {
 		gin.SetMode(gin.ReleaseMode)
 	}
+	db, err := database.Open(context.Background(), cfg)
+	if err != nil {
+		return fmt.Errorf("initialize database: %w", err)
+	}
+	defer db.Close()
+	apiRouter, err := router.NewWithDependencies(logger, cfg, db)
+	if err != nil {
+		return fmt.Errorf("initialize API routes: %w", err)
+	}
 
 	server := &http.Server{
 		Addr:              fmt.Sprintf(":%d", cfg.AppPort),
-		Handler:           router.New(logger),
+		Handler:           apiRouter,
 		ReadHeaderTimeout: 5 * time.Second,
 		IdleTimeout:       60 * time.Second,
 	}

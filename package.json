@@ -19,6 +19,12 @@
     "api:vet": "go -C apps/api vet ./...",
     "api:test": "go -C apps/api test ./...",
     "api:build": "go -C apps/api build ./...",
+    "api:migrate:up": "go -C apps/api run ./cmd/migrate up",
+    "api:migrate:down": "go -C apps/api run ./cmd/migrate down",
+    "api:create-admin": "go -C apps/api run ./cmd/create-admin",
+    "api:integration": "go -C apps/api test -v ./... -run TestDatabaseIntegration -count=1",
+    "db:up": "docker compose --env-file .env -f infra/docker-compose.dev.yml up -d",
+    "db:down": "docker compose --env-file .env -f infra/docker-compose.dev.yml down",
     "verify": "pnpm lint && pnpm format && pnpm typecheck && pnpm test && pnpm build && pnpm api:fmt && pnpm api:vet && pnpm api:test && pnpm api:build"
   }
 }

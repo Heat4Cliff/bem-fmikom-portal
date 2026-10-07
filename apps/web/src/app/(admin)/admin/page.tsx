@@ -12,11 +12,12 @@ export default function AdminFoundationPage() {
         </span>
         <h2 className="font-heading text-xl font-bold text-primary">Kerangka admin siap</h2>
         <p className="mt-2 max-w-lg text-sm leading-6 text-muted">
-          Navigasi dan layout dasar tersedia. Data dashboard, autentikasi, serta kontrol akses akan dikerjakan
-          pada fase yang sesuai.
+          Sesi administrator telah diverifikasi. Ringkasan data organisasi akan tersedia setelah modul
+          dashboard masuk tahap implementasi.
         </p>
-        <Alert className="mt-6 max-w-xl text-left" variant="info" title="Phase 1 foundation">
-          Tidak ada data bisnis atau aturan RBAC aktif pada halaman ini.
+        <Alert className="mt-6 max-w-xl text-left" variant="info" title="Fondasi Phase 2">
+          Login, session refresh, dan navigasi berdasarkan role sudah aktif. Data bisnis belum dimuat pada
+          tahap ini.
         </Alert>
       </Card>
     </div>

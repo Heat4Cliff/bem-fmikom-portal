@@ -12,6 +12,7 @@ type Meta struct {
 type Envelope struct {
 	Success bool                `json:"success"`
 	Message string              `json:"message"`
+	Code    string              `json:"code,omitempty"`
 	Data    any                 `json:"data,omitempty"`
 	Errors  map[string][]string `json:"errors,omitempty"`
 	Meta    *Meta               `json:"meta,omitempty"`
@@ -23,4 +24,8 @@ func Success(message string, data any) Envelope {
 
 func Failure(message string, errors map[string][]string) Envelope {
 	return Envelope{Success: false, Message: message, Errors: errors}
+}
+
+func FailureCode(code, message string, errors map[string][]string) Envelope {
+	return Envelope{Success: false, Message: message, Code: code, Errors: errors}
 }

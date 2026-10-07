@@ -61,7 +61,7 @@ func Recovery(logger *slog.Logger) gin.HandlerFunc {
 	return gin.CustomRecoveryWithWriter(io.Discard, func(c *gin.Context, _ any) {
 		requestID, _ := c.Get("request_id")
 		logger.Error("http_panic_recovered", slog.String("request_id", requestIDString(requestID)))
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"success": false, "message": "Internal server error"})
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"success": false, "message": "Internal server error", "code": "INTERNAL_ERROR"})
 	})
 }
 
