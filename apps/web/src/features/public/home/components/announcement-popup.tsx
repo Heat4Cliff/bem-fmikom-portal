@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/overlays";
@@ -36,6 +36,7 @@ export function AnnouncementPopup({
               fill
               sizes="(max-width: 672px) 92vw, 672px"
               className="object-cover"
+              unoptimized
             />
           </div>
         ) : null}

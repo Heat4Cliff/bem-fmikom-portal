@@ -1,4 +1,5 @@
 import { ArrowRight, Newspaper } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import type { NewsPreview } from "../types";
 import { EmptyPreview, SectionHeading } from "./section-primitives";
@@ -15,7 +16,7 @@ export function NewsSection({ news, demoMode }: { news: NewsPreview[]; demoMode:
           description="Informasi dan cerita kegiatan BEM FMIKOM UNUGHA akan hadir di sini."
           action={
             <Link
-              href="#berita"
+              href="/berita"
               className="inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary hover:bg-white focus-visible:outline-2 focus-visible:outline-secondary"
             >
               Semua berita <ArrowRight aria-hidden="true" className="size-4" />
@@ -37,9 +38,20 @@ export function NewsSection({ news, demoMode }: { news: NewsPreview[]; demoMode:
                 <div
                   role="img"
                   aria-label={item.visualLabel}
-                  className={`grid aspect-[16/10] place-items-center ${visualTones[index % visualTones.length]}`}
+                  className={`relative grid aspect-[16/10] place-items-center overflow-hidden ${visualTones[index % visualTones.length]}`}
                 >
-                  <Newspaper aria-hidden="true" className="size-10 text-primary/70" />
+                  {item.imageUrl ? (
+                    <Image
+                      src={item.imageUrl}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover"
+                      unoptimized
+                    />
+                  ) : (
+                    <Newspaper aria-hidden="true" className="size-10 text-primary/70" />
+                  )}
                 </div>
                 <div className="p-5">
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold text-muted">

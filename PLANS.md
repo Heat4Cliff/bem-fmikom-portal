@@ -36,12 +36,12 @@
 - [x] Visual review against desktop/mobile Stitch refs.
 
 ## Phase 4 — Content CMS
-- [ ] Article categories + articles CRUD/publish/unpublish.
-- [ ] Public article list/detail.
-- [ ] Gallery categories/items with Google Photos URL.
-- [ ] Public gallery list/detail.
-- [ ] Announcements CRUD/scheduling/active popup/public list/detail.
-- [ ] RBAC/division scope tests.
+- [x] Article categories + articles CRUD/publish/unpublish.
+- [x] Public article list/detail.
+- [x] Gallery categories/items with Google Photos URL.
+- [x] Public gallery list/detail.
+- [x] Announcements CRUD/scheduling/active popup/public list/detail.
+- [x] RBAC/division scope tests.
 
 ## Phase 5 — Organization & Period Management
 - [ ] Period CRUD/activate/archive with single-active invariant.

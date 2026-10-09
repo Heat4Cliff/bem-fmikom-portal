@@ -1,6 +1,12 @@
 import type { AuthUser } from "@/types/auth";
 
-type Envelope<T> = { success: boolean; message: string; data: T; code?: string };
+export type Envelope<T> = {
+  success: boolean;
+  message: string;
+  data: T;
+  code?: string;
+  meta?: { page: number; limit: number; total: number; total_pages: number };
+};
 
 export class ApiError extends Error {
   constructor(
@@ -28,6 +34,9 @@ export const onAuthExpired = (listener: (() => void) | null) => {
 const baseURL = (process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080/api/v1").replace(/\/$/, "");
 
 async function readEnvelope<T>(response: Response): Promise<Envelope<T>> {
+  if (response.status === 204) {
+    return { success: true, message: "", data: null as T };
+  }
   let envelope: Envelope<T>;
   try {
     envelope = (await response.json()) as Envelope<T>;
@@ -69,12 +78,15 @@ export interface RequestOptions extends Omit<RequestInit, "body"> {
   retryOnUnauthorized?: boolean;
 }
 
-export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
+export async function apiRequestEnvelope<T>(
+  path: string,
+  options: RequestOptions = {},
+): Promise<Envelope<T>> {
   const { retryOnUnauthorized = true, body, headers: providedHeaders, ...init } = options;
   const headers = new Headers(providedHeaders);
   if (body !== undefined && !(body instanceof FormData)) headers.set("Content-Type", "application/json");
 
-  const perform = async (retried: boolean): Promise<T> => {
+  const perform = async (retried: boolean): Promise<Envelope<T>> => {
     const token = getMemoryAccessToken();
     const requestHeaders = new Headers(headers);
     if (token) requestHeaders.set("Authorization", `Bearer ${token}`);
@@ -92,11 +104,15 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
       }
       return perform(true);
     }
-    const envelope = await readEnvelope<T>(response);
-    return envelope.data;
+    return readEnvelope<T>(response);
   };
 
   return perform(false);
+}
+
+export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  const envelope = await apiRequestEnvelope<T>(path, options);
+  return envelope.data;
 }
 
 export interface AuthPayload {

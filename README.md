@@ -114,4 +114,18 @@ CI runs the aggregate static/unit checks and a MariaDB 11.4 service for actual d
 
 ## Phase status
 
-See `docs/codex/PHASE_2_REPORT.md` and `docs/codex/PHASE_3_REPORT.md` for phase scope and verification evidence. The public landing page is a responsive presentation layer; production dynamic teasers remain empty until their future APIs/content domains are implemented. `/aspirasi` is currently a navigation placeholder and accepts no submissions. No CMS CRUD or product content database tables are included in the public foundation phase.
+See `docs/codex/PHASE_2_REPORT.md`, `docs/codex/PHASE_3_REPORT.md`, and `docs/codex/PHASE_4_REPORT.md` for phase scope and verification evidence. The landing page now reads public news, announcements, and gallery content from the API; other landing settings and organization data remain outside Phase 4. `/aspirasi` is still a navigation placeholder and accepts no submissions.
+
+## Content CMS (Phase 4)
+
+Phase 4 adds:
+
+- Public pages: `/berita`, `/berita/[slug]`, `/pengumuman`, `/pengumuman/[slug]`, `/galeri`, and `/galeri/[slug]`.
+- Admin screens: `/admin/berita`, `/admin/berita/new`, `/admin/berita/[id]/edit`, `/admin/kategori-berita`, `/admin/galeri`, and `/admin/pengumuman`.
+- API-backed article/category, gallery category/item, and announcement CRUD/publication workflows.
+- Reversible migration `00002_content_cms.sql`; `pnpm api:integration` resets only the dedicated database named by `TEST_DATABASE_URL` and ending in `_test`.
+- Rich text sanitized on the server; image/preview fields are HTTPS URLs and album URLs point to Google Photos. File uploads and private media storage are not part of this phase.
+- Role policy: SUPER_ADMIN/BPH manage shared content across divisions; KEPALA_BIDANG content requests are scoped to the current database division. Article taxonomy and announcements are read-only for KEPALA_BIDANG.
+- Public CMS Server Components use `cache: "no-store"` so publication and schedule state is read from the API for each request.
+
+Public announcement archive visibility for scheduled/expired entries still needs a product decision; current list/detail behavior and its impact are recorded in `docs/codex/GAPS_AND_QUESTIONS.md`.

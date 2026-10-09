@@ -109,6 +109,58 @@
   background-image: linear-gradient(135deg, var(--surface-raised), var(--brand-midnight));
 }
 
+.content-rich-text {
+  margin-top: 2rem;
+  color: var(--text-body);
+  font-size: 1rem;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+
+.content-rich-text p,
+.content-rich-text ul,
+.content-rich-text ol,
+.content-rich-text blockquote {
+  margin-block: 1rem;
+}
+
+.content-rich-text h2,
+.content-rich-text h3 {
+  margin-block: 2rem 0.75rem;
+  color: var(--brand-primary);
+  font-family: var(--font-jakarta), sans-serif;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.content-rich-text h2 {
+  font-size: 1.5rem;
+}
+.content-rich-text h3 {
+  font-size: 1.25rem;
+}
+.content-rich-text ul,
+.content-rich-text ol {
+  padding-left: 1.5rem;
+}
+.content-rich-text ul {
+  list-style: disc;
+}
+.content-rich-text ol {
+  list-style: decimal;
+}
+.content-rich-text a {
+  color: var(--brand-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.content-rich-text blockquote {
+  border-left: 3px solid var(--brand-accent-container);
+  padding-left: 1rem;
+  font-style: italic;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -134,7 +186,7 @@ textarea {
 }
 
 button,
-a,
+:where(a),
 input,
 select,
 textarea,

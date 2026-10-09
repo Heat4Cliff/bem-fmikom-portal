@@ -1,7 +1,7 @@
 import { ArrowRight, Mail, MapPin, MessageSquareHeart, Phone } from "lucide-react";
 import Link from "next/link";
-import type { ContactInfo } from "../types";
 import { Button } from "@/components/ui/button";
+import type { ContactInfo } from "../types";
 import { EmptyPreview, SectionHeading } from "./section-primitives";
 
 export function AspirationSection() {

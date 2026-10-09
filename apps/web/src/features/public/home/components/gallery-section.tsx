@@ -1,4 +1,5 @@
 import { ArrowRight, Images } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import type { GalleryPreview } from "../types";
 import { EmptyPreview, SectionHeading } from "./section-primitives";
@@ -20,7 +21,7 @@ export function GallerySection({ gallery, demoMode }: { gallery: GalleryPreview[
           description="Cuplikan dokumentasi kegiatan akan muncul setelah sumber galeri resmi tersedia."
           action={
             <Link
-              href="#galeri"
+              href="/galeri"
               className="inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary hover:bg-surface-muted focus-visible:outline-2 focus-visible:outline-secondary"
             >
               Lihat galeri <ArrowRight aria-hidden="true" className="size-4" />
@@ -36,13 +37,25 @@ export function GallerySection({ gallery, demoMode }: { gallery: GalleryPreview[
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             {gallery.map((item) => (
               <article key={item.id}>
-                <div
+                <Link
+                  href={item.href ?? "/galeri"}
                   role="img"
                   aria-label={item.visualLabel}
-                  className={`grid aspect-[4/3] place-items-center overflow-hidden rounded-xl border border-border/50 ${tones[item.tone]}`}
+                  className={`relative grid aspect-[4/3] place-items-center overflow-hidden rounded-xl border border-border/50 ${tones[item.tone]}`}
                 >
-                  <Images aria-hidden="true" className="size-9 text-white/85" />
-                </div>
+                  {item.imageUrl ? (
+                    <Image
+                      src={item.imageUrl}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      className="object-cover"
+                      unoptimized
+                    />
+                  ) : (
+                    <Images aria-hidden="true" className="size-9 text-white/85" />
+                  )}
+                </Link>
                 <h3 className="mt-3 font-heading text-sm font-bold leading-snug text-primary sm:text-base">
                   {item.title}
                 </h3>

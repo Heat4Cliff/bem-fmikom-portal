@@ -79,3 +79,20 @@ These choices do not resolve Phase 0 product/API/security gaps or introduce auth
 - The PRD's 1800-second login example conflicts with the user-fixed 900-second default; implementation follows 900 seconds.
 - `PLANS.md` has a broad Phase 2 schema checklist naming future domain entities. The user-fixed Phase 2 scope limits migrations to the five foundation tables; no later feature tables were created and Phase 3+ checklist text was not changed.
 - The Phase 0 gap G-13 is resolved for auth: access/refresh lifetimes, opaque refresh rotation/reuse, cookie behavior, current-DB identity, and auth route prefix are fixed. Missing visual login reference remains documented as G-07.
+
+### Phase 4 — Content CMS
+
+| Area | Decision | Reason / boundary |
+|---|---|---|
+| Schema scope | Add migration `00002_content_cms.sql` for article categories/articles/map, gallery categories/items, and announcements; keep foundation migration unchanged. | Phase 4 feature data is isolated in its own reversible migration. |
+| Rich text | Sanitize article/announcement HTML server-side with an allowlist (`p`, `h2`, `h3`, `strong`, `em`, `ul`, `ol`, `li`, `blockquote`, `a`, `br`); strip active-content subtrees, event attributes, and unsafe URL schemes. | Reference HTML is not trusted production code or content. |
+| Images and gallery | Use URL fields only; do not upload files. Google Photos album links and optional image/preview links require HTTPS. | Explicit Phase 4 handoff decision; no storage service or media permission was provided. |
+| Article roles | SUPER_ADMIN/BPH operate across divisions. KEPALA_BIDANG division is always taken from the current database principal; cross-division access is denied. | Prevents request-body division spoofing and IDOR. |
+| Category roles | Article categories are shared taxonomy: KEPALA_BIDANG reads only. Gallery album categories are managed by SUPER_ADMIN/BPH; KEPALA_BIDANG reads its division's albums and can CRUD items only within those parent categories. | Keeps taxonomy centrally managed while allowing division-scoped documentation work. |
+| Announcement roles/status | SUPER_ADMIN/BPH write; KEPALA_BIDANG reads. Persist `is_active` and UTC schedule bounds; report status as INACTIVE/SCHEDULED/ACTIVE/EXPIRED. The active endpoint requires the current UTC time window. | No scheduled task is required to transition the derived status. Public archive visibility still needs product confirmation (G-17). |
+| Public caching | Public CMS Server Components call the REST API with `cache: "no-store"`; admin requests use the existing typed authenticated client. | Avoids serving stale publication state during this phase. |
+| Gallery detail key | Implement `/api/v1/public/gallery-categories/{slug}` and `/galeri/{slug}`. | Full PRD v1.4 route table takes precedence over the API summary's `{id}` placeholder; contract and route matrix are reconciled. |
+| Division denial response | Mutations return 403 for unauthorized scope; scoped detail reads may return 404 to conceal record existence. | The security contract requires denial, and the existing G-12 permits 403 or 404. |
+| Category screen | `/admin/kategori-berita` uses the audited content-management component language; no dedicated Stitch category reference exists. | Reuses the existing design system without claiming screen-specific pixel parity (G-08). |
+
+Phase 4 integration evidence and known limitations are recorded in `PHASE_4_REPORT.md`.

@@ -36,6 +36,7 @@ export type NewsPreview = {
   title: string;
   excerpt: string;
   visualLabel: string;
+  imageUrl?: string;
   href: string;
 };
 
@@ -54,6 +55,8 @@ export type GalleryPreview = {
   dateLabel?: string;
   division?: string;
   visualLabel: string;
+  imageUrl?: string;
+  href?: string;
   tone: "navy" | "blue" | "amber" | "slate";
 };
 

@@ -1,8 +1,8 @@
 "use client";
 
-import * as React from "react";
-import { BellRing, ArrowRight } from "lucide-react";
+import { ArrowRight, BellRing } from "lucide-react";
 import Link from "next/link";
+import * as React from "react";
 import { Button } from "@/components/ui/button";
 import type { AnnouncementPreview } from "../types";
 import { AnnouncementPopup } from "./announcement-popup";
@@ -26,7 +26,7 @@ export function AnnouncementSection({
           description="Informasi resmi dan pembaruan organisasi akan ditampilkan pada bagian ini."
           action={
             <Link
-              href="#pengumuman"
+              href="/pengumuman"
               className="inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary hover:bg-surface-muted focus-visible:outline-2 focus-visible:outline-secondary"
             >
               Arsip pengumuman <ArrowRight aria-hidden="true" className="size-4" />

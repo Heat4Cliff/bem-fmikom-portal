@@ -20,6 +20,8 @@ func NewWithDependencies(logger *slog.Logger, cfg config.Config, db *sql.DB) (*g
 	}
 	engine := newEngine(logger, cfg.FrontendOrigins)
 	auth := handler.NewAuth(authService, cfg, logger)
+	content := handler.NewContent(service.NewContentService(db))
+	content.Register(engine, authService)
 	limiter := middleware.NewLoginLimiter(cfg.LoginLimitCount, cfg.LoginLimitWindow)
 	group := engine.Group("/api/v1/auth")
 	group.Use(middleware.RequireTrustedOrigin(cfg.FrontendOrigins))

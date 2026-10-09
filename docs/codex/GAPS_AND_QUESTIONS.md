@@ -50,3 +50,16 @@ Before implementing affected APIs, update docs/backend/API_CONTRACT.md in this r
 | G-22 | The current API server has no public content endpoints, and product content tables belong to later phases. | Dynamic home sections stay empty in production; typed demo fixtures are isolated behind a local-only flag. Public API/database integration remains future work. |
 
 The later live MariaDB result and Phase 2B/2C evidence are recorded in `PHASE_2_REPORT.md`.
+
+## Phase 4 disposition
+
+| Gap | Phase 4 outcome |
+|---|---|
+| G-01 gallery detail key | Resolved from the full PRD v1.4: public gallery detail uses `{slug}`. `API_CONTRACT.md` and `ROUTE_SCREEN_MATRIX.md` now agree. |
+| G-02 article category list endpoint | Resolved: `GET /api/v1/admin/article-categories` is implemented and consumed by category/article administration. |
+| G-08 category screen reference | The route is implemented using existing content-admin design patterns. No dedicated Stitch category screen exists, so screen-specific visual parity remains unclaimed. |
+| G-12 cross-division read status | Resolved policy: mutations return 403; scoped detail reads may return 404 to conceal resource existence. Both deny access. |
+| G-17 public announcement visibility | Still requires product confirmation. Current archive/detail expose only records whose `is_active` flag is true (including derived SCHEDULED/EXPIRED); `/active` additionally requires the UTC time window. Confirm whether scheduled and expired entries belong in the public archive before release. |
+| G-18 media/upload configuration | Phase 4 explicitly uses HTTPS URL fields and does not implement file upload or storage. Revisit storage constraints only if a later authorized scope adds uploads. |
+
+The unresolved G-17 rule is a release clarification, not a database/auth integration failure. See `PHASE_4_REPORT.md` for the exercised behavior and verification evidence.

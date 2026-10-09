@@ -168,5 +168,5 @@ export function getLandingPageContent(enableDemoContent: boolean): LandingPageCo
 }
 
 export function isDemoContentEnabled() {
-  return process.env.NODE_ENV === "development" || process.env.BEM_DEMO_CONTENT === "true";
+  return process.env.BEM_DEMO_CONTENT === "true";
 }

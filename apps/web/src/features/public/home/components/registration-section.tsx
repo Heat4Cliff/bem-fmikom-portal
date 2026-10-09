@@ -1,7 +1,7 @@
 import { ArrowRight, CalendarClock } from "lucide-react";
 import Link from "next/link";
-import type { RegistrationPreview } from "../types";
 import { Button } from "@/components/ui/button";
+import type { RegistrationPreview } from "../types";
 import { EmptyPreview, SectionHeading } from "./section-primitives";
 
 export function RegistrationSection({

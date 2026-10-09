@@ -1,4 +1,3 @@
-import type { LandingPageContent } from "./types";
 import { AboutSection, VisionMissionSection } from "./components/about-section";
 import { AnnouncementSection } from "./components/announcement-section";
 import { AspirationSection, ContactSection } from "./components/contact-sections";
@@ -7,6 +6,7 @@ import { DemoStatistics, HeroSection } from "./components/hero-section";
 import { NewsSection } from "./components/news-section";
 import { OrganizationSection } from "./components/organization-section";
 import { RegistrationSection } from "./components/registration-section";
+import type { LandingPageContent } from "./types";
 
 export function PublicHome({ content }: { content: LandingPageContent }) {
   return (

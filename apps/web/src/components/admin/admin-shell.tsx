@@ -1,8 +1,5 @@
 "use client";
 
-import * as React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   Activity,
   Bell,
@@ -12,19 +9,22 @@ import {
   FolderOpen,
   GalleryVerticalEnd,
   LayoutDashboard,
-  Menu,
+  LogOut,
   Megaphone,
+  Menu,
   MessageSquareText,
   Network,
   Settings2,
   ShieldCheck,
   Users,
   UsersRound,
-  LogOut,
 } from "lucide-react";
-import { Avatar, AvatarFallback, Badge } from "@/components/ui/primitives";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Drawer } from "@/components/ui/overlays";
+import { Avatar, AvatarFallback, Badge } from "@/components/ui/primitives";
 import { cn } from "@/lib/utils/cn";
 import type { AdminNavigationContext, AdminRole, AuthUser } from "@/types/auth";
 
@@ -71,7 +71,7 @@ function visibleForRole(role: AdminRole, href: string) {
   if (href === "/admin/users" || href === "/admin/activity-logs") return false;
   if (href === "/admin/settings") return role === "BPH";
   if (role === "BPH") return true;
-  return href !== "/admin/kategori-berita";
+  return true;
 }
 
 function SidebarNavigation({ onNavigate, role }: { onNavigate?: () => void; role: AdminRole }) {

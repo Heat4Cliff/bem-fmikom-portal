@@ -70,8 +70,8 @@ func TestDatabaseIntegration(t *testing.T) {
 		}
 	}()
 	var tableCount int
-	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name IN ('periods','divisions','users','refresh_sessions','activity_logs')`, dsn.DBName).Scan(&tableCount); err != nil || tableCount != 5 {
-		t.Fatalf("foundation schema table count = %d, err = %v", tableCount, err)
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name IN ('periods','divisions','users','refresh_sessions','activity_logs','article_categories','articles','article_category_map','gallery_categories','gallery_items','announcements')`, dsn.DBName).Scan(&tableCount); err != nil || tableCount != 11 {
+		t.Fatalf("phase 4 schema table count = %d, err = %v", tableCount, err)
 	}
 	if err := migrate.Down(ctx, db); err != nil {
 		t.Fatalf("rollback foundation migration: %v", err)
@@ -256,6 +256,8 @@ func TestDatabaseIntegration(t *testing.T) {
 	if kepalaBLogin.Code != http.StatusOK {
 		t.Fatalf("second KEPALA_BIDANG login status = %d body=%s", kepalaBLogin.Code, kepalaBLogin.Body.String())
 	}
+	kepalaBAccessToken := accessTokenFromRecorder(t, kepalaBLogin)
+	runContentIntegration(t, ctx, db, engine, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken, divisionID, divisionBID)
 	kepalaAUser, err := repository.NewUsers(db).FindByEmail(ctx, "kepala@example.org")
 	if err != nil {
 		t.Fatal(err)
@@ -594,4 +596,234 @@ func mustAuthService(t *testing.T, db *sql.DB, cfg config.Config, logger *slog.L
 		t.Fatal(err)
 	}
 	return auth
+}
+
+func runContentIntegration(t *testing.T, ctx context.Context, db *sql.DB, engine http.Handler, superToken, bphToken, kepalaAToken, kepalaBToken string, divisionA, divisionB int64) {
+	t.Helper()
+
+	categoryResponse := contentRequest(engine, http.MethodPost, "/api/v1/admin/article-categories", `{"name":"Kegiatan Kampus","slug":"","description":"Agenda organisasi"}`, superToken)
+	if categoryResponse.Code != http.StatusCreated {
+		t.Fatalf("create article category = %d %s", categoryResponse.Code, categoryResponse.Body.String())
+	}
+	var category struct {
+		Data struct {
+			ID int64 `json:"id"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(categoryResponse.Body.Bytes(), &category); err != nil || category.Data.ID == 0 {
+		t.Fatalf("parse article category response: %v (%s)", err, categoryResponse.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodPatch, fmt.Sprintf("/api/v1/admin/article-categories/%d", category.Data.ID), `{"name":"Kegiatan Resmi","slug":"kegiatan-resmi","description":"Kategori diperbarui"}`, superToken); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), "Kegiatan Resmi") {
+		t.Fatalf("article category update failed: %d %s", response.Code, response.Body.String())
+	}
+
+	articleBody := fmt.Sprintf(`{"title":"Artikel Scope Akademik","slug":"artikel-scope-akademik","excerpt":"Ringkasan aman","content_html":"<p>Konten <strong>aman</strong><script>alert(1)</script><a href=\"javascript:alert(1)\" onclick=\"run()\">tautan</a></p>","division_id":%d,"category_ids":[%d]}`, divisionB, category.Data.ID)
+	articleResponse := contentRequest(engine, http.MethodPost, "/api/v1/admin/articles", articleBody, kepalaAToken)
+	if articleResponse.Code != http.StatusCreated {
+		t.Fatalf("create scoped article = %d %s", articleResponse.Code, articleResponse.Body.String())
+	}
+	var article struct {
+		Data struct {
+			ID      int64  `json:"id"`
+			Slug    string `json:"slug"`
+			Content string `json:"content_html"`
+			Status  string `json:"status"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(articleResponse.Body.Bytes(), &article); err != nil || article.Data.ID == 0 {
+		t.Fatalf("parse article create response: %v (%s)", err, articleResponse.Body.String())
+	}
+	if article.Data.Status != "DRAFT" || strings.Contains(strings.ToLower(article.Data.Content), "script") || strings.Contains(strings.ToLower(article.Data.Content), "javascript:") || strings.Contains(strings.ToLower(article.Data.Content), "onclick") {
+		t.Fatalf("article draft state or rich-text sanitization failed: %+v", article.Data)
+	}
+	var storedDivision sql.NullInt64
+	if err := db.QueryRowContext(ctx, `SELECT division_id FROM articles WHERE id=?`, article.Data.ID).Scan(&storedDivision); err != nil || !storedDivision.Valid || storedDivision.Int64 != divisionA {
+		t.Fatalf("KB create did not force authenticated division: value=%v err=%v", storedDivision, err)
+	}
+
+	if response := contentRequest(engine, http.MethodGet, fmt.Sprintf("/api/v1/admin/articles/%d", article.Data.ID), "", kepalaBToken); response.Code != http.StatusForbidden && response.Code != http.StatusNotFound {
+		t.Fatalf("cross-division article detail status=%d body=%s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodGet, fmt.Sprintf("/api/v1/admin/articles/%d", article.Data.ID), "", bphToken); response.Code != http.StatusOK {
+		t.Fatalf("BPH cross-division article detail status=%d body=%s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodGet, "/api/v1/public/articles", "", ""); response.Code != http.StatusOK || strings.Contains(response.Body.String(), "Artikel Scope Akademik") {
+		t.Fatalf("public article list leaked draft: %d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodPost, fmt.Sprintf("/api/v1/admin/articles/%d/publish", article.Data.ID), `{}`, kepalaAToken); response.Code != http.StatusOK {
+		t.Fatalf("publish scoped article = %d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodGet, "/api/v1/public/articles", "", ""); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), "Artikel Scope Akademik") || strings.Contains(response.Body.String(), "javascript:") || strings.Contains(response.Body.String(), "onclick") {
+		t.Fatalf("public published article or sanitizer result invalid: %d %s", response.Code, response.Body.String())
+	}
+	updatedArticleBody := fmt.Sprintf(`{"title":"Artikel Scope Akademik Diperbarui","slug":"artikel-scope-akademik","excerpt":"Ringkasan diperbarui","content_html":"<p>Konten aman diperbarui</p>","division_id":%d,"category_ids":[%d]}`, divisionB, category.Data.ID)
+	if response := contentRequest(engine, http.MethodPatch, fmt.Sprintf("/api/v1/admin/articles/%d", article.Data.ID), updatedArticleBody, kepalaAToken); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), "Artikel Scope Akademik Diperbarui") {
+		t.Fatalf("scoped article update failed or did not force the authenticated division: %d %s", response.Code, response.Body.String())
+	}
+	var articleDivision sql.NullInt64
+	var updatedArticleStatus string
+	if err := db.QueryRowContext(ctx, `SELECT division_id,status FROM articles WHERE id=?`, article.Data.ID).Scan(&articleDivision, &updatedArticleStatus); err != nil || !articleDivision.Valid || articleDivision.Int64 != divisionA || updatedArticleStatus != "PUBLISHED" {
+		t.Fatalf("article update changed scope or publication state: division=%v status=%s err=%v", articleDivision, updatedArticleStatus, err)
+	}
+	duplicateArticle := strings.Replace(articleBody, `"division_id":`+fmt.Sprint(divisionB), `"division_id":`+fmt.Sprint(divisionA), 1)
+	if response := contentRequest(engine, http.MethodPost, "/api/v1/admin/articles", duplicateArticle, superToken); response.Code != http.StatusConflict {
+		t.Fatalf("duplicate article slug status=%d body=%s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodPost, fmt.Sprintf("/api/v1/admin/articles/%d/unpublish", article.Data.ID), `{}`, kepalaAToken); response.Code != http.StatusOK {
+		t.Fatalf("unpublish scoped article = %d %s", response.Code, response.Body.String())
+	}
+	var articleStatus string
+	var publishedAt sql.NullTime
+	if err := db.QueryRowContext(ctx, `SELECT status,published_at FROM articles WHERE id=?`, article.Data.ID).Scan(&articleStatus, &publishedAt); err != nil || articleStatus != "DRAFT" || publishedAt.Valid {
+		t.Fatalf("unpublish state did not clear published_at: status=%s date=%v err=%v", articleStatus, publishedAt, err)
+	}
+	deleteArticle := contentRequest(engine, http.MethodPost, "/api/v1/admin/articles", `{"title":"Artikel Hapus Uji","slug":"artikel-hapus-uji","content_html":"<p>Konten sementara</p>"}`, superToken)
+	if deleteArticle.Code != http.StatusCreated {
+		t.Fatalf("create disposable article = %d %s", deleteArticle.Code, deleteArticle.Body.String())
+	}
+	var deleteArticleID int64
+	if err := db.QueryRowContext(ctx, `SELECT id FROM articles WHERE slug='artikel-hapus-uji'`).Scan(&deleteArticleID); err != nil {
+		t.Fatal(err)
+	}
+	if response := contentRequest(engine, http.MethodDelete, fmt.Sprintf("/api/v1/admin/articles/%d", deleteArticleID), "", superToken); response.Code != http.StatusNoContent {
+		t.Fatalf("article delete failed: %d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodGet, fmt.Sprintf("/api/v1/admin/articles/%d", deleteArticleID), "", superToken); response.Code != http.StatusNotFound {
+		t.Fatalf("soft-deleted article remained readable: %d %s", response.Code, response.Body.String())
+	}
+	unusedArticleCategory := contentRequest(engine, http.MethodPost, "/api/v1/admin/article-categories", `{"name":"Kategori Hapus Uji","slug":"kategori-hapus-uji"}`, superToken)
+	if unusedArticleCategory.Code != http.StatusCreated {
+		t.Fatalf("create disposable article category = %d %s", unusedArticleCategory.Code, unusedArticleCategory.Body.String())
+	}
+	var unusedArticleCategoryID int64
+	if err := db.QueryRowContext(ctx, `SELECT id FROM article_categories WHERE slug='kategori-hapus-uji'`).Scan(&unusedArticleCategoryID); err != nil {
+		t.Fatal(err)
+	}
+	if response := contentRequest(engine, http.MethodDelete, fmt.Sprintf("/api/v1/admin/article-categories/%d", unusedArticleCategoryID), "", superToken); response.Code != http.StatusNoContent {
+		t.Fatalf("unused article category delete failed: %d %s", response.Code, response.Body.String())
+	}
+
+	if response := contentRequest(engine, http.MethodPost, "/api/v1/admin/gallery-categories", `{"title":"Kategori Terlarang","slug":"kategori-terlarang"}`, kepalaAToken); response.Code != http.StatusForbidden {
+		t.Fatalf("KEPALA_BIDANG was allowed to change shared gallery taxonomy: %d %s", response.Code, response.Body.String())
+	}
+	galleryCategory := contentRequest(engine, http.MethodPost, "/api/v1/admin/gallery-categories", `{"title":"Agenda Aman","slug":"","description":"Dokumentasi kegiatan","division_id":`+fmt.Sprint(divisionA)+`}`, bphToken)
+	if galleryCategory.Code != http.StatusCreated {
+		t.Fatalf("create scoped gallery category=%d %s", galleryCategory.Code, galleryCategory.Body.String())
+	}
+	var gallery struct {
+		Data struct {
+			ID   int64  `json:"id"`
+			Slug string `json:"slug"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(galleryCategory.Body.Bytes(), &gallery); err != nil || gallery.Data.ID == 0 {
+		t.Fatalf("parse gallery category response: %v (%s)", err, galleryCategory.Body.String())
+	}
+	var galleryDivision sql.NullInt64
+	if err := db.QueryRowContext(ctx, `SELECT division_id FROM gallery_categories WHERE id=?`, gallery.Data.ID).Scan(&galleryDivision); err != nil || !galleryDivision.Valid || galleryDivision.Int64 != divisionA {
+		t.Fatalf("gallery category has unexpected division: division=%v err=%v", galleryDivision, err)
+	}
+	if response := contentRequest(engine, http.MethodPatch, fmt.Sprintf("/api/v1/admin/gallery-categories/%d", gallery.Data.ID), `{"title":"Perubahan lintas divisi","slug":"agenda-aman"}`, kepalaBToken); response.Code != http.StatusForbidden {
+		t.Fatalf("cross-division gallery category update status=%d body=%s", response.Code, response.Body.String())
+	}
+	galleryItemBody := fmt.Sprintf(`{"category_id":%d,"title":"Album Rapat","google_photos_url":"https://photos.app.goo.gl/aman","sort_order":1}`, gallery.Data.ID)
+	galleryItem := contentRequest(engine, http.MethodPost, "/api/v1/admin/gallery-items", galleryItemBody, kepalaAToken)
+	if galleryItem.Code != http.StatusCreated {
+		t.Fatalf("create gallery item=%d %s", galleryItem.Code, galleryItem.Body.String())
+	}
+	var item struct {
+		Data struct {
+			ID int64 `json:"id"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(galleryItem.Body.Bytes(), &item); err != nil || item.Data.ID == 0 {
+		t.Fatalf("parse gallery item response: %v (%s)", err, galleryItem.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodPatch, fmt.Sprintf("/api/v1/admin/gallery-items/%d", item.Data.ID), galleryItemBody, kepalaBToken); response.Code != http.StatusForbidden {
+		t.Fatalf("cross-division gallery item update status=%d body=%s", response.Code, response.Body.String())
+	}
+	updatedGalleryItem := fmt.Sprintf(`{"category_id":%d,"title":"Album Rapat Diperbarui","google_photos_url":"https://photos.app.goo.gl/aman","sort_order":2}`, gallery.Data.ID)
+	if response := contentRequest(engine, http.MethodPatch, fmt.Sprintf("/api/v1/admin/gallery-items/%d", item.Data.ID), updatedGalleryItem, kepalaAToken); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), "Album Rapat Diperbarui") {
+		t.Fatalf("same-division gallery item update failed: %d %s", response.Code, response.Body.String())
+	}
+	publicGallery := contentRequest(engine, http.MethodGet, "/api/v1/public/gallery-categories/agenda-aman", "", "")
+	if publicGallery.Code != http.StatusOK || !strings.Contains(publicGallery.Body.String(), "https://photos.app.goo.gl/aman") {
+		t.Fatalf("public gallery category/item response=%d %s", publicGallery.Code, publicGallery.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodPost, "/api/v1/admin/gallery-items", `{"category_id":`+fmt.Sprint(gallery.Data.ID)+`,"title":"HTTP tidak aman","google_photos_url":"http://photos.app.goo.gl/nope"}`, kepalaAToken); response.Code != http.StatusUnprocessableEntity {
+		t.Fatalf("non-HTTPS album URL accepted: %d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodDelete, fmt.Sprintf("/api/v1/admin/gallery-items/%d", item.Data.ID), "", kepalaAToken); response.Code != http.StatusNoContent {
+		t.Fatalf("same-division gallery item delete failed: %d %s", response.Code, response.Body.String())
+	}
+	unusedGalleryCategory := contentRequest(engine, http.MethodPost, "/api/v1/admin/gallery-categories", `{"title":"Album Hapus Uji","slug":"album-hapus-uji"}`, bphToken)
+	if unusedGalleryCategory.Code != http.StatusCreated {
+		t.Fatalf("create disposable gallery category = %d %s", unusedGalleryCategory.Code, unusedGalleryCategory.Body.String())
+	}
+	var unusedGalleryCategoryID int64
+	if err := db.QueryRowContext(ctx, `SELECT id FROM gallery_categories WHERE slug='album-hapus-uji'`).Scan(&unusedGalleryCategoryID); err != nil {
+		t.Fatal(err)
+	}
+	if response := contentRequest(engine, http.MethodDelete, fmt.Sprintf("/api/v1/admin/gallery-categories/%d", unusedGalleryCategoryID), "", bphToken); response.Code != http.StatusNoContent {
+		t.Fatalf("empty gallery category delete failed: %d %s", response.Code, response.Body.String())
+	}
+
+	start := time.Now().UTC().Add(-time.Hour).Format(time.RFC3339)
+	end := time.Now().UTC().Add(24 * time.Hour).Format(time.RFC3339)
+	announcementBody := fmt.Sprintf(`{"title":"Pengumuman Scope Test","slug":"pengumuman-scope-test","content_html":"<p>Info resmi</p>","start_at":%q,"end_at":%q}`, start, end)
+	announcementResponse := contentRequest(engine, http.MethodPost, "/api/v1/admin/announcements", announcementBody, bphToken)
+	if announcementResponse.Code != http.StatusCreated {
+		t.Fatalf("create announcement=%d %s", announcementResponse.Code, announcementResponse.Body.String())
+	}
+	var announcement struct {
+		Data struct {
+			ID     int64  `json:"id"`
+			Status string `json:"status"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(announcementResponse.Body.Bytes(), &announcement); err != nil || announcement.Data.ID == 0 || announcement.Data.Status != "INACTIVE" {
+		t.Fatalf("announcement initial state invalid: %v (%s)", err, announcementResponse.Body.String())
+	}
+	updatedAnnouncementBody := fmt.Sprintf(`{"title":"Pengumuman Scope Diperbarui","slug":"pengumuman-scope-test","content_html":"<p>Info resmi diperbarui</p>","start_at":%q,"end_at":%q}`, start, end)
+	if response := contentRequest(engine, http.MethodPatch, fmt.Sprintf("/api/v1/admin/announcements/%d", announcement.Data.ID), updatedAnnouncementBody, bphToken); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), "Pengumuman Scope Diperbarui") {
+		t.Fatalf("announcement update failed: %d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodGet, "/api/v1/public/announcements/active", "", ""); response.Code != http.StatusOK || strings.Contains(response.Body.String(), "Pengumuman Scope Test") {
+		t.Fatalf("inactive announcement appeared publicly: %d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodPost, fmt.Sprintf("/api/v1/admin/announcements/%d/activate", announcement.Data.ID), `{}`, bphToken); response.Code != http.StatusOK {
+		t.Fatalf("activate announcement=%d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodGet, "/api/v1/public/announcements/active", "", ""); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), "Pengumuman Scope Diperbarui") {
+		t.Fatalf("active announcement absent from public active list: %d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodPost, "/api/v1/admin/announcements", announcementBody, kepalaAToken); response.Code != http.StatusForbidden {
+		t.Fatalf("KEPALA_BIDANG was allowed to manage global announcement: %d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodPost, fmt.Sprintf("/api/v1/admin/announcements/%d/deactivate", announcement.Data.ID), `{}`, bphToken); response.Code != http.StatusOK {
+		t.Fatalf("deactivate announcement=%d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodGet, "/api/v1/public/announcements/pengumuman-scope-test", "", ""); response.Code != http.StatusNotFound {
+		t.Fatalf("inactive announcement detail exposed: %d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodDelete, fmt.Sprintf("/api/v1/admin/announcements/%d", announcement.Data.ID), "", bphToken); response.Code != http.StatusNoContent {
+		t.Fatalf("announcement delete failed: %d %s", response.Code, response.Body.String())
+	}
+
+	var activityCount int
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM activity_logs WHERE entity_type IN ('ARTICLE_CATEGORY','ARTICLE','GALLERY_CATEGORY','GALLERY_ITEM','ANNOUNCEMENT') AND action IN ('CREATE','UPDATE','DELETE','PUBLISH','UNPUBLISH','ACTIVATE','DEACTIVATE')`).Scan(&activityCount); err != nil || activityCount < 9 {
+		t.Fatalf("content activity events missing: count=%d err=%v", activityCount, err)
+	}
+}
+
+func contentRequest(engine http.Handler, method, path, body, token string) *httptest.ResponseRecorder {
+	request := httptest.NewRequest(method, path, strings.NewReader(body))
+	request.Header.Set("Origin", "http://localhost:3000")
+	request.Header.Set("Content-Type", "application/json")
+	if token != "" {
+		request.Header.Set("Authorization", "Bearer "+token)
+	}
+	response := httptest.NewRecorder()
+	engine.ServeHTTP(response, request)
+	return response
 }
