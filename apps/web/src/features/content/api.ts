@@ -1,5 +1,13 @@
 import { apiRequest, apiRequestEnvelope, type RequestOptions } from "@/lib/api/client";
-import type { Announcement, Article, ContentCategory, GalleryCategory, GalleryItem, PageMeta } from "./types";
+import type {
+  Announcement,
+  Article,
+  ContentCategory,
+  GalleryCategory,
+  GalleryItem,
+  PageMeta,
+  PublicOrganization,
+} from "./types";
 
 type Envelope<T> = { success: boolean; message: string; data: T; code?: string; meta?: PageMeta };
 const apiBase = (process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080/api/v1").replace(/\/$/, "");
@@ -64,6 +72,7 @@ export const getPublicGalleryPage = (page = 1, limit = 20) =>
   publicPage<GalleryCategory>(`/public/gallery-categories?page=${page}&limit=${limit}`);
 export const getPublicGalleryCategory = (slug: string) =>
   publicGet<GalleryCategory>(`/public/gallery-categories/${encodeURIComponent(slug)}`);
+export const getPublicOrganization = () => publicGet<PublicOrganization>("/public/organization");
 
 export async function adminList<T>(
   path: string,

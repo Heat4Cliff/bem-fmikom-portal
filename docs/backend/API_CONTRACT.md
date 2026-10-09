@@ -180,3 +180,21 @@ The Phase 4 routes below are implemented under `/api/v1`. List responses use the
 Article bodies and announcement bodies are sanitized on the server using the configured HTML allowlist. Gallery album links must be HTTPS Google Photos URLs; preview/image URLs, when supplied, must also use HTTPS. Content images are URL-backed; no upload endpoint or private media storage is introduced in Phase 4. Date filters on announcement lists are `date_from` and `date_to`; API timestamps are persisted as UTC.
 
 The full PRD v1.4 specifies the public gallery detail route by slug, so this contract replaces the earlier `{id}` placeholder. Announcement public archive visibility for scheduled/expired records remains a documented clarification item in `GAPS_AND_QUESTIONS.md`.
+
+## Phase 5 organization implementation contract
+
+Organization routes below are implemented under `/api/v1`. Lists use the shared paginated envelope and accept `page`, `limit`, `search`, `status`, and relevant `period_id`, `division_id`, or `position` filters. Invalid input returns 422; missing/scoped-out detail records return 404; unique-head/dependency conflicts return 409; unauthenticated requests return 401; denied roles or mutations return 403.
+
+| Consumer/action | Endpoint | Access and response scope |
+|---|---|---|
+| Public active period | `GET /public/periods/active` | Public; returns the active period, or 404 if no period is active. |
+| Public division list | `GET /public/divisions` | Public; active-period divisions ordered deterministically by display order, name, and ID; empty list if no active period. |
+| Public organization hierarchy | `GET /public/organization` | Public; minimal active-period, leadership, active-division, head/member DTO; no NIM, status, or audit fields. Returns an empty organization when no period is active. |
+| Period list/detail | `GET /admin/periods`, `GET /admin/periods/{id}` | SUPER_ADMIN/BPH/KEPALA_BIDANG read; KB has no write access. |
+| Period create/update/activate/archive | `POST /admin/periods`, `PATCH /admin/periods/{id}`, `POST /admin/periods/{id}/activate`, `POST /admin/periods/{id}/archive` | SUPER_ADMIN only. Activation transactionally archives the previously active period; history is retained. |
+| Division list/detail | `GET /admin/divisions`, `GET /admin/divisions/{id}` | SUPER_ADMIN/BPH cross-division; KB list/detail is restricted to its current database division. |
+| Division create/update/delete | `POST /admin/divisions`, `PATCH /admin/divisions/{id}`, `DELETE /admin/divisions/{id}` | SUPER_ADMIN/BPH. Delete conflicts when period/member/user/content references prevent safe deletion; no cascade removal. |
+| Member list/detail | `GET /admin/members`, `GET /admin/members/{id}` | SUPER_ADMIN/BPH cross-division; KB reads only its current DB-assigned division. Out-of-scope detail is concealed as 404. |
+| Member create/update/deactivate | `POST /admin/members`, `PATCH /admin/members/{id}`, `DELETE /admin/members/{id}` | SUPER_ADMIN/BPH only. DELETE is soft deactivation to INACTIVE; records and history remain. KB mutations receive 403. |
+
+Members use the six PRD positions (`KETUA`, `WAKIL_KETUA`, `SEKRETARIS`, `BENDAHARA`, `KEPALA_BIDANG`, `ANGGOTA`). A head/member must reference a division in the same period; division is optional for other leadership positions. At most one ACTIVE `KEPALA_BIDANG` is allowed per division and period. A generated-column unique constraint is the database concurrency guard. Mutations emit activity events without sensitive data.

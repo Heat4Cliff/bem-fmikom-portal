@@ -70,7 +70,7 @@ func TestDatabaseIntegration(t *testing.T) {
 		}
 	}()
 	var tableCount int
-	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name IN ('periods','divisions','users','refresh_sessions','activity_logs','article_categories','articles','article_category_map','gallery_categories','gallery_items','announcements')`, dsn.DBName).Scan(&tableCount); err != nil || tableCount != 11 {
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name IN ('periods','divisions','users','refresh_sessions','activity_logs','article_categories','articles','article_category_map','gallery_categories','gallery_items','announcements','organization_members')`, dsn.DBName).Scan(&tableCount); err != nil || tableCount != 12 {
 		t.Fatalf("phase 4 schema table count = %d, err = %v", tableCount, err)
 	}
 	if err := migrate.Down(ctx, db); err != nil {
@@ -258,6 +258,7 @@ func TestDatabaseIntegration(t *testing.T) {
 	}
 	kepalaBAccessToken := accessTokenFromRecorder(t, kepalaBLogin)
 	runContentIntegration(t, ctx, db, engine, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken, divisionID, divisionBID)
+	runOrganizationIntegration(t, ctx, db, engine, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken)
 	kepalaAUser, err := repository.NewUsers(db).FindByEmail(ctx, "kepala@example.org")
 	if err != nil {
 		t.Fatal(err)

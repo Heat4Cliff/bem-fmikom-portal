@@ -33,7 +33,7 @@ const defaultContent: LandingPageContent = {
   },
   visionMission: { vision: null, mission: [] },
   statistics: [],
-  organization: { members: [] },
+  organization: { leadership: [], divisions: [], members: [] },
   news: [],
   announcements: [],
   gallery: [],
@@ -61,6 +61,18 @@ const visualReviewContent: LandingPageContent = {
   ],
   organization: {
     periodLabel: "Contoh visual periode 2024/2025",
+    leadership: [
+      { id: "ketua-umum", role: "Ketua", name: "Nama contoh", division: "BPH" },
+      { id: "wakil-ketua", role: "Wakil Ketua", name: "Nama contoh", division: "BPH" },
+    ],
+    divisions: [
+      {
+        id: 1,
+        name: "Contoh divisi",
+        head: { id: "kepala-bidang", role: "Kepala Bidang", name: "Nama contoh" },
+        members: [{ id: "anggota", role: "Anggota", name: "Nama contoh" }],
+      },
+    ],
     members: [
       { id: "ketua-umum", role: "Ketua Umum", name: "Nama contoh", division: "BPH" },
       { id: "wakil-ketua", role: "Wakil Ketua", name: "Nama contoh", division: "BPH" },

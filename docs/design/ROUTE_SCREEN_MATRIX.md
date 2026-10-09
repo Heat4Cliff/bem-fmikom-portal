@@ -50,3 +50,11 @@ Never show a menu item the current role cannot use, but never rely on hidden nav
 - `/admin/berita`, `/admin/berita/new`, `/admin/berita/[id]/edit`, `/admin/kategori-berita`, `/admin/galeri`, and `/admin/pengumuman` are implemented as role-aware authenticated CMS routes.
 - `screen.png` is the visual target for the reviewed news, announcement, gallery, and landing screens. Corresponding `code.html` was used only as a structural/style reference. The category route has no dedicated Stitch screen and reuses the audited content-admin pattern.
 - Admin navigation hides system permissions from BPH and KEPALA_BIDANG, while the backend remains authoritative for content and division scope.
+
+## Phase 5 implementation status
+
+- `/admin/periode` manages period metadata and activate/archive lifecycle; activation atomically archives the previous active period.
+- `/admin/divisi` and `/admin/pengurus` provide searchable/filterable management with responsive mobile card variants; member create/edit forms require a division only for KEPALA_BIDANG and ANGGOTA.
+- `/admin/struktur` renders the selected period's leadership, divisions, heads, and members. `/` consumes the public active-period organization DTO and preserves an explicit empty state when no active organization exists.
+- Audited Stitch structure, division, member, and period `screen.png` files informed the visual target. Their `code.html` files remain layout/style evidence only. Admin visual browser review was performed at the available local browser viewport; exact 360/390/412 device emulation remains a verification limitation recorded in the Phase 5 report.
+- Backend authorization is authoritative: SUPER_ADMIN manages periods; SUPER_ADMIN/BPH manage divisions and members; KEPALA_BIDANG is read-only and scoped to its database-assigned division.

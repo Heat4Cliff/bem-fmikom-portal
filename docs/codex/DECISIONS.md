@@ -96,3 +96,19 @@ These choices do not resolve Phase 0 product/API/security gaps or introduce auth
 | Category screen | `/admin/kategori-berita` uses the audited content-management component language; no dedicated Stitch category reference exists. | Reuses the existing design system without claiming screen-specific pixel parity (G-08). |
 
 Phase 4 integration evidence and known limitations are recorded in `PHASE_4_REPORT.md`.
+
+### Phase 5 — Organization and periods
+
+| Area | Decision | Reason / boundary |
+|---|---|---|
+| Schema | Reversible migration `00003_organization.sql` adds `divisions.display_order` and `organization_members`; foundation and content migrations stay unchanged. | Keeps Phase 5 data additive and permits a migration round trip. |
+| Role matrix | SUPER_ADMIN alone creates/edits/activates/archives periods. SUPER_ADMIN and BPH manage divisions and members across divisions. KEPALA_BIDANG reads periods and only its current DB-assigned division/members; all organization writes are denied. | Follows PRD v1.4 roles; authorization is enforced by the API and is not inferred from hidden UI controls. |
+| Period lifecycle | No period deletion. Activation is transactional, archives the prior ACTIVE period, preserves all history, and maintains exactly one ACTIVE period. | Period history is used by members and dependent records; the database constraint protects concurrent transitions. |
+| Division lifecycle | Division deletion is rejected when dependent records exist; no cascade deletion. Division order is explicit and public listing uses a stable order. | Prevents orphaning historical members/users/content and keeps public hierarchy deterministic. |
+| Member lifecycle | DELETE is soft deactivation to INACTIVE. NIM and photo URL are optional; no upload workflow. Head/member positions require a same-period division; other leadership positions may have none. | Matches v1.4 history/role intent and the direct Phase 5 field/schema instruction. |
+| Active head | At most one ACTIVE KEPALA_BIDANG per division/period; validate in service and enforce with a MariaDB generated-column unique key. | Preserves correctness under concurrent requests. |
+| Public organization | Public homepage consumes the minimal organization DTO for the current ACTIVE period. Inactive members and internal/audit fields are omitted. No active period produces `period: null` and an empty hierarchy; active-period metadata endpoint returns 404. | Prevents leaking internal records and gives clients deterministic no-data behavior. |
+| Stitch reconciliation | Use the requested optional URL-backed photo and optional NIM; do not add upload, student program, academic year, contact/social, export, or print features solely because extra controls appear in Stitch references. | The explicit Phase 5 scope/schema is authoritative for behavior; `screen.png` guides visuals and `code.html` is not production architecture. |
+| Mobile evidence | Admin routes use responsive cards/forms and source Stitch files were reviewed, but the current in-app browser adapter cannot set an exact 360/390/412 viewport. | Report this manual visual verification limitation explicitly; do not claim device-sized visual parity. |
+
+Phase 5 integration and UAT evidence are recorded in `PHASE_5_REPORT.md`.

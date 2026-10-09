@@ -1,6 +1,6 @@
 # BEM FMIKOM UNUGHA Portal
 
-Monorepo for the BEM FMIKOM UNUGHA portal. Phase 0 source audit, Phase 1 foundation, and Phase 2 database/auth/RBAC foundation are complete. Phase 3 adds the responsive public presentation layer; its database/auth regression and quality gates passed in Phase 3B. Product content modules remain for later phases.
+Monorepo for the BEM FMIKOM UNUGHA portal. Phases 0–5 are implemented: repository/design audit, app foundation, auth/RBAC, public landing, content CMS, and organization/period management. Phase 5 evidence and remaining verification limitations are in `docs/codex/PHASE_5_REPORT.md`. Phase 6 and later have not started.
 
 ## Source of truth
 
@@ -114,7 +114,7 @@ CI runs the aggregate static/unit checks and a MariaDB 11.4 service for actual d
 
 ## Phase status
 
-See `docs/codex/PHASE_2_REPORT.md`, `docs/codex/PHASE_3_REPORT.md`, and `docs/codex/PHASE_4_REPORT.md` for phase scope and verification evidence. The landing page now reads public news, announcements, and gallery content from the API; other landing settings and organization data remain outside Phase 4. `/aspirasi` is still a navigation placeholder and accepts no submissions.
+See `docs/codex/PHASE_2_REPORT.md` through `docs/codex/PHASE_5_REPORT.md` for phase scope and verification evidence. The landing page reads public news, announcements, gallery, and active-period organization data. `/aspirasi` is still a navigation placeholder and accepts no submissions.
 
 ## Content CMS (Phase 4)
 
@@ -129,3 +129,11 @@ Phase 4 adds:
 - Public CMS Server Components use `cache: "no-store"` so publication and schedule state is read from the API for each request.
 
 Public announcement archive visibility for scheduled/expired entries still needs a product decision; current list/detail behavior and its impact are recorded in `docs/codex/GAPS_AND_QUESTIONS.md`.
+
+## Organization and periods (Phase 5)
+
+- Admin routes: `/admin/periode`, `/admin/divisi`, `/admin/pengurus`, member create/edit routes, and `/admin/struktur`.
+- Public home organization section reads `/api/v1/public/organization`; active-period metadata and division listings also have public API endpoints.
+- Reversible migration `00003_organization.sql` adds division ordering and period-scoped organization members. Period transitions preserve archived history; member deactivation is soft (`INACTIVE`).
+- SUPER_ADMIN manages periods; SUPER_ADMIN/BPH manage divisions and members; KEPALA_BIDANG reads only its current division and cannot mutate organization records. The API enforces this policy.
+- Phase 5 verification: `pnpm verify` and `pnpm api:integration`; see `docs/codex/PHASE_5_REPORT.md` for exact evidence, including browser UAT and viewport limitations.

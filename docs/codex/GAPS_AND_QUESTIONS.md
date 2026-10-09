@@ -63,3 +63,15 @@ The later live MariaDB result and Phase 2B/2C evidence are recorded in `PHASE_2_
 | G-18 media/upload configuration | Phase 4 explicitly uses HTTPS URL fields and does not implement file upload or storage. Revisit storage constraints only if a later authorized scope adds uploads. |
 
 The unresolved G-17 rule is a release clarification, not a database/auth integration failure. See `PHASE_4_REPORT.md` for the exercised behavior and verification evidence.
+
+## Phase 5 disposition
+
+| Contract/evidence item | Phase 5 outcome |
+|---|---|
+| Period/division/member endpoint route permissions absent from the earlier summary | Reconciled from PRD v1.4: SUPER_ADMIN alone writes periods; SUPER_ADMIN/BPH manage divisions and members; KEPALA_BIDANG reads only and is division-scoped. `API_CONTRACT.md` records the implemented route policy. |
+| Active period and public structure payload shape | Fixed for implementation as minimal public DTOs: public active period returns 404 when none exists; public organization returns `period: null` and empty hierarchy; public division list returns an empty list. No NIM, internal status, or audit metadata is exposed. |
+| Stitch member-form extras versus Phase 5 schema | The direct phase fields win: photo URL and NIM are optional; no uploads or extra study-program/year/contact/social fields were added. Stitch `screen.png` remains the visual target, and `code.html` is structural/style evidence only. |
+| Division deletion and member deletion | Division deletion conflicts when referenced, with no cascade. Member deletion is soft INACTIVE and preserves history. Periods are archived, never deleted. |
+| Exact-size mobile visual evidence | No product ambiguity remains, but device-sized manual visual review is not confirmed: the available in-app browser control surface had no viewport override for 360/390/412. Responsive source patterns and the mobile landing reference were reviewed; record exact viewport review as follow-up, not as PASS evidence. |
+
+No new Phase 5 product blocker was found for implementation. The exact-size mobile visual review limitation is carried as verification risk to the full visual/UAT phase; do not claim mobile pixel parity from the available browser session.

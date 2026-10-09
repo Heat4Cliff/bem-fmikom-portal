@@ -44,11 +44,11 @@
 - [x] RBAC/division scope tests.
 
 ## Phase 5 — Organization & Period Management
-- [ ] Period CRUD/activate/archive with single-active invariant.
-- [ ] Divisions CRUD.
-- [ ] Members/organization management + sort order.
-- [ ] Public active-period structure.
-- [ ] Historical preservation tests.
+- [x] Period CRUD/activate/archive with single-active invariant.
+- [x] Divisions CRUD.
+- [x] Members/organization management + sort order.
+- [x] Public active-period structure.
+- [x] Historical preservation tests.
 
 ## Phase 6 — Aspirations
 - [ ] Public aspiration form + rate limit + validation.
