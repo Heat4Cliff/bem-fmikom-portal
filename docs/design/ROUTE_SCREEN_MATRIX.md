@@ -39,3 +39,8 @@ This file is intentionally route-oriented. Route names may be refined during Pha
 
 ## Role-aware navigation rule
 Never show a menu item the current role cannot use, but never rely on hidden navigation for security. Backend permission remains mandatory.
+
+## Phase 3 implementation status
+- `/` is implemented as the responsive public landing page using the audited desktop reference `beranda_publik_bem_fmikom_unugha` and mobile reference `beranda_publik_mobile_bem_fmikom_unugha`.
+- `/aspirasi` is a Phase 3 navigation placeholder only; it has no form, API call, or submission behavior.
+- Other public content routes remain future-phase work; landing navigation targets stable section anchors until those routes are implemented.

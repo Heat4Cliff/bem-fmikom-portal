@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { getPublicSiteOrigin } from "@/lib/seo/site-url";
 import "./globals.css";
 
 const inter = localFont({
@@ -15,12 +16,22 @@ const jakarta = localFont({
   weight: "200 800",
 });
 
+const publicSiteOrigin = getPublicSiteOrigin();
+
 export const metadata: Metadata = {
+  metadataBase: publicSiteOrigin ? new URL(publicSiteOrigin) : undefined,
   title: {
     default: "BEM FMIKOM UNUGHA",
     template: "%s | BEM FMIKOM UNUGHA",
   },
   description: "Portal BEM Fakultas Matematika dan Ilmu Komputer UNUGHA.",
+  openGraph: {
+    title: "BEM FMIKOM UNUGHA",
+    description: "Portal publik informasi dan kegiatan BEM FMIKOM UNUGHA.",
+    type: "website",
+    locale: "id_ID",
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

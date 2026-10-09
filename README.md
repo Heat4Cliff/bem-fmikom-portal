@@ -1,6 +1,6 @@
 # BEM FMIKOM UNUGHA Portal
 
-Monorepo for the BEM FMIKOM UNUGHA portal. Phase 0 source audit and Phase 1 foundation are complete. Phase 2 adds the database foundation, admin authentication, and RBAC/division-scope primitives. Product modules remain for later phases.
+Monorepo for the BEM FMIKOM UNUGHA portal. Phase 0 source audit, Phase 1 foundation, and Phase 2 database/auth/RBAC foundation are complete. Phase 3 adds the responsive public presentation layer; its database/auth regression and quality gates passed in Phase 3B. Product content modules remain for later phases.
 
 ## Source of truth
 
@@ -40,6 +40,8 @@ Copy the template and replace its local placeholders. The example credentials ar
 ```powershell
 Copy-Item .env.example .env
 ```
+
+The public landing page reads no content API yet. Dynamic teaser sections show an empty state by default in production. For local visual review only, set `BEM_DEMO_CONTENT=true` in the web process; all fixture content and sample statistics are visibly marked as examples. Do not enable this flag in a production runtime. The brand currently uses a text mark because no approved logo asset or public contact/social details were found in the source package. Set `NEXT_PUBLIC_SITE_URL` to the approved public origin before relying on absolute canonical, sitemap, or robots sitemap URLs.
 
 The root `.env` supplies Docker Compose and Go commands. Go commands also load `apps/api/.env` if present. Existing process environment variables take precedence. Never commit local `.env` files or production credentials.
 
@@ -112,4 +114,4 @@ CI runs the aggregate static/unit checks and a MariaDB 11.4 service for actual d
 
 ## Phase status
 
-See `docs/codex/PHASE_2_REPORT.md` for implementation scope and verification evidence. Phase 2 is limited to schema foundation, authentication, RBAC, and division-scope primitives. Phase 3 and all product feature modules have not started.
+See `docs/codex/PHASE_2_REPORT.md` and `docs/codex/PHASE_3_REPORT.md` for phase scope and verification evidence. The public landing page is a responsive presentation layer; production dynamic teasers remain empty until their future APIs/content domains are implemented. `/aspirasi` is currently a navigation placeholder and accepts no submissions. No CMS CRUD or product content database tables are included in the public foundation phase.

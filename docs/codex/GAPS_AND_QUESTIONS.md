@@ -38,4 +38,15 @@ Before implementing affected APIs, update docs/backend/API_CONTRACT.md in this r
 - **G-13 — Resolved for the authentication foundation.** Phase 2 fixes access JWT lifetime at 15 minutes and refresh lifetime at seven days; refresh tokens are opaque, hashed with SHA-256, rotated transactionally, and replay revokes the session family. Cookie defaults/configuration, production Secure behavior, trusted-origin checks, active-user reload, and `/api/v1/auth/*` route prefix are recorded in `DECISIONS.md`. The API Contract's example `expires_in: 1800` conflicts with the user-fixed 900 seconds; implementation uses 900 and the conflict is explicit.
 - **G-07 — Carried forward as a visual evidence limitation.** `/admin/login` uses the established design tokens and form primitives (`DESIGN SYSTEM CONSISTENT`); there is no dedicated Stitch login image and no pixel-parity claim.
 - **Other Phase 0 gaps remain open.** Gallery/article-category routes, analytics, registration duplicate/snapshot rules, document retention, 403/404 disclosure, public write thresholds, mobile evidence, announcement visibility, and upload configuration do not block the Phase 2 database/auth/RBAC foundation and were not silently decided here.
-- **Database integration is unverified in this workstation.** The suite and CI MariaDB service are configured, but Docker is not installed in the local environment; no live MySQL/MariaDB result is claimed.
+- **Initial database integration was unverified.** The first Phase 2 attempt had no Docker runtime; that historical result was superseded by the live MariaDB rerun in `PHASE_2_REPORT.md`.
+
+## Phase 3 public-site gaps
+
+| ID | Gap | Impact / handling |
+|---|---|---|
+| G-19 | No approved standalone BEM/FMIKOM logo, hero photo, organization portrait, news thumbnail, or gallery image was found in the copied source package. Stitch `code.html` references remote generated media, which is not a production asset source. | CSS artwork and the Phase 1 text mark are used as clearly labeled visual placeholders. Replace them when approved local assets and reuse rights are supplied; this is the main remaining visual-parity gap. |
+| G-20 | Official contact address, email, phone, and social-media URLs are absent from the source data. | Production shows a clear empty state; no contact details or social links are invented. |
+| G-21 | An approved public origin/canonical host is not specified. | `NEXT_PUBLIC_SITE_URL` remains optional; configure it before publishing canonical and sitemap URLs. |
+| G-22 | The current API server has no public content endpoints, and product content tables belong to later phases. | Dynamic home sections stay empty in production; typed demo fixtures are isolated behind a local-only flag. Public API/database integration remains future work. |
+
+The later live MariaDB result and Phase 2B/2C evidence are recorded in `PHASE_2_REPORT.md`.

@@ -21,11 +21,11 @@ const primaryLinks = [
   { label: "Beranda", href: "/", icon: Home },
   { label: "Tentang", href: "/#tentang" },
   { label: "Struktur", href: "/#struktur", icon: Network },
-  { label: "Berita", href: "/berita", icon: BookOpenText },
-  { label: "Galeri", href: "/galeri", icon: Camera },
-  { label: "Pengumuman", href: "/pengumuman", icon: Megaphone },
-  { label: "Pendaftaran", href: "/pendaftaran", icon: CalendarDays },
-  { label: "Aspirasi", href: "/aspirasi", icon: MessageSquareText },
+  { label: "Berita", href: "/#berita", icon: BookOpenText },
+  { label: "Galeri", href: "/#galeri", icon: Camera },
+  { label: "Pengumuman", href: "/#pengumuman", icon: Megaphone },
+  { label: "Pendaftaran", href: "/#pendaftaran", icon: CalendarDays },
+  { label: "Aspirasi", href: "/#aspirasi", icon: MessageSquareText },
 ] as const;
 
 function isCurrent(pathname: string, href: string) {
@@ -33,18 +33,25 @@ function isCurrent(pathname: string, href: string) {
   return path === "/" ? pathname === "/" : pathname === path || pathname.startsWith(`${path}/`);
 }
 
-export function PublicNavigation({ onNavigate }: { onNavigate?: () => void }) {
+export function PublicNavigation({
+  onNavigate,
+  mobile = false,
+}: {
+  onNavigate?: () => void;
+  mobile?: boolean;
+}) {
   const pathname = usePathname();
   return (
     <nav aria-label="Navigasi utama">
-      <ul className="flex flex-col gap-1 md:flex-row md:items-center md:gap-0.5 lg:gap-1">
+      <ul className={mobile ? "flex flex-col gap-1" : "flex items-center gap-0.5"}>
         {primaryLinks.map(({ label, href }) => (
           <li key={label}>
             <Link
               onClick={onNavigate}
-              aria-current={isCurrent(pathname, href) ? "page" : undefined}
+              aria-current={isCurrent(pathname, href) && !href.includes("#") ? "page" : undefined}
               className={cn(
-                "block rounded-md px-3 py-2 text-sm font-medium text-body transition-colors hover:bg-surface-muted hover:text-primary aria-[current=page]:bg-surface-muted aria-[current=page]:font-semibold aria-[current=page]:text-primary md:px-2.5 lg:px-3",
+                "block rounded-md px-2 py-2 text-xs font-semibold text-body transition-colors hover:bg-surface-muted hover:text-primary focus-visible:outline-2 focus-visible:outline-secondary aria-[current=page]:bg-surface-muted aria-[current=page]:text-primary xl:px-2.5 xl:text-sm",
+                mobile && "px-3 py-3 text-sm",
                 label === "Aspirasi" && "text-secondary",
               )}
               href={href}
@@ -62,7 +69,7 @@ export function PublicHeader() {
   const [open, setOpen] = React.useState(false);
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/95 backdrop-blur">
-      <div className="mx-auto flex h-[4.5rem] w-full max-w-[var(--container-public)] items-center justify-between gap-4 px-4 md:px-8 lg:px-12">
+      <div className="mx-auto flex h-[4.5rem] w-full max-w-[var(--container-public)] items-center justify-between gap-3 px-4 md:px-8 lg:px-12">
         <Link
           href="/"
           className="flex min-w-0 items-center gap-2.5 rounded-md"
@@ -76,11 +83,31 @@ export function PublicHeader() {
             <span className="text-[10px] font-medium tracking-wide text-muted">UNUGHA CILACAP</span>
           </span>
         </Link>
-        <div className="hidden flex-1 justify-end md:flex">
+        <div className="hidden flex-1 justify-end xl:flex">
           <PublicNavigation />
         </div>
-        <div className="flex items-center gap-2 md:hidden">
-          <Button aria-label="Buka menu navigasi" variant="outline" size="icon" onClick={() => setOpen(true)}>
+        <div className="hidden items-center gap-2 xl:flex">
+          <Link
+            className="rounded-md bg-secondary px-3 py-2 text-xs font-bold text-white hover:bg-secondary/90"
+            href="/#aspirasi"
+          >
+            Kirim Aspirasi
+          </Link>
+          <Link
+            className="rounded-md bg-primary px-3 py-2 text-xs font-bold text-white hover:bg-primary/90"
+            href="/admin/login"
+          >
+            Portal Admin
+          </Link>
+        </div>
+        <div className="flex items-center gap-2 xl:hidden">
+          <Button
+            aria-label="Buka menu navigasi"
+            aria-haspopup="dialog"
+            variant="outline"
+            size="icon"
+            onClick={() => setOpen(true)}
+          >
             <Menu aria-hidden="true" className="size-5" />
           </Button>
         </div>
@@ -93,13 +120,13 @@ export function PublicHeader() {
         className="w-[min(88vw,24rem)]"
       >
         <div className="p-4">
-          <PublicNavigation onNavigate={() => setOpen(false)} />
+          <PublicNavigation mobile onNavigate={() => setOpen(false)} />
         </div>
         <div className="mt-auto border-t border-border p-4">
           <Link
             onClick={() => setOpen(false)}
             className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-secondary px-4 text-sm font-semibold text-white"
-            href="/aspirasi"
+            href="/#aspirasi"
           >
             <MessageSquareText aria-hidden="true" className="size-4" />
             Kirim Aspirasi
@@ -112,8 +139,8 @@ export function PublicHeader() {
 
 const mobileLinks = [
   { label: "Beranda", href: "/", icon: Home },
-  { label: "Berita", href: "/berita", icon: BookOpenText },
-  { label: "Daftar", href: "/pendaftaran", icon: CalendarDays },
+  { label: "Berita", href: "/#berita", icon: BookOpenText },
+  { label: "Daftar", href: "/#pendaftaran", icon: CalendarDays },
   { label: "Aspirasi", href: "/aspirasi", icon: MessageSquareText },
   { label: "Profil", href: "/#tentang", icon: Network },
 ] as const;
@@ -150,19 +177,67 @@ export function MobileNavigation() {
 
 export function PublicFooter() {
   return (
-    <footer className="border-t border-border/70 bg-surface-muted px-4 py-8 md:px-8">
-      <div className="mx-auto flex max-w-[var(--container-public)] flex-col gap-3 text-sm text-muted sm:flex-row sm:items-center sm:justify-between lg:px-4">
-        <div className="flex items-center gap-2">
-          <span className="grid size-8 place-items-center rounded-md bg-primary text-[10px] font-bold text-white">
-            BEM
-          </span>
-          <span>
-            <strong className="font-semibold text-primary">BEM FMIKOM UNUGHA</strong>
-            <br />
-            <span className="text-xs">Portal organisasi mahasiswa</span>
-          </span>
+    <footer className="border-t border-border/70 bg-surface-soft px-4 pb-24 pt-10 md:px-8 md:pb-10 lg:px-12">
+      <div className="mx-auto grid max-w-[var(--container-public)] gap-8 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
+        <div>
+          <Link
+            href="/"
+            className="flex w-fit items-center gap-2.5 rounded-md focus-visible:outline-2 focus-visible:outline-secondary"
+          >
+            <span className="grid size-10 place-items-center rounded-lg bg-primary font-heading text-xs font-extrabold text-white">
+              BEM
+            </span>
+            <span>
+              <strong className="block font-heading text-sm font-bold text-primary">BEM FMIKOM</strong>
+              <span className="text-[10px] font-medium tracking-wide text-muted">UNUGHA CILACAP</span>
+            </span>
+          </Link>
+          <p className="mt-4 max-w-sm text-sm leading-6 text-muted">
+            Portal publik informasi dan kegiatan BEM Fakultas Matematika dan Ilmu Komputer UNUGHA.
+          </p>
         </div>
-        <p className="text-xs">© {new Date().getFullYear()} BEM FMIKOM UNUGHA</p>
+        <div>
+          <h2 className="font-heading text-sm font-bold text-primary">Tautan cepat</h2>
+          <ul className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-sm text-muted">
+            <li>
+              <Link className="hover:text-primary" href="/#tentang">
+                Tentang
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-primary" href="/#struktur">
+                Struktur
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-primary" href="/#berita">
+                Berita
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-primary" href="/#galeri">
+                Galeri
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-primary" href="/#pengumuman">
+                Pengumuman
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:text-primary" href="/aspirasi">
+                Aspirasi
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2 className="font-heading text-sm font-bold text-primary">Sekretariat & kontak</h2>
+          <p className="mt-3 text-sm leading-6 text-muted">
+            Informasi kontak resmi akan ditambahkan setelah dikonfirmasi.
+          </p>
+          <p className="mt-6 text-xs text-muted">© {new Date().getFullYear()} BEM FMIKOM UNUGHA</p>
+        </div>
       </div>
     </footer>
   );

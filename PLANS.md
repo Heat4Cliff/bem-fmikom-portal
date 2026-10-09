@@ -29,11 +29,11 @@
 - [x] Security tests: 401, 403, cross-division denial at the authorization-policy layer (real CRUD IDOR routes remain out of Phase 2 scope).
 
 ## Phase 3 — Public Foundation & Landing
-- [ ] Public layout/nav/footer responsive.
+- [x] Public layout/nav/footer responsive.
 - [ ] Landing settings/public home.
 - [ ] Active-period organization structure.
-- [ ] SEO metadata/sitemap/OpenGraph baseline.
-- [ ] Visual review against desktop/mobile Stitch refs.
+- [x] SEO metadata/sitemap/OpenGraph baseline.
+- [x] Visual review against desktop/mobile Stitch refs.
 
 ## Phase 4 — Content CMS
 - [ ] Article categories + articles CRUD/publish/unpublish.

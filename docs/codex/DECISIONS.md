@@ -59,7 +59,18 @@ These choices do not resolve Phase 0 product/API/security gaps or introduce auth
 | Login rate limit | Configurable, per-IP fixed-window in-memory limiter; Gin proxy trust is disabled by default to prevent client-supplied forwarded headers from bypassing the limit. | Simple single-instance protection without Redis; distributed enforcement stays future hardening. |
 | Admin bootstrap | `pnpm api:create-admin` invokes an interactive Go CLI; password entry is hidden, confirmed, validated, normalized/hashed, and creates only an ACTIVE `SUPER_ADMIN` with no division. | Avoids hardcoded credentials and avoids passing a password in command history. |
 | Activity events | Store LOGIN and known-identity LOGOUT as product activity rows. Refresh failures/reuse use structured security logs only; no password, access token, refresh token, or JWT secret is logged. | Matches the Phase 2 activity schema scope and explicit exclusion of failed login as a product log; the PRD's broader audit vocabulary remains relevant in later phases. |
-| Integration environment | Local database is MariaDB 11.4 via Compose. Integration suite requires a dedicated database name ending in `_test`, resets it through DOWN/UP, and cleans it after the run. GitHub Actions configures a MariaDB 11.4 service. | Prevents accidental destructive tests against development/production. Docker was unavailable for this local run, so DB integration remains unverified here. |
+| Integration environment | Local database is MariaDB 11.4 via Compose. Integration suite requires a dedicated database name ending in `_test`, resets it through DOWN/UP, and cleans it after the run. GitHub Actions configures a MariaDB 11.4 service. | Prevents accidental destructive tests against development/production. The initial Phase 2 check was blocked; the later live rerun passed as recorded in `PHASE_2_REPORT.md`. |
+
+### Phase 3 — Public website foundation and landing page
+
+| Area | Decision | Reason / boundary |
+|---|---|---|
+| Public home model | Present sections consume a typed `LandingPageContent` view model, not future API response types. | Content APIs are not implemented in this phase; later API adapters can map into this model without coupling UI to wire contracts. |
+| Dynamic previews | Organization, news, announcements, gallery, registration, vision/mission, and statistics use empty production defaults. Visual fixtures are enabled only in development or by server-only `BEM_DEMO_CONTENT=true`; the page marks demo mode visibly. | Avoids fake APIs, official-looking sample content, and demo statistics in production. |
+| Public navigation | Landing sections use stable fragment anchors. `/aspirasi` is a no-form placeholder linked from the public CTA; it is not an aspiration feature. | Prevents Phase 3 links from navigating to unimplemented public routes while keeping the planned route usable as a clear placeholder. |
+| Images and identity | Use palette-based CSS artwork placeholders and the existing text BEM mark. Do not reuse screenshots, hotlink Stitch image URLs, or invent a logo. | The source package contains no approved production logo/photo asset or image license record. Replace placeholders when approved assets are supplied. |
+| Canonical origin | Canonical/sitemap absolute URLs are emitted only after `NEXT_PUBLIC_SITE_URL` is configured; sitemap lists only `/`. | No approved public domain was found in the source package and unimplemented routes must not be advertised. |
+| Color tokens | Align the accent foreground/background mapping to Stitch `DESIGN.md` (`secondary #904d00`, `on-secondary #ffffff`, secondary container `#fe932c`). | The prior app token mapped white text to the lighter `#D97706`; matching the audited YAML improves contrast and keeps the public palette token-based. |
 
 ### Phase 2 source reconciliation notes
 

@@ -10,6 +10,9 @@
   --color-primary-container-foreground: var(--brand-on-primary-container);
   --color-secondary: var(--brand-accent);
   --color-secondary-foreground: var(--brand-on-accent);
+  --color-secondary-container: var(--brand-accent-container);
+  --color-on-secondary-container: var(--text-on-accent-container);
+  --color-on-secondary-fixed: var(--text-on-accent-fixed);
   --color-tertiary: var(--brand-midnight);
   --color-surface: var(--surface-default);
   --color-surface-muted: var(--surface-muted);
@@ -39,9 +42,12 @@
   --brand-on-primary: #ffffff;
   --brand-primary-container: #1e3a8a;
   --brand-on-primary-container: #90a8ff;
-  --brand-accent: #d97706;
+  --brand-accent: #904d00;
   --brand-on-accent: #ffffff;
   --brand-accent-bright: #f59e0b;
+  --brand-accent-container: #fe932c;
+  --text-on-accent-container: #663500;
+  --text-on-accent-fixed: #2f1500;
   --brand-midnight: #0f172a;
   --surface-canvas: #f8f9ff;
   --surface-default: #ffffff;
@@ -70,6 +76,37 @@
   --shadow-subtle: 0 1px 2px rgb(15 23 42 / 5%);
   --shadow-elevated: 0 4px 6px -1px rgb(15 23 42 / 7%), 0 2px 4px -2px rgb(15 23 42 / 5%);
   --shadow-floating: 0 10px 15px -3px rgb(15 23 42 / 8%), 0 4px 6px -4px rgb(15 23 42 / 4%);
+}
+
+.public-hero-art {
+  background-image:
+    radial-gradient(
+      ellipse at 72% 28%,
+      color-mix(in srgb, var(--brand-accent-container) 72%, transparent) 0%,
+      transparent 28%
+    ),
+    radial-gradient(
+      ellipse at 25% 70%,
+      color-mix(in srgb, var(--surface-raised) 88%, transparent) 0%,
+      transparent 30%
+    ),
+    linear-gradient(135deg, var(--surface-soft) 0%, var(--surface-muted) 48%, var(--surface-raised) 100%);
+}
+
+.public-media-art--navy {
+  background-image: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-container));
+}
+
+.public-media-art--blue {
+  background-image: linear-gradient(135deg, var(--surface-raised), var(--surface-soft));
+}
+
+.public-media-art--amber {
+  background-image: linear-gradient(135deg, var(--brand-accent-container), var(--brand-accent));
+}
+
+.public-media-art--slate {
+  background-image: linear-gradient(135deg, var(--surface-raised), var(--brand-midnight));
 }
 
 * {
