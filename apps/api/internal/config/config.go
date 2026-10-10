@@ -20,20 +20,22 @@ type Cookie struct {
 }
 
 type Config struct {
-	AppEnv           string
-	AppPort          int
-	FrontendOrigins  []string
-	DatabaseURL      string
-	DBMaxOpenConns   int
-	DBMaxIdleConns   int
-	DBConnMaxLife    time.Duration
-	JWTSecret        []byte
-	AccessTokenTTL   time.Duration
-	RefreshTokenTTL  time.Duration
-	Cookie           Cookie
-	BcryptCost       int
-	LoginLimitCount  int
-	LoginLimitWindow time.Duration
+	AppEnv                string
+	AppPort               int
+	FrontendOrigins       []string
+	DatabaseURL           string
+	DBMaxOpenConns        int
+	DBMaxIdleConns        int
+	DBConnMaxLife         time.Duration
+	JWTSecret             []byte
+	AccessTokenTTL        time.Duration
+	RefreshTokenTTL       time.Duration
+	Cookie                Cookie
+	BcryptCost            int
+	LoginLimitCount       int
+	LoginLimitWindow      time.Duration
+	AspirationLimitCount  int
+	AspirationLimitWindow time.Duration
 }
 
 type DatabaseSettings struct {
@@ -138,6 +140,14 @@ func LoadFrom(lookup func(string) string) (Config, error) {
 	if err != nil {
 		return Config{}, err
 	}
+	aspirationCount, err := parseInt("PUBLIC_ASPIRATION_RATE_LIMIT", 5, 1, 10000)
+	if err != nil {
+		return Config{}, err
+	}
+	aspirationWindow, err := parseDuration("PUBLIC_ASPIRATION_RATE_WINDOW", "15m", time.Second)
+	if err != nil {
+		return Config{}, err
+	}
 
 	cookieSecureDefault := "false"
 	if env == "production" {
@@ -169,6 +179,7 @@ func LoadFrom(lookup func(string) string) (Config, error) {
 		JWTSecret: secret, AccessTokenTTL: accessTTL, RefreshTokenTTL: refreshTTL,
 		Cookie:     Cookie{Name: cookieName, Secure: secure, SameSite: sameSite, Domain: cookieDomain, Path: "/api/v1/auth"},
 		BcryptCost: bcryptCost, LoginLimitCount: loginCount, LoginLimitWindow: loginWindow,
+		AspirationLimitCount: aspirationCount, AspirationLimitWindow: aspirationWindow,
 	}, nil
 }
 

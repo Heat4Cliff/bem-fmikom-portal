@@ -72,6 +72,18 @@ The unresolved G-17 rule is a release clarification, not a database/auth integra
 | Active period and public structure payload shape | Fixed for implementation as minimal public DTOs: public active period returns 404 when none exists; public organization returns `period: null` and empty hierarchy; public division list returns an empty list. No NIM, internal status, or audit metadata is exposed. |
 | Stitch member-form extras versus Phase 5 schema | The direct phase fields win: photo URL and NIM are optional; no uploads or extra study-program/year/contact/social fields were added. Stitch `screen.png` remains the visual target, and `code.html` is structural/style evidence only. |
 | Division deletion and member deletion | Division deletion conflicts when referenced, with no cascade. Member deletion is soft INACTIVE and preserves history. Periods are archived, never deleted. |
-| Exact-size mobile visual evidence | No product ambiguity remains, but device-sized manual visual review is not confirmed: the available in-app browser control surface had no viewport override for 360/390/412. Responsive source patterns and the mobile landing reference were reviewed; record exact viewport review as follow-up, not as PASS evidence. |
+| Exact-size mobile visual evidence | Phase 6 carry-forward review used the available viewport override: aspiration public/admin list/detail were reviewed at 360/390/412; Phase 5 `/admin/divisi` was reviewed at 360/390/412, and `/admin/pengurus` plus `/admin/struktur` at 390. BPH/KEPALA_BIDANG organization UI smoke was also performed. The Phase 5 implementation report remains unchanged; a complete screenshot matrix for every Phase 5 page/viewport remains release-wide follow-up. |
 
 No new Phase 5 product blocker was found for implementation. The exact-size mobile visual review limitation is carried as verification risk to the full visual/UAT phase; do not claim mobile pixel parity from the available browser session.
+
+## Phase 6 disposition
+
+| Contract/evidence item | Phase 6 outcome |
+|---|---|
+| PRD target division/category vs. Stitch category label | Resolved to active-period divisions as target choices. No category taxonomy endpoint/model exists; no independent taxonomy was invented. |
+| PRD optional name/NIM vs. mock form fields | Name/NIM remain optional. Optional email is included and validated if present; anonymous writes strip all three identity fields server-side and at the schema constraint. |
+| Detail mock uploads, disposition/SLA/notes/export | Carried out of Phase 6 because PRD/API do not support those controls. No file, notification, export, comment, or SLA workflow was added. |
+| Status transitions | Fixed to sequential PENDING → READ → RESOLVED. Direct PENDING → RESOLVED, same-state writes, and reopen are rejected; PRD defines no reopen semantics. |
+| In-memory public limiter | Provides per-process abuse protection; deployment with multiple API instances will need shared/distributed rate-limit storage before scaling. |
+| Exact 360/390/412 visual evidence | Carried forward from Phase 5; browser adapter viewport limits mean responsive source/test evidence cannot claim pixel parity. |
+| MariaDB runtime unavailable during initial Phase 6 attempt | Resolved on 2026-10-10 using the repository's existing Compose configuration and dedicated `bem_fmikom_test`; final migration round trip, non-skipping integration suite, and Phase 2/4/5 regression assertions passed. |

@@ -1,6 +1,6 @@
 # BEM FMIKOM UNUGHA Portal
 
-Monorepo for the BEM FMIKOM UNUGHA portal. Phases 0–5 are implemented: repository/design audit, app foundation, auth/RBAC, public landing, content CMS, and organization/period management. Phase 5 evidence and remaining verification limitations are in `docs/codex/PHASE_5_REPORT.md`. Phase 6 and later have not started.
+Monorepo for the BEM FMIKOM UNUGHA portal. Phases 0–6 are implemented; Phase 6 passed its MariaDB integration, migration, regression, verification, role-based browser UAT, and responsive review gates. See `docs/codex/PHASE_6_REPORT.md` for evidence. Phase 7 and later have not started.
 
 ## Source of truth
 
@@ -114,7 +114,7 @@ CI runs the aggregate static/unit checks and a MariaDB 11.4 service for actual d
 
 ## Phase status
 
-See `docs/codex/PHASE_2_REPORT.md` through `docs/codex/PHASE_5_REPORT.md` for phase scope and verification evidence. The landing page reads public news, announcements, gallery, and active-period organization data. `/aspirasi` is still a navigation placeholder and accepts no submissions.
+See `docs/codex/PHASE_2_REPORT.md` through `docs/codex/PHASE_6_REPORT.md` for phase scope and verification evidence. The landing page reads public news, announcements, gallery, and active-period organization data. `/aspirasi` accepts identified or anonymous submissions; `/admin/aspirasi` provides division-scoped review and `/admin/aspirasi/[id]` shows detail and status history.
 
 ## Content CMS (Phase 4)
 
@@ -137,3 +137,12 @@ Public announcement archive visibility for scheduled/expired entries still needs
 - Reversible migration `00003_organization.sql` adds division ordering and period-scoped organization members. Period transitions preserve archived history; member deactivation is soft (`INACTIVE`).
 - SUPER_ADMIN manages periods; SUPER_ADMIN/BPH manage divisions and members; KEPALA_BIDANG reads only its current division and cannot mutate organization records. The API enforces this policy.
 - Phase 5 verification: `pnpm verify` and `pnpm api:integration`; see `docs/codex/PHASE_5_REPORT.md` for exact evidence, including browser UAT and viewport limitations.
+
+## Aspiration management (Phase 6)
+
+- Public submission uses `POST /api/v1/public/aspirations`; destination must be an ACTIVE division in the ACTIVE period. The form loads choices from `GET /api/v1/public/divisions`.
+- Anonymous submissions persist `name`, `nim`, and `email` as SQL `NULL`. Identified name/NIM are optional; optional email is validated when supplied. Subject/message are plain text (200/5,000 character limits).
+- Reversible migration `00004_aspirations.sql` adds the domain. Status progresses only `PENDING → READ → RESOLVED`; updates are transactional and record first `read_at`/`resolved_at` timestamps in UTC.
+- SUPER_ADMIN and BPH review across divisions; KEPALA_BIDANG is scoped by its current database division. Scoped detail reads return 404; cross-division status writes return 403.
+- Public submissions use a separate configurable in-memory IP limiter (`PUBLIC_ASPIRATION_RATE_LIMIT=5`, `PUBLIC_ASPIRATION_RATE_WINDOW=15m`). Multi-instance deployments need a shared limiter.
+- Status activity rows store only aspiration ID, old/new status, and division ID. Request logs contain route/status/timing only. Attachment, taxonomy, disposition notes, SLA, export, and case workflow controls shown in the Stitch mock are outside the Phase 6 PRD/API scope.

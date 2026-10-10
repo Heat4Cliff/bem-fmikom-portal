@@ -58,3 +58,10 @@ Never show a menu item the current role cannot use, but never rely on hidden nav
 - `/admin/struktur` renders the selected period's leadership, divisions, heads, and members. `/` consumes the public active-period organization DTO and preserves an explicit empty state when no active organization exists.
 - Audited Stitch structure, division, member, and period `screen.png` files informed the visual target. Their `code.html` files remain layout/style evidence only. Admin visual browser review was performed at the available local browser viewport; exact 360/390/412 device emulation remains a verification limitation recorded in the Phase 5 report.
 - Backend authorization is authoritative: SUPER_ADMIN manages periods; SUPER_ADMIN/BPH manage divisions and members; KEPALA_BIDANG is read-only and scoped to its database-assigned division.
+
+## Phase 6 implementation status
+
+- `/aspirasi` is a working public form using active-period division choices from the existing public divisions API. It supports optional identity, explicit anonymous submission, field validation, pending/success/rate-limit/server-error states, and no file upload.
+- `/admin/aspirasi` shows filters and paginated results as a desktop table and mobile cards. `/admin/aspirasi/[id]` renders plain-text details and a simple timestamped status timeline.
+- SUPER_ADMIN/BPH review across divisions; KEPALA_BIDANG is restricted to its current database division. Only the next sequential status action is available; resolved aspirations are terminal.
+- The aspiration `screen.png` references are the visual target. Detail-only attachment, disposition, SLA, export, and analytics controls are excluded because they are not in the Phase 6 PRD/API behavior. `code.html` remains layout/style evidence only.

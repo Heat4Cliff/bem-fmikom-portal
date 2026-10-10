@@ -198,3 +198,15 @@ Organization routes below are implemented under `/api/v1`. Lists use the shared 
 | Member create/update/deactivate | `POST /admin/members`, `PATCH /admin/members/{id}`, `DELETE /admin/members/{id}` | SUPER_ADMIN/BPH only. DELETE is soft deactivation to INACTIVE; records and history remain. KB mutations receive 403. |
 
 Members use the six PRD positions (`KETUA`, `WAKIL_KETUA`, `SEKRETARIS`, `BENDAHARA`, `KEPALA_BIDANG`, `ANGGOTA`). A head/member must reference a division in the same period; division is optional for other leadership positions. At most one ACTIVE `KEPALA_BIDANG` is allowed per division and period. A generated-column unique constraint is the database concurrency guard. Mutations emit activity events without sensitive data.
+
+## Phase 6 aspiration implementation contract
+
+| Consumer/action | Endpoint | Contract / access |
+|---|---|---|
+| Public destination options | `GET /api/v1/public/divisions` | Existing Phase 5 endpoint; returns ACTIVE divisions in the ACTIVE period only. |
+| Submit aspiration | `POST /api/v1/public/aspirations` | Anonymous/public JSON write, separate fixed-window IP rate limit; required `division_id`, `subject`, `message`, and `is_anonymous`; optional `name`, `nim`, `email`. Name/NIM are optional per PRD; email is validated if supplied. |
+| List aspirations | `GET /api/v1/admin/aspirations` | SUPER_ADMIN/BPH cross-division; KEPALA_BIDANG database division only. Supports `page`, `limit` (max 100), `search`, `status`, `division_id`, `date_from`, `date_to`. |
+| Aspiration detail | `GET /api/v1/admin/aspirations/{id}` | Same role scope; out-of-scope KEPALA_BIDANG detail is returned as 404. |
+| Update status | `PATCH /api/v1/admin/aspirations/{id}/status` | Same role scope; body `{ "status": "READ" | "RESOLVED" }`. Cross-division write is 403. |
+
+Subject is capped at 200 Unicode characters; plain-text message at 5,000; optional name/NIM/email at 160/32/254 characters. Anonymous writes persist every identity column as NULL. Destination validation joins the requested division to the current ACTIVE period at write time. Status transitions are sequential only (`PENDING → READ → RESOLVED`); reopening and direct PENDING-to-RESOLVED are rejected. First `read_at` and `resolved_at` timestamps are preserved and stored in UTC. Public create returns only ID, PENDING status, and `submitted_at`; admin activity details contain only aspiration ID, status change, and division ID. Search is parameterized and literal-substring based. A supplied untrusted browser Origin is rejected for this public write route; requests without Origin remain usable by non-browser clients. No auth cookie is required.

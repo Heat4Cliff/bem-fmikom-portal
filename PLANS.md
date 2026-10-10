@@ -51,11 +51,11 @@
 - [x] Historical preservation tests.
 
 ## Phase 6 — Aspirations
-- [ ] Public aspiration form + rate limit + validation.
-- [ ] Division/category routing.
-- [ ] Admin list/detail/status PENDING → READ → RESOLVED.
-- [ ] Scope tests for KEPALA_BIDANG.
-- [ ] Responsive visual review.
+- [x] Public aspiration form + rate limit + validation.
+- [x] Division/category routing.
+- [x] Admin list/detail/status PENDING → READ → RESOLVED.
+- [x] Scope tests for KEPALA_BIDANG.
+- [x] Responsive visual review.
 
 ## Phase 7 — Dynamic Registration
 - [ ] Registration form CRUD and status DRAFT/OPEN/CLOSED.

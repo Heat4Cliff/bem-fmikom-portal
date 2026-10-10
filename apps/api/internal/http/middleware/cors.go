@@ -43,3 +43,22 @@ func RequireTrustedOrigin(allowedOrigins []string) gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+// RejectUntrustedBrowserOrigin rejects a supplied Origin outside the allow-list,
+// while allowing non-browser clients that do not send Origin.
+func RejectUntrustedBrowserOrigin(allowedOrigins []string) gin.HandlerFunc {
+	allowed := make(map[string]struct{}, len(allowedOrigins))
+	for _, origin := range allowedOrigins {
+		allowed[strings.ToLower(strings.TrimSpace(origin))] = struct{}{}
+	}
+	return func(c *gin.Context) {
+		origin := strings.ToLower(strings.TrimSpace(c.GetHeader("Origin")))
+		if origin != "" {
+			if _, ok := allowed[origin]; !ok {
+				c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"success": false, "message": "Origin tidak diizinkan", "code": "FORBIDDEN"})
+				return
+			}
+		}
+		c.Next()
+	}
+}

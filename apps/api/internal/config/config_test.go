@@ -27,7 +27,7 @@ func TestLoadUsesSecureDevelopmentDefaults(t *testing.T) {
 	if got.Cookie.Secure || got.Cookie.SameSite != "lax" || got.Cookie.Path != "/api/v1/auth" {
 		t.Fatalf("unexpected development cookie defaults: %+v", got.Cookie)
 	}
-	if got.BcryptCost != 12 || len(got.FrontendOrigins) != 1 {
+	if got.BcryptCost != 12 || len(got.FrontendOrigins) != 1 || got.AspirationLimitCount != 5 || got.AspirationLimitWindow.String() != "15m0s" {
 		t.Fatalf("unexpected auth defaults: %+v", got)
 	}
 }

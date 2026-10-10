@@ -70,14 +70,18 @@ func TestDatabaseIntegration(t *testing.T) {
 		}
 	}()
 	var tableCount int
-	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name IN ('periods','divisions','users','refresh_sessions','activity_logs','article_categories','articles','article_category_map','gallery_categories','gallery_items','announcements','organization_members')`, dsn.DBName).Scan(&tableCount); err != nil || tableCount != 12 {
-		t.Fatalf("phase 4 schema table count = %d, err = %v", tableCount, err)
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name IN ('periods','divisions','users','refresh_sessions','activity_logs','article_categories','articles','article_category_map','gallery_categories','gallery_items','announcements','organization_members','aspirations')`, dsn.DBName).Scan(&tableCount); err != nil || tableCount != 13 {
+		t.Fatalf("phase 6 schema table count = %d, err = %v", tableCount, err)
 	}
 	if err := migrate.Down(ctx, db); err != nil {
-		t.Fatalf("rollback foundation migration: %v", err)
+		t.Fatalf("rollback aspiration migration: %v", err)
+	}
+	var aspirationsExists int
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=? AND table_name='aspirations'`, dsn.DBName).Scan(&aspirationsExists); err != nil || aspirationsExists != 0 {
+		t.Fatalf("aspirations table remains after migration DOWN: count=%d err=%v", aspirationsExists, err)
 	}
 	if err := migrate.Up(ctx, db); err != nil {
-		t.Fatalf("reapply foundation migration after rollback: %v", err)
+		t.Fatalf("reapply aspiration migration after rollback: %v", err)
 	}
 	if _, err := db.ExecContext(ctx, `INSERT INTO periods (name,start_date,end_date,status) VALUES ('2025/2026','2025-01-01','2026-12-31','ACTIVE')`); err != nil {
 		t.Fatalf("insert active period: %v", err)
@@ -155,6 +159,7 @@ func TestDatabaseIntegration(t *testing.T) {
 		AccessTokenTTL: 15 * time.Minute, RefreshTokenTTL: 7 * 24 * time.Hour,
 		Cookie:     config.Cookie{Name: "bem_refresh", SameSite: "lax", Path: "/api/v1/auth"},
 		BcryptCost: 4, LoginLimitCount: 100, LoginLimitWindow: time.Minute,
+		AspirationLimitCount: 100, AspirationLimitWindow: 15 * time.Minute,
 	}
 	engine, err := NewWithDependencies(logger, cfg, db)
 	if err != nil {
@@ -525,6 +530,16 @@ func TestDatabaseIntegration(t *testing.T) {
 	if strings.Contains(loggerBuffer.String(), "do not log this credential") {
 		t.Fatal("rate-limited login password appeared in structured logs")
 	}
+	if _, err := db.ExecContext(ctx, `UPDATE users SET status='ACTIVE' WHERE email='admin@example.org'`); err != nil {
+		t.Fatal(err)
+	}
+	// Earlier assertions intentionally changed the seeded administrator's
+	// database role to verify that current DB role overrides JWT claims. Restore
+	// the fixture before aspiration tests that require SUPER_ADMIN privileges.
+	if _, err := db.ExecContext(ctx, `UPDATE users SET role='SUPER_ADMIN' WHERE email='admin@example.org'`); err != nil {
+		t.Fatal(err)
+	}
+	runAspirationIntegration(t, ctx, db, engine, cfg, logger, loggerBuffer, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken)
 }
 
 func postJSON(engine http.Handler, path, body string, cookies []*http.Cookie) *httptest.ResponseRecorder {

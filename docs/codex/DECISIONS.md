@@ -112,3 +112,15 @@ Phase 4 integration evidence and known limitations are recorded in `PHASE_4_REPO
 | Mobile evidence | Admin routes use responsive cards/forms and source Stitch files were reviewed, but the current in-app browser adapter cannot set an exact 360/390/412 viewport. | Report this manual visual verification limitation explicitly; do not claim device-sized visual parity. |
 
 Phase 5 integration and UAT evidence are recorded in `PHASE_5_REPORT.md`.
+
+### Phase 6 — Aspiration management
+
+| Area | Decision | Reason / boundary |
+|---|---|---|
+| Identity | Name and NIM remain optional as PRD 7.6 says. Email is also optional and is validated only when supplied, matching the public Stitch field and Phase 6 handoff. When anonymous, service and DB constraint force name/NIM/email to NULL. | Do not make identifying fields required based on mock content; enforce anonymity server-side. |
+| Target/routing | The public target field uses existing active-period divisions as its values. `division_id` is required in the API and verified against an ACTIVE division joined to the ACTIVE period at submit time. | PRD requires routing to a division/category, but no category taxonomy API/model exists; use the supported division routing without inventing taxonomy. |
+| Plain text and bounds | Subject 200, message 5,000, name 160, NIM 32, email 254 Unicode/codepoint characters; subject/message are trimmed and stored/rendered as plain text. | Bounded request/resource use and existing domain conventions; React escapes admin display. |
+| Status workflow | Only sequential `PENDING → READ → RESOLVED`; no direct resolution from PENDING, no same-state update, no reopen. First `read_at` and `resolved_at` are set once in UTC. | This follows the PRD's explicitly ordered lifecycle and keeps RESOLVED terminal where no reopen rule exists. |
+| Activity data | Only admin status transitions emit an `UPDATE`/`ASPIRATION` activity event with aspiration ID, old/new status, and division ID. Public submit identity/message is not copied into activity rows or structured request logs. | Minimize sensitive student data; activity read dashboard remains Phase 9. |
+| Abuse / Origin | Dedicated configurable fixed-window limiter defaults to 5 writes per 15 minutes per client IP. Reject a supplied untrusted Origin on the public write without making Origin mandatory for non-browser clients. | Separate from login throttling while retaining public REST use and explicit origin protection. |
+| Stitch-only controls | Do not implement attachment upload, separate category taxonomy, disposition notes, SLA metrics, export, or case-management workflow. | These controls are visible in reference mockups but not specified by Phase 6 PRD/API contract; uploads and export belong to later authorized scope. |

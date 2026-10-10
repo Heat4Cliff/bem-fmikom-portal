@@ -24,6 +24,8 @@ func NewWithDependencies(logger *slog.Logger, cfg config.Config, db *sql.DB) (*g
 	content.Register(engine, authService)
 	organization := handler.NewOrganization(service.NewOrganizationService(db))
 	organization.Register(engine, authService)
+	aspirations := handler.NewAspirations(service.NewAspirationService(db))
+	aspirations.Register(engine, authService, cfg.FrontendOrigins, middleware.NewAspirationLimiter(cfg.AspirationLimitCount, cfg.AspirationLimitWindow))
 	limiter := middleware.NewLoginLimiter(cfg.LoginLimitCount, cfg.LoginLimitWindow)
 	group := engine.Group("/api/v1/auth")
 	group.Use(middleware.RequireTrustedOrigin(cfg.FrontendOrigins))
