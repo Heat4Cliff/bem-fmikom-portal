@@ -1,6 +1,6 @@
 # BEM FMIKOM UNUGHA Portal
 
-Monorepo for the BEM FMIKOM UNUGHA portal. Phases 0–6 are implemented; Phase 6 passed its MariaDB integration, migration, regression, verification, role-based browser UAT, and responsive review gates. See `docs/codex/PHASE_6_REPORT.md` for evidence. Phase 7 and later have not started.
+Monorepo for the BEM FMIKOM UNUGHA portal. Phases 0–6 are implemented. Phase 7 adds public dynamic registrations, an admin form builder, submissions, and privacy-conscious XLSX export. See `docs/codex/PHASE_7_REPORT.md` for scope and current evidence.
 
 ## Source of truth
 
@@ -146,3 +146,11 @@ Public announcement archive visibility for scheduled/expired entries still needs
 - SUPER_ADMIN and BPH review across divisions; KEPALA_BIDANG is scoped by its current database division. Scoped detail reads return 404; cross-division status writes return 403.
 - Public submissions use a separate configurable in-memory IP limiter (`PUBLIC_ASPIRATION_RATE_LIMIT=5`, `PUBLIC_ASPIRATION_RATE_WINDOW=15m`). Multi-instance deployments need a shared limiter.
 - Status activity rows store only aspiration ID, old/new status, and division ID. Request logs contain route/status/timing only. Attachment, taxonomy, disposition notes, SLA, export, and case workflow controls shown in the Stitch mock are outside the Phase 6 PRD/API scope.
+
+## Dynamic registration management (Phase 7)
+
+- Public routes: `/pendaftaran`, `/pendaftaran/[slug]`, and `/pendaftaran/[slug]/form`. Admin routes: `/admin/pendaftaran`, `/admin/pendaftaran/[id]/builder`, `/admin/pendaftaran/[id]/submissions`, and the submission detail route.
+- The API supports DRAFT → OPEN → CLOSED forms, public UPCOMING/OPEN/CLOSED status, and eight field types: TEXT, TEXTAREA, EMAIL, NUMBER, SELECT, RADIO, CHECKBOX, and DATE. Forms start with the required core identity fields; a schema becomes immutable on its first submission while historical answers retain metadata snapshots.
+- NIM is normalized and unique within one form. MariaDB enforces the duplicate rule, including concurrent submissions. Registration writes have a separate configurable per-process rate limit (`PUBLIC_REGISTRATION_RATE_LIMIT=5`, `PUBLIC_REGISTRATION_RATE_WINDOW=30m`).
+- SUPER_ADMIN and BPH can manage forms across divisions; KEPALA_BIDANG is limited to its current database-assigned division. Admin submission reads and exports require the same form scope. XLSX export is capped at 1,000 rows, uses literal text cells for applicant content, and returns `private, no-store`.
+- Migration `00005_registration.sql` is reversible. Run `pnpm api:integration` against `TEST_DATABASE_URL` ending in `_test` for real MariaDB coverage. For feature decisions, limitations, and browser/visual verification evidence, see `docs/codex/PHASE_7_REPORT.md`.

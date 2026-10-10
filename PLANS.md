@@ -58,14 +58,14 @@
 - [x] Responsive visual review.
 
 ## Phase 7 — Dynamic Registration
-- [ ] Registration form CRUD and status DRAFT/OPEN/CLOSED.
-- [ ] Form fields: text, textarea, email, number, select, radio, checkbox, date.
-- [ ] Form builder reorder + validation.
-- [ ] Public form render/detail/submit.
-- [ ] Duplicate rule support.
-- [ ] Submission list/detail/filter.
-- [ ] XLSX export + activity log EXPORT.
-- [ ] End-to-end integration tests.
+- [x] Registration form CRUD and status DRAFT/OPEN/CLOSED.
+- [x] Form fields: text, textarea, email, number, select, radio, checkbox, date.
+- [x] Form builder reorder + validation.
+- [x] Public form render/detail/submit.
+- [x] Duplicate rule support.
+- [x] Submission list/detail/filter.
+- [x] XLSX export + activity log EXPORT.
+- [x] End-to-end integration tests.
 
 ## Phase 8 — Private Document Archive
 - [ ] Private file storage abstraction.

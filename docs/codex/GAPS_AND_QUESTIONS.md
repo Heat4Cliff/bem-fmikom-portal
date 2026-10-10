@@ -87,3 +87,20 @@ No new Phase 5 product blocker was found for implementation. The exact-size mobi
 | In-memory public limiter | Provides per-process abuse protection; deployment with multiple API instances will need shared/distributed rate-limit storage before scaling. |
 | Exact 360/390/412 visual evidence | Carried forward from Phase 5; browser adapter viewport limits mean responsive source/test evidence cannot claim pixel parity. |
 | MariaDB runtime unavailable during initial Phase 6 attempt | Resolved on 2026-10-10 using the repository's existing Compose configuration and dedicated `bem_fmikom_test`; final migration round trip, non-skipping integration suite, and Phase 2/4/5 regression assertions passed. |
+
+## Phase 7 disposition
+
+| Earlier gap / evidence | Phase 7 resolution or carry-forward |
+|---|---|
+| G-09 duplicate identity policy | Resolved by the direct Phase 7 decision: required NIM, normalized trim/uppercase, database unique `(registration_form_id, normalized_nim)`, email is not a unique key. Same NIM is allowed on another form. |
+| G-10 field mutation/history | Resolved without schema versioning: only DRAFT/no-submission schemas can change key/type/required/options/order; snapshots preserve each answer's field key/label/type/order. Post-submission field labels/placeholders may be corrected as presentation metadata; answer history keeps its original label. Core identity values are stored once. |
+| G-14 public registration abuse limits | Resolved with a registration-only 5 requests/IP/30-minute configurable in-memory limiter. Distributed limiter remains a scale-out concern. |
+| PRD public list only says OPEN; Phase 7 asks UPCOMING/OPEN/CLOSED | Reconciled explicitly in `API_CONTRACT.md`: the detailed direct Phase 7 instruction adds all three safe public effective states; DRAFT remains private. |
+| PRD says duplicate NIM/email may be enabled by form; Phase 7 requires NIM once per form | The direct Phase 7 decision is stricter and overrides that baseline for this implementation; NIM is mandatory and email uniqueness is disabled. |
+| Stitch form builder shows file upload, helper text/validation extras, and publish controls | No applicant file upload, arbitrary helper-text schema, quota/scoring, email/WhatsApp, or approval workflow is implemented. Only the eight fixed field types and the required schema controls are exposed. |
+| Mobile-only registration administration mock; no separate Stitch detail-submission screen | `/admin/pendaftaran` desktop uses existing dense admin table patterns and mobile uses cards. Submission detail uses the design system and data-pendaftar visual language; no screen-specific pixel-parity claim is possible without a dedicated Stitch capture. |
+| Public screenshots include contact/WhatsApp and file-upload examples | Those are visual mock elements, not authorization for notification/file workflows. Build matching hierarchy and responsive layout while keeping unsupported controls absent. |
+
+No Phase 8 archive, Phase 9 settings/users/activity dashboard, applicant file upload, selection workflow, or notification feature was started.
+
+Phase 7 implementation, database/security/export gates, browser workflows, and representative 390×844 public responsive review are complete. Final side-by-side visual sign-off for every relevant Stitch screen and the 360/412 breakpoints remains a manual release review item; see `PHASE_7_REPORT.md`.

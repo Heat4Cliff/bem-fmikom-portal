@@ -20,22 +20,24 @@ type Cookie struct {
 }
 
 type Config struct {
-	AppEnv                string
-	AppPort               int
-	FrontendOrigins       []string
-	DatabaseURL           string
-	DBMaxOpenConns        int
-	DBMaxIdleConns        int
-	DBConnMaxLife         time.Duration
-	JWTSecret             []byte
-	AccessTokenTTL        time.Duration
-	RefreshTokenTTL       time.Duration
-	Cookie                Cookie
-	BcryptCost            int
-	LoginLimitCount       int
-	LoginLimitWindow      time.Duration
-	AspirationLimitCount  int
-	AspirationLimitWindow time.Duration
+	AppEnv                  string
+	AppPort                 int
+	FrontendOrigins         []string
+	DatabaseURL             string
+	DBMaxOpenConns          int
+	DBMaxIdleConns          int
+	DBConnMaxLife           time.Duration
+	JWTSecret               []byte
+	AccessTokenTTL          time.Duration
+	RefreshTokenTTL         time.Duration
+	Cookie                  Cookie
+	BcryptCost              int
+	LoginLimitCount         int
+	LoginLimitWindow        time.Duration
+	AspirationLimitCount    int
+	AspirationLimitWindow   time.Duration
+	RegistrationLimitCount  int
+	RegistrationLimitWindow time.Duration
 }
 
 type DatabaseSettings struct {
@@ -148,6 +150,14 @@ func LoadFrom(lookup func(string) string) (Config, error) {
 	if err != nil {
 		return Config{}, err
 	}
+	registrationCount, err := parseInt("PUBLIC_REGISTRATION_RATE_LIMIT", 5, 1, 10000)
+	if err != nil {
+		return Config{}, err
+	}
+	registrationWindow, err := parseDuration("PUBLIC_REGISTRATION_RATE_WINDOW", "30m", time.Second)
+	if err != nil {
+		return Config{}, err
+	}
 
 	cookieSecureDefault := "false"
 	if env == "production" {
@@ -180,6 +190,7 @@ func LoadFrom(lookup func(string) string) (Config, error) {
 		Cookie:     Cookie{Name: cookieName, Secure: secure, SameSite: sameSite, Domain: cookieDomain, Path: "/api/v1/auth"},
 		BcryptCost: bcryptCost, LoginLimitCount: loginCount, LoginLimitWindow: loginWindow,
 		AspirationLimitCount: aspirationCount, AspirationLimitWindow: aspirationWindow,
+		RegistrationLimitCount: registrationCount, RegistrationLimitWindow: registrationWindow,
 	}, nil
 }
 

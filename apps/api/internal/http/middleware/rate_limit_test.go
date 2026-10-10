@@ -40,3 +40,16 @@ func TestAspirationLimiterHasIndependent429Response(t *testing.T) {
 		t.Fatalf("aspiration limiter responses: first=%d second=%d headers=%v", first.Code, second.Code, second.Header())
 	}
 }
+
+func TestRegistrationLimiterHasIndependent429Response(t *testing.T) {
+	gin.SetMode(gin.TestMode)
+	engine := gin.New()
+	engine.POST("/registrations", NewRegistrationLimiter(1, 30*time.Minute).Middleware(), func(c *gin.Context) { c.Status(http.StatusCreated) })
+	first := httptest.NewRecorder()
+	engine.ServeHTTP(first, httptest.NewRequest(http.MethodPost, "/registrations", nil))
+	second := httptest.NewRecorder()
+	engine.ServeHTTP(second, httptest.NewRequest(http.MethodPost, "/registrations", nil))
+	if first.Code != http.StatusCreated || second.Code != http.StatusTooManyRequests || second.Header().Get("Retry-After") == "" {
+		t.Fatalf("registration limiter responses: first=%d second=%d headers=%v", first.Code, second.Code, second.Header())
+	}
+}

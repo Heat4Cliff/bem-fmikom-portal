@@ -70,8 +70,15 @@ func TestDatabaseIntegration(t *testing.T) {
 		}
 	}()
 	var tableCount int
-	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name IN ('periods','divisions','users','refresh_sessions','activity_logs','article_categories','articles','article_category_map','gallery_categories','gallery_items','announcements','organization_members','aspirations')`, dsn.DBName).Scan(&tableCount); err != nil || tableCount != 13 {
-		t.Fatalf("phase 6 schema table count = %d, err = %v", tableCount, err)
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name IN ('periods','divisions','users','refresh_sessions','activity_logs','article_categories','articles','article_category_map','gallery_categories','gallery_items','announcements','organization_members','aspirations','registration_forms','registration_fields','registration_field_options','registration_submissions','registration_submission_answers')`, dsn.DBName).Scan(&tableCount); err != nil || tableCount != 18 {
+		t.Fatalf("phase 7 schema table count = %d, err = %v", tableCount, err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback registration migration: %v", err)
+	}
+	var registrationTables int
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=? AND table_name IN ('registration_forms','registration_fields','registration_field_options','registration_submissions','registration_submission_answers')`, dsn.DBName).Scan(&registrationTables); err != nil || registrationTables != 0 {
+		t.Fatalf("registration tables remain after migration DOWN: count=%d err=%v", registrationTables, err)
 	}
 	if err := migrate.Down(ctx, db); err != nil {
 		t.Fatalf("rollback aspiration migration: %v", err)
@@ -81,7 +88,7 @@ func TestDatabaseIntegration(t *testing.T) {
 		t.Fatalf("aspirations table remains after migration DOWN: count=%d err=%v", aspirationsExists, err)
 	}
 	if err := migrate.Up(ctx, db); err != nil {
-		t.Fatalf("reapply aspiration migration after rollback: %v", err)
+		t.Fatalf("reapply migrations after rollback: %v", err)
 	}
 	if _, err := db.ExecContext(ctx, `INSERT INTO periods (name,start_date,end_date,status) VALUES ('2025/2026','2025-01-01','2026-12-31','ACTIVE')`); err != nil {
 		t.Fatalf("insert active period: %v", err)
@@ -160,6 +167,7 @@ func TestDatabaseIntegration(t *testing.T) {
 		Cookie:     config.Cookie{Name: "bem_refresh", SameSite: "lax", Path: "/api/v1/auth"},
 		BcryptCost: 4, LoginLimitCount: 100, LoginLimitWindow: time.Minute,
 		AspirationLimitCount: 100, AspirationLimitWindow: 15 * time.Minute,
+		RegistrationLimitCount: 100, RegistrationLimitWindow: 30 * time.Minute,
 	}
 	engine, err := NewWithDependencies(logger, cfg, db)
 	if err != nil {
@@ -540,6 +548,7 @@ func TestDatabaseIntegration(t *testing.T) {
 		t.Fatal(err)
 	}
 	runAspirationIntegration(t, ctx, db, engine, cfg, logger, loggerBuffer, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken)
+	runRegistrationIntegration(t, ctx, db, engine, loggerBuffer, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken, divisionID, divisionBID)
 }
 
 func postJSON(engine http.Handler, path, body string, cookies []*http.Cookie) *httptest.ResponseRecorder {

@@ -65,3 +65,11 @@ Never show a menu item the current role cannot use, but never rely on hidden nav
 - `/admin/aspirasi` shows filters and paginated results as a desktop table and mobile cards. `/admin/aspirasi/[id]` renders plain-text details and a simple timestamped status timeline.
 - SUPER_ADMIN/BPH review across divisions; KEPALA_BIDANG is restricted to its current database division. Only the next sequential status action is available; resolved aspirations are terminal.
 - The aspiration `screen.png` references are the visual target. Detail-only attachment, disposition, SLA, export, and analytics controls are excluded because they are not in the Phase 6 PRD/API behavior. `code.html` remains layout/style evidence only.
+
+## Phase 7 implementation status
+
+- `/pendaftaran` lists real public UPCOMING/OPEN/CLOSED forms; `/pendaftaran/[slug]` shows safe metadata and state-specific CTA; `/pendaftaran/[slug]/form` renders the API field schema, including the mobile form target.
+- `/admin/pendaftaran` lists forms in a desktop table and mobile cards. Create happens in a dialog on this route. `/admin/pendaftaran/[id]/builder` edits form metadata and the dynamic schema; `/admin/pendaftaran/[id]/submissions` lists/filter submissions; `/admin/pendaftaran/[id]/submissions/[submissionId]` displays immutable schema-snapshot answers.
+- `registration_form_builder_admin_bem/screen.png`, `data_pendaftar_submisi_admin_bem/screen.png`, the public registration list/detail/form screen images, and the explicit mobile form/admin-management screen images are the visual targets. The submission detail and desktop registration-management routes have no dedicated Stitch screen; reuse the established design system without claiming screen-specific pixel parity. Stitch `code.html` remains structural/style evidence only.
+- Public data is limited to safe form/field metadata. SUPER_ADMIN/BPH manage across divisions; KEPALA_BIDANG is forced to its database division and scoped for forms, submissions, detail, and export. The API remains the authorization authority.
+- Applicant file upload, quotas/scoring/selection, auto-save, and email/WhatsApp workflows shown in mock references are excluded by the Phase 7 scope and PRD v1.4.
