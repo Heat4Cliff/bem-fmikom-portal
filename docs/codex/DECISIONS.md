@@ -143,3 +143,17 @@ Phase 5 integration and UAT evidence are recorded in `PHASE_5_REPORT.md`.
 | Logging/privacy | Public registration payloads and answers are never copied into request logs or activity rows. Submission rows contain core identity once; answer snapshots contain values only for custom fields. Export is private/no-store and requires the same form scope as submissions. | Minimizes student PII exposure. |
 | Activity | Emit CREATE/UPDATE/DELETE/ACTIVATE/DEACTIVATE for REGISTRATION_FORM as applicable; schema saves use minimized UPDATE metadata. Emit EXPORT with only form ID, division ID, and submission count. | Satisfies PRD audit requirements without logging schemas or applicant answers. |
 | Stitch reconciliation | Build responsive public/admin screens from reusable Next/TypeScript/Tailwind components. Omit file upload, quota/scoring/selection, auto-save, email/WhatsApp, and applicant approval workflow controls shown in some mocks. | The direct Phase 7 scope and PRD v1.4 exclude these behaviors; `screen.png` remains the visual target and `code.html` is reference only. |
+
+### Phase 8 — Private document archive
+
+| Area | Decision | Reason / boundary |
+|---|---|---|
+| Archive route and contract mapping | Admin UI uses `/admin/arsip-dokumen`; retain `/api/v1/admin/documents` contract routes. | Reconciles the direct Phase 8 route with API names and Stitch archive screens. |
+| Division ownership | Documents require a `division_id` belonging to the selected `period_id`; KEPALA_BIDANG is forced to the current database division. | PRD v1.4 allows optional division, while direct Phase 8 instructions specify period/division ownership and fixed KB division. This phase narrows the schema and behavior accordingly. |
+| Upload maximum | Default is 10 MiB (`10 * 1024 * 1024`), configurable with `DOCUMENT_MAX_UPLOAD_BYTES`. | PRD v1.4 and SECURITY_CONTRACT explicitly set 10 MB; the conditional 25 MiB fallback does not apply. |
+| Private storage | Local private filesystem implements a storage interface, uses generated keys, private staging, `0600` POSIX object permissions, and `os.Root` path confinement. Production requires an absolute `DOCUMENT_STORAGE_PATH` outside public/static/web roots. | No public/static file route exists; bytes are served only through the authenticated download endpoint. Windows inherits the storage directory ACL because Windows does not expose POSIX permission semantics. |
+| File checks | Allow PDF/DOC/DOCX/XLS/XLSX; validate normalized extension and declared MIME, then inspect signatures or OOXML ZIP members; stream and hash SHA-256. | Client filename/MIME are untrusted. Format structure checks do not provide antivirus scanning or content disarm. |
+| Delete repair | Mark `delete_pending`, remove the private object idempotently, then delete metadata and write activity in a final transaction. Failed object deletion attempts clear the pending state; final transaction failures leave a hidden retryable row. | This makes the filesystem/database boundary recoverable without claiming a distributed transaction. |
+| Screens | Desktop uses a metadata table and upload dialog; narrow screens use stacked cards/actions. Existing archive desktop/mobile `screen.png` are visual targets; no separate edit/delete reference exists. | Use reusable Next.js, TypeScript, and Tailwind components. Stitch `code.html` stays layout/style evidence only. |
+
+Phase 8 verification and limitations are recorded in `PHASE_8_REPORT.md`.

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -38,6 +39,8 @@ type Config struct {
 	AspirationLimitWindow   time.Duration
 	RegistrationLimitCount  int
 	RegistrationLimitWindow time.Duration
+	DocumentStoragePath     string
+	DocumentMaxUploadBytes  int64
 }
 
 type DatabaseSettings struct {
@@ -158,6 +161,14 @@ func LoadFrom(lookup func(string) string) (Config, error) {
 	if err != nil {
 		return Config{}, err
 	}
+	documentMaxUploadBytes, err := parseInt("DOCUMENT_MAX_UPLOAD_BYTES", 10<<20, 1, 1<<30)
+	if err != nil {
+		return Config{}, err
+	}
+	documentStoragePath := filepath.Clean(get("DOCUMENT_STORAGE_PATH", "../../var/private/documents"))
+	if env == "production" && !filepath.IsAbs(documentStoragePath) {
+		return Config{}, fmt.Errorf("DOCUMENT_STORAGE_PATH must be an absolute private path in production")
+	}
 
 	cookieSecureDefault := "false"
 	if env == "production" {
@@ -191,6 +202,7 @@ func LoadFrom(lookup func(string) string) (Config, error) {
 		BcryptCost: bcryptCost, LoginLimitCount: loginCount, LoginLimitWindow: loginWindow,
 		AspirationLimitCount: aspirationCount, AspirationLimitWindow: aspirationWindow,
 		RegistrationLimitCount: registrationCount, RegistrationLimitWindow: registrationWindow,
+		DocumentStoragePath: documentStoragePath, DocumentMaxUploadBytes: int64(documentMaxUploadBytes),
 	}, nil
 }
 

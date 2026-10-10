@@ -32,7 +32,7 @@ This file is intentionally route-oriented. Route names may be refined during Pha
 - `/admin/pendaftaran/[id]/submissions` → submission list/detail/export.
 - `/admin/aspirasi` → aspirations.
 - `/admin/aspirasi/[id]` → aspiration detail.
-- `/admin/dokumen` → document archive.
+- `/admin/arsip-dokumen` → private document archive.
 - `/admin/settings` → landing settings.
 - `/admin/users` → SUPER_ADMIN user management.
 - `/admin/activity-logs` → SUPER_ADMIN audit trail.
@@ -73,3 +73,10 @@ Never show a menu item the current role cannot use, but never rely on hidden nav
 - `registration_form_builder_admin_bem/screen.png`, `data_pendaftar_submisi_admin_bem/screen.png`, the public registration list/detail/form screen images, and the explicit mobile form/admin-management screen images are the visual targets. The submission detail and desktop registration-management routes have no dedicated Stitch screen; reuse the established design system without claiming screen-specific pixel parity. Stitch `code.html` remains structural/style evidence only.
 - Public data is limited to safe form/field metadata. SUPER_ADMIN/BPH manage across divisions; KEPALA_BIDANG is forced to its database division and scoped for forms, submissions, detail, and export. The API remains the authorization authority.
 - Applicant file upload, quotas/scoring/selection, auto-save, and email/WhatsApp workflows shown in mock references are excluded by the Phase 7 scope and PRD v1.4.
+
+## Phase 8 implementation status
+
+- `/admin/arsip-dokumen` maps to authenticated `/api/v1/admin/documents` list/create/detail/metadata/delete routes and `/api/v1/admin/documents/{id}/download` streaming. Existing API naming is retained while the direct Phase 8 UI route is the Indonesian archive route.
+- Desktop uses the archive table/upload dialog target `arsip_dokumen_internal_admin_bem`; mobile uses stacked cards and download/actions inspired by `arsip_dokumen_mobile_admin_bem`. Edit/delete controls have no separate Stitch screens and are represented with reusable dialogs.
+- Uploads are private and division-period bound. SUPER_ADMIN/BPH can access across divisions; KEPALA_BIDANG is scoped to the current database division. No public document route exists.
+- Visual sign-off must compare `screen.png`; Stitch `code.html` remains structural/style reference only. Responsive browser evidence is recorded in `PHASE_8_REPORT.md`.

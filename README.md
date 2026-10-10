@@ -154,3 +154,12 @@ Public announcement archive visibility for scheduled/expired entries still needs
 - NIM is normalized and unique within one form. MariaDB enforces the duplicate rule, including concurrent submissions. Registration writes have a separate configurable per-process rate limit (`PUBLIC_REGISTRATION_RATE_LIMIT=5`, `PUBLIC_REGISTRATION_RATE_WINDOW=30m`).
 - SUPER_ADMIN and BPH can manage forms across divisions; KEPALA_BIDANG is limited to its current database-assigned division. Admin submission reads and exports require the same form scope. XLSX export is capped at 1,000 rows, uses literal text cells for applicant content, and returns `private, no-store`.
 - Migration `00005_registration.sql` is reversible. Run `pnpm api:integration` against `TEST_DATABASE_URL` ending in `_test` for real MariaDB coverage. For feature decisions, limitations, and browser/visual verification evidence, see `docs/codex/PHASE_7_REPORT.md`.
+
+## Private document archive (Phase 8)
+
+- Admin archive: `/admin/arsip-dokumen`; API list/upload/detail/metadata/delete is under `/api/v1/admin/documents`, with authorized streaming at `/api/v1/admin/documents/{id}/download`.
+- Files are stored in a private local directory configured by `DOCUMENT_STORAGE_PATH`; configure an absolute path outside the web root in production. POSIX storage objects use private `0600` permissions; Windows inherits the directory ACL. The default upload maximum is 10 MiB and can be set with `DOCUMENT_MAX_UPLOAD_BYTES`.
+- Allowed formats are PDF, DOC, DOCX, XLS, and XLSX. Upload checks extension, declared MIME type, and file signature/container. SHA-256 and opaque storage keys are persisted; no public/static path is exposed.
+- SUPER_ADMIN/BPH can access cross-division archives. KEPALA_BIDANG is restricted by the current database division and period. Back up database metadata and private storage together to retain archive consistency.
+- File validation is not antivirus scanning or content disarm. Production should pair the private storage backup with the database backup and verify restore as one recovery set.
+- Run `pnpm db:up`, ensure `TEST_DATABASE_URL` names a dedicated database ending `_test`, then use `pnpm api:integration` and `pnpm verify`. See `docs/codex/PHASE_8_REPORT.md` for executed evidence and remaining manual review.

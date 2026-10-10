@@ -70,8 +70,15 @@ func TestDatabaseIntegration(t *testing.T) {
 		}
 	}()
 	var tableCount int
-	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name IN ('periods','divisions','users','refresh_sessions','activity_logs','article_categories','articles','article_category_map','gallery_categories','gallery_items','announcements','organization_members','aspirations','registration_forms','registration_fields','registration_field_options','registration_submissions','registration_submission_answers')`, dsn.DBName).Scan(&tableCount); err != nil || tableCount != 18 {
-		t.Fatalf("phase 7 schema table count = %d, err = %v", tableCount, err)
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name IN ('periods','divisions','users','refresh_sessions','activity_logs','article_categories','articles','article_category_map','gallery_categories','gallery_items','announcements','organization_members','aspirations','registration_forms','registration_fields','registration_field_options','registration_submissions','registration_submission_answers','documents')`, dsn.DBName).Scan(&tableCount); err != nil || tableCount != 19 {
+		t.Fatalf("phase 8 schema table count = %d, err = %v", tableCount, err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback documents migration: %v", err)
+	}
+	var documentTables int
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=? AND table_name='documents'`, dsn.DBName).Scan(&documentTables); err != nil || documentTables != 0 {
+		t.Fatalf("documents table remains after migration DOWN: count=%d err=%v", documentTables, err)
 	}
 	if err := migrate.Down(ctx, db); err != nil {
 		t.Fatalf("rollback registration migration: %v", err)
@@ -168,6 +175,7 @@ func TestDatabaseIntegration(t *testing.T) {
 		BcryptCost: 4, LoginLimitCount: 100, LoginLimitWindow: time.Minute,
 		AspirationLimitCount: 100, AspirationLimitWindow: 15 * time.Minute,
 		RegistrationLimitCount: 100, RegistrationLimitWindow: 30 * time.Minute,
+		DocumentStoragePath: filepath.Join(t.TempDir(), "private-document-root"), DocumentMaxUploadBytes: 10 << 20,
 	}
 	engine, err := NewWithDependencies(logger, cfg, db)
 	if err != nil {
@@ -549,6 +557,7 @@ func TestDatabaseIntegration(t *testing.T) {
 	}
 	runAspirationIntegration(t, ctx, db, engine, cfg, logger, loggerBuffer, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken)
 	runRegistrationIntegration(t, ctx, db, engine, loggerBuffer, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken, divisionID, divisionBID)
+	runDocumentIntegration(t, ctx, db, engine, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken, archivedPeriodID, divisionID, divisionBID, cfg.DocumentStoragePath, loggerBuffer)
 }
 
 func postJSON(engine http.Handler, path, body string, cookies []*http.Cookie) *httptest.ResponseRecorder {

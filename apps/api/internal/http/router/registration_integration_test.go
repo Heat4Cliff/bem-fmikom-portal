@@ -10,6 +10,7 @@ import (
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
+	"path/filepath"
 	"strings"
 	"sync"
 	"testing"
@@ -324,7 +325,7 @@ func runRegistrationIntegration(t *testing.T, ctx context.Context, db *sql.DB, e
 	}
 
 	// Repeated unique attempts are bounded independently from login and aspirations.
-	limitedCfg := config.Config{AppEnv: "test", FrontendOrigins: []string{"http://localhost:3000"}, JWTSecret: bytes.Repeat([]byte("r"), 32), AccessTokenTTL: time.Minute * 15, RefreshTokenTTL: time.Hour, Cookie: config.Cookie{Name: "bem_refresh", SameSite: "lax", Path: "/api/v1/auth"}, BcryptCost: 4, LoginLimitCount: 100, LoginLimitWindow: time.Minute, AspirationLimitCount: 100, AspirationLimitWindow: time.Minute, RegistrationLimitCount: 1, RegistrationLimitWindow: time.Minute * 30}
+	limitedCfg := config.Config{AppEnv: "test", FrontendOrigins: []string{"http://localhost:3000"}, JWTSecret: bytes.Repeat([]byte("r"), 32), AccessTokenTTL: time.Minute * 15, RefreshTokenTTL: time.Hour, Cookie: config.Cookie{Name: "bem_refresh", SameSite: "lax", Path: "/api/v1/auth"}, BcryptCost: 4, LoginLimitCount: 100, LoginLimitWindow: time.Minute, AspirationLimitCount: 100, AspirationLimitWindow: time.Minute, RegistrationLimitCount: 1, RegistrationLimitWindow: time.Minute * 30, DocumentStoragePath: filepath.Join(t.TempDir(), "private-documents"), DocumentMaxUploadBytes: 10 << 20}
 	limitedEngine, err := NewWithDependencies(slog.New(slog.NewJSONHandler(io.Discard, nil)), limitedCfg, db)
 	if err != nil {
 		t.Fatal(err)

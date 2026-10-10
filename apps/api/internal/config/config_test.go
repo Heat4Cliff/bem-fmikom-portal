@@ -1,6 +1,7 @@
 package config
 
 import (
+	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -30,6 +31,9 @@ func TestLoadUsesSecureDevelopmentDefaults(t *testing.T) {
 	if got.BcryptCost != 12 || len(got.FrontendOrigins) != 1 || got.AspirationLimitCount != 5 || got.AspirationLimitWindow.String() != "15m0s" || got.RegistrationLimitCount != 5 || got.RegistrationLimitWindow.String() != "30m0s" {
 		t.Fatalf("unexpected auth defaults: %+v", got)
 	}
+	if got.DocumentStoragePath != "..\\..\\var\\private\\documents" || got.DocumentMaxUploadBytes != 10<<20 {
+		t.Fatalf("unexpected document defaults: %+v", got)
+	}
 }
 
 func TestLoadRejectsInvalidSecuritySettings(t *testing.T) {
@@ -43,6 +47,8 @@ func TestLoadRejectsInvalidSecuritySettings(t *testing.T) {
 		{"none without secure", map[string]string{"AUTH_REFRESH_COOKIE_SAMESITE": "none"}},
 		{"invalid same site", map[string]string{"AUTH_REFRESH_COOKIE_SAMESITE": "invalid"}},
 		{"invalid duration", map[string]string{"AUTH_ACCESS_TOKEN_TTL": "soon"}},
+		{"invalid document limit", map[string]string{"DOCUMENT_MAX_UPLOAD_BYTES": "0"}},
+		{"production relative document path", map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "DOCUMENT_STORAGE_PATH": "var/private/documents"}},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
@@ -54,7 +60,7 @@ func TestLoadRejectsInvalidSecuritySettings(t *testing.T) {
 }
 
 func TestLoadProductionSecureCookieDefaultAndMultipleOrigins(t *testing.T) {
-	got, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "https://portal.example, https://admin.example"}))
+	got, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "https://portal.example, https://admin.example", "DOCUMENT_STORAGE_PATH": filepath.Join(t.TempDir(), "private-documents")}))
 	if err != nil {
 		t.Fatalf("LoadFrom() error = %v", err)
 	}

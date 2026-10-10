@@ -41,6 +41,10 @@ Sanitize stored/rendered rich text. Do not trust admin editor HTML blindly.
 - Private/non-public storage preferred.
 - Download only through authorized endpoint and stream response.
 - Log UPLOAD/DOWNLOAD/DELETE.
+- Default to 10 MiB, configurable with `DOCUMENT_MAX_UPLOAD_BYTES`; production `DOCUMENT_STORAGE_PATH` must be absolute and outside public/static web roots.
+- A KEPALA_BIDANG can only upload/list/download/manage the current database-assigned division. SUPER_ADMIN/BPH may access across divisions. Scoped detail/download denial may be concealed with 404.
+- Stream to private staging, generate opaque storage keys, compute SHA-256, and verify extension plus declared MIME and file signature/container. Never use the original filename as a path.
+- Download with attachment disposition, `Cache-Control: private, no-store`, and `X-Content-Type-Options: nosniff`.
 
 ## Secrets & logging
 - `.env` ignored; `.env.example` contains placeholders only.

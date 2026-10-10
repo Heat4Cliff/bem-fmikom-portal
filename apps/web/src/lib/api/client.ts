@@ -33,6 +33,31 @@ export const onAuthExpired = (listener: (() => void) | null) => {
 
 const baseURL = (process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080/api/v1").replace(/\/$/, "");
 
+export async function apiDownload(path: string): Promise<{ blob: Blob; filename: string }> {
+  const perform = async (retried: boolean): Promise<Response> => {
+    const token = getMemoryAccessToken();
+    const response = await fetch(`${baseURL}${path}`, {
+      credentials: "include",
+      headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+    });
+    if (response.status === 401 && token && !retried) {
+      await refreshAccessToken();
+      return perform(true);
+    }
+    return response;
+  };
+  const response = await perform(false);
+  if (!response.ok) {
+    const envelope = await readEnvelope<never>(response);
+    throw new ApiError(envelope.message || "Unduhan gagal", response.status, envelope.code);
+  }
+  const disposition = response.headers.get("Content-Disposition") ?? "";
+  const encoded = disposition.match(/filename\*=UTF-8''([^;]+)/i)?.[1];
+  const plain = disposition.match(/filename="?([^";]+)"?/i)?.[1];
+  const filename = encoded ? decodeURIComponent(encoded) : (plain ?? "dokumen");
+  return { blob: await response.blob(), filename };
+}
+
 async function readEnvelope<T>(response: Response): Promise<Envelope<T>> {
   if (response.status === 204) {
     return { success: true, message: "", data: null as T };

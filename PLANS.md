@@ -68,12 +68,12 @@
 - [x] End-to-end integration tests.
 
 ## Phase 8 — Private Document Archive
-- [ ] Private file storage abstraction.
-- [ ] Upload allow-list + size limit + safe filenames.
-- [ ] Metadata CRUD.
-- [ ] Authorized streaming download endpoint.
-- [ ] UPLOAD/DOWNLOAD/DELETE activity logs.
-- [ ] IDOR/path traversal/security tests.
+- [x] Private file storage abstraction.
+- [x] Upload allow-list + size limit + safe filenames.
+- [x] Metadata CRUD.
+- [x] Authorized streaming download endpoint.
+- [x] UPLOAD/DOWNLOAD/DELETE activity logs.
+- [x] IDOR/path traversal/security tests.
 
 ## Phase 9 — Settings, Users, Activity Log & Dashboard Metrics
 - [ ] Landing settings admin editing/preview.

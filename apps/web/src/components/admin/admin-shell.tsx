@@ -53,7 +53,7 @@ const navGroups = [
     items: [
       { label: "Pendaftaran", href: "/admin/pendaftaran", icon: FileText },
       { label: "Aspirasi", href: "/admin/aspirasi", icon: MessageSquareText },
-      { label: "Arsip Dokumen", href: "/admin/dokumen", icon: FolderOpen },
+      { label: "Arsip Dokumen", href: "/admin/arsip-dokumen", icon: FolderOpen },
     ],
   },
   {

@@ -101,6 +101,17 @@ No new Phase 5 product blocker was found for implementation. The exact-size mobi
 | Mobile-only registration administration mock; no separate Stitch detail-submission screen | `/admin/pendaftaran` desktop uses existing dense admin table patterns and mobile uses cards. Submission detail uses the design system and data-pendaftar visual language; no screen-specific pixel-parity claim is possible without a dedicated Stitch capture. |
 | Public screenshots include contact/WhatsApp and file-upload examples | Those are visual mock elements, not authorization for notification/file workflows. Build matching hierarchy and responsive layout while keeping unsupported controls absent. |
 
-No Phase 8 archive, Phase 9 settings/users/activity dashboard, applicant file upload, selection workflow, or notification feature was started.
+Phase 8 implementation is tracked in `PHASE_8_REPORT.md`. Phase 9 settings/users/activity dashboard, applicant file upload, selection workflow, and notification features remain outside this phase.
+
+## Phase 8 disposition
+
+| Contract/evidence item | Phase 8 outcome |
+|---|---|
+| PRD optional `division_id` vs. direct Phase 8 required division scope | Narrowed to required division ownership with a `(division_id, period_id)` foreign key. This is documented as a Phase 8-specific decision; a future product request for organization-wide documents would require a nullable ownership model and UI. |
+| PRD/Security 10 MB vs. conditional 25 MiB fallback | 10 MiB configurable maximum is used because both source contracts already define 10 MB. |
+| Delete atomicity across SQL and local filesystem | No distributed transaction exists. `delete_pending` and idempotent physical deletion support retry/repair; production restore must treat the DB and private file directory as one backup set. |
+| Antivirus/content disarm | Not provided by this phase or existing contracts. Extension/MIME/signature/container checks reject malformed and trivially spoofed formats, but do not assert malware safety. Add approved scanning before production if organizational policy requires it. |
+| Edit/delete-specific Stitch screens | No separate archive edit/delete references were found. Existing archive screens remain targets; those actions use reusable accessible dialogs and remain subject to manual visual sign-off. |
+| Full exact viewport visual sign-off | Browser/viewport evidence and limitations are recorded in `PHASE_8_REPORT.md`; do not claim pixel parity for unreviewed widths/screens. |
 
 Phase 7 implementation, database/security/export gates, browser workflows, and representative 390×844 public responsive review are complete. Final side-by-side visual sign-off for every relevant Stitch screen and the 360/412 breakpoints remains a manual release review item; see `PHASE_7_REPORT.md`.

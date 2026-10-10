@@ -8,6 +8,7 @@ import (
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/http/handler"
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/http/middleware"
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/service"
+	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/storage"
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,6 +29,12 @@ func NewWithDependencies(logger *slog.Logger, cfg config.Config, db *sql.DB) (*g
 	aspirations.Register(engine, authService, cfg.FrontendOrigins, middleware.NewAspirationLimiter(cfg.AspirationLimitCount, cfg.AspirationLimitWindow))
 	registrations := handler.NewRegistrations(service.NewRegistrationService(db))
 	registrations.Register(engine, authService, cfg.FrontendOrigins, middleware.NewRegistrationLimiter(cfg.RegistrationLimitCount, cfg.RegistrationLimitWindow))
+	documentStorage, err := storage.NewLocalPrivateDocuments(cfg.DocumentStoragePath)
+	if err != nil {
+		return nil, err
+	}
+	documents := service.NewDocumentService(db, documentStorage, cfg.DocumentMaxUploadBytes)
+	handler.NewDocuments(documents, documentStorage, cfg.DocumentMaxUploadBytes).Register(engine, authService)
 	limiter := middleware.NewLoginLimiter(cfg.LoginLimitCount, cfg.LoginLimitWindow)
 	group := engine.Group("/api/v1/auth")
 	group.Use(middleware.RequireTrustedOrigin(cfg.FrontendOrigins))

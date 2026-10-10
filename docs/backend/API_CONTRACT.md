@@ -142,6 +142,8 @@ Prefix: `/api/v1`
 - `DELETE /admin/documents/{id}`
 - `GET /admin/documents/{id}/download`
 
+Document list filters: `page`, `limit`, `search`, `category`, `period_id`, `division_id`, `file_type`, `date_from`, and `date_to`. Upload fields are `name`, `category` (`SK`, `PROPOSAL`, `LPJ`, `OTHER`), `period_id`, `division_id`, and one `file` part. Metadata PATCH accepts `name` and `category`. Allowed formats are PDF/DOC/DOCX/XLS/XLSX; max upload defaults to 10 MiB and is configurable. File bytes are private and accessible only by the authenticated download route. The Phase 8 UI route is `/admin/arsip-dokumen`.
+
 ## Landing settings
 - `GET /admin/settings`
 - `PATCH /admin/settings`

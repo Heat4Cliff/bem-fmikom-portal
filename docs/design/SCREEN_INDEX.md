@@ -35,8 +35,8 @@ Base path: `design_reference/stitch_bem_fmikom_unugha_portal/<folder>/`
 | Admin | `/admin/periode` | `periode_kepengurusan_admin_bem` | Period management |
 | Admin | `/admin/galeri` | `manajemen_galeri_admin_bem` | Gallery management |
 | Admin | `/admin/pengumuman` | `manajemen_pengumuman_admin_bem` | Announcement management |
-| Admin | `/admin/dokumen` | `arsip_dokumen_internal_admin_bem` | Document archive |
-| Admin | `/admin/dokumen (mobile)` | `arsip_dokumen_mobile_admin_bem` | Document archive mobile |
+| Admin | `/admin/arsip-dokumen` | `arsip_dokumen_internal_admin_bem` | Private document archive |
+| Admin | `/admin/arsip-dokumen (mobile)` | `arsip_dokumen_mobile_admin_bem` | Private document archive mobile |
 | Admin | `/admin/settings` | `pengaturan_landing_page_admin_bem` | Landing settings |
 | Admin | `/admin/users` | `manajemen_pengguna_admin_bem` | User management |
 | Admin | `/admin/activity-logs` | `activity_log_audit_trail_admin_bem` | Activity log |
