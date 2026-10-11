@@ -180,6 +180,7 @@ func TestDatabaseIntegration(t *testing.T) {
 		AccessTokenTTL: 15 * time.Minute, RefreshTokenTTL: 7 * 24 * time.Hour,
 		Cookie:     config.Cookie{Name: "bem_refresh", SameSite: "lax", Path: "/api/v1/auth"},
 		BcryptCost: 4, LoginLimitCount: 100, LoginLimitWindow: time.Minute,
+		RefreshLimitCount: 100, RefreshLimitWindow: time.Minute,
 		AspirationLimitCount: 100, AspirationLimitWindow: 15 * time.Minute,
 		RegistrationLimitCount: 100, RegistrationLimitWindow: 30 * time.Minute,
 		DocumentStoragePath: filepath.Join(t.TempDir(), "private-document-root"), DocumentMaxUploadBytes: 10 << 20,

@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"net/netip"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -28,6 +29,7 @@ type Config struct {
 	DBMaxOpenConns          int
 	DBMaxIdleConns          int
 	DBConnMaxLife           time.Duration
+	DBConnMaxIdleTime       time.Duration
 	JWTSecret               []byte
 	AccessTokenTTL          time.Duration
 	RefreshTokenTTL         time.Duration
@@ -35,6 +37,8 @@ type Config struct {
 	BcryptCost              int
 	LoginLimitCount         int
 	LoginLimitWindow        time.Duration
+	RefreshLimitCount       int
+	RefreshLimitWindow      time.Duration
 	AspirationLimitCount    int
 	AspirationLimitWindow   time.Duration
 	RegistrationLimitCount  int
@@ -48,6 +52,7 @@ type DatabaseSettings struct {
 	MaxOpenConns    int
 	MaxIdleConns    int
 	ConnMaxLifetime time.Duration
+	ConnMaxIdleTime time.Duration
 }
 
 func Load() (Config, error) { return LoadFrom(os.Getenv) }
@@ -74,7 +79,11 @@ func LoadDatabaseSettingsFrom(lookup func(string) string) (DatabaseSettings, err
 	if err != nil {
 		return DatabaseSettings{}, err
 	}
-	return DatabaseSettings{URL: url, MaxOpenConns: open, MaxIdleConns: idle, ConnMaxLifetime: lifetime}, nil
+	idleTime, err := parseDurationEnv(lookup, "DB_CONN_MAX_IDLE_TIME", "1m", time.Second)
+	if err != nil {
+		return DatabaseSettings{}, err
+	}
+	return DatabaseSettings{URL: url, MaxOpenConns: open, MaxIdleConns: idle, ConnMaxLifetime: lifetime, ConnMaxIdleTime: idleTime}, nil
 }
 
 func LoadFrom(lookup func(string) string) (Config, error) {
@@ -102,6 +111,9 @@ func LoadFrom(lookup func(string) string) (Config, error) {
 	}
 
 	env := get("APP_ENV", "development")
+	if env != "development" && env != "test" && env != "production" {
+		return Config{}, fmt.Errorf("APP_ENV must be development, test, or production")
+	}
 	port, err := parseInt("APP_PORT", 8080, 1, 65535)
 	if err != nil {
 		return Config{}, err
@@ -111,11 +123,33 @@ func LoadFrom(lookup func(string) string) (Config, error) {
 	if err != nil {
 		return Config{}, err
 	}
+	if env == "production" {
+		if strings.TrimSpace(lookup("FRONTEND_ORIGINS")) == "" {
+			return Config{}, fmt.Errorf("FRONTEND_ORIGINS must be explicitly configured in production")
+		}
+		for _, origin := range origins {
+			parsed, _ := url.Parse(origin)
+			host := strings.TrimSuffix(strings.ToLower(parsed.Hostname()), ".")
+			if parsed.Scheme != "https" || host == "localhost" || strings.HasSuffix(host, ".localhost") {
+				return Config{}, fmt.Errorf("production FRONTEND_ORIGINS must use trusted HTTPS origins")
+			}
+			if address, parseErr := netip.ParseAddr(host); parseErr == nil && (address.IsLoopback() || address.IsPrivate() || address.IsLinkLocalUnicast() || address.IsUnspecified()) {
+				return Config{}, fmt.Errorf("production FRONTEND_ORIGINS must not target local or private addresses")
+			}
+		}
+	}
 	dbSettings, err := LoadDatabaseSettingsFrom(lookup)
 	if err != nil {
 		return Config{}, err
 	}
 	databaseURL := dbSettings.URL
+	dbDSN, err := mysql.ParseDSN(databaseURL)
+	if err != nil {
+		return Config{}, fmt.Errorf("DATABASE_URL must be a valid MySQL driver DSN")
+	}
+	if env == "production" && strings.EqualFold(dbDSN.User, "root") {
+		return Config{}, fmt.Errorf("DATABASE_URL must use a dedicated non-root application account in production")
+	}
 	secret := []byte(lookup("JWT_SECRET"))
 	if len(secret) < 32 {
 		return Config{}, fmt.Errorf("JWT_SECRET must contain at least 32 bytes")
@@ -136,12 +170,20 @@ func LoadFrom(lookup func(string) string) (Config, error) {
 	if err != nil {
 		return Config{}, err
 	}
-	maxOpen, maxIdle, connectionLifetime := dbSettings.MaxOpenConns, dbSettings.MaxIdleConns, dbSettings.ConnMaxLifetime
+	maxOpen, maxIdle, connectionLifetime, connectionIdleTime := dbSettings.MaxOpenConns, dbSettings.MaxIdleConns, dbSettings.ConnMaxLifetime, dbSettings.ConnMaxIdleTime
 	loginCount, err := parseInt("AUTH_LOGIN_RATE_LIMIT", 5, 1, 10000)
 	if err != nil {
 		return Config{}, err
 	}
 	loginWindow, err := parseDuration("AUTH_LOGIN_RATE_WINDOW", "1m", time.Second)
+	if err != nil {
+		return Config{}, err
+	}
+	refreshCount, err := parseInt("AUTH_REFRESH_RATE_LIMIT", 30, 1, 10000)
+	if err != nil {
+		return Config{}, err
+	}
+	refreshWindow, err := parseDuration("AUTH_REFRESH_RATE_WINDOW", "1m", time.Second)
 	if err != nil {
 		return Config{}, err
 	}
@@ -178,6 +220,9 @@ func LoadFrom(lookup func(string) string) (Config, error) {
 	if err != nil {
 		return Config{}, fmt.Errorf("AUTH_REFRESH_COOKIE_SECURE must be true or false")
 	}
+	if env == "production" && !secure {
+		return Config{}, fmt.Errorf("AUTH_REFRESH_COOKIE_SECURE must be true in production")
+	}
 	sameSite := strings.ToLower(get("AUTH_REFRESH_COOKIE_SAMESITE", "lax"))
 	if sameSite != "lax" && sameSite != "strict" && sameSite != "none" {
 		return Config{}, fmt.Errorf("AUTH_REFRESH_COOKIE_SAMESITE must be lax, strict, or none")
@@ -196,10 +241,11 @@ func LoadFrom(lookup func(string) string) (Config, error) {
 
 	return Config{
 		AppEnv: env, AppPort: port, FrontendOrigins: origins, DatabaseURL: databaseURL,
-		DBMaxOpenConns: maxOpen, DBMaxIdleConns: maxIdle, DBConnMaxLife: connectionLifetime,
+		DBMaxOpenConns: maxOpen, DBMaxIdleConns: maxIdle, DBConnMaxLife: connectionLifetime, DBConnMaxIdleTime: connectionIdleTime,
 		JWTSecret: secret, AccessTokenTTL: accessTTL, RefreshTokenTTL: refreshTTL,
 		Cookie:     Cookie{Name: cookieName, Secure: secure, SameSite: sameSite, Domain: cookieDomain, Path: "/api/v1/auth"},
 		BcryptCost: bcryptCost, LoginLimitCount: loginCount, LoginLimitWindow: loginWindow,
+		RefreshLimitCount: refreshCount, RefreshLimitWindow: refreshWindow,
 		AspirationLimitCount: aspirationCount, AspirationLimitWindow: aspirationWindow,
 		RegistrationLimitCount: registrationCount, RegistrationLimitWindow: registrationWindow,
 		DocumentStoragePath: documentStoragePath, DocumentMaxUploadBytes: int64(documentMaxUploadBytes),

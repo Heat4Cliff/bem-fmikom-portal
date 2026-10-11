@@ -53,8 +53,9 @@ func (service *TokenService) ParseAccess(raw string, now time.Time) (int64, erro
 			return nil, fmt.Errorf("unexpected signing method")
 		}
 		return service.secret, nil
-	}, jwt.WithIssuer(service.issuer), jwt.WithTimeFunc(func() time.Time { return now }))
-	if err != nil || token == nil || !token.Valid {
+	}, jwt.WithIssuer(service.issuer), jwt.WithTimeFunc(func() time.Time { return now }),
+		jwt.WithValidMethods([]string{jwt.SigningMethodHS256.Alg()}), jwt.WithExpirationRequired(), jwt.WithIssuedAt())
+	if err != nil || token == nil || !token.Valid || claims.Issuer != service.issuer || claims.IssuedAt == nil || claims.ExpiresAt == nil {
 		return 0, fmt.Errorf("invalid access token")
 	}
 	userID, err := strconv.ParseInt(claims.Subject, 10, 64)
@@ -70,6 +71,14 @@ func NewRefreshToken() (string, error) {
 		return "", fmt.Errorf("generate refresh token")
 	}
 	return base64.RawURLEncoding.EncodeToString(token[:]), nil
+}
+
+func ValidateRefreshToken(raw string) bool {
+	if len(raw) != 43 {
+		return false
+	}
+	decoded, err := base64.RawURLEncoding.Strict().DecodeString(raw)
+	return err == nil && len(decoded) == 32
 }
 
 func HashRefreshToken(raw string) string {

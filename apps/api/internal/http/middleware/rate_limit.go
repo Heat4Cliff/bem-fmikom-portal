@@ -20,6 +20,7 @@ type LoginLimiter struct {
 	limit   int
 	window  time.Duration
 	clock   func() time.Time
+	message string
 }
 
 // AspirationLimiter protects anonymous public submission independently from login.
@@ -41,7 +42,11 @@ type RegistrationLimiter struct {
 }
 
 func NewLoginLimiter(limit int, window time.Duration) *LoginLimiter {
-	return &LoginLimiter{entries: make(map[string]attemptWindow), limit: limit, window: window, clock: time.Now}
+	return &LoginLimiter{entries: make(map[string]attemptWindow), limit: limit, window: window, clock: time.Now, message: "Terlalu banyak percobaan login"}
+}
+
+func NewAuthRefreshLimiter(limit int, window time.Duration) *LoginLimiter {
+	return &LoginLimiter{entries: make(map[string]attemptWindow), limit: limit, window: window, clock: time.Now, message: "Terlalu banyak percobaan refresh"}
 }
 
 func NewAspirationLimiter(limit int, window time.Duration) *AspirationLimiter {
@@ -60,6 +65,12 @@ func (limiter *RegistrationLimiter) Middleware() gin.HandlerFunc {
 		entry, exists := limiter.entries[key]
 		if !exists || !now.Before(entry.resetAt) {
 			entry = attemptWindow{resetAt: now.Add(limiter.window)}
+		}
+		if !exists && !makeRoom(limiter.entries, now) {
+			limiter.mu.Unlock()
+			c.Header("Retry-After", strconv.Itoa(max(1, int(limiter.window.Seconds()))))
+			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{"success": false, "message": "Batas kapasitas rate limiter tercapai", "code": "RATE_LIMITED"})
+			return
 		}
 		if entry.count >= limiter.limit {
 			retryAfter := max(1, int(entry.resetAt.Sub(now).Seconds()))
@@ -91,6 +102,12 @@ func (limiter *AspirationLimiter) Middleware() gin.HandlerFunc {
 		if !exists || !now.Before(entry.resetAt) {
 			entry = attemptWindow{resetAt: now.Add(limiter.window)}
 		}
+		if !exists && !makeRoom(limiter.entries, now) {
+			limiter.mu.Unlock()
+			c.Header("Retry-After", strconv.Itoa(max(1, int(limiter.window.Seconds()))))
+			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{"success": false, "message": "Batas kapasitas rate limiter tercapai", "code": "RATE_LIMITED"})
+			return
+		}
 		if entry.count >= limiter.limit {
 			retryAfter := max(1, int(entry.resetAt.Sub(now).Seconds()))
 			limiter.mu.Unlock()
@@ -121,23 +138,34 @@ func (limiter *LoginLimiter) Middleware() gin.HandlerFunc {
 		if !exists || !now.Before(entry.resetAt) {
 			entry = attemptWindow{resetAt: now.Add(limiter.window)}
 		}
+		if !exists && !makeRoom(limiter.entries, now) {
+			limiter.mu.Unlock()
+			c.Header("Retry-After", strconv.Itoa(max(1, int(limiter.window.Seconds()))))
+			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{"success": false, "message": "Batas kapasitas rate limiter tercapai", "code": "RATE_LIMITED"})
+			return
+		}
 		if entry.count >= limiter.limit {
 			retryAfter := max(1, int(entry.resetAt.Sub(now).Seconds()))
 			limiter.mu.Unlock()
 			c.Header("Retry-After", strconv.Itoa(retryAfter))
-			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{"success": false, "message": "Terlalu banyak percobaan login", "code": "RATE_LIMITED"})
+			c.AbortWithStatusJSON(http.StatusTooManyRequests, gin.H{"success": false, "message": limiter.message, "code": "RATE_LIMITED"})
 			return
 		}
 		entry.count++
 		limiter.entries[key] = entry
-		if len(limiter.entries) > 4096 {
-			for address, window := range limiter.entries {
-				if !now.Before(window.resetAt) {
-					delete(limiter.entries, address)
-				}
-			}
-		}
 		limiter.mu.Unlock()
 		c.Next()
 	}
+}
+
+func makeRoom(entries map[string]attemptWindow, now time.Time) bool {
+	if len(entries) < 4096 {
+		return true
+	}
+	for address, window := range entries {
+		if !now.Before(window.resetAt) {
+			delete(entries, address)
+		}
+	}
+	return len(entries) < 4096
 }

@@ -11,7 +11,7 @@ import (
 )
 
 func Open(ctx context.Context, cfg config.Config) (*sql.DB, error) {
-	return OpenWithSettings(ctx, config.DatabaseSettings{URL: cfg.DatabaseURL, MaxOpenConns: cfg.DBMaxOpenConns, MaxIdleConns: cfg.DBMaxIdleConns, ConnMaxLifetime: cfg.DBConnMaxLife})
+	return OpenWithSettings(ctx, config.DatabaseSettings{URL: cfg.DatabaseURL, MaxOpenConns: cfg.DBMaxOpenConns, MaxIdleConns: cfg.DBMaxIdleConns, ConnMaxLifetime: cfg.DBConnMaxLife, ConnMaxIdleTime: cfg.DBConnMaxIdleTime})
 }
 
 func OpenWithSettings(ctx context.Context, settings config.DatabaseSettings) (*sql.DB, error) {
@@ -33,6 +33,7 @@ func OpenWithSettings(ctx context.Context, settings config.DatabaseSettings) (*s
 	db.SetMaxOpenConns(settings.MaxOpenConns)
 	db.SetMaxIdleConns(settings.MaxIdleConns)
 	db.SetConnMaxLifetime(settings.ConnMaxLifetime)
+	db.SetConnMaxIdleTime(settings.ConnMaxIdleTime)
 	if err := db.PingContext(ctx); err != nil {
 		_ = db.Close()
 		return nil, fmt.Errorf("connect to MySQL database: %w", err)

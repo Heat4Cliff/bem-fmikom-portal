@@ -170,3 +170,14 @@ Public announcement archive visibility for scheduled/expired entries still needs
 - `/admin/users` provides SUPER_ADMIN-only user management without hard delete, guarded status changes, and password reset. The API validates active division assignment for KEPALA_BIDANG and revokes refresh sessions on deactivation/reset.
 - `/admin/activity-logs` is SUPER_ADMIN-only and read-only, with list/detail, filters, recursive sensitive-key redaction, and no IP/User-Agent output.
 - Reversible migration `00007_system_management.sql` adds landing content storage. `/admin` loads scoped operational aggregates from `/api/v1/admin/dashboard`; visitor/pageview collection is deferred post-MVP and no tracking data is collected. See `docs/codex/PHASE_9_REPORT.md`.
+
+## Production security notes (Phase 10)
+
+- Serve the frontend and API over HTTPS. Configure `APP_ENV=production`, explicit `FRONTEND_ORIGINS` using trusted HTTPS origins, and a unique random `JWT_SECRET` of at least 32 bytes. Production startup rejects placeholder/low-diversity secrets, local or private origins, and insecure refresh cookies.
+- Use the Secure HttpOnly refresh cookie; `SameSite=None` requires Secure. Set cookie domain only for the intended application domain.
+- Connect the API with a dedicated least-privilege database account; do not use root. Restrict database network access and keep credentials in the deployment secret facility.
+- Set `DOCUMENT_STORAGE_PATH` to an absolute private path outside the web root. Back up document objects together with their database metadata and periodically test restore.
+- Login, refresh, registration, and aspiration limits are process-local. Add an edge/shared rate limit before horizontally scaling the API.
+- Uploaded files receive type/signature, size, path, and archive checks, but there is no antivirus or CDR scanner. Do not treat an accepted upload as malware-free.
+- Protect API/authentication logs and define access and retention: operational auth/security events may include source IP. The Activity Log UI/API intentionally omits raw IP and User-Agent.
+- Review dependency advisories and rerun `pnpm api:integration` and `pnpm verify` for security-sensitive changes. See `docs/security/SECURITY_BASELINE.md`, `docs/security/SECURITY_CHECKLIST.md`, and `docs/codex/PHASE_10_REPORT.md`.

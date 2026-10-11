@@ -30,6 +30,9 @@ func HashPassword(password string, cost int) (string, error) {
 }
 
 func VerifyPassword(hash, password string) bool {
+	if len(password) > 72 {
+		return false
+	}
 	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(password)) == nil
 }
 

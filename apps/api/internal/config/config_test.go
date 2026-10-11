@@ -28,7 +28,7 @@ func TestLoadUsesSecureDevelopmentDefaults(t *testing.T) {
 	if got.Cookie.Secure || got.Cookie.SameSite != "lax" || got.Cookie.Path != "/api/v1/auth" {
 		t.Fatalf("unexpected development cookie defaults: %+v", got.Cookie)
 	}
-	if got.BcryptCost != 12 || len(got.FrontendOrigins) != 1 || got.AspirationLimitCount != 5 || got.AspirationLimitWindow.String() != "15m0s" || got.RegistrationLimitCount != 5 || got.RegistrationLimitWindow.String() != "30m0s" {
+	if got.BcryptCost != 12 || len(got.FrontendOrigins) != 1 || got.LoginLimitCount != 5 || got.RefreshLimitCount != 30 || got.RefreshLimitWindow.String() != "1m0s" || got.AspirationLimitCount != 5 || got.AspirationLimitWindow.String() != "15m0s" || got.RegistrationLimitCount != 5 || got.RegistrationLimitWindow.String() != "30m0s" {
 		t.Fatalf("unexpected auth defaults: %+v", got)
 	}
 	if got.DocumentStoragePath != "..\\..\\var\\private\\documents" || got.DocumentMaxUploadBytes != 10<<20 {
@@ -49,10 +49,25 @@ func TestLoadRejectsInvalidSecuritySettings(t *testing.T) {
 		{"invalid duration", map[string]string{"AUTH_ACCESS_TOKEN_TTL": "soon"}},
 		{"invalid document limit", map[string]string{"DOCUMENT_MAX_UPLOAD_BYTES": "0"}},
 		{"production relative document path", map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "DOCUMENT_STORAGE_PATH": "var/private/documents"}},
+		{"production insecure cookie override", map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "https://portal.example", "AUTH_REFRESH_COOKIE_SECURE": "false"}},
+		{"production local origin", map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "https://localhost:3000"}},
+		{"production non-https origin", map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "http://portal.example"}},
+		{"production default origin rejected", map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef"}},
+		{"production root database rejected", map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "DATABASE_URL": "root:test@tcp(127.0.0.1:3306)/bem_fmikom_test", "FRONTEND_ORIGINS": "https://portal.example"}},
+		{"unknown environment rejected", map[string]string{"APP_ENV": "prodution"}},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			if _, err := LoadFrom(testEnv(test.overrides)); err == nil {
+			overrides := test.overrides
+			if overrides["APP_ENV"] == "production" && test.name != "production relative document path" {
+				if overrides == nil {
+					overrides = make(map[string]string)
+				}
+				if overrides["DOCUMENT_STORAGE_PATH"] == "" {
+					overrides["DOCUMENT_STORAGE_PATH"] = filepath.Join(t.TempDir(), "private-documents")
+				}
+			}
+			if _, err := LoadFrom(testEnv(overrides)); err == nil {
 				t.Fatal("LoadFrom() expected validation error")
 			}
 		})
@@ -66,6 +81,13 @@ func TestLoadProductionSecureCookieDefaultAndMultipleOrigins(t *testing.T) {
 	}
 	if !got.Cookie.Secure || len(got.FrontendOrigins) != 2 {
 		t.Fatalf("unexpected production settings: %+v", got)
+	}
+}
+
+func TestLoadProductionRequiresExplicitHTTPSOriginsAndNonRootDatabase(t *testing.T) {
+	_, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "https://portal.example", "DATABASE_URL": "bem_app:password@tcp(db.example:3306)/bem_fmikom", "DOCUMENT_STORAGE_PATH": filepath.Join(t.TempDir(), "private-documents")}))
+	if err != nil {
+		t.Fatalf("LoadFrom() error = %v", err)
 	}
 }
 

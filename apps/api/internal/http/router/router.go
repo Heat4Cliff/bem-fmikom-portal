@@ -38,10 +38,11 @@ func NewWithDependencies(logger *slog.Logger, cfg config.Config, db *sql.DB) (*g
 	systemManagement := service.NewSystemManagementService(db, cfg.BcryptCost)
 	handler.NewSystemManagementWithDashboard(systemManagement, service.NewDashboardService(db)).Register(engine, authService)
 	limiter := middleware.NewLoginLimiter(cfg.LoginLimitCount, cfg.LoginLimitWindow)
+	refreshLimiter := middleware.NewAuthRefreshLimiter(cfg.RefreshLimitCount, cfg.RefreshLimitWindow)
 	group := engine.Group("/api/v1/auth")
 	group.Use(middleware.RequireTrustedOrigin(cfg.FrontendOrigins))
 	group.POST("/login", limiter.Middleware(), auth.Login)
-	group.POST("/refresh", auth.Refresh)
+	group.POST("/refresh", refreshLimiter.Middleware(), auth.Refresh)
 	group.POST("/logout", auth.Logout)
 	group.GET("/me", middleware.RequireAuth(authService), auth.Me)
 	return engine, nil
@@ -57,6 +58,8 @@ func newEngine(logger *slog.Logger, origins []string) *gin.Engine {
 	engine.Use(middleware.Recovery(logger))
 	engine.Use(middleware.RequestLogger(logger))
 	engine.Use(middleware.CORS(origins))
+	engine.Use(middleware.SecurityHeaders())
+	engine.Use(middleware.RequestGuards())
 	engine.GET("/healthz", handler.Healthz)
 	engine.NoRoute(func(c *gin.Context) {
 		c.JSON(404, handler.FailureCode("NOT_FOUND", "Resource not found", nil))

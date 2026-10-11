@@ -83,13 +83,13 @@
 - [x] Visitor/pageview analytics formally deferred post-MVP; no tracking mechanism or visitor data is part of Phase 9.
 
 ## Phase 10 — Hardening
-- [ ] Public write rate limiting.
-- [ ] CORS, secure cookies, headers, sanitization.
-- [ ] Input/file validation review.
-- [ ] Authorization matrix integration suite.
-- [ ] Database indexes/constraints audit.
+- [x] Public write rate limiting (login, refresh, aspirations, registrations; bounded per-process key maps).
+- [x] CORS, secure cookies, headers, sanitization (including nonce CSP and production config policy).
+- [x] Input/file validation review (bounded JSON/query/pagination, upload/storage/OOXML review).
+- [x] Authorization matrix integration suite (SUPER_ADMIN, BPH, KEPALA_BIDANG/division scope).
+- [x] Database indexes/constraints audit (foreign keys, uniqueness, checks, division-period linkage, active-head invariant reviewed and exercised against MariaDB).
 - [ ] Performance/SEO/accessibility pass.
-- [ ] Dependency/security scan.
+- [x] Dependency/security scan (pnpm audit, govulncheck, gosec high-severity gate; non-blocking findings recorded).
 
 ## Phase 11 — Full Integration & Visual Compliance
 - [ ] All API contract routes verified.

@@ -51,7 +51,10 @@ func run() error {
 		Addr:              fmt.Sprintf(":%d", cfg.AppPort),
 		Handler:           apiRouter,
 		ReadHeaderTimeout: 5 * time.Second,
+		ReadTimeout:       3 * time.Minute,
+		WriteTimeout:      3 * time.Minute,
 		IdleTimeout:       60 * time.Second,
+		MaxHeaderBytes:    32 << 10,
 	}
 
 	serverErrors := make(chan error, 1)

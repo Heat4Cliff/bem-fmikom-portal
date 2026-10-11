@@ -123,7 +123,7 @@ func (service *AuthService) Login(ctx context.Context, input AuthInput, ipAddres
 }
 
 func (service *AuthService) Refresh(ctx context.Context, refreshToken, ipAddress, userAgent string) (AuthResult, error) {
-	if refreshToken == "" {
+	if !security.ValidateRefreshToken(refreshToken) {
 		return AuthResult{}, ErrUnauthenticated
 	}
 	now := service.clock().UTC()
