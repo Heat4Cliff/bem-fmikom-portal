@@ -76,11 +76,11 @@
 - [x] IDOR/path traversal/security tests.
 
 ## Phase 9 — Settings, Users, Activity Log & Dashboard Metrics
-- [ ] Landing settings admin editing/preview.
-- [ ] User management + role/division validation + deactivate/reactivate/reset-password flow.
-- [ ] Activity log list/detail read-only for SUPER_ADMIN.
-- [ ] Dashboard summary metrics.
-- [ ] Simple visit/pageview mechanism chosen and documented.
+- [x] Landing settings admin editing/preview.
+- [x] User management + role/division validation + deactivate/reactivate/reset-password flow.
+- [x] Activity log list/detail read-only for SUPER_ADMIN.
+- [x] Dashboard operational summary metrics with database-backed role/division scope.
+- [x] Visitor/pageview analytics formally deferred post-MVP; no tracking mechanism or visitor data is part of Phase 9.
 
 ## Phase 10 — Hardening
 - [ ] Public write rate limiting.

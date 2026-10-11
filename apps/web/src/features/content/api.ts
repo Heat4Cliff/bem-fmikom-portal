@@ -74,6 +74,30 @@ export const getPublicGalleryCategory = (slug: string) =>
   publicGet<GalleryCategory>(`/public/gallery-categories/${encodeURIComponent(slug)}`);
 export const getPublicOrganization = () => publicGet<PublicOrganization>("/public/organization");
 
+export type PublicLandingSettings = {
+  hero_headline: string;
+  hero_subheadline: string;
+  hero_primary_cta_label: string;
+  hero_primary_cta_url: string;
+  hero_secondary_cta_label: string | null;
+  hero_secondary_cta_url: string | null;
+  hero_image_url: string | null;
+  about_title: string;
+  about_description: string;
+  vision: string;
+  missions: string[];
+  contact_email: string | null;
+  contact_phone: string | null;
+  contact_address: string | null;
+  location_url: string | null;
+  instagram_url: string | null;
+  youtube_url: string | null;
+  tiktok_url: string | null;
+  other_social_url: string | null;
+};
+
+export const getPublicLandingSettings = () => publicGet<PublicLandingSettings>("/public/settings");
+
 export async function adminList<T>(
   path: string,
   options: RequestOptions = {},

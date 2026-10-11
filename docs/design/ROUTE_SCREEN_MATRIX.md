@@ -36,6 +36,7 @@ This file is intentionally route-oriented. Route names may be refined during Pha
 - `/admin/settings` → landing settings.
 - `/admin/users` → SUPER_ADMIN user management.
 - `/admin/activity-logs` → SUPER_ADMIN audit trail.
+- `/admin` → operational summary cards from `/api/v1/admin/dashboard`; role/division scope is database-derived. The visit/pageview card in the Stitch dashboard is omitted because analytics are deferred post-MVP. Desktop/mobile visual review remains for Phase 11.
 
 ## Role-aware navigation rule
 Never show a menu item the current role cannot use, but never rely on hidden navigation for security. Backend permission remains mandatory.
@@ -80,3 +81,10 @@ Never show a menu item the current role cannot use, but never rely on hidden nav
 - Desktop uses the archive table/upload dialog target `arsip_dokumen_internal_admin_bem`; mobile uses stacked cards and download/actions inspired by `arsip_dokumen_mobile_admin_bem`. Edit/delete controls have no separate Stitch screens and are represented with reusable dialogs.
 - Uploads are private and division-period bound. SUPER_ADMIN/BPH can access across divisions; KEPALA_BIDANG is scoped to the current database division. No public document route exists.
 - Visual sign-off must compare `screen.png`; Stitch `code.html` remains structural/style reference only. Responsive browser evidence is recorded in `PHASE_8_REPORT.md`.
+
+## Phase 9 implementation status
+
+- `/admin/settings` maps to SUPER_ADMIN/BPH landing settings; `/` consumes public settings. Desktop Stitch target is `pengaturan_landing_page_admin_bem`; public desktop/mobile targets remain the two `beranda_publik_*` screens. Preview uses shared public components.
+- `/admin/users` maps to SUPER_ADMIN-only management target `manajemen_pengguna_admin_bem`; create/edit/reset use reusable dialogs and mobile uses cards because no separate form screen is indexed.
+- `/admin/activity-logs` maps to SUPER_ADMIN-only read-only target `activity_log_audit_trail_admin_bem`; mobile target is `activity_log_mobile_admin_bem`; detail uses a reusable drawer.
+- Stitch `screen.png` remains visual authority and `code.html` is reference only. Final disposition and visual/UAT limitations are in `docs/codex/PHASE_9_REPORT.md`.

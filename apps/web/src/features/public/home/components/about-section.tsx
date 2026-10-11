@@ -18,25 +18,27 @@ export function AboutSection({ about }: { about: AboutContent }) {
             Informasi umum portal · bukan data periode aktif
           </p>
         </div>
-        <div className="grid gap-3 sm:grid-cols-3">
-          {about.highlights.map((item, index) => {
-            const Icon = highlightIcons[index % highlightIcons.length];
-            return (
-              <article
-                key={item.title}
-                className="rounded-xl border border-border/70 bg-white p-4 shadow-card sm:p-5"
-              >
-                <span className="grid size-10 place-items-center rounded-lg bg-surface-soft text-primary">
-                  <Icon aria-hidden="true" className="size-5" />
-                </span>
-                <h3 className="mt-4 font-heading text-base font-bold leading-snug text-primary">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-muted">{item.description}</p>
-              </article>
-            );
-          })}
-        </div>
+        {about.highlights.length > 0 ? (
+          <div className="grid gap-3 sm:grid-cols-3">
+            {about.highlights.map((item, index) => {
+              const Icon = highlightIcons[index % highlightIcons.length];
+              return (
+                <article
+                  key={item.title}
+                  className="rounded-xl border border-border/70 bg-white p-4 shadow-card sm:p-5"
+                >
+                  <span className="grid size-10 place-items-center rounded-lg bg-surface-soft text-primary">
+                    <Icon aria-hidden="true" className="size-5" />
+                  </span>
+                  <h3 className="mt-4 font-heading text-base font-bold leading-snug text-primary">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-muted">{item.description}</p>
+                </article>
+              );
+            })}
+          </div>
+        ) : null}
       </div>
     </section>
   );

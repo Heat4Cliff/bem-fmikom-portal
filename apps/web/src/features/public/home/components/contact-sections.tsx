@@ -54,7 +54,7 @@ export function ContactSection({ contact, demoMode }: { contact: ContactInfo; de
             Contoh visual · kontak resmi belum dikonfirmasi
           </p>
         ) : null}
-        {entries.length || contact.socialLinks.length ? (
+        {entries.length || contact.socialLinks.length || contact.locationUrl ? (
           <div className="grid gap-5 rounded-2xl border border-border/70 bg-white p-5 shadow-card sm:grid-cols-2 sm:p-7">
             <div className="space-y-4">
               {entries.map(({ icon: Icon, label, value }) => (
@@ -68,6 +68,17 @@ export function ContactSection({ contact, demoMode }: { contact: ContactInfo; de
                   </div>
                 </div>
               ))}
+              {contact.locationUrl ? (
+                <a
+                  href={contact.locationUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-10 items-center gap-2 rounded-md border border-border px-3 text-sm font-semibold text-primary hover:bg-surface-muted focus-visible:outline-2 focus-visible:outline-secondary"
+                >
+                  <MapPin aria-hidden="true" className="size-4" />
+                  Lihat lokasi
+                </a>
+              ) : null}
             </div>
             {contact.socialLinks.length ? (
               <nav aria-label="Media sosial BEM FMIKOM" className="flex flex-wrap content-start gap-2">

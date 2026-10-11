@@ -7,6 +7,7 @@ import {
   getActiveAnnouncements,
   getPublicGallery,
   getPublicOrganization,
+  getPublicLandingSettings,
 } from "@/features/content/api";
 import type { Announcement, Article, GalleryCategory, PublicOrganization } from "@/features/content/types";
 
@@ -45,19 +46,55 @@ function formatDate(value?: string | null) {
   });
 }
 
+function landingSocialLinks(settings: NonNullable<Awaited<ReturnType<typeof getPublicLandingSettings>>>) {
+  const candidates: { label: string; href: string | null }[] = [
+    { label: "Instagram", href: settings.instagram_url },
+    { label: "YouTube", href: settings.youtube_url },
+    { label: "TikTok", href: settings.tiktok_url },
+    { label: "Situs lainnya", href: settings.other_social_url },
+  ];
+  return candidates.flatMap(({ label, href }) => (href ? [{ label, href }] : []));
+}
+
 export default async function PublicHomePage() {
   const content = getLandingPageContent(isDemoContentEnabled());
-  const [articleResult, announcementResult, galleryResult, organizationResult] = await Promise.allSettled([
-    getPublicArticles(1, 3),
-    getActiveAnnouncements(1, 1),
-    getPublicGallery(1, 4),
-    getPublicOrganization(),
-  ]);
+  const [articleResult, announcementResult, galleryResult, organizationResult, settingsResult] =
+    await Promise.allSettled([
+      getPublicArticles(1, 3),
+      getActiveAnnouncements(1, 1),
+      getPublicGallery(1, 4),
+      getPublicOrganization(),
+      getPublicLandingSettings(),
+    ]);
   const articles = articleResult.status === "fulfilled" ? articleResult.value : [];
   const announcements = announcementResult.status === "fulfilled" ? announcementResult.value : [];
   const galleries = galleryResult.status === "fulfilled" ? galleryResult.value : [];
   const organization: PublicOrganization | null =
     organizationResult.status === "fulfilled" ? organizationResult.value : null;
+  const settings = settingsResult.status === "fulfilled" ? settingsResult.value : null;
+  if (settings) {
+    content.hero.title = settings.hero_headline;
+    content.hero.description = settings.hero_subheadline;
+    content.hero.primaryAction = {
+      label: settings.hero_primary_cta_label,
+      href: settings.hero_primary_cta_url,
+    };
+    content.hero.secondaryAction =
+      settings.hero_secondary_cta_label && settings.hero_secondary_cta_url
+        ? { label: settings.hero_secondary_cta_label, href: settings.hero_secondary_cta_url }
+        : null;
+    content.hero.imageUrl = settings.hero_image_url;
+    content.about.title = settings.about_title;
+    content.about.description = settings.about_description;
+    content.visionMission = { vision: settings.vision || null, mission: settings.missions };
+    content.contact = {
+      address: settings.contact_address ?? undefined,
+      email: settings.contact_email ?? undefined,
+      phone: settings.contact_phone ?? undefined,
+      locationUrl: settings.location_url ?? undefined,
+      socialLinks: landingSocialLinks(settings),
+    };
+  }
   if (organization) {
     const toPreview = (member: PublicOrganization["leadership"][number], division?: string) => ({
       id: member.id,

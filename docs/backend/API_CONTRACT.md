@@ -51,6 +51,11 @@ Prefix: `/api/v1`
 
 ## Admin dashboard
 - `GET /admin/dashboard`
+- Access: SUPER_ADMIN, BPH, and KEPALA_BIDANG. Response is `{success,message,data}` with `Cache-Control: private, no-store`.
+- `data` contains `generated_at`, `scope` (`organization` or `division` plus the database-resolved division identity), nullable `active_period`, and aggregate objects: `articles` (`total`, `published`, `draft`), `registrations` (`active_forms`, `active_form_submissions`), `aspirations` (`total`, `pending`, `read`, `resolved`), `documents.total`, and `announcements.total`.
+- Articles exclude soft-deleted rows. Registration counts include forms whose stored status is OPEN and whose UTC open/close window currently includes the request; submission count includes only those forms. Aspirations count by current status. Document count excludes `delete_pending` records. Active announcements follow the public active endpoint's UTC schedule predicate.
+- SUPER_ADMIN and BPH see cross-division aggregate counts. KEPALA_BIDANG division is loaded from the authenticated database principal; articles, forms/submissions, aspirations, and documents are restricted to that division. The announcement table has no division ownership and is readable cross-division by the existing KEPALA_BIDANG announcement-read policy, so its active count remains global. No caller-supplied division filter is accepted.
+- Dashboard summary never returns names, applicant identity, aspiration content, document metadata, or activity details. Visitor/pageview metrics and collection are explicitly deferred post-MVP; no tracking endpoint or visitor data is introduced.
 
 ## Admin users — SUPER_ADMIN
 - `GET /admin/users`
@@ -60,6 +65,15 @@ Prefix: `/api/v1`
 - `POST /admin/users/{id}/deactivate`
 - `POST /admin/users/{id}/reactivate`
 - `POST /admin/users/{id}/reset-password`
+
+## Phase 9 — landing settings, users, and activity logs
+
+- `GET /public/settings` returns the singleton public landing content. It is anonymous and uses `Cache-Control: public, max-age=60, stale-while-revalidate=300`.
+- `GET/PATCH /admin/settings` reads or replaces the typed singleton. SUPER_ADMIN and BPH may edit; KEPALA_BIDANG is denied. Public strings are plain text; external media/social/location URLs require HTTPS; CTA paths are same-origin paths or fragments. Save writes only changed field names to activity metadata.
+- User routes above are SUPER_ADMIN only. `GET /admin/users` accepts `page`, `limit`, `search`, `role`, `status`, and `division_id`; response uses the standard list envelope. Create/update accepts `name`, `email`, `role`, nullable `division_id`, `status`, and create-only `password`. Role KEPALA_BIDANG requires an active division; other roles require null division. Passwords never appear in responses. Deactivate/reactivate are idempotent status transitions; reset-password accepts `password` and matching `confirm_password`. Status/reset revoke refresh sessions. Self-deactivation/demotion and deactivation of the last active SUPER_ADMIN return 409.
+- `GET /admin/activity-logs` and `GET /admin/activity-logs/{id}` are SUPER_ADMIN only and read-only. List accepts `page`, `limit`, `search`, `actor_user_id`, `action`, `entity_type`, `date_from`, and `date_to`. Sensitive nested detail keys are redacted. IP and User-Agent are not returned.
+- Validation failures use 422, role denial uses 403, missing resources use 404, and guarded conflicts use 409. Admin settings responses are `private, no-store`.
+- `/admin`, `/admin/settings`, `/admin/users`, and `/admin/activity-logs` are the corresponding authenticated UI routes. Pageview analytics are deferred post-MVP and are not implied by the dashboard contract.
 
 ## Periods
 - `GET /admin/periods`

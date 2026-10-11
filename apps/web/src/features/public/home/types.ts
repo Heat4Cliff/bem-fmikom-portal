@@ -8,9 +8,10 @@ export type LandingHero = {
   title: string;
   description: string;
   primaryAction: HomeAction;
-  secondaryAction: HomeAction;
+  secondaryAction?: HomeAction | null;
   visualLabel: string;
   visualCaption: string;
+  imageUrl?: string | null;
 };
 
 export type AboutContent = {
@@ -92,6 +93,7 @@ export type ContactInfo = {
   address?: string;
   email?: string;
   phone?: string;
+  locationUrl?: string;
   socialLinks: { label: string; href: string }[];
 };
 

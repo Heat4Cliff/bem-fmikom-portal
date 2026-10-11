@@ -157,3 +157,16 @@ Phase 5 integration and UAT evidence are recorded in `PHASE_5_REPORT.md`.
 | Screens | Desktop uses a metadata table and upload dialog; narrow screens use stacked cards/actions. Existing archive desktop/mobile `screen.png` are visual targets; no separate edit/delete reference exists. | Use reusable Next.js, TypeScript, and Tailwind components. Stitch `code.html` stays layout/style evidence only. |
 
 Phase 8 verification and limitations are recorded in `PHASE_8_REPORT.md`.
+
+### Phase 9 — Landing settings, user management, and activity log
+
+| Area | Decision | Reason / boundary |
+|---|---|---|
+| API compatibility | Retain `/api/v1/public/settings`, `/api/v1/admin/settings`, `/api/v1/admin/users...`, and `/api/v1/admin/activity-logs...` from the API contract. | Phase 9 admin route names map to those existing API resources. |
+| Landing settings | One `landing_settings` row (id=1); plain-text content; HTTPS external URLs; same-origin CTA paths/fragments; public response cache is 60s with stale-while-revalidate 300s; admin response is no-store. | Bounded safe text and explicit public cache behavior; no uploads, HTML authoring, or unverified contact facts. |
+| Roles | Settings write is SUPER_ADMIN/BPH; user administration and activity-log read are SUPER_ADMIN only; KEPALA_BIDANG cannot access these resources. | Enforced on the API and repeated as UI route guards; navigation hiding is not the security control. |
+| User lifecycle | No hard delete. Status transitions are transactional and idempotent; protect self-deactivation/demotion and last active SUPER_ADMIN; require an active division only for KEPALA_BIDANG. Password reset hashes with bcrypt and revokes refresh sessions. | Preserves account/audit references and avoids stale concurrent update races. |
+| Activity privacy | Read-only list/detail with pagination and filters; recursively redact sensitive keys; omit IP/User-Agent; record changed field names and safe metadata only. Reset uses existing UPDATE action vocabulary. | No new action enum or sensitive payload exposure; retention policy remains G-15. |
+| Dashboard summary / visitor analytics | Implement operational counts from articles, currently open registration forms/submissions, aspiration statuses, available documents, and currently scheduled announcements. Use the authenticated database role/division for scope. Visitor/pageview analytics are deferred post-MVP and no tracker, cookie, fingerprint, analytics provider, or visitor-event table is introduced. | Provides source-backed Phase 9 metrics without collecting visitor data; global announcement count follows its existing divisionless domain and read policy. |
+
+Phase 9 implementation and evidence are tracked in `PHASE_9_REPORT.md`.

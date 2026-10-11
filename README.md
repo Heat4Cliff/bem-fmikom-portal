@@ -1,6 +1,6 @@
 # BEM FMIKOM UNUGHA Portal
 
-Monorepo for the BEM FMIKOM UNUGHA portal. Phases 0–6 are implemented. Phase 7 adds public dynamic registrations, an admin form builder, submissions, and privacy-conscious XLSX export. See `docs/codex/PHASE_7_REPORT.md` for scope and current evidence.
+Monorepo for the BEM FMIKOM UNUGHA portal. Phases 0–9 are implemented. Phase 9 adds landing settings, user management, Activity Log, and role/division-scoped operational dashboard metrics; visitor/pageview analytics are deferred post-MVP. Verification status and browser-review limitations are recorded in `docs/codex/PHASE_9_REPORT.md`.
 
 ## Source of truth
 
@@ -163,3 +163,10 @@ Public announcement archive visibility for scheduled/expired entries still needs
 - SUPER_ADMIN/BPH can access cross-division archives. KEPALA_BIDANG is restricted by the current database division and period. Back up database metadata and private storage together to retain archive consistency.
 - File validation is not antivirus scanning or content disarm. Production should pair the private storage backup with the database backup and verify restore as one recovery set.
 - Run `pnpm db:up`, ensure `TEST_DATABASE_URL` names a dedicated database ending `_test`, then use `pnpm api:integration` and `pnpm verify`. See `docs/codex/PHASE_8_REPORT.md` for executed evidence and remaining manual review.
+
+## System management (Phase 9)
+
+- `/admin/settings` edits the singleton public landing content with preview and responsive reusable components. `/` consumes `/api/v1/public/settings` and keeps the existing controlled neutral fallback when the endpoint is unavailable.
+- `/admin/users` provides SUPER_ADMIN-only user management without hard delete, guarded status changes, and password reset. The API validates active division assignment for KEPALA_BIDANG and revokes refresh sessions on deactivation/reset.
+- `/admin/activity-logs` is SUPER_ADMIN-only and read-only, with list/detail, filters, recursive sensitive-key redaction, and no IP/User-Agent output.
+- Reversible migration `00007_system_management.sql` adds landing content storage. `/admin` loads scoped operational aggregates from `/api/v1/admin/dashboard`; visitor/pageview collection is deferred post-MVP and no tracking data is collected. See `docs/codex/PHASE_9_REPORT.md`.

@@ -35,6 +35,8 @@ func NewWithDependencies(logger *slog.Logger, cfg config.Config, db *sql.DB) (*g
 	}
 	documents := service.NewDocumentService(db, documentStorage, cfg.DocumentMaxUploadBytes)
 	handler.NewDocuments(documents, documentStorage, cfg.DocumentMaxUploadBytes).Register(engine, authService)
+	systemManagement := service.NewSystemManagementService(db, cfg.BcryptCost)
+	handler.NewSystemManagementWithDashboard(systemManagement, service.NewDashboardService(db)).Register(engine, authService)
 	limiter := middleware.NewLoginLimiter(cfg.LoginLimitCount, cfg.LoginLimitWindow)
 	group := engine.Group("/api/v1/auth")
 	group.Use(middleware.RequireTrustedOrigin(cfg.FrontendOrigins))

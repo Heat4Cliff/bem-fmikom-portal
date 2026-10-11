@@ -1,5 +1,6 @@
 import { ArrowRight, CalendarDays, MessageSquareText, Sparkles } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import type { LandingHero } from "../types";
 
@@ -31,20 +32,34 @@ export function HeroSection({ hero, demoMode }: { hero: LandingHero; demoMode: b
                   <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
-                <Link href={hero.secondaryAction.href}>
-                  <MessageSquareText aria-hidden="true" className="size-4 text-secondary" />
-                  {hero.secondaryAction.label}
-                </Link>
-              </Button>
+              {hero.secondaryAction ? (
+                <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
+                  <Link href={hero.secondaryAction.href}>
+                    <MessageSquareText aria-hidden="true" className="size-4 text-secondary" />
+                    {hero.secondaryAction.label}
+                  </Link>
+                </Button>
+              ) : null}
             </div>
           </div>
 
-          <div
-            role="img"
-            aria-label={hero.visualLabel}
-            className="public-hero-art relative isolate flex aspect-[16/10] min-h-64 items-end overflow-hidden rounded-2xl border border-primary/10 p-4 shadow-card sm:p-6"
-          >
+          <div className="public-hero-art relative isolate flex aspect-[16/10] min-h-64 items-end overflow-hidden rounded-2xl border border-primary/10 p-4 shadow-card sm:p-6">
+            {hero.imageUrl ? (
+              <>
+                <Image
+                  src={hero.imageUrl}
+                  alt={hero.visualLabel}
+                  width={1600}
+                  height={900}
+                  unoptimized
+                  className="absolute inset-0 -z-10 size-full object-cover"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 -z-10 bg-gradient-to-t from-primary/80 to-primary/5"
+                />
+              </>
+            ) : null}
             <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-60">
               <div className="absolute -right-10 -top-16 size-64 rounded-full border-[28px] border-white/40" />
               <div className="absolute left-[16%] top-[14%] h-[60%] w-[46%] rounded-t-[5rem] border border-white/70 bg-white/25 shadow-inner" />
