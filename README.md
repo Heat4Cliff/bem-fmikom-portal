@@ -120,6 +120,10 @@ CI runs the aggregate static/unit checks and a MariaDB 11.4 service for actual d
 
 See `docs/codex/PHASE_2_REPORT.md` through `docs/codex/PHASE_6_REPORT.md` for phase scope and verification evidence. The landing page reads public news, announcements, gallery, and active-period organization data. `/aspirasi` accepts identified or anonymous submissions; `/admin/aspirasi` provides division-scoped review and `/admin/aspirasi/[id]` shows detail and status history.
 
+## Phase 12 — UAT and deployment readiness
+
+Phase 12 procedures are in `docs/codex/PHASE_12_RESET_SEED.md`, `PHASE_12_UAT_CHECKLIST.md`, `PHASE_12_BACKUP_RESTORE.md`, and `PHASE_12_DEPLOYMENT_RUNBOOK.md`; actual evidence and outstanding operator decisions are tracked in `PHASE_12_REPORT.md`. The UAT reset procedure creates a fresh isolated schema and never resets shared development data. No production deployment is performed by these documents. The API/database provider, region, retention, RPO/RTO, and restore-drill sign-off must be supplied by the release owner.
+
 ## Content CMS (Phase 4)
 
 Phase 4 adds:

@@ -102,10 +102,12 @@
 Phase 11 finalization (2026-10-14): automated integration/security/build gates pass and the owner accepted the current `/struktur` layout (1440×900 explicitly). Remaining unreviewed Stitch rows and exact viewport states stay unchecked as documented non-blocking follow-ups; no other screen is marked user accepted.
 
 ## Phase 12 — UAT & Deployment Readiness
-- [ ] Deterministic reset/seed procedure.
-- [ ] Manual UAT checklist by role: Public, KEPALA_BIDANG, BPH, SUPER_ADMIN.
-- [ ] Backup/restore procedure.
-- [ ] Deployment docs: Vercel frontend + approved Go/MySQL host.
-- [ ] Rollback procedure.
-- [ ] Production env checklist and secret inventory.
-- [ ] Final release report: automated vs manual verification clearly separated.
+- [x] Deterministic isolated reset/seed procedure (fresh UAT schema; no shared dev data reset).
+- [x] Manual UAT checklist by role: Public, KEPALA_BIDANG, BPH, SUPER_ADMIN (manual execution remains a release-owner gate).
+- [x] Backup/restore procedure for DB and all configured storage roots (restore drill remains a go-live gate).
+- [x] Deployment docs: Vercel frontend + approved Go/MySQL host selection gate.
+- [x] Rollback procedure.
+- [x] Production env checklist and secret inventory by variable name (values remain in provider secret manager).
+- [x] Final release report separates automated evidence from pending manual verification.
+
+Phase 12 documentation and automated gates completed 2026-10-14. No production deployment or manual UAT/restore drill is claimed; provider selection, role-based UAT, complete restore drill, and release-owner approval remain go-live gates.

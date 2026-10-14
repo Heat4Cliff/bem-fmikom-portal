@@ -242,3 +242,11 @@ Phase 9 implementation and evidence are tracked in `PHASE_9_REPORT.md`.
 | Public member detail | Use existing Radix Dialog with trigger buttons, visible focus, Escape, focus management, and only photo/name/position/division/period. Do not add bio, program, social links, contact, or identifiers. | No approved public contract exists for additional member fields. |
 | Organization chart | `/struktur` remains canonical. Render the API-ordered Ketua and leadership above visible work divisions; each division shows its head before its ordered members with responsive connectors. Landing remains a short preview with `/struktur` CTA. | User retained `/struktur`; API `display_order` ordering remains authoritative and manual acceptance remains open. |
 | Prior Phase 11 route decision | Continue using the dedicated `/struktur` route; ignore the older Phase 11H inline accordion entry. | The latest manual UAT instruction explicitly retained the separate route and landing preview. |
+
+### Phase 12 — UAT and deployment readiness (2026-10-14)
+
+| Area | Decision | Reason / boundary |
+|---|---|---|
+| UAT reset | Prepare a fresh isolated UAT schema and deterministic fixture recipe; never drop/reset the shared development schema. The repository has no general fixture seeder, so use the existing interactive SUPER_ADMIN bootstrap and authenticated UI/API fixture creation. | Meets repeatability and preserves retained developer data; no new destructive CLI or application behavior is introduced. |
+| Deployment target | Keep the deployment runbook provider-neutral for Go/MySQL until the release owner identifies an approved host and confirms engine compatibility. | PLANS names Vercel plus an approved Go/MySQL host but no vendor, region, RPO/RTO, retention, or owner. Do not invent infrastructure details. |
+| Release boundary | Complete readiness procedures and automated gates without production deployment or claiming operator-run UAT/restore acceptance. | Production access, restore proof, and manual role acceptance belong to an explicitly authorized release operation. |

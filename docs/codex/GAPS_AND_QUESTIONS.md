@@ -151,6 +151,15 @@ Phase 11H identified no new product-contract question. Existing gap G-17 and pri
 - Automated responsive observations for `/struktur` at 360×800, 390×800, and 412×800 remain separate evidence. The broader G-16 requirement to validate every responsive route/reference is not globally resolved by acceptance of this route.
 - Remaining unreviewed screens, exact viewport captures, and authenticated role workflows stay as documented follow-ups with their existing statuses. No screen outside the owner's explicit acceptance is marked PASS by this update. G-15 and G-17 remain open governance/product-policy questions and are not critical Phase 11 runtime/security blockers.
 
+## Phase 12 deployment readiness follow-ups — 2026-10-14
+
+| Item | Status | Required before production go-live |
+|---|---|---|
+| Approved Go/API and MySQL/MariaDB providers, region, and tested engine version | Open operational decision | Release owner selects providers and confirms MariaDB 11.4/MySQL compatibility, TLS/private networking, and service limits. |
+| Backup retention, encryption-key ownership, RPO/RTO, and on-call ownership | Open operational decision | Record values and responsible operators in the release change ticket and provider configuration. |
+| Full database + private documents + registration attachments + media restore drill | Not executed in this documentation phase | Restore one matching recovery set into isolated resources, verify integrity and authorization, and collect operator sign-off. |
+| Role-based manual UAT and outstanding Phase 11 browser/visual follow-ups | Not executed in this documentation phase | Complete and record the role checklist and required manual review before the release owner authorizes production traffic. |
+
 ## Phase 11 organization hierarchy corrective — 2026-10-13
 
 - Organization/aspiration classification is resolved through `divisions.show_in_public_structure`. This flag only affects `GET /public/organization`; the active public divisions and aspiration write remain status/period scoped and continue to include an ACTIVE Fakultas.
