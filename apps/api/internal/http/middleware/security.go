@@ -63,7 +63,7 @@ func RequestGuards() gin.HandlerFunc {
 			unsupportedMediaType(c)
 			return
 		}
-		if request.Method == http.MethodPost && request.URL.Path == "/api/v1/admin/documents" && mediaType == "multipart/form-data" {
+		if request.Method == http.MethodPost && mediaType == "multipart/form-data" && (request.URL.Path == "/api/v1/admin/documents" || request.URL.Path == "/api/v1/admin/media" || strings.HasPrefix(request.URL.Path, "/api/v1/public/registrations/") && strings.HasSuffix(request.URL.Path, "/submissions")) {
 			c.Next()
 			return
 		}

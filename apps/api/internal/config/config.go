@@ -22,29 +22,33 @@ type Cookie struct {
 }
 
 type Config struct {
-	AppEnv                  string
-	AppPort                 int
-	FrontendOrigins         []string
-	DatabaseURL             string
-	DBMaxOpenConns          int
-	DBMaxIdleConns          int
-	DBConnMaxLife           time.Duration
-	DBConnMaxIdleTime       time.Duration
-	JWTSecret               []byte
-	AccessTokenTTL          time.Duration
-	RefreshTokenTTL         time.Duration
-	Cookie                  Cookie
-	BcryptCost              int
-	LoginLimitCount         int
-	LoginLimitWindow        time.Duration
-	RefreshLimitCount       int
-	RefreshLimitWindow      time.Duration
-	AspirationLimitCount    int
-	AspirationLimitWindow   time.Duration
-	RegistrationLimitCount  int
-	RegistrationLimitWindow time.Duration
-	DocumentStoragePath     string
-	DocumentMaxUploadBytes  int64
+	AppEnv                          string
+	AppPort                         int
+	FrontendOrigins                 []string
+	DatabaseURL                     string
+	DBMaxOpenConns                  int
+	DBMaxIdleConns                  int
+	DBConnMaxLife                   time.Duration
+	DBConnMaxIdleTime               time.Duration
+	JWTSecret                       []byte
+	AccessTokenTTL                  time.Duration
+	RefreshTokenTTL                 time.Duration
+	Cookie                          Cookie
+	BcryptCost                      int
+	LoginLimitCount                 int
+	LoginLimitWindow                time.Duration
+	RefreshLimitCount               int
+	RefreshLimitWindow              time.Duration
+	AspirationLimitCount            int
+	AspirationLimitWindow           time.Duration
+	RegistrationLimitCount          int
+	RegistrationLimitWindow         time.Duration
+	RegistrationStoragePath         string
+	RegistrationImageMaxUploadBytes int64
+	DocumentStoragePath             string
+	DocumentMaxUploadBytes          int64
+	MediaStoragePath                string
+	MediaMaxUploadBytes             int64
 }
 
 type DatabaseSettings struct {
@@ -211,6 +215,22 @@ func LoadFrom(lookup func(string) string) (Config, error) {
 	if env == "production" && !filepath.IsAbs(documentStoragePath) {
 		return Config{}, fmt.Errorf("DOCUMENT_STORAGE_PATH must be an absolute private path in production")
 	}
+	mediaMaxUploadBytes, err := parseInt("MEDIA_MAX_UPLOAD_BYTES", 5<<20, 1, 25<<20)
+	if err != nil {
+		return Config{}, err
+	}
+	mediaStoragePath := filepath.Clean(get("MEDIA_STORAGE_PATH", "../../var/media"))
+	if env == "production" && !filepath.IsAbs(mediaStoragePath) {
+		return Config{}, fmt.Errorf("MEDIA_STORAGE_PATH must be an absolute path in production")
+	}
+	registrationImageMaxUploadBytes, err := parseInt("REGISTRATION_IMAGE_MAX_UPLOAD_BYTES", 5<<20, 1, 5<<20)
+	if err != nil {
+		return Config{}, err
+	}
+	registrationStoragePath := filepath.Clean(get("REGISTRATION_STORAGE_PATH", "../../var/private/registration-attachments"))
+	if env == "production" && !filepath.IsAbs(registrationStoragePath) {
+		return Config{}, fmt.Errorf("REGISTRATION_STORAGE_PATH must be an absolute private path in production")
+	}
 
 	cookieSecureDefault := "false"
 	if env == "production" {
@@ -249,6 +269,8 @@ func LoadFrom(lookup func(string) string) (Config, error) {
 		AspirationLimitCount: aspirationCount, AspirationLimitWindow: aspirationWindow,
 		RegistrationLimitCount: registrationCount, RegistrationLimitWindow: registrationWindow,
 		DocumentStoragePath: documentStoragePath, DocumentMaxUploadBytes: int64(documentMaxUploadBytes),
+		MediaStoragePath: mediaStoragePath, MediaMaxUploadBytes: int64(mediaMaxUploadBytes),
+		RegistrationStoragePath: registrationStoragePath, RegistrationImageMaxUploadBytes: int64(registrationImageMaxUploadBytes),
 	}, nil
 }
 

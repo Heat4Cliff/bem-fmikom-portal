@@ -8,6 +8,7 @@ import {
   getPublicGallery,
   getPublicOrganization,
   getPublicLandingSettings,
+  getActivePublicRegistrations,
 } from "@/features/content/api";
 import type { Announcement, Article, GalleryCategory, PublicOrganization } from "@/features/content/types";
 
@@ -58,20 +59,28 @@ function landingSocialLinks(settings: NonNullable<Awaited<ReturnType<typeof getP
 
 export default async function PublicHomePage() {
   const content = getLandingPageContent(isDemoContentEnabled());
-  const [articleResult, announcementResult, galleryResult, organizationResult, settingsResult] =
-    await Promise.allSettled([
-      getPublicArticles(1, 3),
-      getActiveAnnouncements(1, 1),
-      getPublicGallery(1, 4),
-      getPublicOrganization(),
-      getPublicLandingSettings(),
-    ]);
+  const [
+    articleResult,
+    announcementResult,
+    galleryResult,
+    organizationResult,
+    settingsResult,
+    registrationResult,
+  ] = await Promise.allSettled([
+    getPublicArticles(1, 3),
+    getActiveAnnouncements(1, 1),
+    getPublicGallery(1, 4),
+    getPublicOrganization(),
+    getPublicLandingSettings(),
+    getActivePublicRegistrations(),
+  ]);
   const articles = articleResult.status === "fulfilled" ? articleResult.value : [];
   const announcements = announcementResult.status === "fulfilled" ? announcementResult.value : [];
   const galleries = galleryResult.status === "fulfilled" ? galleryResult.value : [];
   const organization: PublicOrganization | null =
     organizationResult.status === "fulfilled" ? organizationResult.value : null;
   const settings = settingsResult.status === "fulfilled" ? settingsResult.value : null;
+  const registrations = registrationResult.status === "fulfilled" ? registrationResult.value : [];
   if (settings) {
     content.hero.title = settings.hero_headline;
     content.hero.description = settings.hero_subheadline;
@@ -95,34 +104,21 @@ export default async function PublicHomePage() {
       socialLinks: landingSocialLinks(settings),
     };
   }
-  if (organization) {
-    const toPreview = (member: PublicOrganization["leadership"][number], division?: string) => ({
-      id: member.id,
-      name: member.name,
-      role: member.position,
-      nim: member.nim,
-      photoUrl: member.photo_url,
-      division,
-    });
-    content.organization = {
-      period: organization.period,
-      periodLabel: organization.period?.name,
-      leadership: organization.leadership.map((member) => toPreview(member, "BPH")),
-      divisions: organization.divisions.map((division) => ({
-        id: division.id,
-        name: division.name,
-        head: division.head ? toPreview(division.head, division.name) : null,
-        members: division.members.map((member) => toPreview(member, division.name)),
-      })),
-      members: [
-        ...organization.leadership.map((member) => toPreview(member, "BPH")),
-        ...organization.divisions.flatMap((division) => [
-          ...(division.head ? [toPreview(division.head, division.name)] : []),
-          ...division.members.map((member) => toPreview(member, division.name)),
-        ]),
-      ],
-    };
-  }
+  content.organization = organization
+    ? {
+        period: organization.period,
+        periodLabel: organization.period?.name,
+        status: organization.period ? "ready" : "empty",
+        // The landing renders a short BPH preview; divisions and member rosters
+        // belong to the dedicated public detail page.
+        leadership: organization.leadership.slice(0, 4).map((member, index) => ({
+          id: `leadership-${index}`,
+          name: member.name,
+          role: member.position,
+          photoUrl: member.photo_url,
+        })),
+      }
+    : { period: null, leadership: [], status: "error" };
   content.news = articles.map((article: Article) => ({
     id: String(article.id),
     category: article.categories[0]?.name ?? "Berita",
@@ -150,6 +146,16 @@ export default async function PublicHomePage() {
     imageUrl: category.items?.[0]?.preview_image_url ?? undefined,
     href: `/galeri/${encodeURIComponent(category.slug)}`,
     tone: (["navy", "blue", "amber", "slate"] as const)[index % 4],
+  }));
+  content.registrations = registrations.map((registration) => ({
+    id: registration.slug,
+    slug: registration.slug,
+    title: registration.title,
+    description: registration.description,
+    division: registration.division_name ?? undefined,
+    openDate: formatDate(registration.open_at),
+    closeDate: formatDate(registration.close_at),
+    status: "DIBUKA",
   }));
   return <PublicHome content={content} />;
 }

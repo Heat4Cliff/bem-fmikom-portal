@@ -34,6 +34,12 @@ func TestLoadUsesSecureDevelopmentDefaults(t *testing.T) {
 	if got.DocumentStoragePath != "..\\..\\var\\private\\documents" || got.DocumentMaxUploadBytes != 10<<20 {
 		t.Fatalf("unexpected document defaults: %+v", got)
 	}
+	if got.MediaStoragePath != "..\\..\\var\\media" || got.MediaMaxUploadBytes != 5<<20 {
+		t.Fatalf("unexpected public media defaults: %+v", got)
+	}
+	if got.RegistrationStoragePath != "..\\..\\var\\private\\registration-attachments" || got.RegistrationImageMaxUploadBytes != 5<<20 {
+		t.Fatalf("unexpected registration attachment defaults: %+v", got)
+	}
 }
 
 func TestLoadRejectsInvalidSecuritySettings(t *testing.T) {
@@ -49,6 +55,7 @@ func TestLoadRejectsInvalidSecuritySettings(t *testing.T) {
 		{"invalid duration", map[string]string{"AUTH_ACCESS_TOKEN_TTL": "soon"}},
 		{"invalid document limit", map[string]string{"DOCUMENT_MAX_UPLOAD_BYTES": "0"}},
 		{"production relative document path", map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "DOCUMENT_STORAGE_PATH": "var/private/documents"}},
+		{"production relative registration path", map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "REGISTRATION_STORAGE_PATH": "var/private/registration-attachments"}},
 		{"production insecure cookie override", map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "https://portal.example", "AUTH_REFRESH_COOKIE_SECURE": "false"}},
 		{"production local origin", map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "https://localhost:3000"}},
 		{"production non-https origin", map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "http://portal.example"}},
@@ -67,6 +74,14 @@ func TestLoadRejectsInvalidSecuritySettings(t *testing.T) {
 					overrides["DOCUMENT_STORAGE_PATH"] = filepath.Join(t.TempDir(), "private-documents")
 				}
 			}
+			if overrides["APP_ENV"] == "production" && test.name != "production relative registration path" {
+				if overrides == nil {
+					overrides = make(map[string]string)
+				}
+				if overrides["REGISTRATION_STORAGE_PATH"] == "" {
+					overrides["REGISTRATION_STORAGE_PATH"] = filepath.Join(t.TempDir(), "private-registration")
+				}
+			}
 			if _, err := LoadFrom(testEnv(overrides)); err == nil {
 				t.Fatal("LoadFrom() expected validation error")
 			}
@@ -75,7 +90,7 @@ func TestLoadRejectsInvalidSecuritySettings(t *testing.T) {
 }
 
 func TestLoadProductionSecureCookieDefaultAndMultipleOrigins(t *testing.T) {
-	got, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "https://portal.example, https://admin.example", "DOCUMENT_STORAGE_PATH": filepath.Join(t.TempDir(), "private-documents")}))
+	got, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "https://portal.example, https://admin.example", "DOCUMENT_STORAGE_PATH": filepath.Join(t.TempDir(), "private-documents"), "MEDIA_STORAGE_PATH": filepath.Join(t.TempDir(), "public-media"), "REGISTRATION_STORAGE_PATH": filepath.Join(t.TempDir(), "private-registration")}))
 	if err != nil {
 		t.Fatalf("LoadFrom() error = %v", err)
 	}
@@ -85,17 +100,18 @@ func TestLoadProductionSecureCookieDefaultAndMultipleOrigins(t *testing.T) {
 }
 
 func TestLoadProductionRequiresExplicitHTTPSOriginsAndNonRootDatabase(t *testing.T) {
-	_, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "https://portal.example", "DATABASE_URL": "bem_app:password@tcp(db.example:3306)/bem_fmikom", "DOCUMENT_STORAGE_PATH": filepath.Join(t.TempDir(), "private-documents")}))
+	_, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": "0123456789abcdef0123456789abcdef", "FRONTEND_ORIGINS": "https://portal.example", "DATABASE_URL": "bem_app:password@tcp(db.example:3306)/bem_fmikom", "DOCUMENT_STORAGE_PATH": filepath.Join(t.TempDir(), "private-documents"), "MEDIA_STORAGE_PATH": filepath.Join(t.TempDir(), "public-media"), "REGISTRATION_STORAGE_PATH": filepath.Join(t.TempDir(), "private-registration")}))
 	if err != nil {
 		t.Fatalf("LoadFrom() error = %v", err)
 	}
 }
 
 func TestProductionRejectsWeakSecretPlaceholder(t *testing.T) {
-	if _, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": "LOCAL_ONLY_GENERATE_A_RANDOM_32_BYTE_SECRET"})); err == nil {
+	paths := map[string]string{"DOCUMENT_STORAGE_PATH": filepath.Join(t.TempDir(), "documents"), "MEDIA_STORAGE_PATH": filepath.Join(t.TempDir(), "media"), "REGISTRATION_STORAGE_PATH": filepath.Join(t.TempDir(), "registration")}
+	if _, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": "LOCAL_ONLY_GENERATE_A_RANDOM_32_BYTE_SECRET", "FRONTEND_ORIGINS": "https://portal.example", "DATABASE_URL": "bem_app:password@tcp(db.example:3306)/bem_fmikom", "DOCUMENT_STORAGE_PATH": paths["DOCUMENT_STORAGE_PATH"], "MEDIA_STORAGE_PATH": paths["MEDIA_STORAGE_PATH"], "REGISTRATION_STORAGE_PATH": paths["REGISTRATION_STORAGE_PATH"]})); err == nil {
 		t.Fatal("production should reject the checked-in local secret marker")
 	}
-	if _, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": strings.Repeat("x", 32)})); err == nil {
+	if _, err := LoadFrom(testEnv(map[string]string{"APP_ENV": "production", "JWT_SECRET": strings.Repeat("x", 32), "FRONTEND_ORIGINS": "https://portal.example", "DATABASE_URL": "bem_app:password@tcp(db.example:3306)/bem_fmikom", "DOCUMENT_STORAGE_PATH": paths["DOCUMENT_STORAGE_PATH"], "MEDIA_STORAGE_PATH": paths["MEDIA_STORAGE_PATH"], "REGISTRATION_STORAGE_PATH": paths["REGISTRATION_STORAGE_PATH"]})); err == nil {
 		t.Fatal("production should reject a low-diversity secret")
 	}
 }

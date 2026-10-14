@@ -3,7 +3,7 @@
 import { CheckCircle2, LockKeyhole, Send } from "lucide-react";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { Checkbox, Input, Label, Select, Textarea } from "@/components/ui/primitives";
+import { ActionGroup, Checkbox, Input, Label, Select, Textarea } from "@/components/ui/primitives";
 import { ApiError } from "@/lib/api/client";
 import { getPublicAspirationDivisions, submitAspiration } from "./api";
 import type { AspirationDivision, AspirationReceipt } from "./types";
@@ -142,12 +142,22 @@ export function PublicAspirationForm() {
         <p className="mt-2 text-sm leading-6 text-body">
           Terima kasih telah menyampaikan masukan. Pengurus terkait akan meninjaunya.
         </p>
-        <p className="mt-4 inline-flex rounded-md bg-surface-muted px-3 py-2 text-sm text-body">
-          Nomor referensi: <strong className="ml-1 text-primary">ASP-{receipt.id}</strong>
-        </p>
-        <Button className="mt-6" onClick={() => setReceipt(null)}>
-          Kirim aspirasi lain
-        </Button>
+        <ActionGroup
+          role="group"
+          aria-label="Aksi setelah aspirasi terkirim"
+          data-slot="aspiration-success-actions"
+          className="mt-5 w-full sm:justify-between"
+        >
+          <p
+            data-slot="aspiration-reference"
+            className="inline-flex min-h-10 w-fit max-w-full items-center rounded-md bg-surface-muted px-3 py-2 text-sm text-body"
+          >
+            Nomor referensi: <strong className="ml-1 whitespace-nowrap text-primary">ASP-{receipt.id}</strong>
+          </p>
+          <Button className="w-full sm:w-auto" onClick={() => setReceipt(null)}>
+            Kirim aspirasi lain
+          </Button>
+        </ActionGroup>
       </div>
     );
   }

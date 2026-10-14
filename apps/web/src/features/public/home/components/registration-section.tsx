@@ -25,11 +25,11 @@ export function RegistrationSection({
           </p>
         ) : null}
         {registrations.length ? (
-          <div className="grid gap-4 lg:grid-cols-[1.3fr_0.7fr]">
+          <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-2">
             {registrations.map((registration) => (
               <article
                 key={registration.id}
-                className="grid gap-5 rounded-2xl border border-primary/10 bg-white p-5 shadow-card sm:p-7 md:grid-cols-[1fr_auto] md:items-center"
+                className="grid h-full w-full min-w-0 gap-5 rounded-2xl border border-primary/10 bg-white p-5 shadow-card sm:p-7 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
               >
                 <div>
                   <span className="inline-flex rounded-full bg-amber-100 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-950">
@@ -38,8 +38,13 @@ export function RegistrationSection({
                   <h3 className="mt-3 font-heading text-xl font-bold leading-snug text-primary sm:text-2xl">
                     {registration.title}
                   </h3>
+                  {registration.description ? (
+                    <p className="mt-2 line-clamp-3 text-sm leading-6 text-muted">
+                      {registration.description}
+                    </p>
+                  ) : null}
                   <p className="mt-2 text-sm text-muted">
-                    {registration.division ?? "Informasi divisi belum tersedia"}
+                    {registration.division ?? "Pendaftaran BEM FMIKOM"}
                   </p>
                   <div className="mt-4 flex flex-wrap gap-2 text-xs text-body">
                     {registration.openDate ? (
@@ -57,8 +62,14 @@ export function RegistrationSection({
                 <div className="flex flex-col items-start gap-3 md:items-end">
                   <CalendarClock aria-hidden="true" className="size-8 text-secondary" />
                   <Button asChild variant="outline">
-                    <Link href="#pendaftaran">
-                      Detail informasi <ArrowRight aria-hidden="true" className="size-4" />
+                    <Link
+                      href={
+                        registration.slug
+                          ? `/pendaftaran/${encodeURIComponent(registration.slug)}/form`
+                          : "/pendaftaran"
+                      }
+                    >
+                      Daftar sekarang <ArrowRight aria-hidden="true" className="size-4" />
                     </Link>
                   </Button>
                 </div>

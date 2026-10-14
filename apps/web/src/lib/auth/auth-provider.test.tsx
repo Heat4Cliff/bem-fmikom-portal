@@ -201,6 +201,10 @@ describe("Phase 2 authentication UI and API client", () => {
     expect(screen.queryByRole("link", { name: "Pengaturan Landing Page" })).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Berita" })).toBeInTheDocument();
     expect(screen.getByText("Scope: Akademik")).toBeInTheDocument();
+    expect(screen.queryByText("Mode akses", { exact: false })).not.toBeInTheDocument();
+    expect(screen.queryByText("Sesi terverifikasi")).not.toBeInTheDocument();
+    expect(screen.getByRole("main").className).toContain("min-h-[calc(100dvh-4.5rem)]");
+    expect(screen.getByRole("button", { name: "Keluar dari akun" })).toBeInTheDocument();
 
     const kepalaKominfo = { ...kepala, division: { id: 4, name: "Kominfo" } };
     rerender(

@@ -27,7 +27,11 @@ func NewWithDependencies(logger *slog.Logger, cfg config.Config, db *sql.DB) (*g
 	organization.Register(engine, authService)
 	aspirations := handler.NewAspirations(service.NewAspirationService(db))
 	aspirations.Register(engine, authService, cfg.FrontendOrigins, middleware.NewAspirationLimiter(cfg.AspirationLimitCount, cfg.AspirationLimitWindow))
-	registrations := handler.NewRegistrations(service.NewRegistrationService(db))
+	registrationStorage, err := storage.NewLocalPrivateDocuments(cfg.RegistrationStoragePath)
+	if err != nil {
+		return nil, err
+	}
+	registrations := handler.NewRegistrations(service.NewRegistrationService(db, registrationStorage, cfg.RegistrationImageMaxUploadBytes), registrationStorage, cfg.RegistrationImageMaxUploadBytes)
 	registrations.Register(engine, authService, cfg.FrontendOrigins, middleware.NewRegistrationLimiter(cfg.RegistrationLimitCount, cfg.RegistrationLimitWindow))
 	documentStorage, err := storage.NewLocalPrivateDocuments(cfg.DocumentStoragePath)
 	if err != nil {
@@ -35,6 +39,12 @@ func NewWithDependencies(logger *slog.Logger, cfg config.Config, db *sql.DB) (*g
 	}
 	documents := service.NewDocumentService(db, documentStorage, cfg.DocumentMaxUploadBytes)
 	handler.NewDocuments(documents, documentStorage, cfg.DocumentMaxUploadBytes).Register(engine, authService)
+	mediaStorage, err := storage.NewLocalPublicMediaStorage(cfg.MediaStoragePath)
+	if err != nil {
+		return nil, err
+	}
+	media := service.NewMediaService(db, mediaStorage, cfg.MediaMaxUploadBytes)
+	handler.NewMedia(media, mediaStorage, cfg.MediaMaxUploadBytes).Register(engine, authService)
 	systemManagement := service.NewSystemManagementService(db, cfg.BcryptCost)
 	handler.NewSystemManagementWithDashboard(systemManagement, service.NewDashboardService(db)).Register(engine, authService)
 	limiter := middleware.NewLoginLimiter(cfg.LoginLimitCount, cfg.LoginLimitWindow)

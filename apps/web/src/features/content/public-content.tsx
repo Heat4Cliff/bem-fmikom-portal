@@ -1,6 +1,6 @@
 import { ArrowLeft, ArrowRight, CalendarDays, Images, Newspaper } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import { MediaImage } from "@/components/ui/media-image";
 import type { Announcement, Article, GalleryCategory } from "./types";
 
 export function PublicContentHeading({
@@ -39,21 +39,18 @@ export function ArticleCard({ article }: { article: Article }) {
     <article className="group overflow-hidden rounded-xl border border-border/70 bg-white shadow-card transition-shadow hover:shadow-raised">
       <Link
         href={`/berita/${encodeURIComponent(article.slug)}`}
-        className="relative grid aspect-[16/9] place-items-center overflow-hidden bg-primary-container/10"
+        className="relative grid aspect-[16/9] place-items-center overflow-hidden bg-surface-muted"
         aria-label={`Baca ${article.title}`}
       >
-        {article.thumbnail_url ? (
-          <Image
-            src={article.thumbnail_url}
-            alt=""
-            fill
-            sizes="(max-width: 768px) 100vw, 33vw"
-            className="object-cover transition-transform group-hover:scale-[1.02]"
-            unoptimized
-          />
-        ) : (
-          <Newspaper aria-hidden="true" className="size-10 text-primary/70" />
-        )}
+        <MediaImage
+          value={article.thumbnail_url}
+          alt=""
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-contain object-center"
+          fallbackClassName="absolute inset-0 grid place-items-center bg-primary-container/10 text-primary/70"
+          fallback={<Newspaper aria-hidden="true" className="size-10" />}
+        />
       </Link>
       <div className="p-5">
         <div className="flex flex-wrap items-center gap-2 text-xs text-muted">
@@ -125,21 +122,18 @@ export function GalleryCard({ category }: { category: GalleryCategory }) {
     <article className="overflow-hidden rounded-xl border border-border/70 bg-white shadow-card">
       <Link
         href={`/galeri/${encodeURIComponent(category.slug)}`}
-        className="relative grid aspect-[4/3] place-items-center overflow-hidden bg-primary-container/10"
+        className="relative grid aspect-[4/3] place-items-center overflow-hidden bg-surface-muted"
         aria-label={`Lihat galeri ${category.title}`}
       >
-        {cover ? (
-          <Image
-            src={cover}
-            alt=""
-            fill
-            sizes="(max-width: 768px) 100vw, 33vw"
-            className="object-cover"
-            unoptimized
-          />
-        ) : (
-          <Images aria-hidden="true" className="size-10 text-primary/70" />
-        )}
+        <MediaImage
+          value={cover}
+          alt=""
+          fill
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-contain object-center"
+          fallbackClassName="absolute inset-0 grid place-items-center bg-primary-container/10 text-primary/70"
+          fallback={<Images aria-hidden="true" className="size-10" />}
+        />
       </Link>
       <div className="p-5">
         <p className="text-xs text-muted">

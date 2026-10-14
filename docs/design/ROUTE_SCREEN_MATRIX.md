@@ -88,3 +88,29 @@ Never show a menu item the current role cannot use, but never rely on hidden nav
 - `/admin/users` maps to SUPER_ADMIN-only management target `manajemen_pengguna_admin_bem`; create/edit/reset use reusable dialogs and mobile uses cards because no separate form screen is indexed.
 - `/admin/activity-logs` maps to SUPER_ADMIN-only read-only target `activity_log_audit_trail_admin_bem`; mobile target is `activity_log_mobile_admin_bem`; detail uses a reusable drawer.
 - Stitch `screen.png` remains visual authority and `code.html` is reference only. Final disposition and visual/UAT limitations are in `docs/codex/PHASE_9_REPORT.md`.
+
+
+## Phase 11 inventory reconciliation — 2026-10-11
+
+The checked-in `SCREEN_INDEX.md` maps 37 actual paired screenshots/HTML references; 8 are explicitly mobile. One additional design folder (`modern_academic_horizon`) is token documentation, not a screen. The successful Next.js production build lists the required public/admin paths, including `/robots.txt`, `/sitemap.xml`, and submission detail. Static route presence is not runtime 404 or browser UAT evidence. All 37 comparison rows and implementation mappings are in `../codex/PHASE_11_VISUAL_MATRIX.md`; comparison and responsive results are BLOCKED by the in-app browser loopback policy.
+
+## Phase 11B corrective mapping — 2026-10-12
+
+- Shared AdminShell mobile header is normal-flow (not sticky); desktop sticky behavior remains. The change applies to `/admin/berita/new`, `/admin/galeri`, `/admin/pendaftaran`, and all admin routes using the shared shell. These user-reviewed mobile routes remain rejected pending manual re-review.
+- Shared `MediaUpload` is wired to article cover (`article_editor_tulis_edit_berita`), gallery preview (`manajemen_galeri_admin_bem`), announcement image (`manajemen_pengumuman_admin_bem`), member photo (`tambah_edit_pengurus_admin_bem`), and hero image (`pengaturan_landing_page_admin_bem`). Google Photos destination stays a plain external URL.
+- Updated visual dispositions are listed in `../codex/PHASE_11_VISUAL_MATRIX.md`; changed admin references are `RE-REVIEW REQUIRED`. No mobile visual row is marked PASS.
+
+## Phase 11H interaction/data notes (2026-10-13)
+
+- `/#struktur` expands the active period's public leadership and division hierarchy inline. It uses the already-loaded `GET /api/v1/public/organization` payload and does not add a dedicated `/struktur` route.
+- `/#pendaftaran` reads the backend's `GET /api/v1/public/registrations?status=OPEN` response on each dynamic landing request (no-store). A listed card links to `/pendaftaran/{slug}/form`; availability and UTC window filtering remain API-owned.
+- `/pendaftaran/{slug}/form` renders IMAGE fields as bounded image selection/preview/replace/remove controls. Admin submissions detail streams images only via the authorized private file endpoint; applicant attachments do not use `/public/media`.
+- Content-media frames for news, announcements, gallery, landing visuals, and registration use centered `object-contain`. Member photos are avatars and may use `object-cover` within a fixed frame with a fallback.
+- Desktop/mobile layout, image fitting, structure disclosure, and registration upload/detail screens changed in Phase 11H and remain RE-REVIEW REQUIRED pending user review at 360×800, 390×844, 412×915, and 1440×900.
+
+## Phase 11 public registration and organization correction — 2026-10-13
+
+- `/` `#struktur` is a compact active-period preview with a navigation CTA; it does not expand the division/member hierarchy.
+- `/struktur` is the canonical public organization detail route. It reads `GET /api/v1/public/organization`, renders the active period's leadership/divisions/heads/members in API order, and shows neutral no-period/API-error states.
+- Navbar and landing preview CTA both link to `/struktur`. No dedicated public organization detail Stitch screenshot is indexed; implementation reuses public design tokens and the public landing visual language. The admin organization screen is not treated as the public visual target.
+- The landing registration list uses one column through tablet and an equal two-column desktop grid; odd final items retain a normal one-column track.

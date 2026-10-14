@@ -56,6 +56,17 @@ func TestDatabaseIntegration(t *testing.T) {
 		t.Fatalf("connect integration database: %v", err)
 	}
 	defer db.Close()
+	// This is an explicitly isolated *_test database. Remove prior integration media
+	// fixtures before rolling back 00009, whose DOWN constraints target 00008 formats.
+	var existingMediaTable int
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=? AND table_name='media_assets'`, dsn.DBName).Scan(&existingMediaTable); err != nil {
+		t.Fatalf("inspect dedicated test media table before reset: %v", err)
+	}
+	if existingMediaTable == 1 {
+		if _, err := db.ExecContext(ctx, `DELETE FROM media_assets`); err != nil {
+			t.Fatalf("clear dedicated test media fixtures before reset: %v", err)
+		}
+	}
 	if err := migrate.DownToZero(ctx, db); err != nil {
 		t.Fatalf("reset dedicated test database: %v", err)
 	}
@@ -65,13 +76,92 @@ func TestDatabaseIntegration(t *testing.T) {
 	defer func() {
 		cleanupCtx, cleanupCancel := context.WithTimeout(context.Background(), 30*time.Second)
 		defer cleanupCancel()
+		if _, err := db.ExecContext(cleanupCtx, `DELETE FROM media_assets`); err != nil {
+			t.Errorf("clean dedicated test media fixtures: %v", err)
+			return
+		}
 		if err := migrate.DownToZero(cleanupCtx, db); err != nil {
 			t.Errorf("clean dedicated test database: %v", err)
 		}
 	}()
 	var tableCount int
-	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name IN ('periods','divisions','users','refresh_sessions','activity_logs','article_categories','articles','article_category_map','gallery_categories','gallery_items','announcements','organization_members','aspirations','registration_forms','registration_fields','registration_field_options','registration_submissions','registration_submission_answers','documents','landing_settings')`, dsn.DBName).Scan(&tableCount); err != nil || tableCount != 20 {
-		t.Fatalf("phase 9 schema table count = %d, err = %v", tableCount, err)
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ? AND table_name IN ('periods','divisions','users','refresh_sessions','activity_logs','article_categories','articles','article_category_map','gallery_categories','gallery_items','announcements','organization_members','aspirations','registration_forms','registration_fields','registration_field_options','registration_submissions','registration_submission_answers','registration_submission_files','documents','landing_settings','media_assets')`, dsn.DBName).Scan(&tableCount); err != nil || tableCount != 22 {
+		t.Fatalf("phase 11 schema table count = %d, err = %v", tableCount, err)
+	}
+	var mediaIndexes, mediaForeignKeys, mediaChecks int
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(DISTINCT index_name) FROM information_schema.statistics WHERE table_schema=? AND table_name='media_assets' AND index_name IN ('uq_media_assets_storage_key','idx_media_assets_uploader_purpose','idx_media_assets_sha256')`, dsn.DBName).Scan(&mediaIndexes); err != nil || mediaIndexes != 3 {
+		t.Fatalf("media indexes = %d, err = %v", mediaIndexes, err)
+	}
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.key_column_usage WHERE constraint_schema=? AND table_name='media_assets' AND constraint_name='fk_media_assets_uploader' AND referenced_table_name='users'`, dsn.DBName).Scan(&mediaForeignKeys); err != nil || mediaForeignKeys != 1 {
+		t.Fatalf("media uploader foreign key count = %d, err = %v", mediaForeignKeys, err)
+	}
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_schema=? AND table_name='media_assets' AND constraint_type='CHECK' AND constraint_name LIKE 'chk_media_assets_%'`, dsn.DBName).Scan(&mediaChecks); err != nil || mediaChecks != 5 {
+		t.Fatalf("media check constraint count = %d, err = %v", mediaChecks, err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback public-structure visibility migration 00011: %v", err)
+	}
+	var visibilityColumns int
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.columns WHERE table_schema=? AND table_name='divisions' AND column_name='show_in_public_structure'`, dsn.DBName).Scan(&visibilityColumns); err != nil || visibilityColumns != 0 {
+		t.Fatalf("public-structure visibility column remains after 00011 DOWN: %d err=%v", visibilityColumns, err)
+	}
+	if _, err := db.ExecContext(ctx, `INSERT INTO periods(name,start_date,end_date,status) VALUES('Phase11 visibility backfill','2035-01-01','2035-12-31','ARCHIVED')`); err != nil {
+		t.Fatalf("create migration visibility fixture period: %v", err)
+	}
+	var visibilityPeriodID int64
+	if err := db.QueryRowContext(ctx, `SELECT id FROM periods WHERE name='Phase11 visibility backfill'`).Scan(&visibilityPeriodID); err != nil {
+		t.Fatalf("read migration visibility fixture period: %v", err)
+	}
+	for _, divisionName := range []string{"Fakultas", "BPH", "Bidang Migrasi"} {
+		if _, err := db.ExecContext(ctx, `INSERT INTO divisions(period_id,name,status) VALUES(?,?,'ACTIVE')`, visibilityPeriodID, divisionName); err != nil {
+			t.Fatalf("create migration visibility fixture %q: %v", divisionName, err)
+		}
+	}
+	if err := migrate.Up(ctx, db); err != nil {
+		t.Fatalf("reapply public-structure visibility migration: %v", err)
+	}
+	var facultyVisible, bphVisible, workDivisionVisible bool
+	if err := db.QueryRowContext(ctx, `SELECT MAX(CASE WHEN name='Fakultas' THEN show_in_public_structure END),MAX(CASE WHEN name='BPH' THEN show_in_public_structure END),MAX(CASE WHEN name='Bidang Migrasi' THEN show_in_public_structure END) FROM divisions WHERE period_id=?`, visibilityPeriodID).Scan(&facultyVisible, &bphVisible, &workDivisionVisible); err != nil || facultyVisible || bphVisible || !workDivisionVisible {
+		t.Fatalf("migration backfill visibility: Fakultas=%v BPH=%v work=%v err=%v", facultyVisible, bphVisible, workDivisionVisible, err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback re-applied public-structure visibility migration: %v", err)
+	}
+	if _, err := db.ExecContext(ctx, `DELETE FROM divisions WHERE period_id=?`, visibilityPeriodID); err != nil {
+		t.Fatalf("remove migration visibility fixtures: %v", err)
+	}
+	if _, err := db.ExecContext(ctx, `DELETE FROM periods WHERE id=?`, visibilityPeriodID); err != nil {
+		t.Fatalf("remove migration visibility fixture period: %v", err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback registration-image migration 00010: %v", err)
+	}
+	var privateFileTables, imageFieldChecks int
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=? AND table_name='registration_submission_files'`, dsn.DBName).Scan(&privateFileTables); err != nil || privateFileTables != 0 {
+		t.Fatalf("registration file table remains after 00010 DOWN: %d err=%v", privateFileTables, err)
+	}
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_schema=? AND table_name='registration_fields' AND constraint_name='chk_registration_fields_type' AND constraint_type='CHECK'`, dsn.DBName).Scan(&imageFieldChecks); err != nil || imageFieldChecks != 1 {
+		t.Fatalf("registration field check missing after 00010 DOWN: %d err=%v", imageFieldChecks, err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback multi-format media migration 00009: %v", err)
+	}
+	var mediaTables int
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=? AND table_name='media_assets'`, dsn.DBName).Scan(&mediaTables); err != nil || mediaTables != 1 {
+		t.Fatalf("media_assets table missing after migration 00009 DOWN: count=%d err=%v", mediaTables, err)
+	}
+	var originalMIMEColumns int
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.columns WHERE table_schema=? AND table_name='media_assets' AND column_name='original_mime_type'`, dsn.DBName).Scan(&originalMIMEColumns); err != nil || originalMIMEColumns != 0 {
+		t.Fatalf("original_mime_type remains after migration 00009 DOWN: count=%d err=%v", originalMIMEColumns, err)
+	}
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_schema=? AND table_name='media_assets' AND constraint_type='CHECK' AND constraint_name LIKE 'chk_media_assets_%'`, dsn.DBName).Scan(&mediaChecks); err != nil || mediaChecks != 4 {
+		t.Fatalf("baseline media check constraint count after migration 00009 DOWN = %d, err = %v", mediaChecks, err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback public-media migration: %v", err)
+	}
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema=? AND table_name='media_assets'`, dsn.DBName).Scan(&mediaTables); err != nil || mediaTables != 0 {
+		t.Fatalf("media_assets table remains after migration 00008 DOWN: count=%d err=%v", mediaTables, err)
 	}
 	if err := migrate.Down(ctx, db); err != nil {
 		t.Fatalf("rollback system-management migration: %v", err)
@@ -184,6 +274,8 @@ func TestDatabaseIntegration(t *testing.T) {
 		AspirationLimitCount: 100, AspirationLimitWindow: 15 * time.Minute,
 		RegistrationLimitCount: 100, RegistrationLimitWindow: 30 * time.Minute,
 		DocumentStoragePath: filepath.Join(t.TempDir(), "private-document-root"), DocumentMaxUploadBytes: 10 << 20,
+		MediaStoragePath: filepath.Join(t.TempDir(), "public-media-root"), MediaMaxUploadBytes: 5 << 20,
+		RegistrationStoragePath: filepath.Join(t.TempDir(), "private-registration-root"), RegistrationImageMaxUploadBytes: 5 << 20,
 	}
 	engine, err := NewWithDependencies(logger, cfg, db)
 	if err != nil {
@@ -286,7 +378,8 @@ func TestDatabaseIntegration(t *testing.T) {
 		t.Fatalf("second KEPALA_BIDANG login status = %d body=%s", kepalaBLogin.Code, kepalaBLogin.Body.String())
 	}
 	kepalaBAccessToken := accessTokenFromRecorder(t, kepalaBLogin)
-	runContentIntegration(t, ctx, db, engine, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken, divisionID, divisionBID)
+	contentMedia := runMediaIntegration(t, ctx, db, engine, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, cfg.MediaStoragePath)
+	runContentIntegration(t, ctx, db, engine, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken, divisionID, divisionBID, contentMedia)
 	runOrganizationIntegration(t, ctx, db, engine, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken)
 	kepalaAUser, err := repository.NewUsers(db).FindByEmail(ctx, "kepala@example.org")
 	if err != nil {
@@ -642,8 +735,9 @@ func mustAuthService(t *testing.T, db *sql.DB, cfg config.Config, logger *slog.L
 	return auth
 }
 
-func runContentIntegration(t *testing.T, ctx context.Context, db *sql.DB, engine http.Handler, superToken, bphToken, kepalaAToken, kepalaBToken string, divisionA, divisionB int64) {
+func runContentIntegration(t *testing.T, ctx context.Context, db *sql.DB, engine http.Handler, superToken, bphToken, kepalaAToken, kepalaBToken string, divisionA, divisionB int64, media contentMediaFixtures) {
 	t.Helper()
+	runArticleCoverIntegration(t, engine, superToken, media.ArticleCovers)
 
 	categoryResponse := contentRequest(engine, http.MethodPost, "/api/v1/admin/article-categories", `{"name":"Kegiatan Kampus","slug":"","description":"Agenda organisasi"}`, superToken)
 	if categoryResponse.Code != http.StatusCreated {
@@ -767,8 +861,15 @@ func runContentIntegration(t *testing.T, ctx context.Context, db *sql.DB, engine
 	if err := db.QueryRowContext(ctx, `SELECT division_id FROM gallery_categories WHERE id=?`, gallery.Data.ID).Scan(&galleryDivision); err != nil || !galleryDivision.Valid || galleryDivision.Int64 != divisionA {
 		t.Fatalf("gallery category has unexpected division: division=%v err=%v", galleryDivision, err)
 	}
+	categoryReload := contentRequest(engine, http.MethodGet, "/api/v1/admin/gallery-categories?page=1&limit=100&search=Agenda%20Aman", "", bphToken)
+	if categoryReload.Code != http.StatusOK || !strings.Contains(categoryReload.Body.String(), `"slug":"agenda-aman"`) {
+		t.Fatalf("saved gallery category missing after list reload: %d %s", categoryReload.Code, categoryReload.Body.String())
+	}
 	if response := contentRequest(engine, http.MethodPatch, fmt.Sprintf("/api/v1/admin/gallery-categories/%d", gallery.Data.ID), `{"title":"Perubahan lintas divisi","slug":"agenda-aman"}`, kepalaBToken); response.Code != http.StatusForbidden {
 		t.Fatalf("cross-division gallery category update status=%d body=%s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodPost, "/api/v1/admin/gallery-items", `{"category_id":0,"title":"Kategori Kosong","google_photos_url":"https://photos.app.goo.gl/nope"}`, bphToken); response.Code != http.StatusUnprocessableEntity || !strings.Contains(response.Body.String(), `"category_id"`) {
+		t.Fatalf("missing gallery category did not return field validation: %d %s", response.Code, response.Body.String())
 	}
 	galleryItemBody := fmt.Sprintf(`{"category_id":%d,"title":"Album Rapat","google_photos_url":"https://photos.app.goo.gl/aman","sort_order":1}`, gallery.Data.ID)
 	galleryItem := contentRequest(engine, http.MethodPost, "/api/v1/admin/gallery-items", galleryItemBody, kepalaAToken)
@@ -783,6 +884,10 @@ func runContentIntegration(t *testing.T, ctx context.Context, db *sql.DB, engine
 	if err := json.Unmarshal(galleryItem.Body.Bytes(), &item); err != nil || item.Data.ID == 0 {
 		t.Fatalf("parse gallery item response: %v (%s)", err, galleryItem.Body.String())
 	}
+	var itemWithoutPreview sql.NullString
+	if err := db.QueryRowContext(ctx, `SELECT preview_image_url FROM gallery_items WHERE id=?`, item.Data.ID).Scan(&itemWithoutPreview); err != nil || itemWithoutPreview.Valid {
+		t.Fatalf("optional gallery preview should persist as NULL: value=%v err=%v", itemWithoutPreview, err)
+	}
 	if response := contentRequest(engine, http.MethodPatch, fmt.Sprintf("/api/v1/admin/gallery-items/%d", item.Data.ID), galleryItemBody, kepalaBToken); response.Code != http.StatusForbidden {
 		t.Fatalf("cross-division gallery item update status=%d body=%s", response.Code, response.Body.String())
 	}
@@ -790,7 +895,38 @@ func runContentIntegration(t *testing.T, ctx context.Context, db *sql.DB, engine
 	if response := contentRequest(engine, http.MethodPatch, fmt.Sprintf("/api/v1/admin/gallery-items/%d", item.Data.ID), updatedGalleryItem, kepalaAToken); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), "Album Rapat Diperbarui") {
 		t.Fatalf("same-division gallery item update failed: %d %s", response.Code, response.Body.String())
 	}
+	internalGalleryBody := fmt.Sprintf(`{"category_id":%d,"title":"Album Preview Internal","description":"Preview tersimpan","google_photos_url":"https://photos.app.goo.gl/preview","preview_image_url":%q,"sort_order":3}`, gallery.Data.ID, "http://localhost:8080"+media.GalleryPreview)
+	internalGallery := contentRequest(engine, http.MethodPost, "/api/v1/admin/gallery-items", internalGalleryBody, kepalaAToken)
+	if internalGallery.Code != http.StatusCreated {
+		t.Fatalf("create gallery item with uploaded preview failed: %d %s", internalGallery.Code, internalGallery.Body.String())
+	}
+	var internalItem struct {
+		Data struct {
+			ID              int64   `json:"id"`
+			PreviewImageURL *string `json:"preview_image_url"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(internalGallery.Body.Bytes(), &internalItem); err != nil || internalItem.Data.ID == 0 || internalItem.Data.PreviewImageURL == nil || *internalItem.Data.PreviewImageURL != media.GalleryPreview {
+		t.Fatalf("uploaded gallery preview response was not normalized: %v (%s)", err, internalGallery.Body.String())
+	}
+	var persistedPreview sql.NullString
+	if err := db.QueryRowContext(ctx, `SELECT preview_image_url FROM gallery_items WHERE id=?`, internalItem.Data.ID).Scan(&persistedPreview); err != nil || !persistedPreview.Valid || persistedPreview.String != media.GalleryPreview {
+		t.Fatalf("gallery media reference was not persisted canonically: value=%v err=%v", persistedPreview, err)
+	}
+	if response := contentRequest(engine, http.MethodGet, "/api/v1/admin/gallery-items?category_id="+fmt.Sprint(gallery.Data.ID)+"&page=1&limit=100", "", bphToken); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), "Album Preview Internal") || !strings.Contains(response.Body.String(), media.GalleryPreview) {
+		t.Fatalf("gallery item missing after admin list reload: %d %s", response.Code, response.Body.String())
+	}
 	publicGallery := contentRequest(engine, http.MethodGet, "/api/v1/public/gallery-categories/agenda-aman", "", "")
+	if publicGallery.Code != http.StatusOK || !strings.Contains(publicGallery.Body.String(), "https://photos.app.goo.gl/preview") || !strings.Contains(publicGallery.Body.String(), media.GalleryPreview) {
+		t.Fatalf("public gallery item did not expose distinct album and stored preview values: %d %s", publicGallery.Code, publicGallery.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodPatch, fmt.Sprintf("/api/v1/admin/gallery-items/%d", internalItem.Data.ID), fmt.Sprintf(`{"category_id":%d,"title":"Album Preview Internal","google_photos_url":"https://photos.app.goo.gl/preview","preview_image_url":"https://cdn.example.test/legacy-preview.jpg","sort_order":3}`, gallery.Data.ID), kepalaAToken); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), "cdn.example.test/legacy-preview.jpg") {
+		t.Fatalf("legacy HTTPS gallery preview update rejected: %d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodPatch, fmt.Sprintf("/api/v1/admin/gallery-items/%d", internalItem.Data.ID), fmt.Sprintf(`{"category_id":%d,"title":"Invalid Preview","google_photos_url":"https://photos.app.goo.gl/preview","preview_image_url":"/uploads/local.png","sort_order":3}`, gallery.Data.ID), kepalaAToken); response.Code != http.StatusUnprocessableEntity || !strings.Contains(response.Body.String(), `"preview_image_url"`) {
+		t.Fatalf("arbitrary gallery preview path was not rejected with field feedback: %d %s", response.Code, response.Body.String())
+	}
+	publicGallery = contentRequest(engine, http.MethodGet, "/api/v1/public/gallery-categories/agenda-aman", "", "")
 	if publicGallery.Code != http.StatusOK || !strings.Contains(publicGallery.Body.String(), "https://photos.app.goo.gl/aman") {
 		t.Fatalf("public gallery category/item response=%d %s", publicGallery.Code, publicGallery.Body.String())
 	}
@@ -828,6 +964,73 @@ func runContentIntegration(t *testing.T, ctx context.Context, db *sql.DB, engine
 	if err := json.Unmarshal(announcementResponse.Body.Bytes(), &announcement); err != nil || announcement.Data.ID == 0 || announcement.Data.Status != "INACTIVE" {
 		t.Fatalf("announcement initial state invalid: %v (%s)", err, announcementResponse.Body.String())
 	}
+	var noAnnouncementImage sql.NullString
+	if err := db.QueryRowContext(ctx, `SELECT image_url FROM announcements WHERE id=?`, announcement.Data.ID).Scan(&noAnnouncementImage); err != nil || noAnnouncementImage.Valid {
+		t.Fatalf("optional announcement image should persist as NULL: value=%v err=%v", noAnnouncementImage, err)
+	}
+	startOnlyBody := fmt.Sprintf(`{"title":"Pengumuman Tanpa Akhir","slug":"pengumuman-tanpa-akhir","content_html":"<p>Tanpa tanggal akhir</p>","start_at":%q}`, start)
+	startOnly := contentRequest(engine, http.MethodPost, "/api/v1/admin/announcements", startOnlyBody, bphToken)
+	if startOnly.Code != http.StatusCreated {
+		t.Fatalf("announcement with optional end_at omitted failed: %d %s", startOnly.Code, startOnly.Body.String())
+	}
+	var startOnlyData struct {
+		Data struct {
+			ID int64 `json:"id"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(startOnly.Body.Bytes(), &startOnlyData); err != nil || startOnlyData.Data.ID == 0 {
+		t.Fatalf("parse start-only announcement response: %v %s", err, startOnly.Body.String())
+	}
+	var persistedEnd sql.NullTime
+	if err := db.QueryRowContext(ctx, `SELECT end_at FROM announcements WHERE id=?`, startOnlyData.Data.ID).Scan(&persistedEnd); err != nil || persistedEnd.Valid {
+		t.Fatalf("optional announcement end_at should remain NULL: value=%v err=%v", persistedEnd, err)
+	}
+	mediaAnnouncementBody := fmt.Sprintf(`{"title":"Pengumuman Gambar Uji","slug":"pengumuman-gambar-uji","content_html":"<p>Info dengan gambar</p>","image_url":%q,"start_at":%q,"end_at":%q}`, "http://localhost:8080"+media.AnnouncementImage, start, end)
+	mediaAnnouncement := contentRequest(engine, http.MethodPost, "/api/v1/admin/announcements", mediaAnnouncementBody, bphToken)
+	if mediaAnnouncement.Code != http.StatusCreated {
+		t.Fatalf("create announcement with uploaded image failed: %d %s", mediaAnnouncement.Code, mediaAnnouncement.Body.String())
+	}
+	var mediaAnnouncementData struct {
+		Data struct {
+			ID       int64   `json:"id"`
+			ImageURL *string `json:"image_url"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(mediaAnnouncement.Body.Bytes(), &mediaAnnouncementData); err != nil || mediaAnnouncementData.Data.ID == 0 || mediaAnnouncementData.Data.ImageURL == nil || *mediaAnnouncementData.Data.ImageURL != media.AnnouncementImage {
+		t.Fatalf("announcement media response was not normalized: %v (%s)", err, mediaAnnouncement.Body.String())
+	}
+	var persistedAnnouncementImage sql.NullString
+	if err := db.QueryRowContext(ctx, `SELECT image_url FROM announcements WHERE id=?`, mediaAnnouncementData.Data.ID).Scan(&persistedAnnouncementImage); err != nil || !persistedAnnouncementImage.Valid || persistedAnnouncementImage.String != media.AnnouncementImage {
+		t.Fatalf("announcement media reference was not persisted canonically: value=%v err=%v", persistedAnnouncementImage, err)
+	}
+	if response := contentRequest(engine, http.MethodGet, fmt.Sprintf("/api/v1/admin/announcements/%d", mediaAnnouncementData.Data.ID), "", bphToken); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), media.AnnouncementImage) {
+		t.Fatalf("saved announcement image missing after detail reload: %d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodPost, fmt.Sprintf("/api/v1/admin/announcements/%d/activate", mediaAnnouncementData.Data.ID), `{}`, bphToken); response.Code != http.StatusOK {
+		t.Fatalf("media announcement activation failed: %d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodGet, "/api/v1/public/announcements/active", "", ""); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), "pengumuman-gambar-uji") || !strings.Contains(response.Body.String(), media.AnnouncementImage) {
+		t.Fatalf("active public announcement did not render the saved image reference: %d %s", response.Code, response.Body.String())
+	}
+	if response := contentRequest(engine, http.MethodPost, fmt.Sprintf("/api/v1/admin/announcements/%d/deactivate", mediaAnnouncementData.Data.ID), `{}`, bphToken); response.Code != http.StatusOK {
+		t.Fatalf("media announcement deactivation failed: %d %s", response.Code, response.Body.String())
+	}
+	legacyAnnouncementBody := fmt.Sprintf(`{"title":"Pengumuman Gambar Uji","slug":"pengumuman-gambar-uji","content_html":"<p>Info dengan gambar</p>","image_url":"https://cdn.example.test/legacy.jpg","start_at":%q,"end_at":%q}`, start, end)
+	if response := contentRequest(engine, http.MethodPatch, fmt.Sprintf("/api/v1/admin/announcements/%d", mediaAnnouncementData.Data.ID), legacyAnnouncementBody, bphToken); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), "cdn.example.test/legacy.jpg") {
+		t.Fatalf("legacy HTTPS announcement image update rejected: %d %s", response.Code, response.Body.String())
+	}
+	invalidAnnouncementImage := strings.Replace(mediaAnnouncementBody, "http://localhost:8080"+media.AnnouncementImage, "data:text/html,<h1>x</h1>", 1)
+	if response := contentRequest(engine, http.MethodPost, "/api/v1/admin/announcements", invalidAnnouncementImage, bphToken); response.Code != http.StatusUnprocessableEntity || !strings.Contains(response.Body.String(), `"image_url"`) {
+		t.Fatalf("unsafe announcement image was not rejected with field feedback: %d %s", response.Code, response.Body.String())
+	}
+	invalidSchedule := fmt.Sprintf(`{"title":"Tanggal Salah","slug":"tanggal-salah","content_html":"<p>Isi</p>","start_at":%q,"end_at":%q}`, end, start)
+	if response := contentRequest(engine, http.MethodPost, "/api/v1/admin/announcements", invalidSchedule, bphToken); response.Code != http.StatusUnprocessableEntity || !strings.Contains(response.Body.String(), `"end_at"`) {
+		t.Fatalf("invalid announcement date order did not identify end_at: %d %s", response.Code, response.Body.String())
+	}
+	invalidDate := `{"title":"Tanggal Format Salah","slug":"tanggal-format-salah","content_html":"<p>Isi</p>","start_at":"not-a-date"}`
+	if response := contentRequest(engine, http.MethodPost, "/api/v1/admin/announcements", invalidDate, bphToken); response.Code != http.StatusUnprocessableEntity || !strings.Contains(response.Body.String(), `"start_at"`) {
+		t.Fatalf("invalid announcement datetime did not identify start_at: %d %s", response.Code, response.Body.String())
+	}
 	updatedAnnouncementBody := fmt.Sprintf(`{"title":"Pengumuman Scope Diperbarui","slug":"pengumuman-scope-test","content_html":"<p>Info resmi diperbarui</p>","start_at":%q,"end_at":%q}`, start, end)
 	if response := contentRequest(engine, http.MethodPatch, fmt.Sprintf("/api/v1/admin/announcements/%d", announcement.Data.ID), updatedAnnouncementBody, bphToken); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), "Pengumuman Scope Diperbarui") {
 		t.Fatalf("announcement update failed: %d %s", response.Code, response.Body.String())
@@ -857,6 +1060,64 @@ func runContentIntegration(t *testing.T, ctx context.Context, db *sql.DB, engine
 	var activityCount int
 	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM activity_logs WHERE entity_type IN ('ARTICLE_CATEGORY','ARTICLE','GALLERY_CATEGORY','GALLERY_ITEM','ANNOUNCEMENT') AND action IN ('CREATE','UPDATE','DELETE','PUBLISH','UNPUBLISH','ACTIVATE','DEACTIVATE')`).Scan(&activityCount); err != nil || activityCount < 9 {
 		t.Fatalf("content activity events missing: count=%d err=%v", activityCount, err)
+	}
+}
+
+func runArticleCoverIntegration(t *testing.T, engine http.Handler, token string, covers []articleCoverFixture) {
+	t.Helper()
+	for index, cover := range covers {
+		t.Run("article_cover_"+strings.TrimPrefix(filepath.Ext(cover.Filename), "."), func(t *testing.T) {
+			title := fmt.Sprintf("Cover Format %d %s", index+1, strings.TrimPrefix(filepath.Ext(cover.Filename), "."))
+			body, err := json.Marshal(map[string]any{
+				"title": title, "slug": fmt.Sprintf("cover-format-%d-%s", index+1, strings.TrimPrefix(filepath.Ext(cover.Filename), ".")),
+				"content_html": "<p>Pengujian cover multi-format.</p>", "thumbnail_url": "http://localhost:8080" + cover.PublicURL,
+			})
+			if err != nil {
+				t.Fatal(err)
+			}
+			created := contentRequest(engine, http.MethodPost, "/api/v1/admin/articles", string(body), token)
+			if created.Code != http.StatusCreated {
+				t.Fatalf("create article with %s cover: %d %s", cover.Filename, created.Code, created.Body.String())
+			}
+			var article struct {
+				Data struct {
+					ID           int64   `json:"id"`
+					Slug         string  `json:"slug"`
+					ThumbnailURL *string `json:"thumbnail_url"`
+				} `json:"data"`
+			}
+			if err := json.Unmarshal(created.Body.Bytes(), &article); err != nil || article.Data.ID < 1 || article.Data.ThumbnailURL == nil || *article.Data.ThumbnailURL != cover.PublicURL {
+				t.Fatalf("created article did not normalize cover reference: err=%v body=%s", err, created.Body.String())
+			}
+			adminURL := fmt.Sprintf("/api/v1/admin/articles/%d", article.Data.ID)
+			if reloaded := contentRequest(engine, http.MethodGet, adminURL, "", token); reloaded.Code != http.StatusOK || !strings.Contains(reloaded.Body.String(), cover.PublicURL) {
+				t.Fatalf("reload %s cover: %d %s", cover.Filename, reloaded.Code, reloaded.Body.String())
+			}
+			body, err = json.Marshal(map[string]any{
+				"title": title + " Diperbarui", "slug": article.Data.Slug,
+				"content_html": "<p>Cover diperbarui.</p>", "thumbnail_url": cover.PublicURL,
+			})
+			if err != nil {
+				t.Fatal(err)
+			}
+			updated := contentRequest(engine, http.MethodPatch, adminURL, string(body), token)
+			if updated.Code != http.StatusOK || !strings.Contains(updated.Body.String(), cover.PublicURL) {
+				t.Fatalf("edit %s cover: %d %s", cover.Filename, updated.Code, updated.Body.String())
+			}
+			published := contentRequest(engine, http.MethodPost, fmt.Sprintf("/api/v1/admin/articles/%d/publish", article.Data.ID), `{}`, token)
+			if published.Code != http.StatusOK {
+				t.Fatalf("publish %s cover article: %d %s", cover.Filename, published.Code, published.Body.String())
+			}
+			public := contentRequest(engine, http.MethodGet, "/api/v1/public/articles/"+article.Data.Slug, "", "")
+			if public.Code != http.StatusOK || !strings.Contains(public.Body.String(), cover.PublicURL) {
+				t.Fatalf("public %s cover article: %d %s", cover.Filename, public.Code, public.Body.String())
+			}
+			mediaResponse := httptest.NewRecorder()
+			engine.ServeHTTP(mediaResponse, httptest.NewRequest(http.MethodGet, cover.PublicURL, nil))
+			if mediaResponse.Code != http.StatusOK || mediaResponse.Header().Get("Content-Type") != cover.StoredMIME || len(mediaResponse.Body.Bytes()) == 0 {
+				t.Fatalf("public %s media response status=%d mime=%s size=%d", cover.Filename, mediaResponse.Code, mediaResponse.Header().Get("Content-Type"), mediaResponse.Body.Len())
+			}
+		})
 	}
 }
 

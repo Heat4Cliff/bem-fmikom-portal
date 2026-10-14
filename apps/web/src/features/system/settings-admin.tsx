@@ -2,8 +2,8 @@
 
 import { Eye, Plus, Save, Trash2 } from "lucide-react";
 import * as React from "react";
-import Image from "next/image";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
+import { MediaUpload } from "@/components/admin/media-upload";
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/primitives";
 import { Input, Label, Textarea } from "@/components/ui/primitives";
@@ -149,7 +149,7 @@ export function LandingSettingsAdmin() {
     about: { title: value.about_title, description: value.about_description, highlights: [] },
     visionMission: { vision: value.vision || null, mission: value.missions },
     statistics: [],
-    organization: { leadership: [], divisions: [], members: [] },
+    organization: { leadership: [], period: null, status: "empty" },
     news: [],
     announcements: [],
     gallery: [],
@@ -234,25 +234,14 @@ export function LandingSettingsAdmin() {
                 {textField("hero_secondary_cta_label", "Label CTA kedua", 80)}
                 {textField("hero_secondary_cta_url", "URL CTA kedua")}
               </div>
-              <div className="grid gap-1.5">
-                <Label htmlFor="hero_image_url">URL gambar hero (HTTPS)</Label>
-                <Input
-                  id="hero_image_url"
-                  type="url"
-                  value={value.hero_image_url ?? ""}
-                  onChange={(e) => update("hero_image_url", toNullable(e.target.value))}
-                />
-              </div>
-              {value.hero_image_url && (
-                <Image
-                  src={value.hero_image_url}
-                  alt="Pratinjau gambar hero"
-                  width={1200}
-                  height={600}
-                  unoptimized
-                  className="max-h-60 w-full rounded-lg object-cover"
-                />
-              )}
+              <MediaUpload
+                id="landing-hero-image"
+                label="Gambar hero"
+                purpose="LANDING_HERO"
+                value={value.hero_image_url ?? ""}
+                onChange={(url) => update("hero_image_url", toNullable(url))}
+                optional
+              />
             </div>
           )}
           {active === "Tentang BEM" && (

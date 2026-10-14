@@ -37,10 +37,23 @@ export function getPublicRegistration(slug: string) {
     retryOnUnauthorized: false,
   });
 }
-export function submitRegistration(id: number, answers: Record<string, unknown>) {
+export function submitRegistration(
+  id: number,
+  answers: Record<string, unknown>,
+  images: Record<string, File> = {},
+) {
+  if (!Object.keys(images).length) {
+    return apiRequest<{ submission_id: number; submitted_at: string; registration_title: string }>(
+      `/public/registrations/${id}/submissions`,
+      { method: "POST", body: { answers }, retryOnUnauthorized: false },
+    );
+  }
+  const body = new FormData();
+  body.set("answers", JSON.stringify(answers));
+  for (const [fieldKey, file] of Object.entries(images)) body.set(`image:${fieldKey}`, file, file.name);
   return apiRequest<{ submission_id: number; submitted_at: string; registration_title: string }>(
     `/public/registrations/${id}/submissions`,
-    { method: "POST", body: { answers }, retryOnUnauthorized: false },
+    { method: "POST", body, retryOnUnauthorized: false },
   );
 }
 export async function getRegistrations(filters: Record<string, string | number | undefined> = {}) {
@@ -84,6 +97,20 @@ export async function getRegistrationSubmissions(
 }
 export function getRegistrationSubmission(id: number, submissionId: number) {
   return apiRequest<RegistrationSubmission>(`/admin/registrations/${id}/submissions/${submissionId}`);
+}
+export async function getRegistrationAttachmentBlob(downloadPath: string) {
+  let token = getMemoryAccessToken();
+  const url = `${(process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8080/api/v1").replace(/\/$/, "")}${downloadPath}`;
+  let response = await fetch(url, {
+    credentials: "include",
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+  if (response.status === 401 && token) {
+    token = await refreshAccessToken();
+    response = await fetch(url, { credentials: "include", headers: { Authorization: `Bearer ${token}` } });
+  }
+  if (!response.ok) throw new ApiError("Lampiran tidak dapat dimuat", response.status);
+  return response.blob();
 }
 export async function downloadRegistrationExport(id: number, search = "") {
   let token = getMemoryAccessToken();

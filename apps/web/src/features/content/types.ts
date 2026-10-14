@@ -32,6 +32,7 @@ export type GalleryCategory = {
   slug: string;
   description?: string | null;
   period_id?: number | null;
+  period_name?: string | null;
   division_id?: number | null;
   division_name?: string | null;
   event_date?: string | null;
@@ -51,17 +52,15 @@ export type Announcement = {
 };
 
 export type PublicOrganizationMember = {
-  id: number;
   name: string;
-  nim?: string | null;
   position: "KETUA" | "WAKIL_KETUA" | "SEKRETARIS" | "BENDAHARA" | "KEPALA_BIDANG" | "ANGGOTA";
   photo_url?: string | null;
+  division_name?: string | null;
 };
 export type PublicOrganization = {
-  period: { id: number; name: string; start_date: string; end_date: string } | null;
+  period: { name: string; start_date: string; end_date: string } | null;
   leadership: PublicOrganizationMember[];
   divisions: {
-    id: number;
     name: string;
     head: PublicOrganizationMember | null;
     members: PublicOrganizationMember[];

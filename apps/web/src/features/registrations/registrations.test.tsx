@@ -151,7 +151,7 @@ describe("public registration experience", () => {
     );
   });
 
-  it("renders all eight API field types, validates required answers, and posts dynamic values", async () => {
+  it("renders the dynamic API field types, validates required answers, and posts dynamic values", async () => {
     const user = userEvent.setup();
     vi.mocked(getPublicRegistration).mockResolvedValue(publicForm);
     vi.mocked(submitRegistration).mockResolvedValue({
@@ -176,13 +176,63 @@ describe("public registration experience", () => {
     fireEvent.change(screen.getByLabelText(/Tanggal/), { target: { value: "2026-10-20" } });
     await user.click(screen.getByRole("button", { name: "Kirim Pendaftaran" }));
     expect(await screen.findByText(/Pendaftaran berhasil dikirim/)).toBeInTheDocument();
+    expect(screen.getByText(/Nomor referensi:/)).toHaveTextContent("#14");
     expect(submitRegistration).toHaveBeenCalledWith(
       7,
       expect.objectContaining({ full_name: "Ayu Pendaftar", shift: "pagi", interest: ["web"] }),
+      {},
     );
   });
 
-  it("shows duplicate and rate-limited submit errors without echoing applicant values", async () => {
+  it("supports IMAGE picker, preview, replacement, removal, and multipart submit state", async () => {
+    const user = userEvent.setup();
+    vi.mocked(getPublicRegistration).mockResolvedValue({
+      ...publicForm,
+      fields: [
+        ...fields.slice(0, 4),
+        {
+          field_key: "profile_photo",
+          label: "Foto Profil",
+          field_type: "IMAGE",
+          required: true,
+          options: [],
+        },
+      ],
+    });
+    vi.mocked(submitRegistration).mockResolvedValue({
+      submission_id: 15,
+      submitted_at: "2026-10-10T00:00:00Z",
+      registration_title: publicForm.title,
+    });
+    Object.defineProperty(URL, "createObjectURL", {
+      configurable: true,
+      value: vi.fn(() => "blob:http://localhost/test"),
+    });
+    Object.defineProperty(URL, "revokeObjectURL", { configurable: true, value: vi.fn() });
+    render(<PublicRegistrationForm slug={publicForm.slug} />);
+    await user.type(await screen.findByLabelText(/Nama Lengkap/), "Ayu Pendaftar");
+    await user.type(screen.getByLabelText(/NIM/), "260002");
+    await user.type(screen.getByLabelText(/Email/), "ayu2@example.test");
+    await user.type(screen.getByLabelText(/No HP/), "0812345678");
+    const input = screen.getByLabelText(/Foto Profil/) as HTMLInputElement;
+    const first = new File(["first"], "profil.png", { type: "image/png" });
+    await user.upload(input, first);
+    expect(await screen.findByAltText("Pratinjau Foto Profil")).toBeInTheDocument();
+    expect(screen.getByText(/profil.png/)).toBeInTheDocument();
+    const replacement = new File(["replacement"], "profil-baru.jpg", { type: "image/jpeg" });
+    await user.upload(input, replacement);
+    expect(await screen.findByText(/profil-baru.jpg/)).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Hapus" }));
+    await user.upload(input, replacement);
+    await user.click(screen.getByRole("button", { name: "Kirim Pendaftaran" }));
+    await waitFor(() =>
+      expect(submitRegistration).toHaveBeenCalledWith(7, expect.objectContaining({ nim: "260002" }), {
+        profile_photo: replacement,
+      }),
+    );
+  });
+
+  it("shows a clear duplicate NIM message and rate-limited submit feedback", async () => {
     const user = userEvent.setup();
     vi.mocked(getPublicRegistration).mockResolvedValue(publicForm);
     vi.mocked(submitRegistration).mockRejectedValue(new ApiError("duplicate", 409, "DUPLICATE_SUBMISSION"));
@@ -199,8 +249,35 @@ describe("public registration experience", () => {
     await user.click(screen.getByLabelText("Web"));
     fireEvent.change(screen.getByLabelText(/Tanggal/), { target: { value: "2026-10-20" } });
     await user.click(screen.getByRole("button", { name: "Kirim Pendaftaran" }));
-    expect(await screen.findByRole("alert")).toHaveTextContent("Anda sudah pernah mengirim pendaftaran");
+    expect(await screen.findAllByText("NIM ini sudah terdaftar pada pendaftaran tersebut.")).toHaveLength(2);
+    expect(screen.getByRole("alert")).toHaveTextContent("NIM ini sudah terdaftar");
     expect(screen.queryByText("Private Applicant")).not.toBeInTheDocument();
+  });
+
+  it("renders structured API validation errors beside the matching field", async () => {
+    const user = userEvent.setup();
+    vi.mocked(getPublicRegistration).mockResolvedValue(publicForm);
+    vi.mocked(submitRegistration).mockRejectedValue(
+      new ApiError("Periksa data formulir.", 422, "VALIDATION_ERROR", {
+        nim: ["NIM tidak valid."],
+      }),
+    );
+    render(<PublicRegistrationForm slug={publicForm.slug} />);
+    await screen.findByRole("heading", { name: publicForm.title });
+    await user.type(screen.getByLabelText(/Nama Lengkap/), "Ayu Pendaftar");
+    await user.type(screen.getByLabelText(/NIM/), "260099");
+    await user.type(screen.getByLabelText(/Email/), "ayu@example.test");
+    await user.type(screen.getByLabelText(/No HP/), "0812345678");
+    await user.type(screen.getByLabelText(/Motivasi/), "Motivasi");
+    await user.type(screen.getByLabelText(/Nilai/), "3");
+    await user.selectOptions(screen.getByLabelText(/Pilih Divisi/), "media");
+    await user.click(screen.getByLabelText("Pagi"));
+    await user.click(screen.getByLabelText("Web"));
+    fireEvent.change(screen.getByLabelText(/Tanggal/), { target: { value: "2026-10-20" } });
+    await user.click(screen.getByRole("button", { name: "Kirim Pendaftaran" }));
+    expect(await screen.findByText("NIM tidak valid.")).toBeInTheDocument();
+    expect(screen.getByRole("alert")).toHaveTextContent("Periksa kolom yang ditandai");
+    expect(screen.getByLabelText(/NIM/)).toHaveAttribute("aria-invalid", "true");
   });
 });
 
@@ -276,6 +353,18 @@ describe("registration admin experience", () => {
       await screen.findByText(/Struktur formulir tidak dapat diubah karena sudah memiliki data pendaftar/),
     ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "text" })).toBeDisabled();
+  });
+
+  it("adds an IMAGE structural field with a dropzone builder preview", async () => {
+    const user = userEvent.setup();
+    vi.mocked(getRegistration).mockResolvedValue({ form: adminForm, fields: fields.slice(0, 4) });
+    vi.mocked(saveRegistrationFields).mockResolvedValue(fields.slice(0, 4));
+    render(<RegistrationBuilder id={7} />);
+    await user.click(await screen.findByRole("button", { name: "image" }));
+    expect(screen.getByText("Pratinjau unggah gambar")).toBeInTheDocument();
+    expect(screen.getByText(/Seret gambar atau pilih dari perangkat/)).toBeInTheDocument();
+    expect(screen.getAllByLabelText("Tipe").at(-1)).toHaveValue("IMAGE");
+    expect(screen.getByLabelText("Deskripsi bantuan (opsional)")).toBeInTheDocument();
   });
 
   it("shows snapshot answers and asks for explicit PII export confirmation", async () => {

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/url"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 	"unicode"
@@ -147,6 +148,18 @@ type AnnouncementInput struct {
 }
 
 var slugPattern = regexp.MustCompile(`^[a-z0-9]+(?:-[a-z0-9]+)*$`)
+var internalPublicMediaPath = regexp.MustCompile(`^/api/v1/public/media/([1-9][0-9]*)/?$`)
+
+type ContentValidationError struct {
+	Fields map[string][]string
+}
+
+func (e *ContentValidationError) Error() string { return ErrContentInvalid.Error() }
+func (e *ContentValidationError) Unwrap() error { return ErrContentInvalid }
+
+func invalidContentField(field, message string) error {
+	return &ContentValidationError{Fields: map[string][]string{field: {message}}}
+}
 
 func normalizeSlug(value, title string) (string, error) {
 	if strings.TrimSpace(value) == "" {
@@ -210,6 +223,58 @@ func validateHTTPS(value string) error {
 		return ErrContentInvalid
 	}
 	return nil
+}
+
+// normalizeImageReference accepts optional legacy HTTPS images and only those
+// internal media URLs that resolve to a persisted asset for the requested use.
+// Internal absolute URLs are normalized to the stable API-relative path.
+func (s *ContentService) normalizeImageReference(ctx context.Context, value *string, purpose MediaPurpose, field string) (*string, error) {
+	if value == nil || strings.TrimSpace(*value) == "" {
+		return nil, nil
+	}
+	raw := strings.TrimSpace(*value)
+	var parsed *url.URL
+	path := ""
+	if strings.HasPrefix(strings.ToLower(raw), "media:") {
+		id := raw[len("media:"):]
+		if id == "" || strings.Trim(id, "0123456789") != "" || strings.HasPrefix(id, "0") {
+			return nil, invalidContentField(field, "Format gambar tidak valid.")
+		}
+		path = "/api/v1/public/media/" + id
+	} else {
+		var err error
+		parsed, err = url.ParseRequestURI(raw)
+		if err != nil {
+			return nil, invalidContentField(field, "Format gambar tidak valid.")
+		}
+		path = parsed.Path
+		if parsed.IsAbs() {
+			if (parsed.Scheme != "http" && parsed.Scheme != "https") || parsed.Hostname() == "" || parsed.User != nil {
+				return nil, invalidContentField(field, "Format gambar tidak valid.")
+			}
+		} else if !strings.HasPrefix(raw, "/") {
+			return nil, invalidContentField(field, "Format gambar tidak valid.")
+		}
+	}
+	if match := internalPublicMediaPath.FindStringSubmatch(path); match != nil {
+		if parsed != nil && (parsed.RawQuery != "" || parsed.ForceQuery || parsed.Fragment != "") {
+			return nil, invalidContentField(field, "Format gambar tidak valid.")
+		}
+		id, parseErr := strconv.ParseInt(match[1], 10, 64)
+		if parseErr != nil || id < 1 {
+			return nil, invalidContentField(field, "Format gambar tidak valid.")
+		}
+		var storedPurpose string
+		if err := s.db.QueryRowContext(ctx, `SELECT purpose FROM media_assets WHERE id=?`, id).Scan(&storedPurpose); err != nil || storedPurpose != string(purpose) {
+			return nil, invalidContentField(field, "Media gambar tidak ditemukan atau tidak sesuai untuk field ini.")
+		}
+		normalized := "/api/v1/public/media/" + strconv.FormatInt(id, 10)
+		return &normalized, nil
+	}
+	if parsed == nil || !parsed.IsAbs() || !strings.EqualFold(parsed.Scheme, "https") || parsed.Hostname() == "" || parsed.User != nil {
+		return nil, invalidContentField(field, "Format gambar tidak valid.")
+	}
+	return &raw, nil
 }
 
 func validateTitle(title string) error {
@@ -483,9 +548,14 @@ func (s *ContentService) SaveArticle(ctx context.Context, user domain.User, id i
 	if err := validateTitle(input.Title); err != nil {
 		return Article{}, err
 	}
-	if optionalString(input.Excerpt, 500) != nil || validateOptionalURL(input.ThumbnailURL, false) != nil {
+	if optionalString(input.Excerpt, 500) != nil {
 		return Article{}, ErrContentInvalid
 	}
+	thumbnail, err := s.normalizeImageReference(ctx, input.ThumbnailURL, MediaArticleCover, "thumbnail_url")
+	if err != nil {
+		return Article{}, err
+	}
+	input.ThumbnailURL = thumbnail
 	body, err := normalizeRichText(input.ContentHTML)
 	if err != nil {
 		return Article{}, err
@@ -753,12 +823,15 @@ func (s *ContentService) SaveGalleryCategory(ctx context.Context, user domain.Us
 	if user.Role == domain.RoleKepala {
 		return GalleryCategory{}, ErrContentForbidden
 	}
-	if validateTitle(input.Title) != nil || optionalString(input.Description, 2048) != nil {
-		return GalleryCategory{}, ErrContentInvalid
+	if validateTitle(input.Title) != nil {
+		return GalleryCategory{}, invalidContentField("title", "Judul kategori wajib diisi.")
+	}
+	if optionalString(input.Description, 2048) != nil {
+		return GalleryCategory{}, invalidContentField("description", "Deskripsi terlalu panjang.")
 	}
 	slug, e := normalizeSlug(input.Slug, input.Title)
 	if e != nil {
-		return GalleryCategory{}, e
+		return GalleryCategory{}, invalidContentField("slug", "Slug kategori tidak valid.")
 	}
 	if user.Role == domain.RoleKepala {
 		if user.DivisionID == nil {
@@ -768,7 +841,7 @@ func (s *ContentService) SaveGalleryCategory(ctx context.Context, user domain.Us
 	}
 	if input.EventDate != nil {
 		if _, e := time.Parse("2006-01-02", *input.EventDate); e != nil {
-			return GalleryCategory{}, ErrContentInvalid
+			return GalleryCategory{}, invalidContentField("event_date", "Tanggal kegiatan tidak valid.")
 		}
 	}
 	tx, e := s.db.BeginTx(ctx, nil)
@@ -882,9 +955,23 @@ func (s *ContentService) ListGalleryItems(ctx context.Context, user domain.User,
 }
 
 func (s *ContentService) SaveGalleryItem(ctx context.Context, user domain.User, id int64, input GalleryItemInput) (GalleryItem, error) {
-	if validateTitle(input.Title) != nil || input.CategoryID < 1 || optionalString(input.Description, 2048) != nil || validateHTTPS(input.GooglePhotosURL) != nil || validateOptionalURL(input.PreviewImageURL, false) != nil {
-		return GalleryItem{}, ErrContentInvalid
+	if validateTitle(input.Title) != nil {
+		return GalleryItem{}, invalidContentField("title", "Judul item wajib diisi.")
 	}
+	if input.CategoryID < 1 {
+		return GalleryItem{}, invalidContentField("category_id", "Pilih kategori galeri.")
+	}
+	if optionalString(input.Description, 2048) != nil {
+		return GalleryItem{}, invalidContentField("description", "Deskripsi terlalu panjang.")
+	}
+	if validateHTTPS(input.GooglePhotosURL) != nil {
+		return GalleryItem{}, invalidContentField("google_photos_url", "Tautan album harus berupa URL HTTPS yang valid.")
+	}
+	preview, err := s.normalizeImageReference(ctx, input.PreviewImageURL, MediaGalleryPreview, "preview_image_url")
+	if err != nil {
+		return GalleryItem{}, err
+	}
+	input.PreviewImageURL = preview
 	tx, e := s.db.BeginTx(ctx, nil)
 	if e != nil {
 		return GalleryItem{}, e
@@ -1028,18 +1115,26 @@ func (s *ContentService) SaveAnnouncement(ctx context.Context, user domain.User,
 		return Announcement{}, ErrContentForbidden
 	}
 	if validateTitle(input.Title) != nil {
-		return Announcement{}, ErrContentInvalid
+		return Announcement{}, invalidContentField("title", "Judul wajib diisi.")
 	}
 	body, e := normalizeRichText(input.ContentHTML)
 	if e != nil {
-		return Announcement{}, e
+		return Announcement{}, invalidContentField("content_html", "Isi pengumuman wajib diisi.")
 	}
 	slug, e := normalizeSlug(input.Slug, input.Title)
 	if e != nil {
-		return Announcement{}, e
+		return Announcement{}, invalidContentField("slug", "Slug pengumuman tidak valid.")
 	}
-	if validateOptionalURL(input.ImageURL, false) != nil || input.StartAt.IsZero() || (input.EndAt != nil && input.EndAt.Before(input.StartAt)) {
-		return Announcement{}, ErrContentInvalid
+	image, imageErr := s.normalizeImageReference(ctx, input.ImageURL, MediaAnnouncementImage, "image_url")
+	if imageErr != nil {
+		return Announcement{}, imageErr
+	}
+	input.ImageURL = image
+	if input.StartAt.IsZero() {
+		return Announcement{}, invalidContentField("start_at", "Tanggal mulai wajib diisi dan harus valid.")
+	}
+	if input.EndAt != nil && input.EndAt.Before(input.StartAt) {
+		return Announcement{}, invalidContentField("end_at", "Tanggal selesai harus setelah tanggal mulai.")
 	}
 	input.StartAt = input.StartAt.UTC()
 	if input.EndAt != nil {

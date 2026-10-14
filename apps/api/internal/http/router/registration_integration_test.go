@@ -6,10 +6,15 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"image"
+	"image/color"
+	"image/png"
 	"io"
 	"log/slog"
+	"mime/multipart"
 	"net/http"
 	"net/http/httptest"
+	"net/textproto"
 	"path/filepath"
 	"strings"
 	"sync"
@@ -39,9 +44,11 @@ func runRegistrationIntegration(t *testing.T, ctx context.Context, db *sql.DB, e
 		{"field_key": "shift", "label": "Shift", "field_type": "RADIO", "required": true, "options": []any{map[string]string{"value": "pagi", "label": "Pagi"}, map[string]string{"value": "sore", "label": "Sore"}}},
 		{"field_key": "interest", "label": "Minat", "field_type": "CHECKBOX", "required": true, "options": []any{map[string]string{"value": "web", "label": "Web"}, map[string]string{"value": "data", "label": "Data"}}},
 		{"field_key": "available_date", "label": "Tanggal", "field_type": "DATE", "required": true, "options": []any{}},
+		{"field_key": "profile_image", "label": "Foto Profil", "field_type": "IMAGE", "required": false, "options": []any{}},
 	}
 	formA := createRegistrationFixture(t, engine, superToken, periodID, divisionA, "Phase7 Dynamic Form A", now)
 	formB := createRegistrationFixture(t, engine, superToken, periodID, divisionB, "Phase7 Dynamic Form B", now)
+	formC := createRegistrationFixture(t, engine, superToken, periodID, divisionA, "Phase11H Required Image Form", now)
 	_ = createRegistrationFixture(t, engine, superToken, periodID, divisionA, "Phase7 Public Draft", now)
 	if res := contentRequest(engine, http.MethodPut, fmt.Sprintf("/api/v1/admin/registrations/%d/fields", formA), mustJSON(t, fields), superToken); res.Code != http.StatusOK {
 		t.Fatalf("save dynamic schema: %d %s", res.Code, res.Body.String())
@@ -49,7 +56,11 @@ func runRegistrationIntegration(t *testing.T, ctx context.Context, db *sql.DB, e
 	if res := contentRequest(engine, http.MethodPut, fmt.Sprintf("/api/v1/admin/registrations/%d/fields", formB), mustJSON(t, coreRegistrationFields()), superToken); res.Code != http.StatusOK {
 		t.Fatalf("save cross-division schema: %d %s", res.Code, res.Body.String())
 	}
-	for _, id := range []int64{formA, formB} {
+	requiredImageFields := append(coreRegistrationFields(), map[string]any{"field_key": "required_photo", "label": "Foto Wajib", "field_type": "IMAGE", "required": true, "options": []any{}})
+	if res := contentRequest(engine, http.MethodPut, fmt.Sprintf("/api/v1/admin/registrations/%d/fields", formC), mustJSON(t, requiredImageFields), superToken); res.Code != http.StatusOK {
+		t.Fatalf("save required image schema: %d %s", res.Code, res.Body.String())
+	}
+	for _, id := range []int64{formA, formB, formC} {
 		res := contentRequest(engine, http.MethodPost, fmt.Sprintf("/api/v1/admin/registrations/%d/open", id), `{}`, superToken)
 		if res.Code != http.StatusOK {
 			t.Fatalf("open form %d: %d %s", id, res.Code, res.Body.String())
@@ -108,6 +119,92 @@ func runRegistrationIntegration(t *testing.T, ctx context.Context, db *sql.DB, e
 	}
 	if err := json.Unmarshal(submitted.Body.Bytes(), &receipt); err != nil || receipt.Data.SubmissionID < 1 {
 		t.Fatalf("invalid safe receipt: %v %s", err, submitted.Body.String())
+	}
+
+	// Image answers travel as bounded multipart files and are stored privately.
+	var validPNG bytes.Buffer
+	imageFixture := image.NewRGBA(image.Rect(0, 0, 3, 2))
+	imageFixture.Set(0, 0, color.RGBA{R: 220, G: 50, B: 80, A: 255})
+	if err := png.Encode(&validPNG, imageFixture); err != nil {
+		t.Fatal(err)
+	}
+	requiredImageValues := map[string]any{"full_name": "Required Image Applicant", "nim": "26A779", "email": "required-photo@example.test", "phone": "0812345678"}
+	requiredImageAnswers := mustJSON(t, map[string]any{"answers": requiredImageValues})
+	missingRequiredImage := contentRequest(engine, http.MethodPost, fmt.Sprintf("/api/v1/public/registrations/%d/submissions", formC), requiredImageAnswers, "")
+	if missingRequiredImage.Code != http.StatusUnprocessableEntity || !strings.Contains(missingRequiredImage.Body.String(), `"required_photo":["Foto Wajib wajib diunggah."]`) {
+		t.Fatalf("required IMAGE accepted without file: %d %s", missingRequiredImage.Code, missingRequiredImage.Body.String())
+	}
+	withRequiredImage := registrationMultipartRequest(engine, fmt.Sprintf("/api/v1/public/registrations/%d/submissions", formC), mustJSON(t, requiredImageValues), "required_photo", "required.png", "image/png", validPNG.Bytes(), "")
+	if withRequiredImage.Code != http.StatusCreated {
+		t.Fatalf("required IMAGE multipart submission: %d %s", withRequiredImage.Code, withRequiredImage.Body.String())
+	}
+	imageResponse := registrationMultipartRequest(engine, fmt.Sprintf("/api/v1/public/registrations/%d/submissions", formA), mustJSON(t, makeAnswers("26A777", "photo@example.test", "multipart image")), "profile_image", "../profile.png", "image/png", validPNG.Bytes(), "")
+	if imageResponse.Code != http.StatusCreated {
+		t.Fatalf("multipart registration with image: %d %s", imageResponse.Code, imageResponse.Body.String())
+	}
+	var imageReceipt struct {
+		Data struct {
+			SubmissionID int64 `json:"submission_id"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(imageResponse.Body.Bytes(), &imageReceipt); err != nil || imageReceipt.Data.SubmissionID < 1 {
+		t.Fatalf("invalid multipart receipt: %v %s", err, imageResponse.Body.String())
+	}
+	imageDetail := getWithToken(engine, fmt.Sprintf("/api/v1/admin/registrations/%d/submissions/%d", formA, imageReceipt.Data.SubmissionID), superToken)
+	if imageDetail.Code != http.StatusOK || !strings.Contains(imageDetail.Body.String(), `"type":"IMAGE"`) || !strings.Contains(imageDetail.Body.String(), `"original_filename":"profile.png"`) || strings.Contains(imageDetail.Body.String(), "storage_key") || strings.Contains(imageDetail.Body.String(), "/public/media/") {
+		t.Fatalf("private registration image detail is unsafe or missing: %d %s", imageDetail.Code, imageDetail.Body.String())
+	}
+	var imageDetailPayload struct {
+		Data struct {
+			Answers []struct {
+				Attachment *struct {
+					ID          int64  `json:"id"`
+					DownloadURL string `json:"download_url"`
+				} `json:"attachment"`
+			} `json:"answers"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(imageDetail.Body.Bytes(), &imageDetailPayload); err != nil {
+		t.Fatal(err)
+	}
+	var privateURL string
+	var privateFileID int64
+	for _, answer := range imageDetailPayload.Data.Answers {
+		if answer.Attachment != nil {
+			privateURL, privateFileID = answer.Attachment.DownloadURL, answer.Attachment.ID
+		}
+	}
+	if privateURL == "" || privateFileID < 1 {
+		t.Fatalf("image answer did not reference private attachment: %s", imageDetail.Body.String())
+	}
+	privateRead := getWithToken(engine, "/api/v1"+privateURL, superToken)
+	if privateRead.Code != http.StatusOK || privateRead.Header().Get("Cache-Control") != "private, no-store" || privateRead.Header().Get("X-Content-Type-Options") != "nosniff" || privateRead.Header().Get("Content-Type") != "image/png" || privateRead.Body.Len() == 0 {
+		t.Fatalf("authorized private image read failed: %d headers=%v bytes=%d", privateRead.Code, privateRead.Header(), privateRead.Body.Len())
+	}
+	fieldMismatch := registrationMultipartRequest(engine, fmt.Sprintf("/api/v1/public/registrations/%d/submissions", formA), mustJSON(t, makeAnswers("26A781", "field-mismatch@example.test", "wrong field key")), "wrong_photo_key", "photo.png", "image/png", validPNG.Bytes(), "")
+	if fieldMismatch.Code != http.StatusUnprocessableEntity || !strings.Contains(fieldMismatch.Body.String(), `"image":["Lampiran gambar tidak cocok dengan kolom formulir."]`) {
+		t.Fatalf("mismatched IMAGE key did not return a safe field error: %d %s", fieldMismatch.Code, fieldMismatch.Body.String())
+	}
+	if anonymousRead := getWithToken(engine, "/api/v1"+privateURL, ""); anonymousRead.Code != http.StatusUnauthorized {
+		t.Fatalf("anonymous attachment read status=%d, want 401", anonymousRead.Code)
+	}
+	if wrongDivisionRead := getWithToken(engine, "/api/v1"+privateURL, kepalaBToken); wrongDivisionRead.Code != http.StatusNotFound {
+		t.Fatalf("cross-division attachment read status=%d, want concealed 404", wrongDivisionRead.Code)
+	}
+	invalidImage := registrationMultipartRequest(engine, fmt.Sprintf("/api/v1/public/registrations/%d/submissions", formA), mustJSON(t, makeAnswers("26A778", "invalid-photo@example.test", "invalid image")), "profile_image", "photo.png", "image/png", []byte("not a png"), "")
+	if invalidImage.Code != http.StatusUnprocessableEntity || !strings.Contains(invalidImage.Body.String(), `"profile_image":["File bukan gambar yang valid atau rusak."]`) {
+		t.Fatalf("invalid image signature accepted: %d %s", invalidImage.Code, invalidImage.Body.String())
+	}
+	tooLargeImage := registrationMultipartRequest(engine, fmt.Sprintf("/api/v1/public/registrations/%d/submissions", formA), mustJSON(t, makeAnswers("26A780", "large-photo@example.test", "large image")), "profile_image", "large.png", "image/png", make([]byte, (5<<20)+1), "")
+	if tooLargeImage.Code != http.StatusRequestEntityTooLarge {
+		t.Fatalf("oversized image status=%d, want 413", tooLargeImage.Code)
+	}
+	malformedMultipart := httptest.NewRequest(http.MethodPost, fmt.Sprintf("/api/v1/public/registrations/%d/submissions", formA), strings.NewReader("not a multipart body"))
+	malformedMultipart.Header.Set("Content-Type", "multipart/form-data; boundary=phase11i-boundary")
+	malformedMultipartResponse := httptest.NewRecorder()
+	engine.ServeHTTP(malformedMultipartResponse, malformedMultipart)
+	if malformedMultipartResponse.Code != http.StatusUnprocessableEntity || !strings.Contains(malformedMultipartResponse.Body.String(), "Bagian answers wajib ada") {
+		t.Fatalf("malformed multipart did not return a safe 422: %d %s", malformedMultipartResponse.Code, malformedMultipartResponse.Body.String())
 	}
 	var storedNIM, normalized, storedEmail string
 	if err := db.QueryRowContext(ctx, `SELECT nim,normalized_nim,email FROM registration_submissions WHERE id=?`, receipt.Data.SubmissionID).Scan(&storedNIM, &normalized, &storedEmail); err != nil || storedNIM != "26A001" || normalized != "26A001" || storedEmail != "shared@example.test" {
@@ -280,25 +377,38 @@ func runRegistrationIntegration(t *testing.T, ctx context.Context, db *sql.DB, e
 	}
 	defer book.Close()
 	rows, err := book.GetRows("Pendaftar")
-	if err != nil || len(rows) != 3 || len(rows[0]) != 12 {
+	if err != nil || len(rows) != 4 || len(rows[0]) != 13 {
 		t.Fatalf("XLSX row/column count mismatch: rows=%d err=%v", len(rows), err)
 	}
-	for column, want := range []string{"No.", "Nama", "NIM", "Email", "No HP", "Waktu Pendaftaran", "Motivasi", "Nilai", "Unit", "Shift", "Minat", "Tanggal"} {
+	for column, want := range []string{"No.", "Nama", "NIM", "Email", "No HP", "Waktu Pendaftaran", "Motivasi", "Nilai", "Unit", "Shift", "Minat", "Tanggal", "Foto Profil"} {
 		cell, _ := excelize.CoordinatesToCellName(column+1, 1)
 		if got, err := book.GetCellValue("Pendaftar", cell); err != nil || got != want {
 			t.Fatalf("XLSX header %s mismatch: got=%q want=%q err=%v", cell, got, want, err)
 		}
 	}
-	if got, err := book.GetCellValue("Pendaftar", "G2"); err != nil || got != `=HYPERLINK("https://attacker.invalid","click")` {
+	var originalApplicantRow int
+	for index, row := range rows[1:] {
+		if len(row) > 2 && row[2] == "26A001" {
+			originalApplicantRow = index + 2
+			break
+		}
+	}
+	if originalApplicantRow == 0 {
+		t.Fatal("original applicant missing from exported rows")
+	}
+	formulaCell, _ := excelize.CoordinatesToCellName(7, originalApplicantRow)
+	if got, err := book.GetCellValue("Pendaftar", formulaCell); err != nil || got != `=HYPERLINK("https://attacker.invalid","click")` {
 		t.Fatalf("formula-like applicant answer missing as literal string: %q err=%v", got, err)
 	}
-	if got, err := book.GetCellValue("Pendaftar", "K2"); err != nil || got != "web; data" {
+	checkboxCell, _ := excelize.CoordinatesToCellName(11, originalApplicantRow)
+	if got, err := book.GetCellValue("Pendaftar", checkboxCell); err != nil || got != "web; data" {
 		t.Fatalf("checkbox values were not serialized: %q err=%v", got, err)
 	}
-	if got, err := book.GetCellValue("Pendaftar", "L2"); err != nil || got != "2026-11-01" {
+	dateCell, _ := excelize.CoordinatesToCellName(12, originalApplicantRow)
+	if got, err := book.GetCellValue("Pendaftar", dateCell); err != nil || got != "2026-11-01" {
 		t.Fatalf("date answer was not preserved: %q err=%v", got, err)
 	}
-	if formula, err := book.GetCellFormula("Pendaftar", "G2"); err != nil || formula != "" {
+	if formula, err := book.GetCellFormula("Pendaftar", formulaCell); err != nil || formula != "" {
 		t.Fatalf("formula injection produced executable formula %q err=%v", formula, err)
 	}
 	var exportEvents int
@@ -325,7 +435,7 @@ func runRegistrationIntegration(t *testing.T, ctx context.Context, db *sql.DB, e
 	}
 
 	// Repeated unique attempts are bounded independently from login and aspirations.
-	limitedCfg := config.Config{AppEnv: "test", FrontendOrigins: []string{"http://localhost:3000"}, JWTSecret: bytes.Repeat([]byte("r"), 32), AccessTokenTTL: time.Minute * 15, RefreshTokenTTL: time.Hour, Cookie: config.Cookie{Name: "bem_refresh", SameSite: "lax", Path: "/api/v1/auth"}, BcryptCost: 4, LoginLimitCount: 100, LoginLimitWindow: time.Minute, AspirationLimitCount: 100, AspirationLimitWindow: time.Minute, RegistrationLimitCount: 1, RegistrationLimitWindow: time.Minute * 30, DocumentStoragePath: filepath.Join(t.TempDir(), "private-documents"), DocumentMaxUploadBytes: 10 << 20}
+	limitedCfg := config.Config{AppEnv: "test", FrontendOrigins: []string{"http://localhost:3000"}, JWTSecret: bytes.Repeat([]byte("r"), 32), AccessTokenTTL: time.Minute * 15, RefreshTokenTTL: time.Hour, Cookie: config.Cookie{Name: "bem_refresh", SameSite: "lax", Path: "/api/v1/auth"}, BcryptCost: 4, LoginLimitCount: 100, LoginLimitWindow: time.Minute, AspirationLimitCount: 100, AspirationLimitWindow: time.Minute, RegistrationLimitCount: 1, RegistrationLimitWindow: time.Minute * 30, DocumentStoragePath: filepath.Join(t.TempDir(), "private-documents"), DocumentMaxUploadBytes: 10 << 20, MediaStoragePath: filepath.Join(t.TempDir(), "public-media"), MediaMaxUploadBytes: 5 << 20, RegistrationStoragePath: filepath.Join(t.TempDir(), "private-registration"), RegistrationImageMaxUploadBytes: 5 << 20}
 	limitedEngine, err := NewWithDependencies(slog.New(slog.NewJSONHandler(io.Discard, nil)), limitedCfg, db)
 	if err != nil {
 		t.Fatal(err)
@@ -335,6 +445,33 @@ func runRegistrationIntegration(t *testing.T, ctx context.Context, db *sql.DB, e
 	if firstRate.Code != http.StatusUnprocessableEntity || secondRate.Code != http.StatusTooManyRequests || secondRate.Header().Get("Retry-After") == "" {
 		t.Fatalf("registration submission limiter failed: first=%d second=%d retry=%s", firstRate.Code, secondRate.Code, secondRate.Header().Get("Retry-After"))
 	}
+}
+
+func registrationMultipartRequest(engine http.Handler, path, answers, fieldKey, filename, mediaType string, data []byte, token string) *httptest.ResponseRecorder {
+	var body bytes.Buffer
+	writer := multipart.NewWriter(&body)
+	_ = writer.WriteField("answers", answers)
+	header := textproto.MIMEHeader{}
+	header.Set("Content-Disposition", fmt.Sprintf(`form-data; name="image:%s"; filename="%s"`, fieldKey, filename))
+	header.Set("Content-Type", mediaType)
+	part, err := writer.CreatePart(header)
+	if err != nil {
+		panic(err)
+	}
+	if _, err := part.Write(data); err != nil {
+		panic(err)
+	}
+	if err := writer.Close(); err != nil {
+		panic(err)
+	}
+	request := httptest.NewRequest(http.MethodPost, path, &body)
+	request.Header.Set("Content-Type", writer.FormDataContentType())
+	if token != "" {
+		request.Header.Set("Authorization", "Bearer "+token)
+	}
+	response := httptest.NewRecorder()
+	engine.ServeHTTP(response, request)
+	return response
 }
 
 func createRegistrationFixture(t *testing.T, engine http.Handler, token string, periodID, divisionID int64, title string, now time.Time) int64 {

@@ -405,8 +405,8 @@ func (h *Content) adminAnnouncements(c *gin.Context) {
 	listSuccess(c, "Data berhasil diambil", result)
 }
 func (h *Content) createAnnouncement(c *gin.Context) {
-	var in service.AnnouncementInput
-	if !bindContent(c, &in) {
+	in, ok := bindAnnouncement(c)
+	if !ok {
 		return
 	}
 	user, _ := middleware.CurrentUser(c)
@@ -434,8 +434,8 @@ func (h *Content) updateAnnouncement(c *gin.Context) {
 	if !ok {
 		return
 	}
-	var in service.AnnouncementInput
-	if !bindContent(c, &in) {
+	in, ok := bindAnnouncement(c)
+	if !ok {
 		return
 	}
 	user, _ := middleware.CurrentUser(c)
@@ -446,6 +446,50 @@ func (h *Content) updateAnnouncement(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, Success("Pengumuman berhasil diperbarui", value))
 }
+
+func bindAnnouncement(c *gin.Context) (service.AnnouncementInput, bool) {
+	var raw struct {
+		Title       string          `json:"title"`
+		Slug        string          `json:"slug"`
+		ContentHTML string          `json:"content_html"`
+		ImageURL    *string         `json:"image_url"`
+		StartAt     json.RawMessage `json:"start_at"`
+		EndAt       json.RawMessage `json:"end_at"`
+	}
+	if !bindContent(c, &raw) {
+		return service.AnnouncementInput{}, false
+	}
+	parse := func(name string, value json.RawMessage, optional bool) (*time.Time, bool) {
+		if len(value) == 0 || string(value) == "null" {
+			if optional {
+				return nil, true
+			}
+			c.JSON(http.StatusUnprocessableEntity, FailureCode("VALIDATION_ERROR", "Validation failed", map[string][]string{name: {"Tanggal harus valid."}}))
+			return nil, false
+		}
+		var text string
+		if err := json.Unmarshal(value, &text); err != nil {
+			c.JSON(http.StatusUnprocessableEntity, FailureCode("VALIDATION_ERROR", "Validation failed", map[string][]string{name: {"Tanggal harus menggunakan format ISO 8601."}}))
+			return nil, false
+		}
+		parsed, err := time.Parse(time.RFC3339Nano, text)
+		if err != nil {
+			c.JSON(http.StatusUnprocessableEntity, FailureCode("VALIDATION_ERROR", "Validation failed", map[string][]string{name: {"Tanggal harus menggunakan format ISO 8601."}}))
+			return nil, false
+		}
+		return &parsed, true
+	}
+	start, valid := parse("start_at", raw.StartAt, false)
+	if !valid {
+		return service.AnnouncementInput{}, false
+	}
+	end, valid := parse("end_at", raw.EndAt, true)
+	if !valid {
+		return service.AnnouncementInput{}, false
+	}
+	return service.AnnouncementInput{Title: raw.Title, Slug: raw.Slug, ContentHTML: raw.ContentHTML, ImageURL: raw.ImageURL, StartAt: *start, EndAt: end}, true
+}
+
 func (h *Content) deleteAnnouncement(c *gin.Context) {
 	id, ok := contentID(c)
 	if !ok {
@@ -520,6 +564,11 @@ func contentError(c *gin.Context, err error) {
 	status := http.StatusInternalServerError
 	code := "INTERNAL_ERROR"
 	message := "Terjadi kesalahan server"
+	var validation *service.ContentValidationError
+	if errors.As(err, &validation) {
+		c.JSON(http.StatusUnprocessableEntity, FailureCode("VALIDATION_ERROR", "Validation failed", validation.Fields))
+		return
+	}
 	switch {
 	case errors.Is(err, service.ErrContentInvalid):
 		status = http.StatusUnprocessableEntity

@@ -170,3 +170,75 @@ Phase 8 verification and limitations are recorded in `PHASE_8_REPORT.md`.
 | Dashboard summary / visitor analytics | Implement operational counts from articles, currently open registration forms/submissions, aspiration statuses, available documents, and currently scheduled announcements. Use the authenticated database role/division for scope. Visitor/pageview analytics are deferred post-MVP and no tracker, cookie, fingerprint, analytics provider, or visitor-event table is introduced. | Provides source-backed Phase 9 metrics without collecting visitor data; global announcement count follows its existing divisionless domain and read policy. |
 
 Phase 9 implementation and evidence are tracked in `PHASE_9_REPORT.md`.
+
+### Phase 11B — Admin mobile correction and public media upload (2026-10-12)
+
+| Area | Decision | Reason / boundary |
+|---|---|---|
+| Mobile admin header | Admin topbar is normal-flow and non-sticky on mobile; sticky behavior starts at the large-screen breakpoint. Main/content wrappers are shrinkable, and shared mobile controls cannot exceed their parent width. | The user's manual 360×800 review rejected admin content where the top region overlapped the first content blocks; root shell behavior is corrected centrally. Exact visual re-review remains pending. |
+| Image fields | “Image fields are no longer URL-only. Local device upload + drag-and-drop is required for admin image fields.” One shared `MediaUpload` supports choose, drop, preview, filename/size, replace, remove, loading/errors, and an optional external URL mode. | Explicit user product decision supersedes Phase 4 URL-only implementation notes. Existing URL values remain readable/editable. |
+| Form inventory | Article cover, announcement image, gallery preview, member photo, and landing hero use the shared picker. Google Photos album URL remains a separate required external destination. | Covers every implemented admin raster image field found in the source audit without adding another image domain. |
+| Format and bounds | JPEG/PNG only, max 5 MiB, max 8,000 px per dimension and 12 MP, no SVG/GIF/WebP. | Safe standard-library decoding and bounded memory use; unsupported formats fail clearly. |
+| API/storage | Add migration 00008, authenticated `POST /admin/media`, public `GET /public/media/{id}`, storage interface/local implementation, and `media_assets`. Stored objects are append-only with opaque keys and immutable caching; the API alone serves them. | Keep public website reads controlled, production storage replaceable, and Phase 8 private document flow separate. |
+| Authorization | SUPER_ADMIN/BPH may upload all bounded purposes. KEPALA_BIDANG may upload ARTICLE_COVER/GALLERY_PREVIEW; resource save APIs continue to enforce current division. | Purpose-limited upload does not bypass resource-scope checks. |
+| Compatibility/orphans | Keep current URL columns and store resolved API URLs. Failed DB/activity writes remove the just-saved file. Images without a saved consumer remain for manual cleanup; no delete endpoint/automatic GC is added. | Avoid breaking historical URLs or deleting an asset still used by a resource. |
+| Acceptance boundary | User's admin mobile findings stay REJECTED until manual re-review; changed screens are RE-REVIEW REQUIRED. No Phase 11 final commit, deployment, or Phase 12 work before user approval. | Automated tests cannot certify device layout, image picker/drop behavior, or public rendering visually. |
+
+### Phase 11G — Image formats and gallery workflow (2026-10-12)
+
+| Area | Decision | Reason / boundary |
+|---|---|---|
+| Accepted image inputs | JPEG `.jpg/.jpeg/.jfif`, PNG, WebP, static GIF, TIFF `.tif/.tiff`, BMP. Backend signature/MIME/decode checks are authoritative. | Matches device formats requested while rejecting extension-only spoofing. |
+| Browser-safe storage | Preserve JPEG, PNG, WebP, and single-frame GIF; normalize TIFF/BMP to PNG. Record original and stored MIME; keep `mime_type` as stored-MIME compatibility alias. | Browsers receive formats they can render; original MIME remains auditable. |
+| GIF and unsupported formats | Reject animated GIF explicitly; do not silently discard frames. SVG, HEIC/HEIF, and AVIF remain unsupported. | Animation preservation and safe HEIC/AVIF decoding are outside this bounded pipeline; SVG needs sanitization policy. |
+| Decoder and bounds | Pure-Go `golang.org/x/image` v0.47.0 supplies TIFF/BMP/WebP decoders. Keep upload and normalized bytes at 5 MiB; max dimension 8,000 and total pixels 12 MP. No native/CGo dependency. | Maintained Go image packages, bounded decoding, and no platform-specific binaries. |
+| Gallery UX | `/admin/galeri` uses a compact category selector and selected-category master/detail item list; category/item create/edit open responsive dialogs, item actions use menus/confirmation. Period/division show names while sending IDs. | Reduce simultaneous form density without changing existing content endpoints. |
+| Acceptance boundary | Multi-format article-media and gallery UX are automated-tested but remain **RE-REVIEW REQUIRED** until user browser review. No Phase 11 final commit, deployment, or Phase 12 work. | Automated API/UI tests do not establish device picker, visual, or manual end-to-end acceptance. |
+
+### Phase 11C — Public navigation, landing polish, and motion
+
+| Area | Decision | Reason / boundary |
+|---|---|---|
+| Public navigation | Keep a single Aspirasi item linking to `/#aspirasi`; remove the duplicate “Kirim Aspirasi” CTA and hide “Portal Admin” from desktop and mobile public navigation. | Admin remains available directly at `/admin/login`; no route, auth, RBAC, API, or bottom-navigation change. |
+| Landing eyebrow | Retain “PORTAL PUBLIK BEM FMIKOM UNUGHA” as a plain uppercase text kicker without a badge, border, or background container. | Keeps approved copy while restoring headline-first hierarchy. |
+| Admin access context | Remove the persistent “Mode akses / Sesi terverifikasi” strip. Keep the current user/role in the topbar and division scope for KEPALA_BIDANG. | Authentication behavior stays intact while reclaiming mobile viewport height. |
+| Admin content offset | Main minimum height is `calc(100dvh - 4.5rem)`, matching the single 4.5rem topbar after the strip was removed. | Prevents retaining the old 7rem reserved-height assumption. Browser geometry still awaits manual review. |
+| React Bits | Use free React Bits Blur Text and Fade Content source adaptations for the landing headline/supporting content, section reveals, and media preview; use the free Count Up source adaptation for actual API-backed dashboard metrics. | Source is adapted to use external CSS classes for visual effects, keep server content visible, and preserve existing BEM structure. Count Up animates only live dashboard values. |
+| Motion dependency and CSP | Pin `motion` 13.5.0 for Count Up's value/spring logic. Do not use `motion` style props for page effects; public animation styling is in the existing stylesheet. | Current `style-src` permits nonce styles only. This avoids relaxing CSP or relying on inline style attributes. `pnpm audit` reports no known vulnerabilities. |
+| Reduced motion and fallback | CSS animations stop under `prefers-reduced-motion: reduce`; Count Up displays the value without counting. Headline and section content render in server HTML and remain visible if JS/IntersectionObserver is unavailable. | No content or CTA requires animation to be usable; motion starts only once and uses short opacity/transform transitions. |
+
+### Phase 11H — Media presentation and registration image policy (2026-10-13)
+
+| Area | Decision | Reason / boundary |
+|---|---|---|
+| Content media frame | Use reusable bounded MediaFrame/MediaImage with centered contain fitting for article, announcement, gallery, landing, and registration content. Keep cover fitting only for semantic avatar photos with a stable fallback. | Intrinsic uploaded aspect ratio must not resize cards or crop large portions of content. |
+| Announcement modal | Bound modal and image dimensions by the viewport; image uses contain and center alignment. | Portrait and ultra-wide images remain fully visible on desktop and mobile. |
+| Public structure | Expand/collapse active-period leadership and division hierarchy in existing landing #struktur section; expose aria-expanded and aria-controls. | Route matrix and current product mapping do not require a new public structure route or duplicate organization fetch. |
+| Registration IMAGE | IMAGE is a ninth structural field type; first submission locks it under the existing form schema policy. Transport images as multipart keyed by field_key and keep answer snapshots metadata-only. | Applicant binary content is private submission data and must not be published through general media. |
+| Registration attachment access | Store opaque keys under dedicated private storage; persist safe file metadata in registration_submission_files; serve only via authenticated scoped admin file route with private/no-store. | Avoid public URL leakage and preserve form role/division authorization. |
+| Image validation | JPEG/JPG/JFIF, PNG, WebP, static GIF, TIFF, BMP; TIFF/BMP normalize to PNG. Reject animated GIF, SVG, HEIC/HEIF, AVIF. Five images maximum, 5 MiB per file, dimension/pixel bounds from Phase 11G. | Reuse the bounded decoder pipeline without arbitrary client policy overrides. |
+| Registration visibility | Landing reads `GET /public/registrations?status=OPEN` using no-store; API is the sole status/time-window authority. Store/compare UTC and localize display with Asia/Jakarta. | Opening/closing changes must not depend on a frontend rebuild or duplicate client filtering. |
+| Migration | Add reversible `00010_registration_image_attachments.sql`; do not alter migrations 00001–00009. | Preserve migration history and keep private attachment metadata separate from answer values. |
+| Acceptance boundary | Keep all affected visual rows RE-REVIEW REQUIRED and overall Phase 11 open until user manual re-review. No final Phase 11 commit or Phase 12 work. | Automated HTTP, database, and component evidence cannot grant visual/manual acceptance. |
+
+### Phase 11 public registration and organization corrective review — 2026-10-13
+
+| Topic | Decision | Basis / boundary |
+|---|---|---|
+| Public organization navigation | Canonical detail route is `/struktur`; navbar and landing preview CTA use that route. Landing organization section is preview-only and no longer expands the full hierarchy inline. | Explicit corrective instruction plus PRD v1.4 public handoff requiring both Landing/Home and Struktur Organisasi. This supersedes the Phase 11H inline accordion decision above. |
+| Public organization data | Reuse `GET /api/v1/public/organization`; add no endpoint or migration. Show active period, leadership, divisions, heads, and members in the deterministic order already returned by API. | Existing public contract is sufficient; presentation must not re-sort by database ID or invent members. |
+| Public privacy | The public frontend type and UI omit NIM. | Public API contract excludes NIM/status/audit data; do not serialize sensitive member fields into the landing preview. |
+| Public detail visual authority | Reuse public design tokens and landing visual language because no public organization detail Stitch screen is indexed. Admin `struktur_organisasi_pengurus_admin_bem` remains an admin target and is not a substitute. | Keep reference coverage gap explicit; all new/affected visual states require re-review. |
+| Registration cards | Equal-width desktop grid begins at large breakpoint; tablet/mobile remain single-column; odd final cards retain the standard grid track. | Avoid cramped tablet cards and any index-based featured width. |
+
+### Phase 11 organization hierarchy corrective — 2026-10-13
+
+| Topic | Decision | Basis / boundary |
+|---|---|---|
+| Division structure visibility | Add reversible `divisions.show_in_public_structure`; defaults to true for new work divisions. A one-time migration marks exact canonical existing names `Fakultas` and `BPH` false. Runtime organization queries use the flag only and do not infer type from names. Admin division editor exposes the flag. | Separate aspiration destinations and work-organization units without deleting or making Fakultas inactive. The one-time backfill applies to current canonical records only; future classification is explicit metadata. |
+| Aspiration destinations | Keep `GET /public/divisions` and aspiration submission validation independent from `show_in_public_structure`. An ACTIVE Fakultas remains selectable and valid for Aspirasi. | The flag is a presentation classification, not activity or eligibility. |
+| Leadership tier | Select active leadership by existing positions (`KETUA`, `WAKIL_KETUA`, `SEKRETARIS`, `BENDAHARA`) regardless of division assignment. Public work division charts include only `KEPALA_BIDANG` and `ANGGOTA`; no role is duplicated. | BPH can remain an admin grouping while its leadership appears in the top tier. |
+| Public detail DTO | Remove period, division, and member database IDs from `GET /public/organization`; include only approved public identity, position, photo, leadership division label where available, and active-period fields. | Dialog and RSC props must not serialize internal record/user identifiers or private member fields. This supersedes the earlier Phase 11 API decision that the public organization payload could retain IDs. |
+| Public member detail | Use existing Radix Dialog with trigger buttons, visible focus, Escape, focus management, and only photo/name/position/division/period. Do not add bio, program, social links, contact, or identifiers. | No approved public contract exists for additional member fields. |
+| Organization chart | `/struktur` remains canonical. Render the API-ordered Ketua and leadership above visible work divisions; each division shows its head before its ordered members with responsive connectors. Landing remains a short preview with `/struktur` CTA. | User retained `/struktur`; API `display_order` ordering remains authoritative and manual acceptance remains open. |
+| Prior Phase 11 route decision | Continue using the dedicated `/struktur` route; ignore the older Phase 11H inline accordion entry. | The latest manual UAT instruction explicitly retained the separate route and landing preview. |

@@ -1,9 +1,10 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
-import Image from "next/image";
+import { ArrowRight, Image as ImageIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { MediaImage } from "@/components/ui/media-image";
+import { MediaFrame } from "@/components/ui/media-frame";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/overlays";
 
 export type AnnouncementPopupProps = {
@@ -27,18 +28,22 @@ export function AnnouncementPopup({
 }: AnnouncementPopupProps) {
   return (
     <Dialog open={open} onOpenChange={(nextOpen) => !nextOpen && onClose()}>
-      <DialogContent aria-describedby="announcement-popup-description" className="w-[min(92vw,42rem)] p-0">
+      <DialogContent
+        aria-describedby="announcement-popup-description"
+        className="max-h-[calc(100dvh-2rem)] w-[min(92vw,42rem)] overflow-y-auto p-0"
+      >
         {image ? (
-          <div className="relative aspect-[16/7] overflow-hidden rounded-t-xl bg-surface-muted">
-            <Image
-              src={image.src}
+          <MediaFrame ratio="h-[min(38dvh,18rem)]" className="rounded-t-xl">
+            <MediaImage
+              value={image.src}
               alt={image.alt}
               fill
               sizes="(max-width: 672px) 92vw, 672px"
-              className="object-cover"
-              unoptimized
+              className="object-contain object-center"
+              fallbackClassName="absolute inset-0 grid place-items-center bg-surface-muted text-primary"
+              fallback={<ImageIcon aria-hidden="true" className="size-8" />}
             />
-          </div>
+          </MediaFrame>
         ) : null}
         <div className="p-6 sm:p-8">
           {dateLabel ? (

@@ -21,7 +21,7 @@ These are genuine contract or evidence gaps. They are kept explicit rather than 
 | G-15 | Define activity-log retention and whether failed refresh attempts are logged as a named action/event. | Phase 9 applies recursive sensitive-key redaction and omits IP/User-Agent from responses; retention and failed-refresh vocabulary remain unspecified. | Retention decision required before production operations; event vocabulary before failed-refresh audit requirement is claimed. |
 | G-16 | How should remaining 29/37 references adapt to mobile where no separate mobile screen exists? Validate against responsive acceptance at 360/390/412 widths. | Mobile layout cannot be visually inferred from nonexistent captures. | Before visual sign-off for each route. |
 | G-17 | Confirm whether public archive lists expired/inactive announcements and exact visibility rules; summary says archive/list but lacks detailed publication policy. | Public list may expose or hide the wrong announcements. | Before announcement API/UI implementation. |
-| G-18 | Define upload constraints/configuration overrides and whether browser preview is expected for small media versus document archive; PRD gives 10 MB baseline and file_path is internal. | Upload UX and deployment storage configuration may vary. | Before upload implementation. |
+| G-18 | Define upload constraints/configuration overrides and whether browser preview is expected for small media versus document archive; PRD gives 10 MB baseline and file_path is internal. | Resolved for the explicit Phase 11B public image scope: shared picker/preview, JPEG/PNG, configurable 5 MiB default, 12 MP bound, public API media route; private documents remain separate. GIF/WebP are unsupported. | Resolved for Phase 11B; production storage/backup target is a deployment follow-up. |
 
 ## Contract reconciliation gate
 
@@ -63,6 +63,13 @@ The later live MariaDB result and Phase 2B/2C evidence are recorded in `PHASE_2_
 | G-18 media/upload configuration | Phase 4 explicitly uses HTTPS URL fields and does not implement file upload or storage. Revisit storage constraints only if a later authorized scope adds uploads. |
 
 The unresolved G-17 rule is a release clarification, not a database/auth integration failure. See `PHASE_4_REPORT.md` for the exercised behavior and verification evidence.
+
+## Phase 11B implementation gaps
+
+- Admin mobile screenshots from the user's 360×800 inspection were rejected. The root shell layout is corrected and touched screens are marked `RE-REVIEW REQUIRED`; device re-review at 360×800, 390×844, and 412×915 is still mandatory.
+- Public media supports JPEG/PNG only; WebP was intentionally not accepted without a decoder dependency. Revisit only if an approved product requirement needs it.
+- URL columns are retained for compatibility. Asset use is recorded at upload but not relationally bound to content; upload or consumer-save failure can leave an orphan asset. Such assets are immutable and retained for manual cleanup so a referenced public URL is never removed.
+- Local public media path must be provisioned/backed up with the database in deployment. Storage interface is replaceable, but S3-compatible implementation and production deployment are outside Phase 11B.
 
 ## Phase 5 disposition
 
@@ -115,3 +122,37 @@ Phase 8 implementation is tracked in `PHASE_8_REPORT.md`. Phase 9 scope and evid
 | Full exact viewport visual sign-off | Browser/viewport evidence and limitations are recorded in `PHASE_8_REPORT.md`; do not claim pixel parity for unreviewed widths/screens. |
 
 Phase 7 implementation, database/security/export gates, browser workflows, and representative 390×844 public responsive review are complete. Final side-by-side visual sign-off for every relevant Stitch screen and the 360/412 breakpoints remains a manual release review item; see `PHASE_7_REPORT.md`.
+
+
+## Phase 11 audit status — 2026-10-11
+
+- The production build exposes the indexed public/admin route set and the 37 screen references (37 paired HTML references; 8 explicit mobile references) are inventoried in `PHASE_11_VISUAL_MATRIX.md`.
+- In-app browser navigation to `http://localhost:3000/admin/login` was explicitly denied by browser URL policy. No alternate browser or low-level workaround was attempted. Implementation screenshot comparison, 360/390/412 measurements, keyboard/console/network checks, and Phase 11 public/cross-role UAT remain **BLOCKED**.
+- Phase 7/8 manual follow-ups and Phase 10 browser CSP-console follow-up are not closed. Phase 9's visitor analytics deferral remains authoritative for current implementation; no analytics were added. G-17 and G-15 remain as previously described.
+- Automated evidence on 2026-10-11: `pnpm api:integration`, `pnpm verify`, `pnpm audit`, pinned `govulncheck`, and the CI gosec severity/confidence gate passed. Static API comparison found 94 registered routes, 93 product-contract path matches, and only operational `GET /healthz` outside product scope. See `PHASE_11_REPORT.md` and `PHASE_11_API_MATRIX.md`; no Phase 11 product-code change or Phase 12 work was made.
+- G-03 remains resolved as recorded for Phase 9: the implemented soft-deactivation lifecycle uses explicit POST actions rather than the legacy PRD DELETE method. G-04 detail/list operations are documented in the API contract; Phase 11 found several supported detail GETs have no direct UI caller, as listed in `PHASE_11_API_MATRIX.md`.
+
+## Phase 11H — Resolved defects and remaining acceptance gaps (2026-10-13)
+
+| Item | Status | Evidence / remaining work |
+|---|---|---|
+| Uploaded content image crop/zoom | Implementation corrected | Shared bounded contain frames and avatar exception are automated/build verified; user must review varied aspect ratios and modal layouts at target viewports. |
+| Landing organization “Lihat struktur” | Implementation corrected | Accessible in-place expansion uses the existing organization payload; user must review hierarchy, keyboard behavior, and mobile overflow. |
+| Registration IMAGE applicant data | Implemented | Private attachment domain/storage and authorized route are integration verified; user must review builder/form/admin detail and submit a real UAT image. |
+| OPEN form absent from landing | Root cause fixed | The landing previously did not fetch the public registrations endpoint. It now uses a no-store API fetch; user must confirm open/close actions update the landing and CTA without restart/rebuild. |
+| Registration time display | Policy fixed | API persists/evaluates in UTC and UI localizes to Asia/Jakarta; boundary behavior is covered by backend integration. Do not manually offset timestamps. |
+| Phase 11H manual visual acceptance | Pending | Every affected visual row remains RE-REVIEW REQUIRED. This is the remaining release acceptance work; it is not an automated implementation blocker. |
+
+Phase 11H identified no new product-contract question. Existing gap G-17 and prior Phase 11/Phase 7/8 manual UAT items remain open as documented above.
+
+## Phase 11 finalization disposition — 2026-10-14
+
+- The owner manually accepted the current public `/struktur` design, explicitly at 1440×900 and generally for the current layout. This closes the `/struktur` owner visual-acceptance gap; it does not create separate manual viewport measurements for 1280×800 or mobile sizes.
+- Automated responsive observations for `/struktur` at 360×800, 390×800, and 412×800 remain separate evidence. The broader G-16 requirement to validate every responsive route/reference is not globally resolved by acceptance of this route.
+- Remaining unreviewed screens, exact viewport captures, and authenticated role workflows stay as documented follow-ups with their existing statuses. No screen outside the owner's explicit acceptance is marked PASS by this update. G-15 and G-17 remain open governance/product-policy questions and are not critical Phase 11 runtime/security blockers.
+
+## Phase 11 organization hierarchy corrective — 2026-10-13
+
+- Organization/aspiration classification is resolved through `divisions.show_in_public_structure`. This flag only affects `GET /public/organization`; the active public divisions and aspiration write remain status/period scoped and continue to include an ACTIVE Fakultas.
+- Existing canonical `Fakultas` and `BPH` rows are classified false once by migration `00011_public_structure_visibility.sql`; runtime presentation uses metadata, not names. Future records use the explicit flag exposed in division administration.
+- `/struktur` hierarchy, dialog contents, and 360/390/412/desktop visual acceptance remain pending manual user re-review. This is not overall Phase 11 acceptance.

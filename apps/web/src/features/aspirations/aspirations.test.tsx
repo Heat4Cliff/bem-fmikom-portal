@@ -70,6 +70,14 @@ describe("aspiration public form", () => {
 
     expect(await screen.findByRole("heading", { name: "Aspirasi berhasil dikirim." })).toBeInTheDocument();
     expect(screen.getByText("ASP-41")).toBeInTheDocument();
+    const successActions = screen.getByRole("group", { name: "Aksi setelah aspirasi terkirim" });
+    const reference = successActions.querySelector('[data-slot="aspiration-reference"]');
+    const retryAction = screen.getByRole("button", { name: "Kirim aspirasi lain" });
+    expect(reference).toHaveTextContent("Nomor referensi: ASP-41");
+    expect(successActions).toHaveClass("mt-5", "flex-col", "gap-3", "sm:flex-row");
+    expect(retryAction).toHaveClass("min-h-10", "whitespace-nowrap", "w-full", "sm:w-auto");
+    await user.tab();
+    expect(retryAction).toHaveFocus();
     expect(submitAspiration).toHaveBeenCalledWith(
       expect.objectContaining({
         division_id: 2,

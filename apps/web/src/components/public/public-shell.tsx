@@ -3,7 +3,7 @@ import { PublicFooter, PublicHeader, MobileNavigation } from "@/components/publi
 
 export function PublicShell({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-dvh pb-16 md:pb-0">
+    <div className="min-h-dvh pb-[calc(3rem+0.375rem+max(env(safe-area-inset-bottom),0.35rem)+1px)] md:pb-0">
       <a
         href="#main-content"
         className="sr-only z-[60] rounded-md bg-primary px-4 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"

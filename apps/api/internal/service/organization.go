@@ -44,17 +44,18 @@ type Period struct {
 }
 
 type Division struct {
-	ID           int64          `json:"id"`
-	PeriodID     int64          `json:"period_id"`
-	PeriodName   string         `json:"period_name,omitempty"`
-	Name         string         `json:"name"`
-	Description  *string        `json:"description"`
-	Status       string         `json:"status"`
-	DisplayOrder int            `json:"display_order"`
-	Head         *MemberSummary `json:"head,omitempty"`
-	MemberCount  int            `json:"member_count"`
-	CreatedAt    time.Time      `json:"created_at"`
-	UpdatedAt    time.Time      `json:"updated_at"`
+	ID                    int64          `json:"id"`
+	PeriodID              int64          `json:"period_id"`
+	PeriodName            string         `json:"period_name,omitempty"`
+	Name                  string         `json:"name"`
+	Description           *string        `json:"description"`
+	Status                string         `json:"status"`
+	DisplayOrder          int            `json:"display_order"`
+	ShowInPublicStructure bool           `json:"show_in_public_structure"`
+	Head                  *MemberSummary `json:"head,omitempty"`
+	MemberCount           int            `json:"member_count"`
+	CreatedAt             time.Time      `json:"created_at"`
+	UpdatedAt             time.Time      `json:"updated_at"`
 }
 
 type MemberSummary struct {
@@ -88,22 +89,19 @@ type Organization struct {
 }
 
 type PublicPeriod struct {
-	ID        int64  `json:"id"`
 	Name      string `json:"name"`
 	StartDate string `json:"start_date"`
 	EndDate   string `json:"end_date"`
 }
 
 type PublicOrganizationMember struct {
-	ID       int64   `json:"id"`
-	Name     string  `json:"name"`
-	NIM      *string `json:"nim"`
-	Position string  `json:"position"`
-	PhotoURL *string `json:"photo_url"`
+	Name         string  `json:"name"`
+	Position     string  `json:"position"`
+	PhotoURL     *string `json:"photo_url"`
+	DivisionName *string `json:"division_name,omitempty"`
 }
 
 type PublicOrganizationDivision struct {
-	ID      int64                      `json:"id"`
 	Name    string                     `json:"name"`
 	Head    *PublicOrganizationMember  `json:"head"`
 	Members []PublicOrganizationMember `json:"members"`
@@ -122,11 +120,12 @@ type PeriodInput struct {
 }
 
 type DivisionInput struct {
-	PeriodID     int64   `json:"period_id"`
-	Name         string  `json:"name"`
-	Description  *string `json:"description"`
-	Status       string  `json:"status"`
-	DisplayOrder int     `json:"display_order"`
+	PeriodID              int64   `json:"period_id"`
+	Name                  string  `json:"name"`
+	Description           *string `json:"description"`
+	Status                string  `json:"status"`
+	DisplayOrder          int     `json:"display_order"`
+	ShowInPublicStructure *bool   `json:"show_in_public_structure"`
 }
 
 type MemberInput struct {
@@ -196,8 +195,8 @@ func (s *OrganizationService) PublicOrganization(ctx context.Context) (Organizat
 	if err != nil {
 		return result, err
 	}
-	result.Period = &PublicPeriod{ID: p.ID, Name: p.Name, StartDate: p.StartDate, EndDate: p.EndDate}
-	rows, err := s.db.QueryContext(ctx, `SELECT id,name,nim,position,photo_url FROM organization_members WHERE period_id=? AND division_id IS NULL AND status='ACTIVE' AND position IN ('KETUA','WAKIL_KETUA','SEKRETARIS','BENDAHARA') ORDER BY FIELD(position,'KETUA','WAKIL_KETUA','SEKRETARIS','BENDAHARA'),display_order,name,id`, p.ID)
+	result.Period = &PublicPeriod{Name: p.Name, StartDate: p.StartDate, EndDate: p.EndDate}
+	rows, err := s.db.QueryContext(ctx, `SELECT m.name,m.position,m.photo_url,d.name FROM organization_members m LEFT JOIN divisions d ON d.id=m.division_id AND d.period_id=m.period_id WHERE m.period_id=? AND m.status='ACTIVE' AND m.position IN ('KETUA','WAKIL_KETUA','SEKRETARIS','BENDAHARA') ORDER BY FIELD(m.position,'KETUA','WAKIL_KETUA','SEKRETARIS','BENDAHARA'),m.display_order,m.name,m.id`, p.ID)
 	if err != nil {
 		return result, err
 	}
@@ -207,37 +206,40 @@ func (s *OrganizationService) PublicOrganization(ctx context.Context) (Organizat
 		return result, err
 	}
 	rows, err = s.db.QueryContext(ctx, `SELECT d.id,d.name,
-		h.id,h.name,h.nim,h.photo_url,
-		m.id,m.name,m.nim,m.photo_url
+		h.id,h.name,h.photo_url,
+		m.id,m.name,m.photo_url
 		FROM divisions d
 		LEFT JOIN organization_members h ON h.division_id=d.id AND h.period_id=d.period_id AND h.position='KEPALA_BIDANG' AND h.status='ACTIVE'
 		LEFT JOIN organization_members m ON m.division_id=d.id AND m.period_id=d.period_id AND m.status='ACTIVE' AND m.position='ANGGOTA'
-		WHERE d.period_id=? AND d.status='ACTIVE'
+		WHERE d.period_id=? AND d.status='ACTIVE' AND d.show_in_public_structure=TRUE
 		ORDER BY d.display_order,d.name,d.id,COALESCE(m.display_order,-1),m.name,m.id`, p.ID)
 	if err != nil {
 		return result, err
 	}
 	defer rows.Close()
 	byID := map[int64]int{}
+	lastMemberID := map[int64]int64{}
 	for rows.Next() {
 		var d PublicOrganizationDivision
+		var divisionID int64
 		var headID, mID sql.NullInt64
-		var headName, headNIM, headPhoto, mName, mNIM, mPhoto sql.NullString
-		if err := rows.Scan(&d.ID, &d.Name, &headID, &headName, &headNIM, &headPhoto, &mID, &mName, &mNIM, &mPhoto); err != nil {
+		var headName, headPhoto, mName, mPhoto sql.NullString
+		if err := rows.Scan(&divisionID, &d.Name, &headID, &headName, &headPhoto, &mID, &mName, &mPhoto); err != nil {
 			return result, err
 		}
-		idx, ok := byID[d.ID]
+		idx, ok := byID[divisionID]
 		if !ok {
 			idx = len(result.Divisions)
-			byID[d.ID] = idx
-			result.Divisions = append(result.Divisions, PublicOrganizationDivision{ID: d.ID, Name: d.Name, Members: []PublicOrganizationMember{}})
+			byID[divisionID] = idx
+			result.Divisions = append(result.Divisions, PublicOrganizationDivision{Name: d.Name, Members: []PublicOrganizationMember{}})
 		}
 		division := &result.Divisions[idx]
 		if headID.Valid && division.Head == nil {
-			division.Head = &PublicOrganizationMember{ID: headID.Int64, Name: headName.String, NIM: ptrString(headNIM), Position: "KEPALA_BIDANG", PhotoURL: ptrString(headPhoto)}
+			division.Head = &PublicOrganizationMember{Name: headName.String, Position: "KEPALA_BIDANG", PhotoURL: ptrString(headPhoto)}
 		}
-		if mID.Valid && (len(division.Members) == 0 || division.Members[len(division.Members)-1].ID != mID.Int64) {
-			division.Members = append(division.Members, PublicOrganizationMember{ID: mID.Int64, Name: mName.String, NIM: ptrString(mNIM), Position: "ANGGOTA", PhotoURL: ptrString(mPhoto)})
+		if mID.Valid && lastMemberID[divisionID] != mID.Int64 {
+			division.Members = append(division.Members, PublicOrganizationMember{Name: mName.String, Position: "ANGGOTA", PhotoURL: ptrString(mPhoto)})
+			lastMemberID[divisionID] = mID.Int64
 		}
 	}
 	return result, rows.Err()
@@ -260,11 +262,12 @@ func scanPublicMembers(rows *sql.Rows) ([]PublicOrganizationMember, error) {
 	items := []PublicOrganizationMember{}
 	for rows.Next() {
 		var m PublicOrganizationMember
-		var nim, photo sql.NullString
-		if err := rows.Scan(&m.ID, &m.Name, &nim, &m.Position, &photo); err != nil {
+		var photo, divisionName sql.NullString
+		if err := rows.Scan(&m.Name, &m.Position, &photo, &divisionName); err != nil {
 			return nil, err
 		}
-		m.NIM, m.PhotoURL = ptrString(nim), ptrString(photo)
+		m.PhotoURL = ptrString(photo)
+		m.DivisionName = ptrString(divisionName)
 		items = append(items, m)
 	}
 	return items, rows.Err()
@@ -456,7 +459,7 @@ func (s *OrganizationService) listDivisions(ctx context.Context, f OrganizationF
 	if err := s.db.QueryRowContext(ctx, `SELECT COUNT(*) FROM divisions d`+where, args...).Scan(&total); err != nil {
 		return Result[Division]{}, err
 	}
-	query := `SELECT d.id,d.period_id,p.name,d.name,d.description,d.status,d.display_order,d.created_at,d.updated_at,
+	query := `SELECT d.id,d.period_id,p.name,d.name,d.description,d.status,d.display_order,d.show_in_public_structure,d.created_at,d.updated_at,
 	(SELECT COUNT(*) FROM organization_members m WHERE m.division_id=d.id AND m.period_id=d.period_id AND m.status='ACTIVE'),
 	(SELECT id FROM organization_members h WHERE h.division_id=d.id AND h.period_id=d.period_id AND h.position='KEPALA_BIDANG' AND h.status='ACTIVE' LIMIT 1),
 	(SELECT name FROM organization_members h WHERE h.division_id=d.id AND h.period_id=d.period_id AND h.position='KEPALA_BIDANG' AND h.status='ACTIVE' LIMIT 1)
@@ -472,7 +475,7 @@ func (s *OrganizationService) listDivisions(ctx context.Context, f OrganizationF
 		var d Division
 		var headID sql.NullInt64
 		var headName sql.NullString
-		if err := rows.Scan(&d.ID, &d.PeriodID, &d.PeriodName, &d.Name, &d.Description, &d.Status, &d.DisplayOrder, &d.CreatedAt, &d.UpdatedAt, &d.MemberCount, &headID, &headName); err != nil {
+		if err := rows.Scan(&d.ID, &d.PeriodID, &d.PeriodName, &d.Name, &d.Description, &d.Status, &d.DisplayOrder, &d.ShowInPublicStructure, &d.CreatedAt, &d.UpdatedAt, &d.MemberCount, &headID, &headName); err != nil {
 			return Result[Division]{}, err
 		}
 		if headID.Valid {
@@ -531,13 +534,23 @@ func (s *OrganizationService) SaveDivision(ctx context.Context, user domain.User
 		}
 	}
 	created := id == 0
+	showInPublicStructure := true
+	if in.ShowInPublicStructure != nil {
+		showInPublicStructure = *in.ShowInPublicStructure
+	} else if !created {
+		if err := s.db.QueryRowContext(ctx, `SELECT show_in_public_structure FROM divisions WHERE id=?`, id).Scan(&showInPublicStructure); errors.Is(err, sql.ErrNoRows) {
+			return Division{}, ErrOrganizationNotFound
+		} else if err != nil {
+			return Division{}, err
+		}
+	}
 	tx, err := s.db.BeginTx(ctx, nil)
 	if err != nil {
 		return Division{}, err
 	}
 	defer tx.Rollback()
 	if created {
-		res, e := tx.ExecContext(ctx, `INSERT INTO divisions(period_id,name,description,status,display_order) VALUES(?,?,?,?,?)`, in.PeriodID, in.Name, in.Description, in.Status, in.DisplayOrder)
+		res, e := tx.ExecContext(ctx, `INSERT INTO divisions(period_id,name,description,status,display_order,show_in_public_structure) VALUES(?,?,?,?,?,?)`, in.PeriodID, in.Name, in.Description, in.Status, in.DisplayOrder, showInPublicStructure)
 		if e != nil {
 			return Division{}, mapOrganizationDBError(e)
 		}
@@ -550,7 +563,7 @@ func (s *OrganizationService) SaveDivision(ctx context.Context, user domain.User
 		if exists == 0 {
 			return Division{}, ErrOrganizationNotFound
 		}
-		if _, e := tx.ExecContext(ctx, `UPDATE divisions SET period_id=?,name=?,description=?,status=?,display_order=? WHERE id=?`, in.PeriodID, in.Name, in.Description, in.Status, in.DisplayOrder, id); e != nil {
+		if _, e := tx.ExecContext(ctx, `UPDATE divisions SET period_id=?,name=?,description=?,status=?,display_order=?,show_in_public_structure=? WHERE id=?`, in.PeriodID, in.Name, in.Description, in.Status, in.DisplayOrder, showInPublicStructure, id); e != nil {
 			return Division{}, mapOrganizationDBError(e)
 		}
 	}

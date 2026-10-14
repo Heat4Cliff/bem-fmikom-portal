@@ -93,6 +93,86 @@
     linear-gradient(135deg, var(--surface-soft) 0%, var(--surface-muted) 48%, var(--surface-raised) 100%);
 }
 
+.react-bits-blur-word {
+  display: inline-block;
+  animation: react-bits-blur-word-in 280ms ease-out both;
+}
+
+.react-bits-blur-delay-0 {
+  animation-delay: 0ms;
+}
+.react-bits-blur-delay-1 {
+  animation-delay: 28ms;
+}
+.react-bits-blur-delay-2 {
+  animation-delay: 56ms;
+}
+.react-bits-blur-delay-3 {
+  animation-delay: 84ms;
+}
+.react-bits-blur-delay-4 {
+  animation-delay: 112ms;
+}
+.react-bits-blur-delay-5 {
+  animation-delay: 140ms;
+}
+.react-bits-blur-delay-6 {
+  animation-delay: 168ms;
+}
+.react-bits-blur-delay-7 {
+  animation-delay: 196ms;
+}
+.react-bits-blur-delay-8 {
+  animation-delay: 224ms;
+}
+.react-bits-blur-delay-9 {
+  animation-delay: 252ms;
+}
+.react-bits-blur-delay-10 {
+  animation-delay: 280ms;
+}
+.react-bits-blur-delay-11 {
+  animation-delay: 308ms;
+}
+.react-bits-blur-delay-12 {
+  animation-delay: 336ms;
+}
+
+.react-bits-fade-visible {
+  animation: react-bits-fade-in 320ms ease-out both;
+}
+
+@keyframes react-bits-blur-word-in {
+  from {
+    opacity: 0.82;
+    transform: translateY(5px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes react-bits-fade-in {
+  from {
+    opacity: 0.88;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .react-bits-blur-word,
+  .react-bits-fade-visible {
+    animation: none !important;
+  }
+}
+
 .public-media-art--navy {
   background-image: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-container));
 }
@@ -197,6 +277,18 @@ textarea,
 :focus-visible {
   outline: 2px solid var(--brand-accent-bright);
   outline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+  [data-admin-role] form,
+  [data-admin-role] form > *,
+  [data-admin-role] input,
+  [data-admin-role] select,
+  [data-admin-role] textarea,
+  [data-admin-role] button {
+    min-width: 0;
+    max-width: 100%;
+  }
 }
 
 ::selection {

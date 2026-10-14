@@ -12,16 +12,18 @@ import (
 
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/domain"
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/repository"
+	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/storage"
 )
 
 var (
-	ErrRegistrationNotFound  = errors.New("registration not found")
-	ErrRegistrationForbidden = errors.New("registration access forbidden")
-	ErrRegistrationConflict  = errors.New("registration conflict")
-	ErrRegistrationInvalid   = errors.New("registration validation failed")
-	ErrRegistrationDuplicate = errors.New("duplicate registration submission")
-	ErrRegistrationLocked    = errors.New("registration schema is locked")
-	ErrRegistrationHasData   = errors.New("registration has submissions")
+	ErrRegistrationNotFound      = errors.New("registration not found")
+	ErrRegistrationForbidden     = errors.New("registration access forbidden")
+	ErrRegistrationConflict      = errors.New("registration conflict")
+	ErrRegistrationInvalid       = errors.New("registration validation failed")
+	ErrRegistrationDuplicate     = errors.New("duplicate registration submission")
+	ErrRegistrationLocked        = errors.New("registration schema is locked")
+	ErrRegistrationHasData       = errors.New("registration has submissions")
+	ErrRegistrationImageTooLarge = errors.New("registration image exceeds size limit")
 )
 
 const (
@@ -35,6 +37,7 @@ const (
 	RegistrationMaxPhone        = 32
 	RegistrationMaxExportRows   = 1000
 	RegistrationMaxRequestBytes = 64 << 10
+	RegistrationMaxImageFields  = 5
 )
 
 var (
@@ -43,12 +46,14 @@ var (
 )
 
 type RegistrationService struct {
-	db  *sql.DB
-	log *repository.ActivityLogs
+	db       *sql.DB
+	log      *repository.ActivityLogs
+	files    storage.DocumentStorage
+	imageMax int64
 }
 
-func NewRegistrationService(db *sql.DB) *RegistrationService {
-	return &RegistrationService{db: db, log: repository.NewActivityLogs(db)}
+func NewRegistrationService(db *sql.DB, files storage.DocumentStorage, imageMax int64) *RegistrationService {
+	return &RegistrationService{db: db, log: repository.NewActivityLogs(db), files: files, imageMax: imageMax}
 }
 
 type RegistrationForm struct {
@@ -699,7 +704,7 @@ func validateRegistrationFields(fields []RegistrationFieldInput) error {
 		seen[field.FieldKey] = true
 		field.FieldType = strings.ToUpper(strings.TrimSpace(field.FieldType))
 		switch field.FieldType {
-		case "TEXT", "TEXTAREA", "EMAIL", "NUMBER", "SELECT", "RADIO", "CHECKBOX", "DATE":
+		case "TEXT", "TEXTAREA", "EMAIL", "NUMBER", "SELECT", "RADIO", "CHECKBOX", "DATE", "IMAGE":
 		default:
 			return ErrRegistrationInvalid
 		}
@@ -730,6 +735,15 @@ func validateRegistrationFields(fields []RegistrationFieldInput) error {
 		if !ok || field.FieldType != expectedType {
 			return ErrRegistrationInvalid
 		}
+	}
+	imageFields := 0
+	for _, field := range fields {
+		if strings.EqualFold(strings.TrimSpace(field.FieldType), "IMAGE") {
+			imageFields++
+		}
+	}
+	if imageFields > RegistrationMaxImageFields {
+		return ErrRegistrationInvalid
 	}
 	return nil
 }

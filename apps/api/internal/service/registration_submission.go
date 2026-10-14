@@ -3,12 +3,15 @@ package service
 import (
 	"bytes"
 	"context"
+	"crypto/rand"
 	"database/sql"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
 	"net/mail"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -16,6 +19,7 @@ import (
 
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/domain"
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/repository"
+	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/storage"
 )
 
 var registrationPhonePattern = regexp.MustCompile(`^[+0-9() .-]+$`)
@@ -80,12 +84,54 @@ type RegistrationReceipt struct {
 }
 
 type RegistrationAnswer struct {
-	FieldKey string          `json:"field_key"`
-	Label    string          `json:"label"`
-	Type     string          `json:"type"`
-	Text     *string         `json:"value_text"`
-	JSON     json.RawMessage `json:"value_json,omitempty"`
-	Order    int             `json:"display_order"`
+	FieldKey   string                  `json:"field_key"`
+	Label      string                  `json:"label"`
+	Type       string                  `json:"type"`
+	Text       *string                 `json:"value_text"`
+	JSON       json.RawMessage         `json:"value_json,omitempty"`
+	Order      int                     `json:"display_order"`
+	Attachment *RegistrationAttachment `json:"attachment,omitempty"`
+}
+
+type RegistrationImageUpload struct {
+	Filename string
+	MIMEType string
+	Data     []byte
+}
+
+// RegistrationSubmissionFieldErrors carries safe, actionable validation
+// feedback keyed by the stable registration field key. It deliberately omits
+// database and storage internals from public responses.
+type RegistrationSubmissionFieldErrors struct {
+	Fields map[string]string
+}
+
+func (e *RegistrationSubmissionFieldErrors) Error() string {
+	return "registration submission validation failed"
+}
+func (e *RegistrationSubmissionFieldErrors) Unwrap() error { return ErrRegistrationInvalid }
+
+func registrationSubmissionFieldError(key, message string) error {
+	return &RegistrationSubmissionFieldErrors{Fields: map[string]string{key: message}}
+}
+
+type RegistrationAttachment struct {
+	ID           int64  `json:"id"`
+	OriginalName string `json:"original_filename"`
+	MIMEType     string `json:"mime_type"`
+	SizeBytes    int64  `json:"size_bytes"`
+	Width        int    `json:"width"`
+	Height       int    `json:"height"`
+	DownloadURL  string `json:"download_url"`
+}
+
+type privateRegistrationFile struct {
+	StorageKey   string
+	OriginalName string
+	MIMEType     string
+	SizeBytes    int64
+	Width        int
+	Height       int
 }
 
 type RegistrationSubmission struct {
@@ -102,8 +148,21 @@ type RegistrationSubmission struct {
 }
 
 func (s *RegistrationService) Submit(ctx context.Context, formID int64, in RegistrationSubmitInput, now time.Time) (RegistrationReceipt, error) {
-	if formID < 1 || len(in.Answers) < 4 || len(in.Answers) > RegistrationMaxFields {
+	return s.SubmitWithImages(ctx, formID, in, nil, now)
+}
+
+func (s *RegistrationService) SubmitWithImages(ctx context.Context, formID int64, in RegistrationSubmitInput, images map[string]RegistrationImageUpload, now time.Time) (RegistrationReceipt, error) {
+	if formID < 1 || len(in.Answers) > RegistrationMaxFields {
 		return RegistrationReceipt{}, ErrRegistrationInvalid
+	}
+	for _, key := range []string{"full_name", "nim", "email", "phone"} {
+		if _, exists := in.Answers[key]; !exists {
+			label := map[string]string{"full_name": "Nama lengkap", "nim": "NIM", "email": "Email", "phone": "Nomor HP"}[key]
+			return RegistrationReceipt{}, registrationSubmissionFieldError(key, label+" wajib diisi.")
+		}
+	}
+	if len(images) > RegistrationMaxImageFields || (len(images) > 0 && (s.files == nil || s.imageMax < 1)) {
+		return RegistrationReceipt{}, registrationSubmissionFieldError("image", "Lampiran gambar tidak dapat diproses.")
 	}
 	ctx, cancel := context.WithTimeout(ctx, 8*time.Second)
 	defer cancel()
@@ -126,37 +185,122 @@ func (s *RegistrationService) Submit(ctx context.Context, formID int64, in Regis
 	if err := validateRegistrationFields(toRegistrationFieldInputs(fields)); err != nil {
 		return RegistrationReceipt{}, err
 	}
+	imageFields := make(map[string]RegistrationField)
+	for _, field := range fields {
+		if field.FieldType == "IMAGE" {
+			imageFields[field.FieldKey] = field
+		}
+	}
+	if len(images) > len(imageFields) {
+		return RegistrationReceipt{}, registrationSubmissionFieldError("image", "Jumlah lampiran tidak sesuai dengan kolom gambar formulir.")
+	}
+	prepared := make(map[string]preparedRegistrationFile, len(images))
+	cleanupKeys := []string{}
+	committed := false
+	defer func() {
+		if !committed && s.files != nil {
+			for _, key := range cleanupKeys {
+				_ = s.files.Delete(context.Background(), key)
+			}
+		}
+	}()
+	for key, field := range imageFields {
+		upload, exists := images[key]
+		if !exists {
+			if field.Required {
+				return RegistrationReceipt{}, registrationSubmissionFieldError(key, field.Label+" wajib diunggah.")
+			}
+			continue
+		}
+		name := safeMediaFilename(upload.Filename)
+		ext := strings.ToLower(filepath.Ext(name))
+		processed, processErr := processMediaImage(upload.Data, ext, upload.MIMEType, s.imageMax)
+		if errors.Is(processErr, ErrMediaTooLarge) {
+			return RegistrationReceipt{}, registrationSubmissionFieldError(key, "Ukuran gambar maksimal 5 MiB.")
+		}
+		if name == "" {
+			return RegistrationReceipt{}, registrationSubmissionFieldError(key, "Nama file gambar tidak valid.")
+		}
+		if errors.Is(processErr, ErrMediaUnsupported) {
+			return RegistrationReceipt{}, registrationSubmissionFieldError(key, "Format gambar tidak didukung atau tidak cocok dengan isi file.")
+		}
+		if errors.Is(processErr, ErrMediaAnimationUnsupported) {
+			return RegistrationReceipt{}, registrationSubmissionFieldError(key, "GIF animasi tidak didukung.")
+		}
+		if errors.Is(processErr, ErrMediaDimensions) {
+			return RegistrationReceipt{}, registrationSubmissionFieldError(key, "Dimensi gambar melebihi batas yang diizinkan.")
+		}
+		if processErr != nil {
+			return RegistrationReceipt{}, registrationSubmissionFieldError(key, "File bukan gambar yang valid atau rusak.")
+		}
+		id, randomErr := randomRegistrationFileID()
+		if randomErr != nil {
+			return RegistrationReceipt{}, randomErr
+		}
+		stage := ".staging/" + id + ".part"
+		final := "registration/" + id + processed.storedExt
+		cleanupKeys = append(cleanupKeys, stage, final)
+		prepared[key] = preparedRegistrationFile{field: field, filename: name, originalMIME: acceptedImageTypes[ext], processed: processed, stageKey: stage, storageKey: final}
+	}
+	for key := range images {
+		if _, ok := imageFields[key]; !ok {
+			return RegistrationReceipt{}, registrationSubmissionFieldError("image", "Lampiran gambar tidak cocok dengan kolom formulir.")
+		}
+		if _, ok := in.Answers[key]; ok {
+			return RegistrationReceipt{}, registrationSubmissionFieldError(key, "Lampiran gambar dikirim dengan format jawaban yang keliru.")
+		}
+	}
 	values := make(map[string]any, len(fields))
 	for _, field := range fields {
+		if field.FieldType == "IMAGE" {
+			values[field.FieldKey] = nil
+			continue
+		}
 		raw, ok := in.Answers[field.FieldKey]
 		if !ok {
 			if field.Required {
-				return RegistrationReceipt{}, ErrRegistrationInvalid
+				return RegistrationReceipt{}, registrationSubmissionFieldError(field.FieldKey, field.Label+" wajib diisi.")
 			}
 			values[field.FieldKey] = nil
 			continue
 		}
 		value, err := validateRegistrationAnswer(field, raw)
 		if err != nil {
-			return RegistrationReceipt{}, ErrRegistrationInvalid
+			message := field.Label + " tidak valid."
+			if field.FieldType == "EMAIL" {
+				message = "Format email tidak valid."
+			}
+			return RegistrationReceipt{}, registrationSubmissionFieldError(field.FieldKey, message)
 		}
 		values[field.FieldKey] = value
 	}
 	for key := range in.Answers {
+		if field, isImage := imageFields[key]; isImage && field.FieldType == "IMAGE" {
+			return RegistrationReceipt{}, registrationSubmissionFieldError(key, "Unggah gambar pada kolom lampiran, bukan sebagai jawaban teks.")
+		}
 		if _, ok := values[key]; !ok {
-			return RegistrationReceipt{}, ErrRegistrationInvalid
+			return RegistrationReceipt{}, registrationSubmissionFieldError(key, "Kolom formulir tidak dikenali.")
 		}
 	}
 	fullName := strings.TrimSpace(values["full_name"].(string))
 	nim := strings.TrimSpace(values["nim"].(string))
 	email := strings.ToLower(strings.TrimSpace(values["email"].(string)))
 	phone := strings.TrimSpace(values["phone"].(string))
-	if fullName == "" || runeLen(fullName) > RegistrationMaxName || nim == "" || runeLen(nim) > RegistrationMaxNIM || email == "" || runeLen(email) > RegistrationMaxEmail || phone == "" || runeLen(phone) > RegistrationMaxPhone || !registrationPhonePattern.MatchString(phone) {
-		return RegistrationReceipt{}, ErrRegistrationInvalid
+	if fullName == "" || runeLen(fullName) > RegistrationMaxName {
+		return RegistrationReceipt{}, registrationSubmissionFieldError("full_name", "Nama lengkap wajib diisi dan tidak boleh melebihi batas karakter.")
+	}
+	if nim == "" || runeLen(nim) > RegistrationMaxNIM {
+		return RegistrationReceipt{}, registrationSubmissionFieldError("nim", "NIM wajib diisi dan tidak boleh melebihi batas karakter.")
+	}
+	if email == "" || runeLen(email) > RegistrationMaxEmail {
+		return RegistrationReceipt{}, registrationSubmissionFieldError("email", "Email wajib diisi dan tidak boleh melebihi batas karakter.")
+	}
+	if phone == "" || runeLen(phone) > RegistrationMaxPhone || !registrationPhonePattern.MatchString(phone) {
+		return RegistrationReceipt{}, registrationSubmissionFieldError("phone", "Nomor HP wajib diisi dan hanya boleh berisi angka, spasi, +, tanda kurung, titik, atau tanda hubung.")
 	}
 	parsedEmail, err := mail.ParseAddress(email)
 	if err != nil || parsedEmail.Address != email {
-		return RegistrationReceipt{}, ErrRegistrationInvalid
+		return RegistrationReceipt{}, registrationSubmissionFieldError("email", "Format email tidak valid.")
 	}
 	normalizedNIM := strings.ToUpper(nim)
 	var duplicate int
@@ -196,13 +340,43 @@ func (s *RegistrationService) Submit(ctx context.Context, formID int64, in Regis
 			return RegistrationReceipt{}, err
 		}
 	}
+	for fieldKey, file := range prepared {
+		object, err := s.files.Save(ctx, file.stageKey, bytes.NewReader(file.processed.storedBytes), s.imageMax)
+		if err != nil {
+			return RegistrationReceipt{}, err
+		}
+		if _, err := tx.ExecContext(ctx, `INSERT INTO registration_submission_files (submission_id,field_id,field_key_snapshot,original_filename,storage_key,original_mime_type,stored_mime_type,size_bytes,width,height,sha256) VALUES (?,?,?,?,?,?,?,?,?,?,?)`, submissionID, file.field.ID, fieldKey, file.filename, file.storageKey, file.originalMIME, file.processed.storedMIME, object.SizeBytes, file.processed.width, file.processed.height, object.SHA256); err != nil {
+			return RegistrationReceipt{}, err
+		}
+		if err := s.files.Promote(ctx, file.stageKey, file.storageKey); err != nil {
+			return RegistrationReceipt{}, err
+		}
+	}
 	if err := tx.Commit(); err != nil {
 		if isRegistrationUniqueConflict(err) {
 			return RegistrationReceipt{}, ErrRegistrationDuplicate
 		}
 		return RegistrationReceipt{}, err
 	}
+	committed = true
 	return RegistrationReceipt{SubmissionID: submissionID, SubmittedAt: submittedAt, Title: form.Title}, nil
+}
+
+type preparedRegistrationFile struct {
+	field        RegistrationField
+	filename     string
+	originalMIME string
+	processed    processedImage
+	stageKey     string
+	storageKey   string
+}
+
+func randomRegistrationFileID() (string, error) {
+	var value [16]byte
+	if _, err := rand.Read(value[:]); err != nil {
+		return "", fmt.Errorf("generate private attachment key")
+	}
+	return hex.EncodeToString(value[:]), nil
 }
 
 func (s *RegistrationService) ListSubmissions(ctx context.Context, user domain.User, formID int64, filters RegistrationSubmissionFilters) (Result[RegistrationSubmission], error) {
@@ -270,9 +444,38 @@ func (s *RegistrationService) GetSubmission(ctx context.Context, user domain.Use
 		if len(jsonValue) > 0 {
 			answer.JSON = append(json.RawMessage(nil), jsonValue...)
 		}
+		if answer.Type == "IMAGE" {
+			var file RegistrationAttachment
+			fileErr := s.db.QueryRowContext(ctx, `SELECT id,original_filename,stored_mime_type,size_bytes,width,height FROM registration_submission_files WHERE submission_id=? AND field_key_snapshot=?`, submissionID, answer.FieldKey).Scan(&file.ID, &file.OriginalName, &file.MIMEType, &file.SizeBytes, &file.Width, &file.Height)
+			if fileErr == nil {
+				file.DownloadURL = fmt.Sprintf("/admin/registrations/%d/submissions/%d/files/%d", formID, submissionID, file.ID)
+				answer.Attachment = &file
+			} else if !errors.Is(fileErr, sql.ErrNoRows) {
+				return RegistrationSubmission{}, fileErr
+			}
+		}
 		item.Answers = append(item.Answers, answer)
 	}
 	return item, rows.Err()
+}
+
+func (s *RegistrationService) OpenSubmissionFile(ctx context.Context, user domain.User, formID, submissionID, fileID int64) (storage.DocumentReader, privateRegistrationFile, error) {
+	if _, err := s.Get(ctx, user, formID); err != nil {
+		return nil, privateRegistrationFile{}, err
+	}
+	var file privateRegistrationFile
+	err := s.db.QueryRowContext(ctx, `SELECT f.storage_key,f.original_filename,f.stored_mime_type,f.size_bytes,f.width,f.height FROM registration_submission_files f JOIN registration_submissions s ON s.id=f.submission_id WHERE s.registration_form_id=? AND s.id=? AND f.id=?`, formID, submissionID, fileID).Scan(&file.StorageKey, &file.OriginalName, &file.MIMEType, &file.SizeBytes, &file.Width, &file.Height)
+	if errors.Is(err, sql.ErrNoRows) {
+		return nil, privateRegistrationFile{}, ErrRegistrationNotFound
+	}
+	if err != nil {
+		return nil, privateRegistrationFile{}, err
+	}
+	reader, err := s.files.Open(ctx, file.StorageKey)
+	if err != nil {
+		return nil, privateRegistrationFile{}, err
+	}
+	return reader, file, nil
 }
 
 func submissionWhere(formID int64, filters RegistrationSubmissionFilters) (string, []any) {

@@ -37,11 +37,14 @@ func runOrganizationIntegration(t *testing.T, ctx context.Context, db *sql.DB, e
 
 	divA := createDivision(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"name":"Phase5 Divisi A","status":"ACTIVE","display_order":1}`, periodA))
 	divB := createDivision(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"name":"Phase5 Divisi B","status":"ACTIVE","display_order":0}`, periodA))
+	faculty := createDivision(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"name":"Fakultas","status":"ACTIVE","display_order":0,"show_in_public_structure":false}`, periodA))
+	bphDivision := createDivision(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"name":"BPH","status":"ACTIVE","display_order":0,"show_in_public_structure":false}`, periodA))
 	if response := contentRequest(engine, http.MethodGet, fmt.Sprintf("/api/v1/admin/divisions/%d", divA), "", kepalaToken); response.Code != http.StatusNotFound {
 		t.Fatalf("KB cross-division read status=%d", response.Code)
 	}
 
 	createMember(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"name":"Phase5 Ketua","position":"KETUA","status":"ACTIVE","display_order":0}`, periodA))
+	createMember(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"division_id":%d,"name":"Phase5 Wakil","position":"WAKIL_KETUA","status":"ACTIVE","display_order":0}`, periodA, bphDivision))
 	headA := createMember(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"division_id":%d,"name":"Phase5 Kepala A","position":"KEPALA_BIDANG","status":"ACTIVE","display_order":0}`, periodA, divA))
 	createMember(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"division_id":%d,"name":"Phase5 Anggota A","position":"ANGGOTA","status":"ACTIVE","display_order":1}`, periodA, divA))
 	createMember(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"division_id":%d,"name":"Phase5 Kepala B","position":"KEPALA_BIDANG","status":"ACTIVE","display_order":0}`, periodA, divB))
@@ -103,12 +106,42 @@ func runOrganizationIntegration(t *testing.T, ctx context.Context, db *sql.DB, e
 		t.Fatalf("active period count=%d err=%v", activeCount, err)
 	}
 	publicOrg := contentRequest(engine, http.MethodGet, "/api/v1/public/organization", "", "")
-	if publicOrg.Code != http.StatusOK || !strings.Contains(publicOrg.Body.String(), "Phase5 Ketua") || !strings.Contains(publicOrg.Body.String(), "Phase5 Kepala A") || strings.Contains(publicOrg.Body.String(), "Phase5 Tidak Publik") || strings.Contains(publicOrg.Body.String(), "created_at") || strings.Contains(publicOrg.Body.String(), "display_order") || strings.Contains(publicOrg.Body.String(), "INACTIVE") {
+	if publicOrg.Code != http.StatusOK || !strings.Contains(publicOrg.Body.String(), "Phase5 Ketua") || !strings.Contains(publicOrg.Body.String(), "Phase5 Wakil") || strings.Count(publicOrg.Body.String(), "Phase5 Wakil") != 1 || !strings.Contains(publicOrg.Body.String(), "Phase5 Kepala A") || strings.Contains(publicOrg.Body.String(), "Phase5 Tidak Publik") || strings.Contains(publicOrg.Body.String(), "Fakultas") || strings.Contains(publicOrg.Body.String(), `"nim"`) || strings.Contains(publicOrg.Body.String(), `"id":`) || strings.Contains(publicOrg.Body.String(), "created_at") || strings.Contains(publicOrg.Body.String(), "display_order") || strings.Contains(publicOrg.Body.String(), "INACTIVE") {
 		t.Fatalf("public organization visibility/shape = %d %s", publicOrg.Code, publicOrg.Body.String())
 	}
+	var publicStructure struct {
+		Data struct {
+			Leadership []struct {
+				Name         string  `json:"name"`
+				Position     string  `json:"position"`
+				DivisionName *string `json:"division_name"`
+			} `json:"leadership"`
+			Divisions []struct {
+				Name string `json:"name"`
+			} `json:"divisions"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(publicOrg.Body.Bytes(), &publicStructure); err != nil {
+		t.Fatalf("decode public organization: %v", err)
+	}
+	if len(publicStructure.Data.Divisions) != 2 || publicStructure.Data.Divisions[0].Name != "Phase5 Divisi B" || publicStructure.Data.Divisions[1].Name != "Phase5 Divisi A" {
+		t.Fatalf("public work division hierarchy = %+v", publicStructure.Data.Divisions)
+	}
+	for _, member := range publicStructure.Data.Leadership {
+		if member.Name == "Phase5 Wakil" && (member.Position != "WAKIL_KETUA" || member.DivisionName == nil || *member.DivisionName != "BPH") {
+			t.Fatalf("BPH-assigned leadership was not classified by position: %+v", member)
+		}
+	}
 	publicDivisions := contentRequest(engine, http.MethodGet, "/api/v1/public/divisions", "", "")
-	if publicDivisions.Code != http.StatusOK || strings.Index(publicDivisions.Body.String(), "Phase5 Divisi B") > strings.Index(publicDivisions.Body.String(), "Phase5 Divisi A") {
+	if publicDivisions.Code != http.StatusOK || !strings.Contains(publicDivisions.Body.String(), "Fakultas") || strings.Index(publicDivisions.Body.String(), "Phase5 Divisi B") > strings.Index(publicDivisions.Body.String(), "Phase5 Divisi A") {
 		t.Fatalf("public division order = %d %s", publicDivisions.Code, publicDivisions.Body.String())
+	}
+	var facultyVisible, bphVisible bool
+	if err := db.QueryRowContext(ctx, `SELECT show_in_public_structure FROM divisions WHERE id=?`, faculty).Scan(&facultyVisible); err != nil || facultyVisible {
+		t.Fatalf("faculty visibility metadata=%v err=%v", facultyVisible, err)
+	}
+	if err := db.QueryRowContext(ctx, `SELECT show_in_public_structure FROM divisions WHERE id=?`, bphDivision).Scan(&bphVisible); err != nil || bphVisible {
+		t.Fatalf("BPH visibility metadata=%v err=%v", bphVisible, err)
 	}
 	if response := contentRequest(engine, http.MethodDelete, fmt.Sprintf("/api/v1/admin/members/%d", inactiveMember), "", bphToken); response.Code != http.StatusNoContent {
 		t.Fatalf("member soft-delete status=%d", response.Code)

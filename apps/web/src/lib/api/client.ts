@@ -5,6 +5,7 @@ export type Envelope<T> = {
   message: string;
   data: T;
   code?: string;
+  errors?: Record<string, string[]>;
   meta?: { page: number; limit: number; total: number; total_pages: number };
 };
 
@@ -13,6 +14,7 @@ export class ApiError extends Error {
     message: string,
     readonly status: number,
     readonly code?: string,
+    readonly errors?: Record<string, string[]>,
   ) {
     super(message);
     this.name = "ApiError";
@@ -69,7 +71,12 @@ async function readEnvelope<T>(response: Response): Promise<Envelope<T>> {
     throw new ApiError("Respons server tidak dapat dibaca", response.status);
   }
   if (!response.ok || !envelope.success) {
-    throw new ApiError(envelope.message || "Permintaan gagal", response.status, envelope.code);
+    throw new ApiError(
+      envelope.message || "Permintaan gagal",
+      response.status,
+      envelope.code,
+      envelope.errors,
+    );
   }
   return envelope;
 }

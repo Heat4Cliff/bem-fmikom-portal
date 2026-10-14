@@ -23,10 +23,11 @@ func runAspirationIntegration(t *testing.T, ctx context.Context, db *sql.DB, eng
 	}
 	divisionA := createDivision(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"name":"Phase6 Divisi A","status":"ACTIVE"}`, periodID))
 	divisionB := createDivision(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"name":"Phase6 Divisi B","status":"ACTIVE"}`, periodID))
+	createDivision(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"name":"Fakultas","status":"ACTIVE","show_in_public_structure":false}`, periodID))
 	inactiveDivision := createDivision(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"name":"Phase6 Divisi Inactive","status":"INACTIVE"}`, periodID))
 	archivedPeriod := createPeriod(t, engine, superToken, `{"name":"Phase6 Archived Period","start_date":"2032-01-01","end_date":"2032-12-31"}`)
 	archivedDivision := createDivision(t, engine, bphToken, fmt.Sprintf(`{"period_id":%d,"name":"Phase6 Divisi Archived","status":"ACTIVE"}`, archivedPeriod))
-	if response := contentRequest(engine, http.MethodGet, "/api/v1/public/divisions", "", ""); response.Code != http.StatusOK || strings.Contains(response.Body.String(), "Phase6 Divisi Inactive") || strings.Contains(response.Body.String(), "Phase6 Divisi Archived") {
+	if response := contentRequest(engine, http.MethodGet, "/api/v1/public/divisions", "", ""); response.Code != http.StatusOK || !strings.Contains(response.Body.String(), "Fakultas") || strings.Contains(response.Body.String(), "Phase6 Divisi Inactive") || strings.Contains(response.Body.String(), "Phase6 Divisi Archived") {
 		t.Fatalf("public division options included inactive or archived division: %d %s", response.Code, response.Body.String())
 	}
 

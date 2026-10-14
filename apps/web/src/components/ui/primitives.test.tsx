@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/overlays";
-import { Input } from "@/components/ui/primitives";
+import { ActionGroup, Input, PageHeader } from "@/components/ui/primitives";
 
 describe("core UI primitives", () => {
   it("keeps the selected button variant and disabled state", () => {
@@ -15,6 +15,41 @@ describe("core UI primitives", () => {
 
     expect(button).toBeDisabled();
     expect(button).toHaveClass("bg-danger");
+  });
+
+  it("keeps page actions below the header on mobile and nowrap on primary buttons", () => {
+    render(
+      <PageHeader
+        title="Data Pengurus"
+        description="Kelola pengurus organisasi."
+        actions={<Button>Tambah Pengurus</Button>}
+      />,
+    );
+
+    const header = screen.getByRole("heading", { name: "Data Pengurus" }).closest("header");
+    const actions = screen.getByRole("button", { name: "Tambah Pengurus" });
+    expect(header).toHaveClass("mb-6", "flex-col", "md:flex-row");
+    expect(screen.getByRole("button", { name: "Tambah Pengurus" }).parentElement).toHaveAttribute(
+      "data-page-header-actions",
+    );
+    expect(actions).toHaveClass("whitespace-nowrap");
+  });
+
+  it("uses a shared action group with mobile stacking and token-sized gaps", () => {
+    render(
+      <ActionGroup role="group" aria-label="Aksi formulir">
+        <Button>Simpan</Button>
+        <Button variant="outline">Batal</Button>
+      </ActionGroup>,
+    );
+
+    expect(screen.getByRole("group", { name: "Aksi formulir" })).toHaveClass(
+      "min-w-0",
+      "flex-col",
+      "gap-3",
+      "sm:flex-row",
+      "sm:flex-wrap",
+    );
   });
 
   it("connects input validation text to the control", () => {

@@ -1,13 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { CalendarDays, Network, Plus, Search, UserRound, UsersRound } from "lucide-react";
+import { CalendarDays, Network, Plus, Search, UsersRound } from "lucide-react";
 import * as React from "react";
 import { AdminBreadcrumb, AdminPageHeader } from "@/components/admin/admin-page-header";
+import { MediaUpload } from "@/components/admin/media-upload";
+import { ActionGroup } from "@/components/ui/primitives";
+import { MediaImage } from "@/components/ui/media-image";
 import { Button } from "@/components/ui/button";
-import { Alert, Badge, Card, Input, Label, Select, Textarea } from "@/components/ui/primitives";
+import { Alert, Badge, Card, Checkbox, Input, Label, Select, Textarea } from "@/components/ui/primitives";
 import { useAuth } from "@/lib/auth/auth-provider";
 import {
   deleteDivision,
@@ -401,7 +403,7 @@ export function PeriodManager() {
           <span>
             Halaman {page} dari {totalPages}
           </span>
-          <div className="flex gap-2">
+          <div className="grid w-full gap-3 md:w-auto md:grid-cols-[minmax(10rem,14rem)_auto] md:items-center">
             <Button variant="outline" disabled={page <= 1} onClick={() => setPage(page - 1)}>
               Sebelumnya
             </Button>
@@ -434,6 +436,7 @@ type DivisionDraft = {
   description: string;
   status: "ACTIVE" | "INACTIVE";
   display_order: number;
+  show_in_public_structure: boolean;
 };
 const emptyDivision: DivisionDraft = {
   period_id: 0,
@@ -441,6 +444,7 @@ const emptyDivision: DivisionDraft = {
   description: "",
   status: "ACTIVE",
   display_order: 0,
+  show_in_public_structure: true,
 };
 
 export function DivisionManager() {
@@ -591,6 +595,26 @@ export function DivisionManager() {
               />
             </div>
           </div>
+          <label
+            htmlFor="division-public-structure"
+            className="flex min-h-11 items-start gap-3 rounded-lg border border-border/70 bg-surface-soft p-3 text-sm text-body md:col-span-2"
+          >
+            <Checkbox
+              id="division-public-structure"
+              checked={draft.show_in_public_structure}
+              onChange={(e) => setDraft({ ...draft, show_in_public_structure: e.target.checked })}
+              aria-describedby="division-public-structure-help"
+            />
+            <span>
+              <span className="block font-semibold text-primary">
+                Tampilkan sebagai bidang pada struktur publik
+              </span>
+              <span id="division-public-structure-help" className="mt-1 block text-xs leading-5 text-muted">
+                Pengaturan ini hanya mengatur bagan organisasi. Divisi tetap dapat menjadi tujuan Aspirasi
+                selama aktif.
+              </span>
+            </span>
+          </label>
           <div className="flex gap-2 md:col-span-2">
             <Button type="submit">{editing ? "Simpan Perubahan" : "Simpan Divisi"}</Button>
             <Button
@@ -669,6 +693,7 @@ export function DivisionManager() {
                             description: d.description ?? "",
                             status: d.status,
                             display_order: d.display_order,
+                            show_in_public_structure: d.show_in_public_structure,
                           });
                           setEditing(d.id);
                         }}
@@ -711,6 +736,7 @@ export function DivisionManager() {
                         description: d.description ?? "",
                         status: d.status,
                         display_order: d.display_order,
+                        show_in_public_structure: d.show_in_public_structure,
                       });
                       setEditing(d.id);
                     }}
@@ -875,20 +901,15 @@ export function MemberManager() {
               {items.map((m) => (
                 <tr key={m.id}>
                   <td className="px-4 py-3">
-                    {m.photo_url ? (
-                      <Image
-                        src={m.photo_url}
-                        alt={`Foto ${m.name}`}
-                        width={40}
-                        height={40}
-                        unoptimized
-                        className="size-10 rounded-full object-cover"
-                      />
-                    ) : (
-                      <span className="grid size-10 place-items-center rounded-full bg-primary-fixed text-primary">
-                        <UserRound aria-hidden="true" className="size-5" />
-                      </span>
-                    )}
+                    <MediaImage
+                      value={m.photo_url}
+                      alt={`Foto ${m.name}`}
+                      width={40}
+                      height={40}
+                      className="size-10 rounded-full object-cover"
+                      fallbackClassName="bg-primary-fixed text-primary"
+                      fallbackText={memberInitials(m.name)}
+                    />
                   </td>
                   <th scope="row" className="px-4 py-3 font-semibold text-primary">
                     {m.name}
@@ -924,20 +945,15 @@ export function MemberManager() {
         {items.map((m) => (
           <li key={m.id}>
             <Card className="flex gap-3 p-4">
-              {m.photo_url ? (
-                <Image
-                  src={m.photo_url}
-                  alt={`Foto ${m.name}`}
-                  width={48}
-                  height={48}
-                  unoptimized
-                  className="size-12 shrink-0 rounded-full object-cover"
-                />
-              ) : (
-                <span className="grid size-12 shrink-0 place-items-center rounded-full bg-primary-fixed text-primary">
-                  <UserRound aria-hidden="true" className="size-5" />
-                </span>
-              )}
+              <MediaImage
+                value={m.photo_url}
+                alt={`Foto ${m.name}`}
+                width={48}
+                height={48}
+                className="size-12 rounded-full object-cover"
+                fallbackClassName="bg-primary-fixed text-primary"
+                fallbackText={memberInitials(m.name)}
+              />
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <h2 className="break-words font-heading font-bold text-primary">{m.name}</h2>
@@ -1076,38 +1092,20 @@ export function MemberEditor({ memberId }: { memberId?: number }) {
       ) : null}
       <form
         onSubmit={(e) => void submit(e)}
-        className="grid gap-5 lg:grid-cols-[minmax(15rem,0.8fr)_minmax(0,1.5fr)]"
+        data-slot="member-form-grid"
+        className="grid gap-5 lg:grid-cols-[minmax(17rem,0.85fr)_minmax(0,1.5fr)]"
       >
         <Card className="space-y-4 p-5">
           <h2 className="font-heading text-lg font-bold text-primary">Foto Profil</h2>
-          <div className="grid min-h-48 place-items-center rounded-lg bg-surface-muted">
-            {draft.photo_url ? (
-              <Image
-                src={draft.photo_url}
-                alt={`Pratinjau foto ${draft.name || "pengurus"}`}
-                width={160}
-                height={160}
-                unoptimized
-                className="size-40 rounded-lg object-cover"
-              />
-            ) : (
-              <span className="grid size-20 place-items-center rounded-full bg-primary-fixed text-primary">
-                <UserRound className="size-10" />
-              </span>
-            )}
-          </div>
-          <div className={fieldClass}>
-            <Label htmlFor="member-photo">URL Foto (opsional)</Label>
-            <Input
-              id="member-photo"
-              type="url"
-              placeholder="https://…"
-              disabled={!canEdit}
-              value={draft.photo_url}
-              onChange={(e) => setDraft({ ...draft, photo_url: e.target.value })}
-            />
-            <p className="text-xs text-muted">Gunakan URL HTTP atau HTTPS; HTTPS disarankan.</p>
-          </div>
+          <MediaUpload
+            id="member-photo"
+            label="Foto profil"
+            purpose="MEMBER_PHOTO"
+            value={draft.photo_url}
+            onChange={(photo_url) => setDraft((current) => ({ ...current, photo_url }))}
+            disabled={!canEdit}
+            optional
+          />
         </Card>
         <Card className="grid content-start gap-4 p-5 sm:grid-cols-2">
           <div className={`${fieldClass} sm:col-span-2`}>
@@ -1221,14 +1219,14 @@ export function MemberEditor({ memberId }: { memberId?: number }) {
               onChange={(e) => setDraft({ ...draft, display_order: Number(e.target.value) })}
             />
           </div>
-          <div className="flex flex-wrap gap-2 sm:col-span-2">
+          <ActionGroup role="group" aria-label="Aksi formulir pengurus" className="sm:col-span-2">
             <Button type="submit" disabled={!canEdit || saving || !draft.period_id}>
               {saving ? "Menyimpan…" : "Simpan Pengurus"}
             </Button>
             <Button type="button" variant="outline" asChild>
               <Link href="/admin/pengurus">Batal</Link>
             </Button>
-          </div>
+          </ActionGroup>
         </Card>
       </form>
     </div>
@@ -1387,24 +1385,28 @@ export function OrganizationStructureManager() {
 function MemberHierarchyCard({ member }: { member: OrganizationMember }) {
   return (
     <li className="flex min-w-0 items-center gap-3 rounded-lg border border-border/70 bg-white p-3">
-      <span className="grid size-10 shrink-0 place-items-center overflow-hidden rounded-full bg-primary-fixed text-primary">
-        {member.photo_url ? (
-          <Image
-            src={member.photo_url}
-            alt={`Foto ${member.name}`}
-            width={40}
-            height={40}
-            unoptimized
-            className="size-10 object-cover"
-          />
-        ) : (
-          <UserRound aria-hidden="true" className="size-5" />
-        )}
-      </span>
+      <MediaImage
+        value={member.photo_url}
+        alt={`Foto ${member.name}`}
+        width={40}
+        height={40}
+        className="size-10 rounded-full object-cover"
+        fallbackClassName="bg-primary-fixed text-primary"
+        fallbackText={memberInitials(member.name)}
+      />
       <span className="min-w-0">
         <span className="block text-xs font-semibold text-secondary">{positionLabel(member.position)}</span>
         <span className="block break-words text-sm font-bold text-primary">{member.name}</span>
       </span>
     </li>
   );
+}
+
+function memberInitials(name: string) {
+  return name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
 }

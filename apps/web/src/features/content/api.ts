@@ -74,6 +74,21 @@ export const getPublicGalleryCategory = (slug: string) =>
   publicGet<GalleryCategory>(`/public/gallery-categories/${encodeURIComponent(slug)}`);
 export const getPublicOrganization = () => publicGet<PublicOrganization>("/public/organization");
 
+export type ActivePublicRegistration = {
+  title: string;
+  slug: string;
+  description: string | null;
+  period_name: string;
+  division_name: string | null;
+  open_at: string;
+  close_at: string;
+  public_status: "OPEN";
+};
+
+// Opening/closing windows are time-dependent; always ask the API for the current UTC state.
+export const getActivePublicRegistrations = (limit = 6) =>
+  publicList<ActivePublicRegistration>(`/public/registrations?status=OPEN&page=1&limit=${limit}`);
+
 export type PublicLandingSettings = {
   hero_headline: string;
   hero_subheadline: string;

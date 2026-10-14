@@ -165,7 +165,7 @@ export function AdminTopbar({
   const divisionScope = divisionName ? `Scope: ${divisionName}` : "Scope divisi tidak tersedia";
 
   return (
-    <header className="sticky top-0 z-30 flex h-[4.5rem] items-center justify-between border-b border-border/70 bg-surface px-4 md:px-6">
+    <header className="relative z-30 flex min-h-[4.5rem] items-center justify-between border-b border-border/70 bg-surface px-4 py-2 md:px-6 lg:sticky lg:top-0 lg:h-[4.5rem] lg:py-0">
       <div className="flex min-w-0 items-center gap-3">
         <Button
           aria-label="Buka navigasi admin"
@@ -228,7 +228,7 @@ export function AdminTopbar({
 
 export function AdminContent({ children }: { children: React.ReactNode }) {
   return (
-    <main id="admin-main" className="min-h-[calc(100dvh-7rem)]">
+    <main id="admin-main" className="min-h-[calc(100dvh-4.5rem)] min-w-0">
       {children}
     </main>
   );
@@ -271,19 +271,12 @@ export function AdminShell({
   const role = context?.role ?? user?.role;
   if (!role) return null;
   return (
-    <div className="min-h-dvh bg-background" data-admin-role={role}>
+    <div className="min-h-dvh min-w-0 bg-background" data-admin-role={role}>
       <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-20 lg:block lg:w-[var(--sidebar-width)]">
         <AdminSidebar role={role} />
       </div>
-      <div className="lg:pl-[var(--sidebar-width)]">
+      <div className="min-w-0 lg:pl-[var(--sidebar-width)]">
         <AdminTopbar onMenuClick={() => setOpen(true)} user={user} onLogout={onLogout} />
-        <div className="border-b border-border/70 bg-primary-container/10 px-4 py-2.5 md:px-6">
-          <div className="mx-auto flex max-w-[1440px] items-center gap-2 text-xs">
-            <span className="size-2 rounded-full bg-secondary" />
-            <span className="font-semibold uppercase tracking-wide text-muted">Mode akses</span>
-            <span className="font-bold text-primary">Sesi terverifikasi</span>
-          </div>
-        </div>
         <AdminContent>{children}</AdminContent>
       </div>
       <AdminMobileDrawer open={open} onOpenChange={setOpen} role={role} />

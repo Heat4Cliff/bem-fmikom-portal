@@ -1,7 +1,7 @@
 import { ArrowUpRight, CalendarDays } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import { MediaImage } from "@/components/ui/media-image";
 import { getPublicGalleryCategory } from "@/features/content/api";
 import { BackLink, formatDate, PublicContentHeading } from "@/features/content/public-content";
 import type { GalleryCategory } from "@/features/content/types";
@@ -52,20 +52,15 @@ export default async function GalleryDetailPage({ params }: Props) {
                   className="overflow-hidden rounded-xl border border-border/70 bg-white shadow-card"
                 >
                   <div className="relative grid aspect-[4/3] place-items-center bg-surface-muted">
-                    {item.preview_image_url ? (
-                      <Image
-                        src={item.preview_image_url}
-                        alt={item.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover"
-                        unoptimized
-                      />
-                    ) : (
-                      <span className="px-4 text-center text-sm text-muted">
-                        Pratinjau foto belum tersedia
-                      </span>
-                    )}
+                    <MediaImage
+                      value={item.preview_image_url}
+                      alt={item.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-contain object-center"
+                      fallbackClassName="absolute inset-0 grid place-items-center px-4 text-center text-sm text-muted"
+                      fallbackText="Pratinjau foto belum tersedia"
+                    />
                   </div>
                   <div className="p-4">
                     <h2 className="font-heading text-base font-bold text-primary">{item.title}</h2>

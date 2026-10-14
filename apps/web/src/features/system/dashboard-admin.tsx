@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Archive, FileText, Megaphone, MessageSquareText, UserRoundPlus } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
 import { Alert, Card } from "@/components/ui/primitives";
+import { CountUp } from "@/components/react-bits/count-up";
 import { getDashboard, type DashboardSummary } from "./api";
 
 function Metric({
@@ -25,7 +26,9 @@ function Metric({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted">{title}</p>
-          <p className="mt-2 text-3xl font-bold tabular-nums text-primary">{value.toLocaleString("id-ID")}</p>
+          <p className="mt-2 text-3xl font-bold tabular-nums text-primary">
+            <CountUp to={value} />
+          </p>
           {detail ? <p className="mt-2 text-sm text-muted">{detail}</p> : null}
         </div>
         <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/5 text-primary">

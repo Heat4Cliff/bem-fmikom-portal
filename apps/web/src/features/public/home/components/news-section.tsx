@@ -1,6 +1,6 @@
 import { ArrowRight, Newspaper } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import { MediaImage } from "@/components/ui/media-image";
 import type { NewsPreview } from "../types";
 import { EmptyPreview, SectionHeading } from "./section-primitives";
 
@@ -40,18 +40,15 @@ export function NewsSection({ news, demoMode }: { news: NewsPreview[]; demoMode:
                   aria-label={item.visualLabel}
                   className={`relative grid aspect-[16/10] place-items-center overflow-hidden ${visualTones[index % visualTones.length]}`}
                 >
-                  {item.imageUrl ? (
-                    <Image
-                      src={item.imageUrl}
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover"
-                      unoptimized
-                    />
-                  ) : (
-                    <Newspaper aria-hidden="true" className="size-10 text-primary/70" />
-                  )}
+                  <MediaImage
+                    value={item.imageUrl}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-contain object-center"
+                    fallbackClassName="absolute inset-0 grid place-items-center bg-primary-container/10 text-primary/70"
+                    fallback={<Newspaper aria-hidden="true" className="size-10" />}
+                  />
                 </div>
                 <div className="p-5">
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold text-muted">

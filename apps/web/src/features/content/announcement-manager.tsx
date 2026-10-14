@@ -2,8 +2,11 @@
 
 import * as React from "react";
 import { AdminBreadcrumb, AdminPageHeader } from "@/components/admin/admin-page-header";
+import { MediaUpload } from "@/components/admin/media-upload";
 import { apiRequest, apiRequestEnvelope } from "@/lib/api/client";
 import { useAuth } from "@/lib/auth/auth-provider";
+import { announcementPayload } from "./content-payloads";
+import { contentFormErrorMessage } from "./form-errors";
 import type { Announcement } from "./types";
 
 type Form = {
@@ -29,6 +32,7 @@ export function AnnouncementManager() {
   const [editing, setEditing] = React.useState<number | null>(null);
   const [open, setOpen] = React.useState(false);
   const [busy, setBusy] = React.useState(false);
+  const [uploadPending, setUploadPending] = React.useState(false);
   const [error, setError] = React.useState("");
   const [message, setMessage] = React.useState("");
   const [search, setSearch] = React.useState("");
@@ -65,26 +69,22 @@ export function AnnouncementManager() {
   }
   async function submit(event: React.FormEvent) {
     event.preventDefault();
+    if (busy || uploadPending) return;
     setBusy(true);
     setError("");
     setMessage("");
     try {
       await apiRequest(editing ? `/admin/announcements/${editing}` : "/admin/announcements", {
         method: editing ? "PATCH" : "POST",
-        body: {
-          ...form,
-          image_url: form.image_url || null,
-          start_at: new Date(form.start_at).toISOString(),
-          end_at: form.end_at ? new Date(form.end_at).toISOString() : null,
-        },
+        body: announcementPayload(form),
       });
       setMessage(editing ? "Pengumuman diperbarui." : "Pengumuman dibuat sebagai nonaktif.");
       setOpen(false);
       setEditing(null);
       setForm(blank);
       await load();
-    } catch {
-      setError("Pengumuman gagal disimpan. Pastikan tanggal dan URL gambar valid.");
+    } catch (error: unknown) {
+      setError(contentFormErrorMessage(error, "Pengumuman gagal disimpan. Periksa data lalu coba lagi."));
     } finally {
       setBusy(false);
     }
@@ -316,15 +316,19 @@ export function AnnouncementManager() {
                   />
                 </label>
               </div>
-              <label className="text-sm font-semibold">
-                Gambar (URL HTTPS, opsional)
-                <input
-                  type="url"
+              <div className="text-sm font-semibold">
+                <MediaUpload
+                  id="announcement-image"
+                  label="Gambar pengumuman"
+                  purpose="ANNOUNCEMENT_IMAGE"
                   value={form.image_url}
-                  onChange={(e) => setForm({ ...form, image_url: e.target.value })}
-                  className="mt-1 min-h-10 w-full rounded-md border border-border bg-surface-muted px-3 font-normal"
+                  onChange={(image_url) => setForm((current) => ({ ...current, image_url }))}
+                  onUploadStateChange={setUploadPending}
+                  disabled={busy}
+                  optional
+                  compact
                 />
-              </label>
+              </div>
               <label className="text-sm font-semibold">
                 Isi pengumuman
                 <textarea
@@ -348,7 +352,7 @@ export function AnnouncementManager() {
                 </button>
                 <button
                   type="submit"
-                  disabled={busy}
+                  disabled={busy || uploadPending}
                   className="min-h-10 rounded-md bg-primary px-4 text-sm font-semibold text-white"
                 >
                   Simpan

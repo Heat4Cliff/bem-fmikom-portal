@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import { MediaImage } from "@/components/ui/media-image";
 import { getPublicAnnouncement } from "@/features/content/api";
 import { BackLink, formatDate, SanitizedRichText } from "@/features/content/public-content";
 import type { Announcement } from "@/features/content/types";
@@ -36,13 +36,13 @@ export default async function AnnouncementDetailPage({ params }: Props) {
         <div className="mt-6 overflow-hidden rounded-2xl border border-border/70 bg-white shadow-card">
           {announcement.image_url ? (
             <div className="relative aspect-[16/7] max-h-[26rem] bg-surface-muted">
-              <Image
-                src={announcement.image_url}
+              <MediaImage
+                value={announcement.image_url}
                 alt=""
                 fill
                 sizes="(max-width: 768px) 100vw, 896px"
-                className="object-cover"
-                unoptimized
+                className="object-contain object-center"
+                fallbackClassName="absolute inset-0 grid place-items-center bg-surface-muted"
               />
             </div>
           ) : null}

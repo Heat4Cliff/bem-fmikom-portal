@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import * as React from "react";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
 import { Button } from "@/components/ui/button";
+import { MediaImage } from "@/components/ui/media-image";
 import { Checkbox, Input, Label, Select, Textarea } from "@/components/ui/primitives";
 import { useAuth } from "@/lib/auth/auth-provider";
 import { ApiError } from "@/lib/api/client";
@@ -17,6 +18,7 @@ import {
   downloadRegistrationExport,
   getRegistration,
   getRegistrationSubmission,
+  getRegistrationAttachmentBlob,
   getRegistrationSubmissions,
   getRegistrations,
   saveRegistrationFields,
@@ -39,6 +41,7 @@ const fieldTypes: RegistrationFieldType[] = [
   "RADIO",
   "CHECKBOX",
   "DATE",
+  "IMAGE",
 ];
 const coreKeys = new Set(["full_name", "nim", "email", "phone"]);
 
@@ -949,12 +952,15 @@ function FieldEditor({
           </Select>
         </div>
         <div>
-          <Label htmlFor={`field-placeholder-${index}`}>Placeholder</Label>
+          <Label htmlFor={`field-placeholder-${index}`}>
+            {field.field_type === "IMAGE" ? "Deskripsi bantuan (opsional)" : "Placeholder"}
+          </Label>
           <Input
             id={`field-placeholder-${index}`}
             maxLength={255}
             value={field.placeholder ?? ""}
             onChange={(e) => onChange({ placeholder: e.target.value })}
+            placeholder={field.field_type === "IMAGE" ? "Contoh: Unggah foto formal" : undefined}
           />
         </div>
         <div className="flex min-h-10 items-center gap-2 text-sm text-body">
@@ -967,7 +973,15 @@ function FieldEditor({
           <Label htmlFor={`field-required-${index}`}>Wajib diisi</Label>
         </div>
       </div>
-      {choices ? (
+      {field.field_type === "IMAGE" ? (
+        <div className="space-y-2 rounded-md border border-dashed border-border bg-surface-muted p-4">
+          <p className="text-sm font-semibold text-primary">Pratinjau unggah gambar</p>
+          <div className="grid min-h-28 place-items-center rounded-lg bg-white text-sm text-muted">
+            <span>Seret gambar atau pilih dari perangkat</span>
+          </div>
+          <p className="text-xs text-muted">JPEG, PNG, WebP, GIF statis, TIFF, BMP · maks. 5 MiB</p>
+        </div>
+      ) : choices ? (
         <div className="space-y-2 rounded-md bg-surface-muted p-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-primary">Pilihan</span>
@@ -1296,7 +1310,17 @@ export function RegistrationSubmissionDetail({ id, submissionId }: { id: number;
               .map((answer) => (
                 <div key={answer.field_key}>
                   <dt className="text-xs text-muted">{answer.label}</dt>
-                  <dd className="mt-1 whitespace-pre-wrap break-words text-sm text-body">{value(answer)}</dd>
+                  <dd className="mt-1 whitespace-pre-wrap break-words text-sm text-body">
+                    {answer.type === "IMAGE" ? (
+                      answer.attachment ? (
+                        <PrivateRegistrationAttachment attachment={answer.attachment} />
+                      ) : (
+                        "Tidak ada gambar dilampirkan."
+                      )
+                    ) : (
+                      value(answer)
+                    )}
+                  </dd>
                 </div>
               ))}
           </dl>
@@ -1305,6 +1329,63 @@ export function RegistrationSubmissionDetail({ id, submissionId }: { id: number;
           ) : null}
         </section>
       </div>
+    </div>
+  );
+}
+
+function PrivateRegistrationAttachment({
+  attachment,
+}: {
+  attachment: NonNullable<NonNullable<RegistrationSubmission["answers"]>[number]["attachment"]>;
+}) {
+  const [url, setUrl] = React.useState("");
+  React.useEffect(() => {
+    let active = true;
+    let objectURL = "";
+    getRegistrationAttachmentBlob(attachment.download_url)
+      .then((blob) => {
+        objectURL = URL.createObjectURL(blob);
+        if (active) setUrl(objectURL);
+        else URL.revokeObjectURL(objectURL);
+      })
+      .catch(() => {
+        if (active) setUrl("");
+      });
+    return () => {
+      active = false;
+      if (objectURL) URL.revokeObjectURL(objectURL);
+    };
+  }, [attachment.download_url]);
+  return (
+    <div className="max-w-md space-y-2 rounded-lg border border-border bg-surface-muted p-3">
+      {url ? (
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md bg-white">
+          <MediaImage
+            value={url}
+            alt={`Lampiran ${attachment.original_filename}`}
+            fill
+            allowBlobPreview
+            className="object-contain object-center"
+          />
+        </div>
+      ) : (
+        <p role="status" className="text-xs text-muted">
+          Memuat lampiran privat…
+        </p>
+      )}
+      <p className="break-all text-xs text-body">
+        {attachment.original_filename} · {(attachment.size_bytes / (1024 * 1024)).toFixed(2)} MiB
+      </p>
+      {url ? (
+        <a
+          href={url}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex min-h-10 items-center font-semibold text-primary"
+        >
+          Buka gambar
+        </a>
+      ) : null}
     </div>
   );
 }

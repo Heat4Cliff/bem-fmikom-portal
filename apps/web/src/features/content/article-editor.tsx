@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { AdminBreadcrumb, AdminPageHeader } from "@/components/admin/admin-page-header";
+import { MediaUpload } from "@/components/admin/media-upload";
 import { apiRequest } from "@/lib/api/client";
 import { useAuth } from "@/lib/auth/auth-provider";
 import type { Article, ContentCategory } from "./types";
@@ -88,7 +89,7 @@ export function ArticleEditor({ id }: { id?: number }) {
       setMessage(item.status === "PUBLISHED" ? "Perubahan berita terbit tersimpan." : "Draft tersimpan.");
       if (!articleID) router.replace(`/admin/berita/${item.id}/edit`);
     } catch {
-      setError("Berita gagal disimpan. Periksa judul, URL gambar, kategori, dan format konten.");
+      setError("Berita gagal disimpan. Periksa judul, gambar, kategori, dan format konten.");
     } finally {
       setBusy(false);
     }
@@ -220,20 +221,15 @@ export function ArticleEditor({ id }: { id?: number }) {
             </div>
           </section>
           <section className="rounded-xl border border-border/70 bg-white p-5 shadow-card">
-            <h2 className="font-heading font-bold text-primary">Gambar sampul</h2>
-            <label className="mt-3 block text-sm">
-              URL gambar (HTTPS)
-              <input
-                type="url"
-                value={form.thumbnail_url}
-                onChange={(e) => setForm({ ...form, thumbnail_url: e.target.value })}
-                placeholder="https://..."
-                className="mt-1 min-h-10 w-full rounded-md border border-border bg-surface-muted px-3 text-xs"
-              />
-            </label>
-            <p className="mt-2 text-xs leading-5 text-muted">
-              Upload gambar belum termasuk Phase 4; gunakan URL gambar HTTPS yang disetujui.
-            </p>
+            <MediaUpload
+              id="article-cover"
+              label="Gambar sampul"
+              purpose="ARTICLE_COVER"
+              value={form.thumbnail_url}
+              onChange={(thumbnail_url) => setForm((current) => ({ ...current, thumbnail_url }))}
+              optional
+              compact
+            />
           </section>
           {user?.role !== "KEPALA_BIDANG" ? (
             <section className="rounded-xl border border-border/70 bg-white p-5 shadow-card">

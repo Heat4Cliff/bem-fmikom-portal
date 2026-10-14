@@ -92,12 +92,14 @@
 - [x] Dependency/security scan (pnpm audit, govulncheck, gosec high-severity gate; non-blocking findings recorded).
 
 ## Phase 11 — Full Integration & Visual Compliance
-- [ ] All API contract routes verified.
+- [x] All API contract routes verified.
 - [ ] Desktop visual review against Stitch.
 - [ ] Mobile 360/390/412 review against Stitch patterns.
 - [ ] Loading/empty/error/permission states verified.
-- [ ] No out-of-scope features introduced.
-- [ ] Create defect log and resolve P0/P1 issues.
+- [x] No out-of-scope features introduced.
+- [x] Create defect log and resolve P0/P1 issues.
+
+Phase 11 finalization (2026-10-14): automated integration/security/build gates pass and the owner accepted the current `/struktur` layout (1440×900 explicitly). Remaining unreviewed Stitch rows and exact viewport states stay unchecked as documented non-blocking follow-ups; no other screen is marked user accepted.
 
 ## Phase 12 — UAT & Deployment Readiness
 - [ ] Deterministic reset/seed procedure.

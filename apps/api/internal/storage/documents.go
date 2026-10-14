@@ -150,7 +150,7 @@ func (reader *rootedReadCloser) Close() error {
 func (store *LocalPrivateDocuments) Promote(ctx context.Context, temporaryKey, storageKey string) error {
 	source, sourceErr := validateKey(temporaryKey)
 	destination, destinationErr := validateKey(storageKey)
-	if sourceErr != nil || destinationErr != nil || !strings.HasPrefix(source, ".staging/") || !strings.HasPrefix(destination, "documents/") {
+	if sourceErr != nil || destinationErr != nil || !strings.HasPrefix(source, ".staging/") || !(strings.HasPrefix(destination, "documents/") || strings.HasPrefix(destination, "registration/")) {
 		return ErrInvalidKey
 	}
 	if err := ctx.Err(); err != nil {

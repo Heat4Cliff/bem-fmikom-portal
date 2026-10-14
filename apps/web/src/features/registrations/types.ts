@@ -8,7 +8,8 @@ export type RegistrationFieldType =
   | "SELECT"
   | "RADIO"
   | "CHECKBOX"
-  | "DATE";
+  | "DATE"
+  | "IMAGE";
 
 export type RegistrationOption = { value: string; label: string; display_order?: number };
 export type RegistrationField = {
@@ -71,6 +72,15 @@ export type RegistrationSubmission = {
     value_text: string | null;
     value_json?: unknown;
     display_order: number;
+    attachment?: {
+      id: number;
+      original_filename: string;
+      mime_type: string;
+      size_bytes: number;
+      width: number;
+      height: number;
+      download_url: string;
+    };
   }[];
 };
 export type PageMeta = { page: number; limit: number; total: number; total_pages: number };

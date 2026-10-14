@@ -26,6 +26,7 @@ export type Division = {
   description?: string | null;
   status: "ACTIVE" | "INACTIVE";
   display_order: number;
+  show_in_public_structure: boolean;
   head?: { id: number; name: string; position: string } | null;
   member_count: number;
 };

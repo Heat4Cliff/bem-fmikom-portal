@@ -1,0 +1,1 @@
+webp-sample.webp is copied from golang.org/x/image v0.47.0 testdata/blue-purple-pink.lossy.webp and is used only as a decoder regression fixture. The golang.org/x/image module is BSD-3-Clause licensed.

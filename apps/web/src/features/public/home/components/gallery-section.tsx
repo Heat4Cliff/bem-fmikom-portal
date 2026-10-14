@@ -1,6 +1,6 @@
 import { ArrowRight, Images } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import { MediaImage } from "@/components/ui/media-image";
 import type { GalleryPreview } from "../types";
 import { EmptyPreview, SectionHeading } from "./section-primitives";
 
@@ -43,18 +43,15 @@ export function GallerySection({ gallery, demoMode }: { gallery: GalleryPreview[
                   aria-label={item.visualLabel}
                   className={`relative grid aspect-[4/3] place-items-center overflow-hidden rounded-xl border border-border/50 ${tones[item.tone]}`}
                 >
-                  {item.imageUrl ? (
-                    <Image
-                      src={item.imageUrl}
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      className="object-cover"
-                      unoptimized
-                    />
-                  ) : (
-                    <Images aria-hidden="true" className="size-9 text-white/85" />
-                  )}
+                  <MediaImage
+                    value={item.imageUrl}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="object-contain object-center"
+                    fallbackClassName={`absolute inset-0 grid place-items-center ${tones[item.tone]}`}
+                    fallback={<Images aria-hidden="true" className="size-9 text-white/85" />}
+                  />
                 </Link>
                 <h3 className="mt-3 font-heading text-sm font-bold leading-snug text-primary sm:text-base">
                   {item.title}

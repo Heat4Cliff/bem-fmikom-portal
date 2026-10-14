@@ -26,27 +26,18 @@ export type VisionMission = {
 };
 
 export type OrganizationPreview = {
-  period?: { id: number; name: string; start_date: string; end_date: string } | null;
+  period?: { name: string; start_date: string; end_date: string } | null;
   periodLabel?: string;
+  status?: "ready" | "empty" | "error";
   leadership: OrganizationMemberPreview[];
-  divisions: OrganizationDivisionPreview[];
-  members: OrganizationMemberPreview[];
 };
 
 export type OrganizationMemberPreview = {
   id: number | string;
   role: string;
   name: string;
-  nim?: string | null;
   photoUrl?: string | null;
   division?: string;
-};
-
-export type OrganizationDivisionPreview = {
-  id: number;
-  name: string;
-  head: OrganizationMemberPreview | null;
-  members: OrganizationMemberPreview[];
 };
 
 export type NewsPreview = {
@@ -82,7 +73,9 @@ export type GalleryPreview = {
 
 export type RegistrationPreview = {
   id: string;
+  slug?: string;
   title: string;
+  description?: string | null;
   division?: string;
   openDate?: string;
   closeDate?: string;

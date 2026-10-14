@@ -1,8 +1,11 @@
 package handler
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
+	"mime"
 	"net/http"
 	"strconv"
 	"strings"
@@ -11,13 +14,18 @@ import (
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/domain"
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/http/middleware"
 	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/service"
+	"github.com/bem-fmikom/bem-fmikom-portal/apps/api/internal/storage"
 	"github.com/gin-gonic/gin"
 )
 
-type Registrations struct{ service *service.RegistrationService }
+type Registrations struct {
+	service  *service.RegistrationService
+	files    storage.DocumentStorage
+	imageMax int64
+}
 
-func NewRegistrations(registrations *service.RegistrationService) *Registrations {
-	return &Registrations{service: registrations}
+func NewRegistrations(registrations *service.RegistrationService, files storage.DocumentStorage, imageMax int64) *Registrations {
+	return &Registrations{service: registrations, files: files, imageMax: imageMax}
 }
 
 func (h *Registrations) Register(engine *gin.Engine, auth middleware.CurrentUserLoader, origins []string, limiter *middleware.RegistrationLimiter) {
@@ -38,6 +46,7 @@ func (h *Registrations) Register(engine *gin.Engine, auth middleware.CurrentUser
 	admin.PUT("/registrations/:id/fields", middleware.RequireRoles(domain.RoleSuperAdmin, domain.RoleBPH, domain.RoleKepala), h.saveFields)
 	admin.GET("/registrations/:id/submissions", middleware.RequireRoles(domain.RoleSuperAdmin, domain.RoleBPH, domain.RoleKepala), h.submissions)
 	admin.GET("/registrations/:id/submissions/:submissionId", middleware.RequireRoles(domain.RoleSuperAdmin, domain.RoleBPH, domain.RoleKepala), h.submissionDetail)
+	admin.GET("/registrations/:id/submissions/:submissionId/files/:fileId", middleware.RequireRoles(domain.RoleSuperAdmin, domain.RoleBPH, domain.RoleKepala), h.submissionFile)
 	admin.GET("/registrations/:id/export", middleware.RequireRoles(domain.RoleSuperAdmin, domain.RoleBPH, domain.RoleKepala), h.export)
 }
 
@@ -66,31 +75,121 @@ func (h *Registrations) publicDetail(c *gin.Context) {
 }
 
 func (h *Registrations) submit(c *gin.Context) {
-	if !isJSONRequest(c) {
-		c.JSON(http.StatusUnsupportedMediaType, FailureCode("UNSUPPORTED_MEDIA_TYPE", "Gunakan format JSON", nil))
-		return
-	}
 	id, ok := registrationID(c, "id")
 	if !ok {
 		return
 	}
-	c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, service.RegistrationMaxRequestBytes)
 	var input service.RegistrationSubmitInput
-	if err := decodeStrictJSON(c, &input); err != nil {
-		var maxBytesError *http.MaxBytesError
-		if errors.As(err, &maxBytesError) {
-			c.JSON(http.StatusRequestEntityTooLarge, FailureCode("REQUEST_TOO_LARGE", "Ukuran request melebihi batas", nil))
+	images := map[string]service.RegistrationImageUpload{}
+	contentType := c.GetHeader("Content-Type")
+	if strings.HasPrefix(strings.ToLower(contentType), "multipart/form-data") {
+		if h.parseSubmissionMultipart(c, &input, images) != nil {
 			return
 		}
-		c.JSON(http.StatusUnprocessableEntity, FailureCode("VALIDATION_ERROR", "Request body tidak valid", nil))
+	} else if isJSONRequest(c) {
+		c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, service.RegistrationMaxRequestBytes)
+		if err := decodeStrictJSON(c, &input); err != nil {
+			var maxBytesError *http.MaxBytesError
+			if errors.As(err, &maxBytesError) {
+				c.JSON(http.StatusRequestEntityTooLarge, FailureCode("REQUEST_TOO_LARGE", "Ukuran request melebihi batas", nil))
+				return
+			}
+			c.JSON(http.StatusUnprocessableEntity, FailureCode("VALIDATION_ERROR", "Request body tidak valid", nil))
+			return
+		}
+	} else {
+		c.JSON(http.StatusUnsupportedMediaType, FailureCode("UNSUPPORTED_MEDIA_TYPE", "Gunakan JSON atau multipart/form-data", nil))
 		return
 	}
-	receipt, err := h.service.Submit(c.Request.Context(), id, input, time.Now().UTC())
+	receipt, err := h.service.SubmitWithImages(c.Request.Context(), id, input, images, time.Now().UTC())
 	if err != nil {
 		registrationError(c, err)
 		return
 	}
 	c.JSON(http.StatusCreated, Success("Pendaftaran berhasil dikirim", receipt))
+}
+
+func (h *Registrations) parseSubmissionMultipart(c *gin.Context, input *service.RegistrationSubmitInput, images map[string]service.RegistrationImageUpload) error {
+	maxRequest := int64(service.RegistrationMaxImageFields)*h.imageMax + service.RegistrationMaxRequestBytes + (128 << 10)
+	c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, maxRequest)
+	reader, err := c.Request.MultipartReader()
+	if err != nil {
+		registrationMultipartImageError(c, http.StatusBadRequest, "VALIDATION_ERROR", "Format pengiriman gambar tidak valid.")
+		return err
+	}
+	answersSeen := false
+	for {
+		part, nextErr := reader.NextPart()
+		if errors.Is(nextErr, io.EOF) {
+			break
+		}
+		if nextErr != nil {
+			var maxErr *http.MaxBytesError
+			if errors.As(nextErr, &maxErr) {
+				registrationMultipartImageError(c, http.StatusRequestEntityTooLarge, "REQUEST_TOO_LARGE", "Ukuran pengiriman gambar melebihi batas.")
+			} else {
+				c.JSON(http.StatusUnprocessableEntity, FailureCode("VALIDATION_ERROR", "Multipart tidak valid", nil))
+			}
+			return nextErr
+		}
+		name := part.FormName()
+		if name == "answers" && part.FileName() == "" {
+			if answersSeen {
+				part.Close()
+				c.JSON(http.StatusUnprocessableEntity, FailureCode("VALIDATION_ERROR", "Jawaban duplikat", nil))
+				return errors.New("duplicate answers part")
+			}
+			answersSeen = true
+			data, readErr := io.ReadAll(io.LimitReader(part, service.RegistrationMaxRequestBytes+1))
+			part.Close()
+			// Multipart's `answers` part is the answer object itself. Wrap it in
+			// the same envelope used by JSON-only requests so the strict custom
+			// decoder still rejects duplicate keys and trailing JSON.
+			wrappedAnswers := make([]byte, 0, len(data)+12)
+			wrappedAnswers = append(wrappedAnswers, `{"answers":`...)
+			wrappedAnswers = append(wrappedAnswers, data...)
+			wrappedAnswers = append(wrappedAnswers, '}')
+			if readErr != nil || int64(len(data)) > service.RegistrationMaxRequestBytes || json.Unmarshal(wrappedAnswers, input) != nil {
+				c.JSON(http.StatusUnprocessableEntity, FailureCode("VALIDATION_ERROR", "Bagian jawaban tidak valid", nil))
+				return errors.New("invalid multipart answers")
+			}
+			continue
+		}
+		if !strings.HasPrefix(name, "image:") || part.FileName() == "" {
+			part.Close()
+			registrationMultipartImageError(c, http.StatusUnprocessableEntity, "VALIDATION_ERROR", "Lampiran gambar tidak dikenali.")
+			return errors.New("unknown multipart part")
+		}
+		fieldKey := strings.TrimPrefix(name, "image:")
+		if fieldKey == "" || len(fieldKey) > 64 || len(images) >= service.RegistrationMaxImageFields {
+			part.Close()
+			registrationMultipartImageError(c, http.StatusUnprocessableEntity, "VALIDATION_ERROR", "Jumlah lampiran gambar tidak valid.")
+			return errors.New("invalid image field")
+		}
+		if _, duplicate := images[fieldKey]; duplicate {
+			part.Close()
+			registrationMultipartImageError(c, http.StatusUnprocessableEntity, "VALIDATION_ERROR", "Lampiran gambar dikirim lebih dari sekali.")
+			return errors.New("duplicate image part")
+		}
+		data, readErr := io.ReadAll(io.LimitReader(part, h.imageMax+1))
+		filename := part.FileName()
+		contentMIME, _, _ := mime.ParseMediaType(part.Header.Get("Content-Type"))
+		part.Close()
+		if readErr != nil || int64(len(data)) > h.imageMax {
+			registrationMultipartImageError(c, http.StatusRequestEntityTooLarge, "REQUEST_TOO_LARGE", "Ukuran gambar maksimal 5 MiB.")
+			return errors.New("image too large")
+		}
+		images[fieldKey] = service.RegistrationImageUpload{Filename: filename, MIMEType: contentMIME, Data: data}
+	}
+	if !answersSeen {
+		c.JSON(http.StatusUnprocessableEntity, FailureCode("VALIDATION_ERROR", "Bagian answers wajib ada", nil))
+		return errors.New("answers part missing")
+	}
+	return nil
+}
+
+func registrationMultipartImageError(c *gin.Context, status int, code, message string) {
+	c.JSON(status, FailureCode(code, message, map[string][]string{"image": {message}}))
 }
 
 func (h *Registrations) list(c *gin.Context) {
@@ -252,6 +351,41 @@ func (h *Registrations) submissionDetail(c *gin.Context) {
 	c.JSON(http.StatusOK, Success("Detail pendaftar berhasil diambil", item))
 }
 
+func (h *Registrations) submissionFile(c *gin.Context) {
+	formID, ok := registrationID(c, "id")
+	if !ok {
+		return
+	}
+	submissionID, ok := registrationID(c, "submissionId")
+	if !ok {
+		return
+	}
+	fileID, ok := registrationID(c, "fileId")
+	if !ok {
+		return
+	}
+	user, _ := middleware.CurrentUser(c)
+	reader, file, err := h.service.OpenSubmissionFile(c.Request.Context(), user, formID, submissionID, fileID)
+	if err != nil {
+		registrationError(c, err)
+		return
+	}
+	defer reader.Close()
+	info, err := reader.Stat()
+	if err != nil {
+		registrationError(c, err)
+		return
+	}
+	c.Header("Content-Type", file.MIMEType)
+	c.Header("Content-Disposition", `inline; filename*=UTF-8''`+urlQueryEscape(file.OriginalName))
+	c.Header("Content-Length", strconv.FormatInt(info.Size(), 10))
+	c.Header("Cache-Control", "private, no-store")
+	c.Header("X-Content-Type-Options", "nosniff")
+	c.Header("Content-Security-Policy", "default-src 'none'; sandbox")
+	c.Status(http.StatusOK)
+	_, _ = io.Copy(c.Writer, reader)
+}
+
 func (h *Registrations) export(c *gin.Context) {
 	formID, ok := registrationID(c, "id")
 	if !ok {
@@ -313,6 +447,15 @@ func registrationID(c *gin.Context, parameter string) (int64, bool) {
 }
 
 func registrationError(c *gin.Context, err error) {
+	var fieldErrors *service.RegistrationSubmissionFieldErrors
+	if errors.As(err, &fieldErrors) {
+		fields := make(map[string][]string, len(fieldErrors.Fields))
+		for key, message := range fieldErrors.Fields {
+			fields[key] = []string{message}
+		}
+		c.JSON(http.StatusUnprocessableEntity, FailureCode("VALIDATION_ERROR", "Periksa data formulir.", fields))
+		return
+	}
 	status, code, message := http.StatusInternalServerError, "INTERNAL_ERROR", "Terjadi kesalahan server"
 	switch {
 	case errors.Is(err, service.ErrRegistrationInvalid):
@@ -329,6 +472,8 @@ func registrationError(c *gin.Context, err error) {
 		status, code, message = http.StatusConflict, "REGISTRATION_CLOSED", "Pendaftaran sudah tidak menerima kiriman"
 	case errors.Is(err, service.ErrRegistrationExportLimit):
 		status, code, message = http.StatusRequestEntityTooLarge, "EXPORT_LIMIT_EXCEEDED", "Ekspor melebihi batas 1.000 baris"
+	case errors.Is(err, service.ErrRegistrationImageTooLarge):
+		status, code, message = http.StatusRequestEntityTooLarge, "REGISTRATION_IMAGE_TOO_LARGE", "Ukuran gambar melebihi batas 5 MiB"
 	}
 	c.JSON(status, FailureCode(code, message, nil))
 }

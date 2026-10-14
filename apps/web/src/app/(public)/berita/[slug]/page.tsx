@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import { MediaImage } from "@/components/ui/media-image";
 import { getPublicArticle } from "@/features/content/api";
 import { BackLink, formatDate, SanitizedRichText } from "@/features/content/public-content";
 import type { Article } from "@/features/content/types";
@@ -59,13 +59,13 @@ export default async function ArticleDetailPage({ params }: Props) {
           </p>
           {article.thumbnail_url ? (
             <div className="relative mt-7 aspect-[16/9] overflow-hidden rounded-xl bg-surface-muted">
-              <Image
-                src={article.thumbnail_url}
+              <MediaImage
+                value={article.thumbnail_url}
                 alt=""
                 fill
                 sizes="(max-width: 768px) 100vw, 896px"
-                className="object-cover"
-                unoptimized
+                className="object-contain object-center"
+                fallbackClassName="absolute inset-0 grid place-items-center bg-surface-muted"
               />
             </div>
           ) : null}

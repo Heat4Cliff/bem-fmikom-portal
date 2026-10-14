@@ -47,6 +47,25 @@ func TestLocalPrivateDocumentsStreamsAndPromotesObjects(t *testing.T) {
 	}
 }
 
+func TestLocalPrivateDocumentsPromotesRegistrationAttachments(t *testing.T) {
+	store, err := NewLocalPrivateDocuments(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := store.Save(context.Background(), ".staging/registration.part", bytes.NewReader([]byte("private image")), 64); err != nil {
+		t.Fatal(err)
+	}
+	if err := store.Promote(context.Background(), ".staging/registration.part", "registration/opaque.png"); err != nil {
+		t.Fatal(err)
+	}
+	if exists, err := store.Exists(context.Background(), "registration/opaque.png"); err != nil || !exists {
+		t.Fatalf("registration attachment exists=%v err=%v", exists, err)
+	}
+	if err := store.Promote(context.Background(), ".staging/other.part", "arbitrary/opaque.png"); !errors.Is(err, ErrInvalidKey) {
+		t.Fatalf("unexpected destination prefix accepted: %v", err)
+	}
+}
+
 func TestLocalPrivateDocumentsRejectsTraversalAndPublicRoots(t *testing.T) {
 	if _, err := NewLocalPrivateDocuments(filepath.Join(t.TempDir(), "public", "docs")); err == nil {
 		t.Fatal("public web root was accepted")

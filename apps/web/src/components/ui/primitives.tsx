@@ -270,13 +270,37 @@ export function PageHeader({
   className?: string;
 }) {
   return (
-    <header className={cn("flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between", className)}>
-      <div>
+    <header
+      className={cn(
+        "mb-6 flex min-w-0 flex-col gap-4 md:flex-row md:items-end md:justify-between",
+        className,
+      )}
+    >
+      <div className="min-w-0">
         <h1 className="font-heading text-2xl font-bold tracking-tight text-primary md:text-3xl">{title}</h1>
         {description ? <p className="mt-1.5 max-w-2xl text-sm leading-6 text-muted">{description}</p> : null}
       </div>
-      {actions ? <div className="flex flex-wrap items-center gap-2">{actions}</div> : null}
+      {actions ? (
+        <div
+          data-page-header-actions
+          className="flex w-full min-w-0 flex-col items-stretch gap-3 md:w-auto md:flex-row md:flex-wrap md:items-center md:justify-end [&>*]:w-full [&>*]:justify-center [&>*]:whitespace-nowrap [&_a]:w-full [&_button]:w-full [&_select]:w-full md:[&>*]:w-auto md:[&_a]:w-auto md:[&_button]:w-auto md:[&_select]:w-auto"
+        >
+          {actions}
+        </div>
+      ) : null}
     </header>
+  );
+}
+
+export function ActionGroup({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={cn(
+        "flex min-w-0 flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center",
+        className,
+      )}
+      {...props}
+    />
   );
 }
 

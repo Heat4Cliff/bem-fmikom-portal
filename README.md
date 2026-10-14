@@ -61,11 +61,15 @@ pnpm api:create-admin -name "Admin BEM" -email admin@bem.unugha.ac.id
 Run the API and web app in separate terminals:
 
 ```powershell
+# API terminal
+$env:FRONTEND_ORIGINS = "http://localhost:3290,http://127.0.0.1:3290"
 pnpm api:dev
-pnpm dev
+
+# Web terminal
+pnpm --filter @bem-fmikom/web dev --hostname 0.0.0.0 --port 3290
 ```
 
-The public shell is at `http://localhost:3000`, admin login at `http://localhost:3000/admin/login`, API at `http://localhost:8080`, and operational health at `http://localhost:8080/healthz`.
+The public shell is at `http://localhost:3290`, admin login at `http://localhost:3290/admin/login`, API at `http://localhost:8080`, and operational health at `http://localhost:8080/healthz`.
 
 ## Database and migrations
 
@@ -159,6 +163,7 @@ Public announcement archive visibility for scheduled/expired entries still needs
 
 - Admin archive: `/admin/arsip-dokumen`; API list/upload/detail/metadata/delete is under `/api/v1/admin/documents`, with authorized streaming at `/api/v1/admin/documents/{id}/download`.
 - Files are stored in a private local directory configured by `DOCUMENT_STORAGE_PATH`; configure an absolute path outside the web root in production. POSIX storage objects use private `0600` permissions; Windows inherits the directory ACL. The default upload maximum is 10 MiB and can be set with `DOCUMENT_MAX_UPLOAD_BYTES`.
+- Public image bytes use a separate API-controlled storage directory configured by `MEDIA_STORAGE_PATH` (default `../../var/media` relative to `apps/api`) and must remain outside every web static/public directory. The default limit is 5 MiB (`MEDIA_MAX_UPLOAD_BYTES`); only validated JPEG/PNG images up to 12 megapixels are accepted. Back up this directory with the `media_assets` database metadata; uploaded URLs are immutable.
 - Allowed formats are PDF, DOC, DOCX, XLS, and XLSX. Upload checks extension, declared MIME type, and file signature/container. SHA-256 and opaque storage keys are persisted; no public/static path is exposed.
 - SUPER_ADMIN/BPH can access cross-division archives. KEPALA_BIDANG is restricted by the current database division and period. Back up database metadata and private storage together to retain archive consistency.
 - File validation is not antivirus scanning or content disarm. Production should pair the private storage backup with the database backup and verify restore as one recovery set.
@@ -177,6 +182,7 @@ Public announcement archive visibility for scheduled/expired entries still needs
 - Use the Secure HttpOnly refresh cookie; `SameSite=None` requires Secure. Set cookie domain only for the intended application domain.
 - Connect the API with a dedicated least-privilege database account; do not use root. Restrict database network access and keep credentials in the deployment secret facility.
 - Set `DOCUMENT_STORAGE_PATH` to an absolute private path outside the web root. Back up document objects together with their database metadata and periodically test restore.
+- Set `MEDIA_STORAGE_PATH` to a durable path outside the Next.js static tree. Back up media objects with `media_assets`; local cleanup must not remove media referenced by a saved URL.
 - Login, refresh, registration, and aspiration limits are process-local. Add an edge/shared rate limit before horizontally scaling the API.
 - Uploaded files receive type/signature, size, path, and archive checks, but there is no antivirus or CDR scanner. Do not treat an accepted upload as malware-free.
 - Protect API/authentication logs and define access and retention: operational auth/security events may include source IP. The Activity Log UI/API intentionally omits raw IP and User-Agent.

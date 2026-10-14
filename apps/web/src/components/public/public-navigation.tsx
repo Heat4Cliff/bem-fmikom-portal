@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils/cn";
 const primaryLinks = [
   { label: "Beranda", href: "/", icon: Home },
   { label: "Tentang", href: "/#tentang" },
-  { label: "Struktur", href: "/#struktur", icon: Network },
+  { label: "Struktur", href: "/struktur", icon: Network },
   { label: "Berita", href: "/#berita", icon: BookOpenText },
   { label: "Galeri", href: "/#galeri", icon: Camera },
   { label: "Pengumuman", href: "/#pengumuman", icon: Megaphone },
@@ -86,20 +86,6 @@ export function PublicHeader() {
         <div className="hidden flex-1 justify-end xl:flex">
           <PublicNavigation />
         </div>
-        <div className="hidden items-center gap-2 xl:flex">
-          <Link
-            className="rounded-md bg-secondary px-3 py-2 text-xs font-bold text-white hover:bg-secondary/90"
-            href="/#aspirasi"
-          >
-            Kirim Aspirasi
-          </Link>
-          <Link
-            className="rounded-md bg-primary px-3 py-2 text-xs font-bold text-white hover:bg-primary/90"
-            href="/admin/login"
-          >
-            Portal Admin
-          </Link>
-        </div>
         <div className="flex items-center gap-2 xl:hidden">
           <Button
             aria-label="Buka menu navigasi"
@@ -121,16 +107,6 @@ export function PublicHeader() {
       >
         <div className="p-4">
           <PublicNavigation mobile onNavigate={() => setOpen(false)} />
-        </div>
-        <div className="mt-auto border-t border-border p-4">
-          <Link
-            onClick={() => setOpen(false)}
-            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-secondary px-4 text-sm font-semibold text-white"
-            href="/#aspirasi"
-          >
-            <MessageSquareText aria-hidden="true" className="size-4" />
-            Kirim Aspirasi
-          </Link>
         </div>
       </Drawer>
     </header>
@@ -205,7 +181,7 @@ export function PublicFooter() {
               </Link>
             </li>
             <li>
-              <Link className="hover:text-primary" href="/#struktur">
+              <Link className="hover:text-primary" href="/struktur">
                 Struktur
               </Link>
             </li>

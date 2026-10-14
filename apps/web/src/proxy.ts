@@ -13,12 +13,14 @@ function contentSecurityPolicy(nonce: string) {
     ? new URL(process.env.NEXT_PUBLIC_API_BASE_URL).origin
     : "'self'";
   const connectSources = apiOrigin === "'self'" ? "'self'" : `'self' ${apiOrigin}`;
+  const imageSources =
+    apiOrigin === "'self'" ? "'self' data: blob: https:" : `'self' data: blob: https: ${apiOrigin}`;
 
   return [
     "default-src 'self'",
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`,
     `style-src 'self' 'nonce-${nonce}'`,
-    "img-src 'self' data: https:",
+    `img-src ${imageSources}`,
     "font-src 'self' data:",
     `connect-src ${connectSources}`,
     "object-src 'none'",
