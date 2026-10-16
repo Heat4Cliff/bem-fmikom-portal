@@ -71,6 +71,10 @@ pnpm --filter @bem-fmikom/web dev --hostname 0.0.0.0 --port 3290
 
 The public shell is at `http://localhost:3290`, admin login at `http://localhost:3290/admin/login`, API at `http://localhost:8080`, and operational health at `http://localhost:8080/healthz`.
 
+### Production administrator bootstrap
+
+The production environment does not ship with a default administrator account. After the production database is configured, backed up, and migrations have completed, the campus deployment operator must create the initial `SUPER_ADMIN` through the interactive backend bootstrap CLI. Never reuse UAT credentials in production. See [`deployment_handoff/DEPLOYMENT_HANDOFF.md`](deployment_handoff/DEPLOYMENT_HANDOFF.md) for the exact command, migration sequence, security guidance, and first-login checklist.
+
 ## Database and migrations
 
 The local Compose service binds MariaDB to `127.0.0.1:3306`, persists data in a named Docker volume, and creates the dedicated `bem_fmikom_test` database for integration tests. `pnpm db:down` stops the service but keeps its volume. Migrations are embedded and versioned with Goose.
