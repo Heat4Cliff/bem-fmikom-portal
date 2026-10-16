@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import Script from "next/script";
 import { getPublicSiteOrigin } from "@/lib/seo/site-url";
 import "./globals.css";
 
@@ -36,8 +37,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="id">
-      <body className={`${inter.variable} ${jakarta.variable} font-sans`}>{children}</body>
+    <html lang="id" data-theme="nawasena" suppressHydrationWarning>
+      <body className={`${inter.variable} ${jakarta.variable} font-sans`}>
+        {children}
+        <Script src="/theme-init.js" strategy="beforeInteractive" />
+      </body>
     </html>
   );
 }

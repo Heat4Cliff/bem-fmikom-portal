@@ -8,9 +8,13 @@ import { Button } from "@/components/ui/button";
 import { ApiError } from "@/lib/api/client";
 import { useAuth } from "@/lib/auth/auth-provider";
 import { validateLogin } from "@/lib/auth/login-validation";
+import { ThemeSwitcher } from "@/components/ui/theme-switcher";
+import { BrandLogo } from "@/components/ui/brand-logo";
+import { useBranding } from "@/features/content/branding-context";
 
 export default function AdminLoginPage() {
   const { login } = useAuth();
+  const branding = useBranding();
   const router = useRouter();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -42,10 +46,17 @@ export default function AdminLoginPage() {
   return (
     <main className="grid min-h-dvh place-items-center bg-background px-4 py-10">
       <div className="w-full max-w-[27rem]">
+        <div className="mb-4 flex justify-end">
+          <ThemeSwitcher />
+        </div>
         <div className="mb-6 text-center">
-          <div className="mx-auto mb-4 grid size-14 place-items-center rounded-xl bg-primary font-heading text-sm font-extrabold tracking-wide text-white shadow-card">
-            BEM
-          </div>
+          <BrandLogo
+            src={branding.logoUrl}
+            shape={branding.logoShape}
+            fit={branding.logoFit}
+            alt="BEM FMIKOM UNUGHA"
+            className="mx-auto mb-4 size-14 shadow-card"
+          />
           <p className="font-heading text-xl font-bold text-primary">BEM FMIKOM UNUGHA</p>
           <p className="mt-1 text-sm text-muted">Portal pengelolaan organisasi</p>
         </div>

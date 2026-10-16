@@ -30,6 +30,10 @@ describe("public home foundation", () => {
     ]) {
       expect(screen.getByRole("heading", { name: heading })).toBeInTheDocument();
     }
+    expect(screen.getByRole("link", { name: /Lihat selengkapnya/ })).toHaveAttribute("href", "/tentang");
+    expect(screen.queryByRole("heading", { name: "Visi & Misi", level: 2 })).not.toBeInTheDocument();
+    expect(screen.getByText("Arah gerak")).toBeInTheDocument();
+    expect(screen.queryByRole("img", { name: /logo kabinet/i })).not.toBeInTheDocument();
   });
 
   it("uses working section anchors for hero calls to action", () => {
@@ -41,16 +45,90 @@ describe("public home foundation", () => {
     expect(document.getElementById("aspirasi")).toBeInTheDocument();
   });
 
-  it("keeps the mobile hero artwork and caption fluid for narrow screens", () => {
+  it("keeps non-CTA hero and about content outside every link while isolating news links", () => {
+    const source = getLandingPageContent(true);
+    const content = {
+      ...source,
+      news: source.news.map((item, index) => (index === 0 ? { ...item, href: "/berita/regression" } : item)),
+    };
+    render(<PublicHome content={content} />);
+
+    const heroTitle = screen.getByRole("heading", { level: 1 });
+    const heroArt = screen.getByTestId("public-hero-art");
+    const heroSection = heroTitle.closest("section");
+    expect(heroTitle.closest("a")).toBeNull();
+    expect(heroArt.closest("a")).toBeNull();
+    expect(heroSection).not.toBeNull();
+    fireEvent.click(heroTitle);
+    fireEvent.click(heroArt);
+    if (heroSection) fireEvent.click(heroSection);
+    expect(heroTitle.closest("a")).toBeNull();
+    expect(screen.getByRole("link", { name: "Jelajahi informasi" })).toHaveAttribute("href", "#berita");
+
+    const aboutSection = document.querySelector(".landing-about-section");
+    const aboutTitle = screen.getByRole("heading", { name: "Ruang informasi dan kolaborasi mahasiswa" });
+    const aboutDescription = aboutSection?.querySelector("p.line-clamp-4");
+    const visionCard = aboutSection?.querySelector("article");
+    expect(aboutSection).not.toBeNull();
+    expect(aboutTitle.closest("a")).toBeNull();
+    expect(aboutDescription?.closest("a")).toBeNull();
+    expect(visionCard?.closest("a")).toBeNull();
+    fireEvent.click(aboutTitle);
+    if (aboutDescription) fireEvent.click(aboutDescription);
+    if (visionCard) fireEvent.click(visionCard);
+    if (aboutSection) fireEvent.click(aboutSection);
+    expect(screen.getByRole("link", { name: /Lihat selengkapnya/ })).toHaveAttribute("href", "/tentang");
+
+    const story = screen.getByRole("link", { name: "Contoh judul berita untuk tinjauan tampilan portal" });
+    expect(story).toHaveAttribute("href", "/berita/regression");
+    expect(story.closest("article")?.className).toContain("relative");
+    expect(story.closest("article")?.className).toContain("isolate");
+    expect(
+      screen.getByRole("link", { name: "Baca Contoh judul berita untuk tinjauan tampilan portal" }),
+    ).toHaveAttribute("href", "/berita/regression");
+  });
+
+  it("keeps the decorative hero frame fluid and independent from news content", () => {
     render(<PublicHome content={getLandingPageContent(true)} />);
 
     const artwork = screen.getByTestId("public-hero-art");
-    const caption = screen.getByTestId("public-hero-caption");
     expect(artwork.className).toContain("w-full");
     expect(artwork.className).toContain("min-w-0");
     expect(artwork.className).toContain("aspect-[4/3]");
-    expect(caption.className).toContain("min-w-0");
+    expect(
+      screen.getByText("Dokumentasi kegiatan akan ditampilkan setelah aset resmi tersedia."),
+    ).toBeInTheDocument();
+    expect(screen.queryByTestId("hero-news-carousel")).not.toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: "Berita terbaru" })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 1 }).className).toContain("break-words");
+  });
+
+  it("renders landing hero media as a documentation visual, not a news link", () => {
+    const content = getLandingPageContent(false);
+    content.hero.imageUrl = "/api/v1/public/media/42";
+    content.hero.visualCaption = "Dokumentasi kegiatan dan aktivitas BEM FMIKOM UNUGHA.";
+    render(<PublicHome content={content} />);
+
+    const frame = screen.getByTestId("public-hero-art");
+    const image = screen.getByRole("img", { name: content.hero.visualLabel });
+    expect(frame.tagName).toBe("FIGURE");
+    expect(frame).toHaveClass("aspect-[4/3]", "overflow-hidden", "rounded-2xl", "sm:aspect-[16/10]");
+    expect(image).toHaveAttribute("src", expect.stringContaining("/api/v1/public/media/42"));
+    expect(image).toHaveClass("object-cover", "object-center");
+    expect(screen.getByText(content.hero.visualCaption)).toBeInTheDocument();
+    expect(frame.querySelector("a")).toBeNull();
+  });
+
+  it("shows a themed documentation fallback when no hero image is configured", () => {
+    const content = getLandingPageContent(false);
+    content.hero.imageUrl = null;
+    render(<PublicHome content={content} />);
+
+    expect(screen.getAllByText("BEM FMIKOM · UNUGHA").length).toBeGreaterThan(0);
+    expect(
+      screen.getAllByText("Dokumentasi kegiatan akan ditampilkan setelah aset resmi tersedia.").length,
+    ).toBeGreaterThan(0);
+    expect(screen.getByTestId("public-hero-art").querySelector("a")).toBeNull();
   });
 
   it("shows safe empty states and no demo statistics when preview data is unavailable", () => {
@@ -143,8 +221,8 @@ describe("public home foundation", () => {
     expect(screen.getByRole("heading", { level: 1, name: longHeadline })).toBeInTheDocument();
     expect(screen.getAllByRole("heading", { level: 3, name: longHeadline })).toHaveLength(2);
     expect(
-      screen.getByText("Misi tambahan untuk memastikan susunan list tetap bertambah dengan aman."),
-    ).toBeInTheDocument();
+      screen.queryByText("Misi tambahan untuk memastikan susunan list tetap bertambah dengan aman."),
+    ).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: /Baca pengumuman/ }));
     expect(await screen.findByRole("dialog", { name: longHeadline })).toBeVisible();
     expect(screen.queryByRole("img", { name: /contoh visual/ })).not.toBeInTheDocument();

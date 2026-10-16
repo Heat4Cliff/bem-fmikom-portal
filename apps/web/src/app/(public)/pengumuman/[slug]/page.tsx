@@ -33,7 +33,7 @@ export default async function AnnouncementDetailPage({ params }: Props) {
     <main className="px-4 py-8 md:px-8 lg:px-12 lg:py-12">
       <article className="mx-auto max-w-4xl">
         <BackLink href="/pengumuman">Arsip pengumuman</BackLink>
-        <div className="mt-6 overflow-hidden rounded-2xl border border-border/70 bg-white shadow-card">
+        <div className="mt-6 overflow-hidden rounded-2xl border border-border/70 bg-surface shadow-card">
           {announcement.image_url ? (
             <div className="relative aspect-[16/7] max-h-[26rem] bg-surface-muted">
               <MediaImage

@@ -46,7 +46,7 @@ function PersonCard({
       type="button"
       aria-label={`Lihat profil ${member.name}, ${label}`}
       onClick={(event) => onSelect(event.currentTarget)}
-      className="group flex w-full min-w-0 items-center gap-3 rounded-xl border border-border bg-white p-3 text-left shadow-card transition hover:border-secondary/50 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 sm:flex-col sm:items-stretch sm:p-4 md:w-40 lg:w-48"
+      className="group flex w-full min-w-0 items-center gap-3 rounded-xl border border-border bg-surface p-3 text-left shadow-card transition hover:border-secondary/50 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 sm:flex-col sm:items-stretch sm:p-4 md:w-40 lg:w-48"
     >
       <MediaFrame
         className="size-14 shrink-0 self-center rounded-full sm:size-24 sm:rounded-xl"
@@ -106,7 +106,7 @@ function DivisionOrganizationChart({
   return (
     <article
       aria-labelledby={`division-${division.name.replace(/[^a-z0-9]+/gi, "-")}`}
-      className="min-w-0 rounded-2xl border border-border bg-white p-4 shadow-card sm:p-6 lg:p-8"
+      className="min-w-0 rounded-2xl border border-border bg-surface p-4 shadow-card sm:p-6 lg:p-8"
       data-testid="division-chart"
     >
       <h3

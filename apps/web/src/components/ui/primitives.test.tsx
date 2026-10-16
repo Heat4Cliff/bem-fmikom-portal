@@ -14,7 +14,7 @@ describe("core UI primitives", () => {
     const button = screen.getByRole("button", { name: "Hapus" });
 
     expect(button).toBeDisabled();
-    expect(button).toHaveClass("bg-danger");
+    expect(button).toHaveClass("bg-danger-action");
   });
 
   it("keeps page actions below the header on mobile and nowrap on primary buttons", () => {

@@ -49,7 +49,7 @@ export default async function GalleryDetailPage({ params }: Props) {
               {category.items.map((item) => (
                 <article
                   key={item.id}
-                  className="overflow-hidden rounded-xl border border-border/70 bg-white shadow-card"
+                  className="overflow-hidden rounded-xl border border-border/70 bg-surface shadow-card"
                 >
                   <div className="relative grid aspect-[4/3] place-items-center bg-surface-muted">
                     <MediaImage
@@ -80,7 +80,7 @@ export default async function GalleryDetailPage({ params }: Props) {
               ))}
             </div>
           ) : (
-            <p className="mt-6 rounded-xl border border-border bg-white p-8 text-sm text-muted">
+            <p className="mt-6 rounded-xl border border-border bg-surface p-8 text-sm text-muted">
               Belum ada item dokumentasi untuk kategori ini.
             </p>
           )}

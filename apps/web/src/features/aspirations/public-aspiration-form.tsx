@@ -133,9 +133,9 @@ export function PublicAspirationForm() {
         tabIndex={-1}
         role="status"
         aria-live="polite"
-        className="rounded-2xl border border-emerald-200 bg-white p-6 shadow-card outline-none sm:p-9"
+        className="rounded-2xl border border-emerald-200 bg-surface p-6 shadow-card outline-none sm:p-9"
       >
-        <span className="grid size-12 place-items-center rounded-xl bg-emerald-50 text-emerald-700">
+        <span className="grid size-12 place-items-center rounded-xl bg-success/10 text-success-foreground">
           <CheckCircle2 aria-hidden="true" className="size-6" />
         </span>
         <h2 className="mt-5 font-heading text-2xl font-bold text-primary">Aspirasi berhasil dikirim.</h2>
@@ -166,7 +166,7 @@ export function PublicAspirationForm() {
     <form
       onSubmit={onSubmit}
       noValidate
-      className="space-y-5 rounded-2xl border border-border bg-white p-5 shadow-card sm:p-8"
+      className="space-y-5 rounded-2xl border border-border bg-surface p-5 shadow-card sm:p-8"
     >
       <div>
         <Label htmlFor="aspiration-division">
@@ -305,7 +305,10 @@ export function PublicAspirationForm() {
         </p>
       </div>
       {submitError ? (
-        <p role="alert" className="rounded-md border border-danger/25 bg-danger/5 p-3 text-sm text-red-900">
+        <p
+          role="alert"
+          className="rounded-md border border-danger/25 bg-danger/5 p-3 text-sm text-danger-foreground"
+        >
           {submitError}
         </p>
       ) : null}

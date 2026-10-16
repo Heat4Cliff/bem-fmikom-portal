@@ -56,7 +56,7 @@
 
 - XLSX export is capped at 1,000 rows, uses explicit string cells for all submitted values, and returns `Cache-Control: private, no-store`.
 - Integration reopened the generated workbook and verified its 12 headers/columns, two data rows, Indonesian field labels, checkbox serialization (`web; data`), date value, and an applicant formula string stored without an executable formula.
-- Export activity metadata contains form/division/row count only. A browser download completed successfully; the local UAT file was `C:\Users\alwan\Downloads\pendaftar-1.xlsx` and contained synthetic test data.
+- Export activity metadata contains form/division/row count only. A browser download completed successfully; the local UAT file contained synthetic test data.
 
 ## Authorization / Division Scope
 

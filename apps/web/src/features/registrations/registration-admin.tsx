@@ -177,7 +177,7 @@ export function RegistrationAdminList() {
       {creating ? (
         <form
           onSubmit={create}
-          className="mb-6 grid gap-4 rounded-xl border border-border bg-white p-4 shadow-card sm:grid-cols-2 lg:grid-cols-3"
+          className="mb-6 grid gap-4 rounded-xl border border-border bg-surface p-4 shadow-card sm:grid-cols-2 lg:grid-cols-3"
         >
           <div>
             <Label htmlFor="registration-title">Nama pendaftaran</Label>
@@ -273,7 +273,7 @@ export function RegistrationAdminList() {
           </div>
         </form>
       ) : null}
-      <div className="mb-4 grid gap-3 rounded-xl border border-border bg-white p-4 shadow-card sm:grid-cols-[minmax(14rem,1fr)_12rem]">
+      <div className="mb-4 grid gap-3 rounded-xl border border-border bg-surface p-4 shadow-card sm:grid-cols-[minmax(14rem,1fr)_12rem]">
         <div className="relative">
           <Label htmlFor="registration-search" className="sr-only">
             Cari pendaftaran
@@ -316,7 +316,7 @@ export function RegistrationAdminList() {
         </p>
       ) : (
         <>
-          <div className="hidden overflow-x-auto rounded-xl border border-border bg-white shadow-card md:block">
+          <div className="hidden overflow-x-auto rounded-xl border border-border bg-surface shadow-card md:block">
             <table className="w-full min-w-[850px] text-left text-sm">
               <thead className="bg-surface-muted text-xs uppercase tracking-wide text-muted">
                 <tr>
@@ -394,7 +394,7 @@ export function RegistrationAdminList() {
           </div>
           <div className="grid gap-3 md:hidden">
             {items.map((item) => (
-              <article key={item.id} className="rounded-xl border border-border bg-white p-4 shadow-card">
+              <article key={item.id} className="rounded-xl border border-border bg-surface p-4 shadow-card">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h2 className="font-heading font-bold text-primary">{item.title}</h2>
@@ -667,12 +667,12 @@ export function RegistrationBuilder({ id }: { id: number }) {
           label dan metadata yang aman.
         </p>
       ) : null}
-      <div className="mb-4 grid grid-cols-2 rounded-lg border border-border bg-white p-1 md:hidden">
+      <div className="mb-4 grid grid-cols-2 rounded-lg border border-border bg-surface p-1 md:hidden">
         <button
           type="button"
           aria-pressed={mobileTab === "form"}
           onClick={() => setMobileTab("form")}
-          className={`min-h-10 rounded-md text-sm font-semibold ${mobileTab === "form" ? "bg-primary text-white" : "text-muted"}`}
+          className={`min-h-10 rounded-md text-sm font-semibold ${mobileTab === "form" ? "bg-primary text-primary-foreground" : "text-muted"}`}
         >
           Form
         </button>
@@ -680,7 +680,7 @@ export function RegistrationBuilder({ id }: { id: number }) {
           type="button"
           aria-pressed={mobileTab === "settings"}
           onClick={() => setMobileTab("settings")}
-          className={`min-h-10 rounded-md text-sm font-semibold ${mobileTab === "settings" ? "bg-primary text-white" : "text-muted"}`}
+          className={`min-h-10 rounded-md text-sm font-semibold ${mobileTab === "settings" ? "bg-primary text-primary-foreground" : "text-muted"}`}
         >
           Field Settings
         </button>
@@ -690,7 +690,7 @@ export function RegistrationBuilder({ id }: { id: number }) {
           className={`${mobileTab === "settings" ? "hidden md:block" : ""} space-y-4`}
           aria-label="Preview formulir"
         >
-          <div className="rounded-xl border border-border bg-white p-5 shadow-card sm:p-7">
+          <div className="rounded-xl border border-border bg-surface p-5 shadow-card sm:p-7">
             <p className="text-xs font-bold uppercase tracking-wide text-secondary">Preview Formulir</p>
             <h2 className="mt-2 font-heading text-2xl font-bold text-primary">
               {meta.title || "Judul pendaftaran"}
@@ -720,7 +720,7 @@ export function RegistrationBuilder({ id }: { id: number }) {
         >
           <form
             onSubmit={saveMetadata}
-            className="space-y-3 rounded-xl border border-border bg-white p-4 shadow-card"
+            className="space-y-3 rounded-xl border border-border bg-surface p-4 shadow-card"
           >
             <h2 className="font-heading text-lg font-bold text-primary">Informasi Pendaftaran</h2>
             <div>
@@ -798,7 +798,7 @@ export function RegistrationBuilder({ id }: { id: number }) {
               Simpan Informasi
             </Button>
           </form>
-          <div className="space-y-3 rounded-xl border border-border bg-white p-4 shadow-card">
+          <div className="space-y-3 rounded-xl border border-border bg-surface p-4 shadow-card">
             <div className="flex items-center justify-between gap-2">
               <h2 className="font-heading text-lg font-bold text-primary">Field Settings</h2>
               <span className="text-xs text-muted">{fields.length} / 50</span>
@@ -976,7 +976,7 @@ function FieldEditor({
       {field.field_type === "IMAGE" ? (
         <div className="space-y-2 rounded-md border border-dashed border-border bg-surface-muted p-4">
           <p className="text-sm font-semibold text-primary">Pratinjau unggah gambar</p>
-          <div className="grid min-h-28 place-items-center rounded-lg bg-white text-sm text-muted">
+          <div className="grid min-h-28 place-items-center rounded-lg bg-surface text-sm text-muted">
             <span>Seret gambar atau pilih dari perangkat</span>
           </div>
           <p className="text-xs text-muted">JPEG, PNG, WebP, GIF statis, TIFF, BMP · maks. 5 MiB</p>
@@ -1145,7 +1145,7 @@ export function RegistrationSubmissionList({ id }: { id: number }) {
         </p>
       ) : error ? null : (
         <>
-          <div className="hidden overflow-x-auto rounded-xl border border-border bg-white shadow-card md:block">
+          <div className="hidden overflow-x-auto rounded-xl border border-border bg-surface shadow-card md:block">
             <table className="w-full min-w-[760px] text-left text-sm">
               <thead className="bg-surface-muted text-xs uppercase text-muted">
                 <tr>
@@ -1184,7 +1184,7 @@ export function RegistrationSubmissionList({ id }: { id: number }) {
           </div>
           <div className="grid gap-3 md:hidden">
             {items.map((item) => (
-              <article key={item.id} className="rounded-xl border border-border bg-white p-4">
+              <article key={item.id} className="rounded-xl border border-border bg-surface p-4">
                 <h2 className="font-semibold text-primary">{item.full_name}</h2>
                 <p className="mt-1 text-sm text-body">NIM {item.nim}</p>
                 <p className="mt-1 break-all text-xs text-muted">
@@ -1285,7 +1285,7 @@ export function RegistrationSubmissionDetail({ id, submissionId }: { id: number;
         description={`${item.registration_title} · ${formatDate(item.submitted_at)}`}
       />
       <div className="grid gap-5 md:grid-cols-2">
-        <section className="rounded-xl border border-border bg-white p-5 shadow-card">
+        <section className="rounded-xl border border-border bg-surface p-5 shadow-card">
           <h2 className="font-heading text-lg font-bold text-primary">Identitas</h2>
           <dl className="mt-4 space-y-4">
             {[
@@ -1302,7 +1302,7 @@ export function RegistrationSubmissionDetail({ id, submissionId }: { id: number;
             ))}
           </dl>
         </section>
-        <section className="rounded-xl border border-border bg-white p-5 shadow-card">
+        <section className="rounded-xl border border-border bg-surface p-5 shadow-card">
           <h2 className="font-heading text-lg font-bold text-primary">Jawaban Formulir</h2>
           <dl className="mt-4 space-y-4">
             {(item.answers ?? [])
@@ -1359,7 +1359,7 @@ function PrivateRegistrationAttachment({
   return (
     <div className="max-w-md space-y-2 rounded-lg border border-border bg-surface-muted p-3">
       {url ? (
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md bg-white">
+        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md bg-surface">
           <MediaImage
             value={url}
             alt={`Lampiran ${attachment.original_filename}`}

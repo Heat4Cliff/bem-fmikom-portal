@@ -38,6 +38,7 @@ const (
 	MediaGalleryPreview    MediaPurpose = "GALLERY_PREVIEW"
 	MediaMemberPhoto       MediaPurpose = "MEMBER_PHOTO"
 	MediaLandingHero       MediaPurpose = "LANDING_HERO"
+	MediaLandingBranding   MediaPurpose = "LANDING_BRANDING"
 	maxMediaDimension                   = 8000
 	maxMediaPixels                      = 12_000_000
 )
@@ -159,7 +160,7 @@ func mediaPurposeAllowed(role domain.Role, purpose MediaPurpose) bool {
 
 func validMediaPurpose(purpose MediaPurpose) bool {
 	switch purpose {
-	case MediaArticleCover, MediaAnnouncementImage, MediaGalleryPreview, MediaMemberPhoto, MediaLandingHero:
+	case MediaArticleCover, MediaAnnouncementImage, MediaGalleryPreview, MediaMemberPhoto, MediaLandingHero, MediaLandingBranding:
 		return true
 	default:
 		return false

@@ -99,6 +99,50 @@ func TestDatabaseIntegration(t *testing.T) {
 		t.Fatalf("media check constraint count = %d, err = %v", mediaChecks, err)
 	}
 	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback branding/social controls migration 00013: %v", err)
+	}
+	var brandingControlColumns int
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.columns WHERE table_schema=? AND table_name='landing_settings' AND column_name IN ('brand_logo_shape','brand_logo_fit','footer_use_brand_logo','footer_logo_shape','footer_logo_fit','cabinet_logo_shape','cabinet_logo_fit','social_links_json')`, dsn.DBName).Scan(&brandingControlColumns); err != nil || brandingControlColumns != 0 {
+		t.Fatalf("00013 fields remain after DOWN: %d err=%v", brandingControlColumns, err)
+	}
+	if err := migrate.Up(ctx, db); err != nil {
+		t.Fatalf("reapply branding/social controls migration 00013: %v", err)
+	}
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.columns WHERE table_schema=? AND table_name='landing_settings' AND column_name IN ('brand_logo_shape','brand_logo_fit','footer_use_brand_logo','footer_logo_shape','footer_logo_fit','cabinet_logo_shape','cabinet_logo_fit','social_links_json')`, dsn.DBName).Scan(&brandingControlColumns); err != nil || brandingControlColumns != 8 {
+		t.Fatalf("00013 fields missing after UP: %d err=%v", brandingControlColumns, err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback re-applied branding/social controls migration 00013: %v", err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback landing brand identity migration 00012: %v", err)
+	}
+	var brandColumns int
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.columns WHERE table_schema=? AND table_name='landing_settings' AND column_name IN ('navbar_logo_url','footer_logo_url','cabinet_logo_url','cabinet_name','cabinet_period','cabinet_tagline')`, dsn.DBName).Scan(&brandColumns); err != nil || brandColumns != 0 {
+		t.Fatalf("landing brand fields remain after 00012 DOWN: %d err=%v", brandColumns, err)
+	}
+	if err := migrate.Up(ctx, db); err != nil {
+		t.Fatalf("reapply landing brand identity migration 00012: %v", err)
+	}
+	if err := db.QueryRowContext(ctx, `SELECT COUNT(*) FROM information_schema.columns WHERE table_schema=? AND table_name='landing_settings' AND column_name IN ('navbar_logo_url','footer_logo_url','cabinet_logo_url','cabinet_name','cabinet_period','cabinet_tagline')`, dsn.DBName).Scan(&brandColumns); err != nil || brandColumns != 6 {
+		t.Fatalf("landing brand fields missing after 00012 UP: %d err=%v", brandColumns, err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback re-applied landing brand identity migration 00012: %v", err)
+	}
+	if err := migrate.Up(ctx, db); err != nil {
+		t.Fatalf("restore landing brand identity migration 00012: %v", err)
+	}
+	if err := migrate.Up(ctx, db); err != nil {
+		t.Fatalf("restore branding/social controls migration 00013: %v", err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback branding/social controls before 00011 round-trip: %v", err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback landing brand identity before 00011 round-trip: %v", err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
 		t.Fatalf("rollback public-structure visibility migration 00011: %v", err)
 	}
 	var visibilityColumns int
@@ -125,7 +169,13 @@ func TestDatabaseIntegration(t *testing.T) {
 		t.Fatalf("migration backfill visibility: Fakultas=%v BPH=%v work=%v err=%v", facultyVisible, bphVisible, workDivisionVisible, err)
 	}
 	if err := migrate.Down(ctx, db); err != nil {
-		t.Fatalf("rollback re-applied public-structure visibility migration: %v", err)
+		t.Fatalf("rollback re-applied public-structure visibility migration 00011: %v", err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback re-applied public-structure visibility migration 00011: %v", err)
+	}
+	if err := migrate.Down(ctx, db); err != nil {
+		t.Fatalf("rollback public-structure visibility migration 00011 after restoring versions 00012-00013: %v", err)
 	}
 	if _, err := db.ExecContext(ctx, `DELETE FROM divisions WHERE period_id=?`, visibilityPeriodID); err != nil {
 		t.Fatalf("remove migration visibility fixtures: %v", err)
@@ -659,7 +709,7 @@ func TestDatabaseIntegration(t *testing.T) {
 	runAspirationIntegration(t, ctx, db, engine, cfg, logger, loggerBuffer, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken)
 	runRegistrationIntegration(t, ctx, db, engine, loggerBuffer, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken, divisionID, divisionBID)
 	runDocumentIntegration(t, ctx, db, engine, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken, archivedPeriodID, divisionID, divisionBID, cfg.DocumentStoragePath, loggerBuffer)
-	runSystemManagementIntegration(t, ctx, db, engine, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, divisionID, divisionBID)
+	runSystemManagementIntegration(t, ctx, db, engine, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, divisionID, divisionBID, contentMedia)
 	runDashboardIntegration(t, ctx, db, engine, loginBody.Data.AccessToken, bphAccessToken, kepalaAccessToken, kepalaBAccessToken, divisionID, divisionBID)
 }
 

@@ -36,7 +36,7 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
               ))}
             </div>
           ) : (
-            <p className="rounded-xl border border-border bg-white p-8 text-sm text-muted">
+            <p className="rounded-xl border border-border bg-surface p-8 text-sm text-muted">
               Dokumentasi kegiatan belum tersedia.
             </p>
           )}

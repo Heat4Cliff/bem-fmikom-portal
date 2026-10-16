@@ -1,20 +1,36 @@
 import type { ReactNode } from "react";
 import { PublicFooter, PublicHeader, MobileNavigation } from "@/components/public/public-navigation";
+import { getPublicLandingSettings } from "@/features/content/api";
 
-export function PublicShell({ children }: { children: ReactNode }) {
+export async function PublicShell({ children }: { children: ReactNode }) {
+  const settings = await getPublicLandingSettings().catch(() => null);
   return (
     <div className="min-h-dvh pb-[calc(3rem+0.375rem+max(env(safe-area-inset-bottom),0.35rem)+1px)] md:pb-0">
       <a
         href="#main-content"
-        className="sr-only z-[60] rounded-md bg-primary px-4 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        className="sr-only z-[60] rounded-md bg-primary px-4 py-3 font-semibold text-primary-foreground focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
       >
         Lewati ke konten utama
       </a>
-      <PublicHeader />
+      <PublicHeader
+        logoUrl={settings?.navbar_logo_url ?? null}
+        logoShape={settings?.brand_logo_shape ?? "original"}
+        logoFit={settings?.brand_logo_fit ?? "contain"}
+      />
       <main id="main-content" tabIndex={-1}>
         {children}
       </main>
-      <PublicFooter />
+      <PublicFooter
+        logoUrl={
+          settings?.footer_use_brand_logo === false ? settings.footer_logo_url : settings?.navbar_logo_url
+        }
+        logoShape={
+          settings?.footer_use_brand_logo === false ? settings?.footer_logo_shape : settings?.brand_logo_shape
+        }
+        logoFit={
+          settings?.footer_use_brand_logo === false ? settings?.footer_logo_fit : settings?.brand_logo_fit
+        }
+      />
       <MobileNavigation />
     </div>
   );

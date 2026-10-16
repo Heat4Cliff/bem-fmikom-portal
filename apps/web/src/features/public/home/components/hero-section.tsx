@@ -10,7 +10,7 @@ export function HeroSection({ hero, demoMode }: { hero: LandingHero; demoMode: b
   return (
     <>
       {demoMode ? (
-        <div className="border-b border-amber-200 bg-amber-50 px-4 py-2 text-center text-xs font-semibold text-amber-950">
+        <div className="border-b border-warning/30 bg-warning/10 px-4 py-2 text-center text-xs font-semibold text-warning-foreground">
           Mode demo: konten dan angka contoh hanya digunakan untuk tinjauan visual.
         </div>
       ) : null}
@@ -48,9 +48,10 @@ export function HeroSection({ hero, demoMode }: { hero: LandingHero; demoMode: b
           </div>
 
           <FadeContent>
-            <div
+            <figure
+              aria-label={hero.visualLabel}
               data-testid="public-hero-art"
-              className="public-hero-art relative isolate flex min-h-0 aspect-[4/3] w-full min-w-0 items-end overflow-hidden rounded-2xl border border-primary/10 p-3 shadow-card sm:aspect-[16/10] sm:min-h-64 sm:p-6"
+              className="public-hero-art relative isolate aspect-[4/3] w-full min-w-0 overflow-hidden rounded-2xl border border-primary/20 shadow-card sm:aspect-[16/10] sm:min-h-64"
             >
               {hero.imageUrl ? (
                 <>
@@ -59,39 +60,52 @@ export function HeroSection({ hero, demoMode }: { hero: LandingHero; demoMode: b
                     alt={hero.visualLabel}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="absolute inset-0 -z-10 size-full bg-surface-muted object-contain object-center"
+                    className="absolute inset-0 -z-10 size-full object-cover object-center"
                     fallbackClassName="absolute inset-0 -z-10"
-                    fallback={<span aria-hidden="true" />}
+                    fallback={
+                      <span className="flex size-full flex-col items-center justify-center gap-2 bg-surface-soft px-6 text-center text-primary">
+                        <span className="font-heading text-sm font-bold tracking-wide sm:text-base">
+                          BEM FMIKOM · UNUGHA
+                        </span>
+                        <span className="max-w-sm text-xs leading-5 text-muted sm:text-sm">
+                          Dokumentasi kegiatan akan ditampilkan setelah aset resmi tersedia.
+                        </span>
+                      </span>
+                    }
                   />
                   <div
                     aria-hidden="true"
-                    className="absolute inset-0 -z-10 bg-gradient-to-t from-primary/80 to-primary/5"
+                    className="absolute inset-0 -z-10 bg-gradient-to-t from-foreground/40 to-transparent"
                   />
                 </>
-              ) : null}
-              <div aria-hidden="true" className="absolute inset-0 -z-10 opacity-60">
-                <div className="absolute -right-10 -top-16 size-64 rounded-full border-[28px] border-white/40" />
-                <div className="absolute left-[16%] top-[14%] h-[60%] w-[46%] rounded-t-[5rem] border border-white/70 bg-white/25 shadow-inner" />
-                <div className="absolute bottom-[22%] left-[8%] h-2 w-[70%] rounded-full bg-primary/10" />
-                <div className="absolute bottom-[14%] left-[14%] h-2 w-[56%] rounded-full bg-primary/10" />
-              </div>
-              <div
-                data-testid="public-hero-caption"
-                className="relative z-10 flex w-full min-w-0 items-end justify-between gap-2 rounded-xl border border-white/60 bg-white/90 p-3 shadow-raised backdrop-blur sm:gap-3 sm:p-4"
-              >
-                <div className="min-w-0 flex-1">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-secondary">
+              ) : (
+                <div className="absolute inset-0 -z-10 flex flex-col items-center justify-center gap-2 px-6 text-center text-primary">
+                  <p className="font-heading text-sm font-bold tracking-wide sm:text-base">
                     BEM FMIKOM · UNUGHA
                   </p>
-                  <p className="mt-1 break-words font-heading text-sm font-bold leading-snug text-primary sm:text-lg">
-                    {hero.visualCaption}
+                  <p className="max-w-sm text-xs leading-5 text-muted sm:text-sm">
+                    Dokumentasi kegiatan akan ditampilkan setelah aset resmi tersedia.
                   </p>
                 </div>
-                <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-primary text-white">
-                  <CalendarDays aria-hidden="true" className="size-5" />
-                </span>
-              </div>
-            </div>
+              )}
+              {hero.imageUrl ? (
+                <figcaption className="absolute inset-x-3 bottom-3 rounded-xl border border-border/80 bg-surface/95 p-4 shadow-raised backdrop-blur-sm sm:inset-x-6 sm:bottom-6 sm:p-5">
+                  <div className="flex items-start gap-3">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary">
+                      <CalendarDays aria-hidden="true" className="size-5" />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-primary sm:text-xs">
+                        BEM FMIKOM · UNUGHA
+                      </p>
+                      <p className="mt-1 text-xs leading-5 text-muted sm:text-sm sm:leading-6">
+                        {hero.visualCaption}
+                      </p>
+                    </div>
+                  </div>
+                </figcaption>
+              ) : null}
+            </figure>
           </FadeContent>
         </div>
       </section>
@@ -111,13 +125,13 @@ export function DemoStatistics({ items }: { items: { label: string; value: strin
         {items.map((item) => (
           <div
             key={item.label}
-            className="rounded-xl border border-border/60 bg-white p-4 shadow-card sm:p-5"
+            className="rounded-xl border border-border/60 bg-surface p-4 shadow-card sm:p-5"
           >
             <p className="font-heading text-2xl font-extrabold tracking-tight text-primary sm:text-3xl">
               {item.value}
             </p>
             <p className="mt-1 text-xs font-medium leading-5 text-muted sm:text-sm">{item.label}</p>
-            <span className="mt-3 inline-flex rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-950">
+            <span className="mt-3 inline-flex rounded-full bg-warning/15 px-2 py-0.5 text-[10px] font-bold text-warning-foreground">
               Contoh
             </span>
           </div>

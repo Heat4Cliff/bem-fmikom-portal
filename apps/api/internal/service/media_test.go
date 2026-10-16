@@ -27,10 +27,12 @@ func TestMediaUploadRoleAndPurposePolicy(t *testing.T) {
 		allowed bool
 	}{
 		{domain.RoleSuperAdmin, MediaLandingHero, true},
+		{domain.RoleBPH, MediaLandingBranding, true},
 		{domain.RoleBPH, MediaAnnouncementImage, true},
 		{domain.RoleKepala, MediaArticleCover, true},
 		{domain.RoleKepala, MediaGalleryPreview, true},
 		{domain.RoleKepala, MediaLandingHero, false},
+		{domain.RoleKepala, MediaLandingBranding, false},
 		{domain.RoleKepala, MediaMemberPhoto, false},
 		{domain.RoleBPH, "UNBOUNDED", false},
 		{"UNKNOWN", MediaArticleCover, false},

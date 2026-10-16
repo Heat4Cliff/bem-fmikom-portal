@@ -37,7 +37,7 @@ export default async function ArticleDetailPage({ params }: Props) {
     <main className="px-4 py-8 md:px-8 lg:px-12 lg:py-12">
       <article className="mx-auto max-w-4xl">
         <BackLink href="/berita">Daftar berita</BackLink>
-        <div className="mt-6 rounded-2xl border border-border/70 bg-white p-5 shadow-card sm:p-8 lg:p-10">
+        <div className="mt-6 rounded-2xl border border-border/70 bg-surface p-5 shadow-card sm:p-8 lg:p-10">
           <div className="flex flex-wrap gap-2">
             {article.categories.map((category) => (
               <span

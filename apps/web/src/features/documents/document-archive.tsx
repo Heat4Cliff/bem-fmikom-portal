@@ -201,7 +201,10 @@ export function DocumentArchive() {
         </div>
       </div>
       {error && (
-        <div role="alert" className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800">
+        <div
+          role="alert"
+          className="rounded-lg border border-danger/30 bg-danger/10 p-3 text-sm text-danger-foreground"
+        >
           {error}
         </div>
       )}

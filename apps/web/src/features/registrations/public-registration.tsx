@@ -69,7 +69,7 @@ export function PublicRegistrationList() {
             type="button"
             aria-pressed={status === item.value}
             onClick={() => setStatus(item.value)}
-            className={`min-h-10 rounded-full px-5 text-sm font-semibold transition ${status === item.value ? "bg-primary text-white" : "border border-border bg-white text-muted hover:text-primary"}`}
+            className={`min-h-10 rounded-full px-5 text-sm font-semibold transition ${status === item.value ? "bg-primary text-primary-foreground" : "border border-border bg-surface text-muted hover:text-primary"}`}
           >
             {item.label}
           </button>
@@ -89,7 +89,7 @@ export function PublicRegistrationList() {
           {items.map((item) => (
             <article
               key={item.slug}
-              className="flex min-h-64 flex-col rounded-2xl border border-border bg-white p-6 shadow-card"
+              className="flex min-h-64 flex-col rounded-2xl border border-border bg-surface p-6 shadow-card"
             >
               <div className="flex items-center justify-between gap-3">
                 <span
@@ -121,7 +121,7 @@ export function PublicRegistrationList() {
           ))}
         </div>
       ) : !loading ? (
-        <div className="mx-auto mt-10 max-w-xl rounded-2xl border border-dashed border-border bg-white p-8 text-center">
+        <div className="mx-auto mt-10 max-w-xl rounded-2xl border border-dashed border-border bg-surface p-8 text-center">
           <CalendarDays aria-hidden="true" className="mx-auto size-8 text-secondary" />
           <h2 className="mt-3 font-heading text-lg font-bold text-primary">
             Belum ada pendaftaran{" "}
@@ -176,7 +176,7 @@ export function PublicRegistrationDetail({ slug }: { slug: string }) {
       <Link className="text-sm font-semibold text-primary hover:text-secondary" href="/pendaftaran">
         ← Semua pendaftaran
       </Link>
-      <article className="mt-5 rounded-2xl border border-border bg-white p-5 shadow-card sm:p-9">
+      <article className="mt-5 rounded-2xl border border-border bg-surface p-5 shadow-card sm:p-9">
         <div className="flex flex-wrap items-center gap-3">
           <span className="rounded-full bg-primary/5 px-3 py-1 text-xs font-bold uppercase text-primary">
             {registration.status === "OPEN"
@@ -208,7 +208,7 @@ export function PublicRegistrationDetail({ slug }: { slug: string }) {
         {isOpen ? (
           <Link
             href={`/pendaftaran/${encodeURIComponent(registration.slug)}/form`}
-            className="mt-8 inline-flex min-h-12 items-center justify-center rounded-lg bg-primary px-6 text-sm font-bold text-white hover:bg-primary/90"
+            className="mt-8 inline-flex min-h-12 items-center justify-center rounded-lg bg-primary px-6 text-sm font-bold text-primary-foreground hover:bg-primary/90"
           >
             Isi Formulir Pendaftaran
           </Link>
@@ -329,7 +329,7 @@ export function PublicRegistrationForm({ slug }: { slug: string }) {
   if (success)
     return (
       <main className="mx-auto max-w-2xl px-4 py-16 text-center">
-        <div className="rounded-2xl border border-success/20 bg-white p-8 shadow-card">
+        <div className="rounded-2xl border border-success/20 bg-surface p-8 shadow-card">
           <CheckCircle2 aria-hidden="true" className="mx-auto size-12 text-success" />
           <h1 className="mt-4 font-heading text-2xl font-bold text-primary">Pendaftaran berhasil dikirim</h1>
           <p className="mt-2 text-sm text-muted">
@@ -355,7 +355,7 @@ export function PublicRegistrationForm({ slug }: { slug: string }) {
   if (registration.status !== "OPEN")
     return (
       <main className="mx-auto max-w-2xl px-4 py-16">
-        <div className="rounded-xl border border-border bg-white p-6 text-center">
+        <div className="rounded-xl border border-border bg-surface p-6 text-center">
           <h1 className="font-heading text-xl font-bold text-primary">Formulir tidak sedang dibuka</h1>
           <p className="mt-2 text-sm text-muted">
             {registration.status === "UPCOMING"
@@ -376,17 +376,19 @@ export function PublicRegistrationForm({ slug }: { slug: string }) {
       <Link className="text-sm font-semibold text-primary" href={`/pendaftaran/${encodeURIComponent(slug)}`}>
         ← Kembali ke informasi
       </Link>
-      <header className="mt-5 rounded-2xl bg-primary p-5 text-white sm:p-8">
-        <p className="text-xs font-bold uppercase tracking-[0.15em] text-white/70">Formulir Pendaftaran</p>
+      <header className="mt-5 rounded-2xl bg-primary p-5 text-primary-foreground sm:p-8">
+        <p className="text-xs font-bold uppercase tracking-[0.15em] text-primary-foreground/80">
+          Formulir Pendaftaran
+        </p>
         <h1 className="mt-2 font-heading text-2xl font-bold sm:text-3xl">{registration.title}</h1>
-        <p className="mt-2 text-sm text-white/75">
+        <p className="mt-2 text-sm text-primary-foreground/85">
           {registration.division_name ?? "BEM FMIKOM"} · ditutup {formatDate(registration.close_at)}
         </p>
       </header>
       <form
         onSubmit={onSubmit}
         noValidate
-        className="mt-5 space-y-5 rounded-2xl border border-border bg-white p-5 shadow-card sm:p-8"
+        className="mt-5 space-y-5 rounded-2xl border border-border bg-surface p-5 shadow-card sm:p-8"
       >
         {message ? (
           <p role="alert" className="rounded-lg bg-danger/5 p-3 text-sm text-danger">
@@ -638,7 +640,7 @@ function RegistrationImageInput({
       </Label>
       <div className="space-y-3 rounded-xl border border-dashed border-border bg-surface-muted p-4">
         {file && preview ? (
-          <MediaFrame ratio="aspect-[4/3]" className="mx-auto max-w-sm rounded-lg bg-white">
+          <MediaFrame ratio="aspect-[4/3]" className="mx-auto max-w-sm rounded-lg bg-surface">
             {/* Blob URLs are local previews only; submission bytes use multipart and never a public URL. */}
             <MediaImage
               value={preview}

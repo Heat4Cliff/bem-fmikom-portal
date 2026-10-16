@@ -76,14 +76,14 @@ export function ArticleManager() {
         actions={
           <Link
             href="/admin/berita/new"
-            className="inline-flex min-h-11 items-center rounded-md bg-primary px-5 text-sm font-semibold text-white"
+            className="inline-flex min-h-11 items-center rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground"
           >
             + Tulis berita baru
           </Link>
         }
       />
       <section
-        className="mt-6 rounded-xl border border-border/70 bg-white p-4 shadow-card"
+        className="mt-6 rounded-xl border border-border/70 bg-surface p-4 shadow-card"
         aria-label="Filter berita"
       >
         <form
@@ -148,7 +148,7 @@ export function ArticleManager() {
         </p>
       ) : null}
       <section
-        className="mt-5 overflow-hidden rounded-xl border border-border/70 bg-white shadow-card"
+        className="mt-5 overflow-hidden rounded-xl border border-border/70 bg-surface shadow-card"
         aria-label="Daftar berita"
         aria-busy={busy}
       >

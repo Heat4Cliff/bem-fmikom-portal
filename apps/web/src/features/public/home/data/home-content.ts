@@ -10,12 +10,12 @@ const defaultContent: LandingPageContent = {
     primaryAction: { label: "Jelajahi informasi", href: "#berita" },
     secondaryAction: { label: "Kirim aspirasi", href: "#aspirasi" },
     visualLabel: "Visual kegiatan BEM FMIKOM UNUGHA",
-    visualCaption: "Dokumentasi kegiatan akan ditampilkan setelah aset resmi tersedia.",
+    visualCaption: "Dokumentasi kegiatan dan aktivitas BEM FMIKOM UNUGHA.",
   },
   about: {
     title: "Ruang informasi dan kolaborasi mahasiswa",
     description:
-      "Portal ini menjadi kanal publik untuk mengenal BEM FMIKOM UNUGHA dan menemukan informasi organisasi. Konten resmi dapat diperbarui ketika pengelolaan konten tersedia.",
+      "BEM FMIKOM UNUGHA menjadi ruang koordinasi, representasi, dan kolaborasi mahasiswa. Kenali organisasi serta arah geraknya.",
     highlights: [
       {
         title: "Informasi terpusat",

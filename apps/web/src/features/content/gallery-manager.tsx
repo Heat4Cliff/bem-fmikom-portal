@@ -293,7 +293,7 @@ export function GalleryManager() {
       ) : null}
 
       <section aria-label="Ringkasan galeri" className="mt-5 grid grid-cols-2 gap-3 sm:max-w-xl">
-        <div className="flex items-center gap-3 rounded-xl border border-border/70 bg-white p-4 shadow-card">
+        <div className="flex items-center gap-3 rounded-xl border border-border/70 bg-surface p-4 shadow-card">
           <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-primary/5 text-primary">
             <Layers3 aria-hidden="true" className="size-5" />
           </span>
@@ -302,7 +302,7 @@ export function GalleryManager() {
             <p className="font-heading text-xl font-bold text-primary">{categories.length}</p>
           </div>
         </div>
-        <div className="flex items-center gap-3 rounded-xl border border-border/70 bg-white p-4 shadow-card">
+        <div className="flex items-center gap-3 rounded-xl border border-border/70 bg-surface p-4 shadow-card">
           <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-secondary/15 text-primary">
             <Rows3 aria-hidden="true" className="size-5" />
           </span>
@@ -315,7 +315,7 @@ export function GalleryManager() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-xl border border-border/70 bg-white shadow-card">
+      <section className="mt-6 rounded-xl border border-border/70 bg-surface shadow-card">
         <div className="border-b border-border/70 p-4 sm:p-5">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
@@ -338,7 +338,7 @@ export function GalleryManager() {
                   key={category.id}
                   className={`flex shrink-0 items-center gap-1 rounded-lg border ${
                     selected === category.id
-                      ? "border-primary bg-primary text-white"
+                      ? "border-primary bg-primary text-primary-foreground"
                       : "border-border bg-surface text-body"
                   }`}
                 >
@@ -350,7 +350,7 @@ export function GalleryManager() {
                   >
                     <span className="block truncate font-semibold">{category.title}</span>
                     <span
-                      className={`block text-xs ${selected === category.id ? "text-white/75" : "text-muted"}`}
+                      className={`block text-xs ${selected === category.id ? "text-primary-foreground/75" : "text-muted"}`}
                     >
                       {category.item_count ?? 0} dokumentasi
                     </span>
@@ -450,7 +450,7 @@ export function GalleryManager() {
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`Buka album ${item.title} di ${albumHost(item.google_photos_url)}`}
-                          className="inline-flex min-h-8 items-center gap-1.5 rounded-md bg-white px-2 font-semibold text-primary underline decoration-primary/30 underline-offset-2 focus-visible:outline-2 focus-visible:outline-secondary"
+                          className="inline-flex min-h-8 items-center gap-1.5 rounded-md bg-surface px-2 font-semibold text-primary underline decoration-primary/30 underline-offset-2 focus-visible:outline-2 focus-visible:outline-secondary"
                         >
                           Google Photos <ArrowUpRight aria-hidden="true" className="size-3.5" />
                         </a>
@@ -462,7 +462,7 @@ export function GalleryManager() {
                         <button
                           type="button"
                           aria-label={`Aksi dokumentasi ${item.title}`}
-                          className="grid size-10 place-items-center rounded-md text-muted hover:bg-white hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
+                          className="grid size-10 place-items-center rounded-md text-muted hover:bg-surface hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
                         >
                           <Ellipsis aria-hidden="true" className="size-5" />
                         </button>

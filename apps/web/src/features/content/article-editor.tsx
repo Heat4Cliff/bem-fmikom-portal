@@ -152,7 +152,7 @@ export function ArticleEditor({ id }: { id?: number }) {
         </p>
       ) : null}
       <form onSubmit={save} className="mt-5 grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_20rem]">
-        <section className="space-y-4 rounded-xl border border-border/70 bg-white p-5 shadow-card">
+        <section className="space-y-4 rounded-xl border border-border/70 bg-surface p-5 shadow-card">
           <label className="block text-sm font-semibold text-primary">
             Judul berita
             <input
@@ -203,7 +203,7 @@ export function ArticleEditor({ id }: { id?: number }) {
           </div>
         </section>
         <aside className="space-y-4">
-          <section className="rounded-xl border border-border/70 bg-white p-5 shadow-card">
+          <section className="rounded-xl border border-border/70 bg-surface p-5 shadow-card">
             <h2 className="font-heading font-bold text-primary">Kategori</h2>
             <div className="mt-3 space-y-2">
               {categories.map((category) => (
@@ -220,7 +220,7 @@ export function ArticleEditor({ id }: { id?: number }) {
               {categories.length === 0 ? <p className="text-xs text-muted">Belum ada kategori.</p> : null}
             </div>
           </section>
-          <section className="rounded-xl border border-border/70 bg-white p-5 shadow-card">
+          <section className="rounded-xl border border-border/70 bg-surface p-5 shadow-card">
             <MediaUpload
               id="article-cover"
               label="Gambar sampul"
@@ -232,7 +232,7 @@ export function ArticleEditor({ id }: { id?: number }) {
             />
           </section>
           {user?.role !== "KEPALA_BIDANG" ? (
-            <section className="rounded-xl border border-border/70 bg-white p-5 shadow-card">
+            <section className="rounded-xl border border-border/70 bg-surface p-5 shadow-card">
               <h2 className="font-heading font-bold text-primary">Divisi pemilik</h2>
               <label className="mt-3 block text-sm">
                 ID divisi
@@ -249,14 +249,14 @@ export function ArticleEditor({ id }: { id?: number }) {
               </p>
             </section>
           ) : null}
-          <section className="flex flex-col gap-2 rounded-xl border border-border/70 bg-white p-4 shadow-card">
+          <section className="flex flex-col gap-2 rounded-xl border border-border/70 bg-surface p-4 shadow-card">
             <p className="text-xs font-semibold text-muted">
               Status: {status === "PUBLISHED" ? "Terbit" : "Draft"}
             </p>
             <button
               type="submit"
               disabled={busy}
-              className="min-h-11 rounded-md bg-primary px-4 text-sm font-semibold text-white"
+              className="min-h-11 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground"
             >
               {busy ? "Menyimpan..." : status === "PUBLISHED" ? "Simpan perubahan" : "Simpan draft"}
             </button>
@@ -265,7 +265,7 @@ export function ArticleEditor({ id }: { id?: number }) {
                 type="button"
                 disabled={busy}
                 onClick={() => void publish()}
-                className="min-h-11 rounded-md bg-secondary px-4 text-sm font-semibold text-white"
+                className="min-h-11 rounded-md bg-secondary px-4 text-sm font-semibold text-secondary-foreground"
               >
                 Terbitkan
               </button>

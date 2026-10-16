@@ -36,7 +36,7 @@ export function ArticleCard({ article }: { article: Article }) {
       .trim()
       .slice(0, 180);
   return (
-    <article className="group overflow-hidden rounded-xl border border-border/70 bg-white shadow-card transition-shadow hover:shadow-raised">
+    <article className="group overflow-hidden rounded-xl border border-border/70 bg-surface shadow-card transition-shadow hover:shadow-raised">
       <Link
         href={`/berita/${encodeURIComponent(article.slug)}`}
         className="relative grid aspect-[16/9] place-items-center overflow-hidden bg-surface-muted"
@@ -85,7 +85,7 @@ export function ArticleCard({ article }: { article: Article }) {
 
 export function AnnouncementCard({ announcement }: { announcement: Announcement }) {
   return (
-    <article className="grid gap-5 rounded-xl border border-border/70 bg-white p-5 shadow-card sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:p-6">
+    <article className="grid gap-5 rounded-xl border border-border/70 bg-surface p-5 shadow-card sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:p-6">
       <div>
         <p className="flex items-center gap-2 text-xs font-semibold text-muted">
           <CalendarDays aria-hidden="true" className="size-4 text-secondary" />
@@ -108,7 +108,7 @@ export function AnnouncementCard({ announcement }: { announcement: Announcement 
       </div>
       <Link
         href={`/pengumuman/${encodeURIComponent(announcement.slug)}`}
-        className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-white hover:bg-primary/90"
+        className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
       >
         Baca pengumuman <ArrowRight aria-hidden="true" className="size-4" />
       </Link>
@@ -119,7 +119,7 @@ export function AnnouncementCard({ announcement }: { announcement: Announcement 
 export function GalleryCard({ category }: { category: GalleryCategory }) {
   const cover = category.items?.find((item) => item.preview_image_url)?.preview_image_url;
   return (
-    <article className="overflow-hidden rounded-xl border border-border/70 bg-white shadow-card">
+    <article className="overflow-hidden rounded-xl border border-border/70 bg-surface shadow-card">
       <Link
         href={`/galeri/${encodeURIComponent(category.slug)}`}
         className="relative grid aspect-[4/3] place-items-center overflow-hidden bg-surface-muted"
@@ -172,7 +172,7 @@ export function ContentPagination({
   return (
     <nav
       aria-label="Halaman daftar"
-      className="mt-8 flex items-center justify-between rounded-lg border border-border bg-white p-3 text-sm"
+      className="mt-8 flex items-center justify-between rounded-lg border border-border bg-surface p-3 text-sm"
     >
       {page > 1 ? (
         <Link

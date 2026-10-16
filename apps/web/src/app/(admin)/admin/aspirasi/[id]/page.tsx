@@ -8,7 +8,7 @@ export default function AdminAspirationDetailPage() {
   const id = Number(params.id);
   if (!Number.isSafeInteger(id) || id < 1) {
     return (
-      <p role="alert" className="m-6 rounded-md bg-danger/5 p-4 text-sm text-red-900">
+      <p role="alert" className="m-6 rounded-md bg-danger/5 p-4 text-sm text-danger-foreground">
         ID aspirasi tidak valid.
       </p>
     );

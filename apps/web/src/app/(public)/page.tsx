@@ -11,6 +11,7 @@ import {
   getActivePublicRegistrations,
 } from "@/features/content/api";
 import type { Announcement, Article, GalleryCategory, PublicOrganization } from "@/features/content/types";
+import { landingSocialLinks } from "@/features/public/home/data/landing-social-links";
 
 export const dynamic = "force-dynamic";
 
@@ -45,16 +46,6 @@ function formatDate(value?: string | null) {
     year: "numeric",
     timeZone: "Asia/Jakarta",
   });
-}
-
-function landingSocialLinks(settings: NonNullable<Awaited<ReturnType<typeof getPublicLandingSettings>>>) {
-  const candidates: { label: string; href: string | null }[] = [
-    { label: "Instagram", href: settings.instagram_url },
-    { label: "YouTube", href: settings.youtube_url },
-    { label: "TikTok", href: settings.tiktok_url },
-    { label: "Situs lainnya", href: settings.other_social_url },
-  ];
-  return candidates.flatMap(({ label, href }) => (href ? [{ label, href }] : []));
 }
 
 export default async function PublicHomePage() {

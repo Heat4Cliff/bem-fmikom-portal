@@ -7,7 +7,10 @@ import { MediaUpload } from "@/components/admin/media-upload";
 import { Button } from "@/components/ui/button";
 import { Alert } from "@/components/ui/primitives";
 import { Input, Label, Textarea } from "@/components/ui/primitives";
-import { AboutSection, VisionMissionSection } from "@/features/public/home/components/about-section";
+import { Checkbox, RadioGroup, RadioOption } from "@/components/ui/primitives";
+import { BrandLogo } from "@/components/ui/brand-logo";
+import { SocialBrandIcon } from "@/components/public/social-brand-icon";
+import { AboutSection } from "@/features/public/home/components/about-section";
 import { ContactSection } from "@/features/public/home/components/contact-sections";
 import { HeroSection } from "@/features/public/home/components/hero-section";
 import type { LandingPageContent } from "@/features/public/home/types";
@@ -23,6 +26,19 @@ const empty: LandingSettings = {
   hero_secondary_cta_label: null,
   hero_secondary_cta_url: null,
   hero_image_url: null,
+  navbar_logo_url: null,
+  brand_logo_shape: "original",
+  brand_logo_fit: "contain",
+  footer_logo_url: null,
+  footer_use_brand_logo: true,
+  footer_logo_shape: "original",
+  footer_logo_fit: "contain",
+  cabinet_logo_url: null,
+  cabinet_logo_shape: "original",
+  cabinet_logo_fit: "contain",
+  cabinet_name: null,
+  cabinet_period: null,
+  cabinet_tagline: null,
   about_title: "",
   about_description: "",
   vision: "",
@@ -35,19 +51,34 @@ const empty: LandingSettings = {
   youtube_url: null,
   tiktok_url: null,
   other_social_url: null,
+  social_links: [],
 };
-const sections = ["Hero", "Tentang BEM", "Visi & Misi", "Kontak", "Media Sosial"] as const;
+const sections = ["Hero", "Tentang BEM", "Visi & Misi", "Branding", "Kontak", "Media Sosial"] as const;
+const socialPlatforms = [
+  { value: "instagram", label: "Instagram" },
+  { value: "tiktok", label: "TikTok" },
+  { value: "youtube", label: "YouTube" },
+  { value: "facebook", label: "Facebook" },
+  { value: "x", label: "X / Twitter" },
+  { value: "whatsapp", label: "WhatsApp" },
+  { value: "linkedin", label: "LinkedIn" },
+  { value: "website", label: "Website" },
+];
 function toNullable(value: string) {
   return value.trim() ? value.trim() : null;
 }
 function socialLinks(settings: LandingSettings) {
-  const candidates: { label: string; href: string | null }[] = [
-    { label: "Instagram", href: settings.instagram_url },
-    { label: "YouTube", href: settings.youtube_url },
-    { label: "TikTok", href: settings.tiktok_url },
-    { label: "Situs lainnya", href: settings.other_social_url },
-  ];
-  return candidates.flatMap(({ label, href }) => (href ? [{ label, href }] : []));
+  const configured = (settings.social_links ?? [])
+    .filter((item) => item.active && item.url.trim())
+    .sort((a, b) => a.order - b.order)
+    .map(({ platform, label, url }) => ({ platform, label, href: url }));
+  if (configured.length) return configured;
+  return [
+    { platform: "instagram", label: "Instagram", href: settings.instagram_url },
+    { platform: "youtube", label: "YouTube", href: settings.youtube_url },
+    { platform: "tiktok", label: "TikTok", href: settings.tiktok_url },
+    { platform: "website", label: "Situs lainnya", href: settings.other_social_url },
+  ].flatMap(({ platform, label, href }) => (href ? [{ platform, label, href }] : []));
 }
 
 export function LandingSettingsAdmin() {
@@ -56,6 +87,7 @@ export function LandingSettingsAdmin() {
   const [saved, setSaved] = React.useState<LandingSettings>(empty);
   const [loading, setLoading] = React.useState(true);
   const [saving, setSaving] = React.useState(false);
+  const [uploading, setUploading] = React.useState(false);
   const [error, setError] = React.useState("");
   const [notice, setNotice] = React.useState("");
   const [preview, setPreview] = React.useState(false);
@@ -83,8 +115,11 @@ export function LandingSettingsAdmin() {
     window.addEventListener("beforeunload", warn);
     return () => window.removeEventListener("beforeunload", warn);
   }, [dirty]);
-  const update = <K extends keyof LandingSettings>(key: K, next: LandingSettings[K]) =>
+  const update = <K extends keyof LandingSettings>(key: K, next: LandingSettings[K]) => {
+    setError("");
+    setNotice("");
     setValue((current) => ({ ...current, [key]: next }));
+  };
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError("");
@@ -98,8 +133,8 @@ export function LandingSettingsAdmin() {
     } catch (e) {
       setError(
         e instanceof ApiError && e.status === 422
-          ? "Periksa kembali isian dan URL. Semua tautan eksternal harus menggunakan HTTPS."
-          : "Pengaturan gagal disimpan. Periksa koneksi dan akses akun.",
+          ? "Pengaturan belum tersimpan. Periksa isian, media, dan URL. Tautan eksternal harus menggunakan HTTPS; draf tetap tersedia untuk diperbaiki."
+          : "Pengaturan belum tersimpan. Draf tetap tersedia; periksa koneksi dan akses akun lalu coba lagi.",
       );
     } finally {
       setSaving(false);
@@ -114,6 +149,64 @@ export function LandingSettingsAdmin() {
         value={String(value[key] ?? "")}
         onChange={(e) => update(key, e.target.value as never)}
       />
+    </div>
+  );
+  const optionalTextField = (
+    key: "cabinet_name" | "cabinet_period" | "cabinet_tagline",
+    label: string,
+    max: number,
+  ) => (
+    <div className="grid gap-1.5" key={key}>
+      <Label htmlFor={key}>{label}</Label>
+      <Input
+        id={key}
+        maxLength={max}
+        value={value[key] ?? ""}
+        onChange={(e) => update(key, toNullable(e.target.value))}
+      />
+    </div>
+  );
+  const logoShapeControls = (prefix: "brand_logo" | "footer_logo" | "cabinet_logo", label: string) => (
+    <div className="grid gap-2">
+      <span className="text-sm font-semibold text-primary">Tampilan {label}</span>
+      <RadioGroup aria-label={`Tampilan ${label}`} className="gap-2">
+        {(
+          [
+            ["original", "Original"],
+            ["rounded", "Rounded"],
+            ["circle", "Circle"],
+          ] as const
+        ).map(([shape, shapeLabel]) => (
+          <RadioOption
+            key={shape}
+            id={`${prefix}-shape-${shape}`}
+            name={`${prefix}-shape`}
+            value={shape}
+            label={shapeLabel}
+            checked={value[`${prefix}_shape`] === shape}
+            onChange={() => update(`${prefix}_shape`, shape)}
+          />
+        ))}
+      </RadioGroup>
+      <span className="text-sm font-semibold text-primary">Image fit</span>
+      <RadioGroup aria-label={`Image fit ${label}`} className="gap-2">
+        {(
+          [
+            ["contain", "Contain"],
+            ["cover", "Cover"],
+          ] as const
+        ).map(([fit, fitLabel]) => (
+          <RadioOption
+            key={fit}
+            id={`${prefix}-fit-${fit}`}
+            name={`${prefix}-fit`}
+            value={fit}
+            label={fitLabel}
+            checked={value[`${prefix}_fit`] === fit}
+            onChange={() => update(`${prefix}_fit`, fit)}
+          />
+        ))}
+      </RadioGroup>
     </div>
   );
   if (loading)
@@ -140,7 +233,7 @@ export function LandingSettingsAdmin() {
         ? { label: value.hero_secondary_cta_label, href: value.hero_secondary_cta_url }
         : null,
     visualLabel: "Gambar hero BEM FMIKOM UNUGHA",
-    visualCaption: "Informasi resmi organisasi",
+    visualCaption: "Dokumentasi kegiatan dan aktivitas BEM FMIKOM UNUGHA.",
     imageUrl: value.hero_image_url,
   };
   const previewContent = {
@@ -174,14 +267,14 @@ export function LandingSettingsAdmin() {
               <Eye className="size-4" />
               Pratinjau
             </Button>
-            <Button onClick={submit} disabled={saving || !dirty}>
+            <Button onClick={submit} disabled={saving || uploading || !dirty}>
               <Save className="size-4" />
               {saving ? "Menyimpan…" : "Simpan Perubahan"}
             </Button>
           </div>
         }
       />
-      {dirty && (
+      {dirty && !error && (
         <Alert variant="warning" title="Perubahan belum disimpan">
           Perubahan draf belum diterapkan ke halaman publik.
         </Alert>
@@ -202,7 +295,7 @@ export function LandingSettingsAdmin() {
             type="button"
             aria-pressed={active === s}
             onClick={() => setActive(s)}
-            className={`min-h-10 rounded-md px-3 text-sm font-semibold ${active === s ? "bg-primary text-white" : "text-body hover:bg-surface-muted"}`}
+            className={`min-h-10 rounded-md px-3 text-sm font-semibold ${active === s ? "bg-primary text-primary-foreground" : "text-body hover:bg-surface-muted"}`}
           >
             {s}
           </button>
@@ -240,6 +333,8 @@ export function LandingSettingsAdmin() {
                 purpose="LANDING_HERO"
                 value={value.hero_image_url ?? ""}
                 onChange={(url) => update("hero_image_url", toNullable(url))}
+                onUploadStateChange={setUploading}
+                disabled={saving || uploading}
                 optional
               />
             </div>
@@ -350,6 +445,136 @@ export function LandingSettingsAdmin() {
               </ol>
             </div>
           )}
+          {active === "Branding" && (
+            <div className="mt-5 grid gap-6">
+              <p className="text-sm leading-6 text-muted">
+                Atur satu identitas utama untuk seluruh portal. Bentuk hanya mengubah tampilan di layar; file
+                gambar asli tetap tersimpan tanpa dipotong.
+              </p>
+              <section
+                aria-labelledby="global-brand-logo-heading"
+                className="grid gap-4 rounded-xl border border-border bg-surface p-4 sm:p-5"
+              >
+                <div className="flex items-center gap-4">
+                  <BrandLogo
+                    src={value.navbar_logo_url}
+                    shape={value.brand_logo_shape}
+                    fit={value.brand_logo_fit}
+                    className="size-16"
+                  />
+                  <div>
+                    <h3 id="global-brand-logo-heading" className="font-heading font-bold text-primary">
+                      Global Brand Logo
+                    </h3>
+                    <p className="mt-1 text-sm text-muted">
+                      Dipakai di navbar publik, sidebar admin, dan halaman login.
+                    </p>
+                  </div>
+                </div>
+                <MediaUpload
+                  id="landing-navbar-logo"
+                  label="Gambar Global Brand Logo"
+                  purpose="LANDING_BRANDING"
+                  value={value.navbar_logo_url ?? ""}
+                  onChange={(url) => update("navbar_logo_url", toNullable(url))}
+                  onUploadStateChange={setUploading}
+                  disabled={saving || uploading}
+                  optional
+                  compact
+                />
+                {logoShapeControls("brand_logo", "Global Brand Logo")}
+              </section>
+              <section
+                aria-labelledby="footer-branding-heading"
+                className="grid gap-4 rounded-xl border border-border bg-surface p-4 sm:p-5"
+              >
+                <h3 id="footer-branding-heading" className="font-heading font-bold text-primary">
+                  Footer
+                </h3>
+                <div className="flex min-h-11 items-center gap-3 text-sm font-medium text-body">
+                  <Checkbox
+                    id="footer-use-brand-logo"
+                    checked={value.footer_use_brand_logo}
+                    onChange={(event) => update("footer_use_brand_logo", event.target.checked)}
+                    disabled={saving || uploading}
+                  />
+                  <Label htmlFor="footer-use-brand-logo">Gunakan Global Brand Logo untuk Footer</Label>
+                </div>
+                {value.footer_use_brand_logo ? (
+                  <div className="flex items-center gap-3 rounded-lg bg-surface-muted p-3 text-sm text-muted">
+                    <BrandLogo
+                      src={value.navbar_logo_url}
+                      shape={value.brand_logo_shape}
+                      fit={value.brand_logo_fit}
+                    />
+                    Mengikuti gambar, bentuk, dan fit Global Brand Logo.
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex items-center gap-3">
+                      <BrandLogo
+                        src={value.footer_logo_url}
+                        shape={value.footer_logo_shape}
+                        fit={value.footer_logo_fit}
+                      />
+                      <p className="text-sm text-muted">Pratinjau logo khusus Footer</p>
+                    </div>
+                    <MediaUpload
+                      id="landing-footer-logo"
+                      label="Gambar Footer"
+                      purpose="LANDING_BRANDING"
+                      value={value.footer_logo_url ?? ""}
+                      onChange={(url) => update("footer_logo_url", toNullable(url))}
+                      onUploadStateChange={setUploading}
+                      disabled={saving || uploading}
+                      optional
+                      compact
+                    />
+                    {logoShapeControls("footer_logo", "Footer")}
+                  </>
+                )}
+              </section>
+              <section
+                aria-labelledby="cabinet-branding-heading"
+                className="grid gap-4 rounded-xl border border-border bg-surface p-4 sm:p-5"
+              >
+                <h3 id="cabinet-branding-heading" className="font-heading font-bold text-primary">
+                  Kabinet
+                </h3>
+                <div className="flex items-center gap-3">
+                  <BrandLogo
+                    src={value.cabinet_logo_url}
+                    shape={value.cabinet_logo_shape}
+                    fit={value.cabinet_logo_fit}
+                  />
+                  <p className="text-sm text-muted">Logo kabinet hanya digunakan pada halaman /tentang.</p>
+                </div>
+                <MediaUpload
+                  id="landing-cabinet-logo"
+                  label="Logo Kabinet"
+                  purpose="LANDING_BRANDING"
+                  value={value.cabinet_logo_url ?? ""}
+                  onChange={(url) => update("cabinet_logo_url", toNullable(url))}
+                  onUploadStateChange={setUploading}
+                  disabled={saving || uploading}
+                  optional
+                  compact
+                />
+                {logoShapeControls("cabinet_logo", "Kabinet")}
+              </section>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {optionalTextField("cabinet_name", "Nama kabinet", 180)}
+                {optionalTextField("cabinet_period", "Periode / tahun kabinet", 80)}
+                <div className="sm:col-span-2">
+                  {optionalTextField("cabinet_tagline", "Tagline / nama lengkap kabinet", 180)}
+                </div>
+              </div>
+              <p className="text-xs leading-5 text-muted">
+                Logo kabinet hanya tampil pada halaman profil <code>/tentang</code>, bukan di beranda. Hapus
+                melepas referensi aktif; file lama mengikuti kebijakan retensi media.
+              </p>
+            </div>
+          )}
           {active === "Kontak" && (
             <div className="mt-5 grid gap-4">
               {textField("contact_email", "Email kontak", 254)}
@@ -376,19 +601,139 @@ export function LandingSettingsAdmin() {
           )}
           {active === "Media Sosial" && (
             <div className="mt-5 grid gap-4">
-              {(["instagram_url", "youtube_url", "tiktok_url", "other_social_url"] as const).map((key, i) => (
-                <div key={key} className="grid gap-1.5">
-                  <Label htmlFor={key}>
-                    {["Instagram", "YouTube", "TikTok", "Situs lainnya"][i]} (HTTPS)
-                  </Label>
-                  <Input
-                    id={key}
-                    type="url"
-                    value={value[key] ?? ""}
-                    onChange={(e) => update(key, toNullable(e.target.value))}
-                  />
-                </div>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <p className="text-sm leading-6 text-muted">
+                  Tambah kanal publik. Ikon mengikuti platform dan URL eksternal wajib HTTPS.
+                </p>
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={socialPlatforms.every((option) =>
+                    value.social_links.some((item) => item.platform === option.value),
+                  )}
+                  onClick={() => {
+                    const platform =
+                      socialPlatforms.find(
+                        (option) => !value.social_links.some((item) => item.platform === option.value),
+                      )?.value ?? "website";
+                    const label =
+                      socialPlatforms.find((option) => option.value === platform)?.label ?? "Website";
+                    update("social_links", [
+                      ...value.social_links,
+                      { platform, label, url: "", order: value.social_links.length, active: true },
+                    ]);
+                  }}
+                >
+                  <Plus aria-hidden="true" className="size-4" /> Tambah media sosial
+                </Button>
+              </div>
+              {value.social_links.map((item, index) => (
+                <article
+                  key={item.order}
+                  className="grid gap-3 rounded-xl border border-border bg-surface p-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start"
+                >
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="grid gap-1.5">
+                      <Label htmlFor={`social-platform-${index}`}>Platform</Label>
+                      <select
+                        id={`social-platform-${index}`}
+                        className="h-11 w-full rounded-md border border-border bg-surface px-3 text-sm text-foreground focus-visible:outline-2 focus-visible:outline-secondary"
+                        value={item.platform}
+                        onChange={(event) => {
+                          const platform = event.target.value;
+                          const label =
+                            socialPlatforms.find((option) => option.value === platform)?.label ?? platform;
+                          update(
+                            "social_links",
+                            value.social_links.map((link, i) =>
+                              i === index ? { ...link, platform, label } : link,
+                            ),
+                          );
+                        }}
+                      >
+                        {socialPlatforms.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="grid gap-1.5">
+                      <Label htmlFor={`social-label-${index}`}>Label</Label>
+                      <Input
+                        id={`social-label-${index}`}
+                        value={item.label}
+                        maxLength={80}
+                        onChange={(event) =>
+                          update(
+                            "social_links",
+                            value.social_links.map((link, i) =>
+                              i === index ? { ...link, label: event.target.value } : link,
+                            ),
+                          )
+                        }
+                      />
+                    </div>
+                    <div className="grid gap-1.5 sm:col-span-2">
+                      <Label htmlFor={`social-url-${index}`}>URL (HTTPS)</Label>
+                      <Input
+                        id={`social-url-${index}`}
+                        type="url"
+                        inputMode="url"
+                        placeholder="https://"
+                        value={item.url}
+                        onChange={(event) =>
+                          update(
+                            "social_links",
+                            value.social_links.map((link, i) =>
+                              i === index ? { ...link, url: event.target.value } : link,
+                            ),
+                          )
+                        }
+                      />
+                    </div>
+                    <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
+                      <div className="flex min-h-11 items-center gap-2 text-sm font-medium text-body">
+                        <Checkbox
+                          id={`social-active-${index}`}
+                          checked={item.active}
+                          onChange={(event) =>
+                            update(
+                              "social_links",
+                              value.social_links.map((link, i) =>
+                                i === index ? { ...link, active: event.target.checked } : link,
+                              ),
+                            )
+                          }
+                        />
+                        <Label htmlFor={`social-active-${index}`}>Aktif</Label>
+                      </div>
+                      <span className="inline-flex items-center gap-2 text-sm text-muted">
+                        <SocialBrandIcon platform={item.platform} /> Pratinjau: {item.label || "Media sosial"}
+                      </span>
+                    </div>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    aria-label={`Hapus ${item.label || "media sosial"}`}
+                    onClick={() =>
+                      update(
+                        "social_links",
+                        value.social_links.filter((_, i) => i !== index),
+                      )
+                    }
+                  >
+                    <Trash2 aria-hidden="true" className="size-4 text-danger" />
+                  </Button>
+                </article>
               ))}
+              {value.social_links.length === 0 ? (
+                <p className="rounded-lg border border-dashed border-border p-4 text-sm text-muted">
+                  Belum ada kanal media sosial.
+                </p>
+              ) : null}
             </div>
           )}
         </section>
@@ -419,11 +764,10 @@ export function LandingSettingsAdmin() {
               </Button>
             </div>
             <HeroSection hero={previewContent.hero} demoMode={false} />
-            <AboutSection about={previewContent.about} />
-            <VisionMissionSection
+            <AboutSection
+              about={previewContent.about}
               vision={previewContent.visionMission.vision}
               mission={previewContent.visionMission.mission}
-              demoMode={false}
             />
             <ContactSection contact={previewContent.contact} demoMode={false} />
           </div>

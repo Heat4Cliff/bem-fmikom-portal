@@ -129,7 +129,7 @@ export function AnnouncementManager() {
                 setForm(blank);
                 setOpen(true);
               }}
-              className="min-h-11 rounded-md bg-primary px-5 text-sm font-semibold text-white"
+              className="min-h-11 rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground"
             >
               + Tambah pengumuman
             </button>
@@ -146,7 +146,7 @@ export function AnnouncementManager() {
           {message}
         </p>
       ) : null}
-      <section className="mt-5 rounded-xl border border-border/70 bg-white p-4 shadow-card">
+      <section className="mt-5 rounded-xl border border-border/70 bg-surface p-4 shadow-card">
         <label className="block max-w-xl text-sm font-semibold">
           Cari pengumuman
           <input
@@ -158,7 +158,7 @@ export function AnnouncementManager() {
         </label>
       </section>
       <section
-        className="mt-5 overflow-hidden rounded-xl border border-border/70 bg-white shadow-card"
+        className="mt-5 overflow-hidden rounded-xl border border-border/70 bg-surface shadow-card"
         aria-busy={busy}
       >
         <div className="hidden overflow-x-auto md:block">
@@ -260,7 +260,7 @@ export function AnnouncementManager() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="announcement-form-title"
-            className="max-h-[95dvh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white shadow-float"
+            className="max-h-[95dvh] w-full max-w-2xl overflow-y-auto rounded-xl bg-surface shadow-float"
           >
             <header className="sticky top-0 flex items-center justify-between border-b border-border bg-surface-muted p-4">
               <h2 id="announcement-form-title" className="font-heading text-lg font-bold text-primary">
@@ -270,7 +270,7 @@ export function AnnouncementManager() {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Tutup form"
-                className="size-10 rounded-md hover:bg-white"
+                className="size-10 rounded-md hover:bg-surface"
               >
                 ×
               </button>
@@ -353,7 +353,7 @@ export function AnnouncementManager() {
                 <button
                   type="submit"
                   disabled={busy || uploadPending}
-                  className="min-h-10 rounded-md bg-primary px-4 text-sm font-semibold text-white"
+                  className="min-h-10 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground"
                 >
                   Simpan
                 </button>

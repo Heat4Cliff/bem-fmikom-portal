@@ -85,6 +85,16 @@ export type ActivePublicRegistration = {
   public_status: "OPEN";
 };
 
+export type LogoShape = "original" | "rounded" | "circle";
+export type LogoFit = "contain" | "cover";
+export type SocialLinkSetting = {
+  platform: string;
+  label: string;
+  url: string;
+  order: number;
+  active: boolean;
+};
+
 // Opening/closing windows are time-dependent; always ask the API for the current UTC state.
 export const getActivePublicRegistrations = (limit = 6) =>
   publicList<ActivePublicRegistration>(`/public/registrations?status=OPEN&page=1&limit=${limit}`);
@@ -97,6 +107,19 @@ export type PublicLandingSettings = {
   hero_secondary_cta_label: string | null;
   hero_secondary_cta_url: string | null;
   hero_image_url: string | null;
+  navbar_logo_url: string | null;
+  brand_logo_shape: LogoShape;
+  brand_logo_fit: LogoFit;
+  footer_logo_url: string | null;
+  footer_use_brand_logo: boolean;
+  footer_logo_shape: LogoShape;
+  footer_logo_fit: LogoFit;
+  cabinet_logo_url: string | null;
+  cabinet_logo_shape: LogoShape;
+  cabinet_logo_fit: LogoFit;
+  cabinet_name: string | null;
+  cabinet_period: string | null;
+  cabinet_tagline: string | null;
   about_title: string;
   about_description: string;
   vision: string;
@@ -109,6 +132,7 @@ export type PublicLandingSettings = {
   youtube_url: string | null;
   tiktok_url: string | null;
   other_social_url: string | null;
+  social_links: SocialLinkSetting[];
 };
 
 export const getPublicLandingSettings = () => publicGet<PublicLandingSettings>("/public/settings");

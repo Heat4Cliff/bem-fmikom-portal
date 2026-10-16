@@ -103,7 +103,7 @@ export function AspirationAdminList() {
 
       <section
         aria-label="Filter aspirasi"
-        className="mb-4 grid gap-3 rounded-xl border border-border bg-white p-4 shadow-card sm:grid-cols-2 xl:grid-cols-[minmax(14rem,1.5fr)_repeat(4,minmax(9rem,1fr))]"
+        className="mb-4 grid gap-3 rounded-xl border border-border bg-surface p-4 shadow-card sm:grid-cols-2 xl:grid-cols-[minmax(14rem,1.5fr)_repeat(4,minmax(9rem,1fr))]"
       >
         <div className="relative sm:col-span-2 xl:col-span-1">
           <Label htmlFor="aspiration-search" className="sr-only">
@@ -183,19 +183,19 @@ export function AspirationAdminList() {
       {error ? (
         <p
           role="alert"
-          className="mb-4 rounded-md border border-danger/25 bg-danger/5 p-3 text-sm text-red-900"
+          className="mb-4 rounded-md border border-danger/25 bg-danger/5 p-3 text-sm text-danger-foreground"
         >
           {error}
         </p>
       ) : null}
       {!loading && !error && items.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-border bg-white px-6 py-14 text-center">
+        <div className="rounded-xl border border-dashed border-border bg-surface px-6 py-14 text-center">
           <p className="font-semibold text-primary">Belum ada aspirasi yang cocok</p>
           <p className="mt-1 text-sm text-muted">Ubah filter pencarian atau periksa kembali nanti.</p>
         </div>
       ) : null}
 
-      <div className="hidden overflow-hidden rounded-xl border border-border bg-white shadow-card md:block">
+      <div className="hidden overflow-hidden rounded-xl border border-border bg-surface shadow-card md:block">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[850px] border-collapse text-left text-sm">
             <thead className="bg-surface-muted text-[11px] uppercase tracking-wide text-muted">
@@ -258,7 +258,7 @@ export function AspirationAdminList() {
 
       <div className="space-y-3 md:hidden">
         {items.map((item) => (
-          <article key={item.id} className="rounded-xl border border-border bg-white p-4 shadow-card">
+          <article key={item.id} className="rounded-xl border border-border bg-surface p-4 shadow-card">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <StatusBadge status={item.status} />
               <time className="text-xs text-muted">{formatDate(item.submitted_at)}</time>
@@ -288,7 +288,7 @@ export function AspirationAdminList() {
 
       <nav
         aria-label="Halaman aspirasi"
-        className="mt-5 flex items-center justify-between gap-3 rounded-xl bg-white p-3 shadow-card"
+        className="mt-5 flex items-center justify-between gap-3 rounded-xl bg-surface p-3 shadow-card"
       >
         <span className="text-xs text-muted">
           Halaman {page}
@@ -320,13 +320,15 @@ export function AspirationAdminList() {
 }
 
 export function StatusBadge({ status }: { status: AspirationStatus }) {
-  const variant = status === "PENDING" ? "warning" : status === "READ" ? "info" : "neutral";
-  const color = status === "RESOLVED" ? "border-slate-300 bg-slate-100 text-slate-700" : undefined;
-  return (
-    <Badge variant={variant} className={color}>
-      {aspirationStatusLabel[status]}
-    </Badge>
-  );
+  const variant =
+    status === "PENDING"
+      ? "warning"
+      : status === "READ"
+        ? "info"
+        : status === "RESOLVED"
+          ? "success"
+          : "neutral";
+  return <Badge variant={variant}>{aspirationStatusLabel[status]}</Badge>;
 }
 
 export function AspirationDetail({ id }: { id: number }) {
@@ -374,7 +376,7 @@ export function AspirationDetail({ id }: { id: number }) {
   if (error && !item)
     return (
       <div className="mx-auto max-w-5xl p-4 md:p-8">
-        <p role="alert" className="rounded-md bg-danger/5 p-4 text-sm text-red-900">
+        <p role="alert" className="rounded-md bg-danger/5 p-4 text-sm text-danger-foreground">
           {error}
         </p>
         <Button asChild variant="outline" className="mt-4">
@@ -401,7 +403,7 @@ export function AspirationDetail({ id }: { id: number }) {
           <Link href="/admin/aspirasi">Kembali ke daftar</Link>
         </Button>
       </nav>
-      <header className="mb-5 rounded-2xl border border-border bg-gradient-to-br from-white to-primary/5 p-5 sm:p-7">
+      <header className="mb-5 rounded-2xl border border-border bg-gradient-to-br from-surface to-primary/5 p-5 sm:p-7">
         <div className="flex flex-wrap items-center gap-2">
           <StatusBadge status={item.status} />
           <Badge variant="neutral">{item.division_name}</Badge>
@@ -415,7 +417,7 @@ export function AspirationDetail({ id }: { id: number }) {
       {notice ? (
         <p
           role="status"
-          className="mb-4 rounded-md border border-success/25 bg-success/5 p-3 text-sm text-emerald-900"
+          className="mb-4 rounded-md border border-success/25 bg-success/5 p-3 text-sm text-success-foreground"
         >
           {notice}
         </p>
@@ -423,18 +425,18 @@ export function AspirationDetail({ id }: { id: number }) {
       {error ? (
         <p
           role="alert"
-          className="mb-4 rounded-md border border-danger/25 bg-danger/5 p-3 text-sm text-red-900"
+          className="mb-4 rounded-md border border-danger/25 bg-danger/5 p-3 text-sm text-danger-foreground"
         >
           {error}
         </p>
       ) : null}
       <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <div className="space-y-5">
-          <section className="rounded-xl border border-border bg-white p-5 shadow-card sm:p-7">
+          <section className="rounded-xl border border-border bg-surface p-5 shadow-card sm:p-7">
             <h2 className="font-heading text-lg font-bold text-primary">Uraian aspirasi</h2>
             <p className="mt-4 whitespace-pre-wrap break-words text-sm leading-7 text-body">{item.message}</p>
           </section>
-          <section className="rounded-xl border border-border bg-white p-5 shadow-card sm:p-7">
+          <section className="rounded-xl border border-border bg-surface p-5 shadow-card sm:p-7">
             <h2 className="font-heading text-lg font-bold text-primary">Linimasa status</h2>
             <ol className="mt-5 space-y-5 border-l-2 border-primary/15 pl-5">
               <TimelineItem title="Aspirasi dikirim" at={item.submitted_at} complete />
@@ -445,7 +447,7 @@ export function AspirationDetail({ id }: { id: number }) {
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-24">
-          <section className="rounded-xl border border-border bg-white p-5 shadow-card">
+          <section className="rounded-xl border border-border bg-surface p-5 shadow-card">
             <h2 className="font-heading text-lg font-bold text-primary">Informasi pengirim</h2>
             {item.is_anonymous ? (
               <p className="mt-3 rounded-lg bg-primary/5 p-3 text-sm font-medium text-primary">
@@ -470,7 +472,7 @@ export function AspirationDetail({ id }: { id: number }) {
             </dl>
           </section>
           {item.status !== "RESOLVED" ? (
-            <section className="rounded-xl border border-border bg-white p-5 shadow-card">
+            <section className="rounded-xl border border-border bg-surface p-5 shadow-card">
               <h2 className="font-heading text-lg font-bold text-primary">Tindakan status</h2>
               <p className="mt-2 text-xs leading-5 text-muted">
                 Status mengikuti alur Menunggu → Dibaca → Selesai.
@@ -501,7 +503,7 @@ function TimelineItem({ title, at, complete }: { title: string; at: string | nul
     <li className="relative">
       <span
         aria-hidden="true"
-        className={`absolute -left-[1.72rem] top-1 size-3 rounded-full border-2 ${complete ? "border-primary bg-primary" : "border-border bg-white"}`}
+        className={`absolute -left-[1.72rem] top-1 size-3 rounded-full border-2 ${complete ? "border-primary bg-primary" : "border-border bg-surface"}`}
       />
       <p className={`text-sm font-semibold ${complete ? "text-primary" : "text-muted"}`}>{title}</p>
       <p className="mt-1 text-xs text-muted">{at ? formatDate(at) : "Menunggu"}</p>

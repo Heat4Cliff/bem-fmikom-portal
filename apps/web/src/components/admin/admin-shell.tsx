@@ -27,6 +27,9 @@ import { Drawer } from "@/components/ui/overlays";
 import { Avatar, AvatarFallback, Badge } from "@/components/ui/primitives";
 import { cn } from "@/lib/utils/cn";
 import type { AdminNavigationContext, AdminRole, AuthUser } from "@/types/auth";
+import { ThemeSwitcher } from "@/components/ui/theme-switcher";
+import { BrandLogo } from "@/components/ui/brand-logo";
+import { useBranding } from "@/features/content/branding-context";
 
 const navGroups = [
   { title: "OVERVIEW", items: [{ label: "Dashboard", href: "/admin", icon: LayoutDashboard }] },
@@ -74,7 +77,7 @@ function visibleForRole(role: AdminRole, href: string) {
   return true;
 }
 
-function SidebarNavigation({ onNavigate, role }: { onNavigate?: () => void; role: AdminRole }) {
+function SidebarNavigation({ onNavigate, adminRole }: { onNavigate?: () => void; adminRole: AdminRole }) {
   const pathname = usePathname();
   return (
     <nav aria-label="Navigasi admin" className="space-y-5 px-3 py-5">
@@ -88,7 +91,7 @@ function SidebarNavigation({ onNavigate, role }: { onNavigate?: () => void; role
           </h2>
           <ul className="space-y-1">
             {group.items
-              .filter(({ href }) => visibleForRole(role, href))
+              .filter(({ href }) => visibleForRole(adminRole, href))
               .map(({ label, href, icon: Icon }) => {
                 const active = pathname === href || (href !== "/admin" && pathname.startsWith(`${href}/`));
                 return (
@@ -98,7 +101,7 @@ function SidebarNavigation({ onNavigate, role }: { onNavigate?: () => void; role
                       aria-current={active ? "page" : undefined}
                       href={href}
                       className={cn(
-                        "flex min-h-10 items-center gap-3 rounded-md px-3 text-[13px] font-medium text-body transition-colors hover:bg-white/80 hover:text-primary aria-[current=page]:bg-primary-container aria-[current=page]:font-semibold aria-[current=page]:text-white",
+                        "flex min-h-10 items-center gap-3 rounded-md px-3 text-[13px] font-medium text-body transition-colors hover:bg-sidebar-hover hover:text-primary aria-[current=page]:bg-sidebar-active aria-[current=page]:font-semibold aria-[current=page]:text-sidebar-active-foreground",
                       )}
                     >
                       <Icon aria-hidden="true" className="size-[17px] shrink-0" />
@@ -115,15 +118,14 @@ function SidebarNavigation({ onNavigate, role }: { onNavigate?: () => void; role
 }
 
 function SidebarBrand() {
+  const branding = useBranding();
   return (
     <Link
       href="/admin"
       className="flex h-[4.5rem] items-center gap-3 border-b border-border/60 px-5"
       aria-label="BEM FMIKOM Admin Portal"
     >
-      <span className="grid size-10 place-items-center rounded-lg bg-primary font-heading text-xs font-extrabold text-white">
-        BEM
-      </span>
+      <BrandLogo src={branding.logoUrl} shape={branding.logoShape} fit={branding.logoFit} alt="" />
       <span className="flex flex-col leading-tight">
         <strong className="font-heading text-sm font-bold text-primary">BEM FMIKOM</strong>
         <span className="text-[10px] font-medium tracking-wide text-muted">ADMIN PORTAL</span>
@@ -132,21 +134,24 @@ function SidebarBrand() {
   );
 }
 
-export function AdminSidebar({ onNavigate, role }: { onNavigate?: () => void; role: AdminRole }) {
+export function AdminSidebar({ onNavigate, adminRole }: { onNavigate?: () => void; adminRole: AdminRole }) {
   return (
-    <aside className="flex h-full w-full flex-col bg-surface-muted">
+    <aside className="flex h-full w-full flex-col bg-sidebar">
       <SidebarBrand />
       <div className="flex-1 overflow-y-auto">
-        <SidebarNavigation onNavigate={onNavigate} role={role} />
+        <SidebarNavigation onNavigate={onNavigate} adminRole={adminRole} />
       </div>
       <div className="border-t border-border/60 p-3">
         <Link
           href="/"
-          className="flex min-h-10 items-center gap-3 rounded-md px-3 text-xs font-semibold text-primary hover:bg-white"
+          className="flex min-h-10 items-center gap-3 rounded-md px-3 text-xs font-semibold text-primary hover:bg-surface"
         >
           <Network aria-hidden="true" className="size-4" />
           Lihat Web Publik
         </Link>
+      </div>
+      <div className="border-t border-border/60 px-4 py-3 lg:hidden">
+        <ThemeSwitcher className="w-full justify-between" />
       </div>
     </aside>
   );
@@ -161,6 +166,7 @@ export function AdminTopbar({
   user: AuthUser;
   onLogout: () => void;
 }) {
+  const branding = useBranding();
   const divisionName = user.division?.name.trim();
   const divisionScope = divisionName ? `Scope: ${divisionName}` : "Scope divisi tidak tersedia";
 
@@ -176,9 +182,13 @@ export function AdminTopbar({
         >
           <Menu aria-hidden="true" className="size-5" />
         </Button>
-        <div className="hidden size-9 place-items-center rounded-md bg-primary text-[10px] font-extrabold text-white sm:grid lg:hidden">
-          BEM
-        </div>
+        <BrandLogo
+          src={branding.logoUrl}
+          shape={branding.logoShape}
+          fit={branding.logoFit}
+          alt=""
+          className="hidden size-9 sm:inline-grid lg:hidden"
+        />
         <div className="min-w-0">
           <p className="truncate font-heading text-sm font-bold text-primary md:text-base">
             BEM FMIKOM UNUGHA
@@ -187,6 +197,7 @@ export function AdminTopbar({
         </div>
       </div>
       <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3">
+        <ThemeSwitcher className="hidden md:flex" />
         {user.role === "KEPALA_BIDANG" ? (
           <Badge
             aria-label={divisionScope}
@@ -251,7 +262,7 @@ export function AdminMobileDrawer({
       side="left"
       className="w-[min(86vw,18rem)] p-0"
     >
-      <AdminSidebar role={role} onNavigate={() => onOpenChange(false)} />
+      <AdminSidebar adminRole={role} onNavigate={() => onOpenChange(false)} />
     </Drawer>
   );
 }
@@ -273,7 +284,7 @@ export function AdminShell({
   return (
     <div className="min-h-dvh min-w-0 bg-background" data-admin-role={role}>
       <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-20 lg:block lg:w-[var(--sidebar-width)]">
-        <AdminSidebar role={role} />
+        <AdminSidebar adminRole={role} />
       </div>
       <div className="min-w-0 lg:pl-[var(--sidebar-width)]">
         <AdminTopbar onMenuClick={() => setOpen(true)} user={user} onLogout={onLogout} />

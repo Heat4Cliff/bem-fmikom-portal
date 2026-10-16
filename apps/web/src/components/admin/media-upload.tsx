@@ -13,7 +13,8 @@ export type MediaPurpose =
   | "ANNOUNCEMENT_IMAGE"
   | "GALLERY_PREVIEW"
   | "MEMBER_PHOTO"
-  | "LANDING_HERO";
+  | "LANDING_HERO"
+  | "LANDING_BRANDING";
 
 type UploadedMedia = { public_url: string };
 
@@ -253,7 +254,7 @@ export function MediaUpload({
             type="button"
             disabled={disabled || busy}
             onClick={() => inputRef.current?.click()}
-            className="min-h-11 rounded-md bg-primary px-4 text-sm font-semibold text-white"
+            className="min-h-11 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground"
           >
             Pilih gambar
           </button>

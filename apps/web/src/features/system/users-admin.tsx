@@ -210,7 +210,7 @@ export function UsersAdmin() {
         </p>
       )}
       {message && (
-        <p role="status" className="rounded-md bg-success/10 p-3 text-sm text-emerald-900">
+        <p role="status" className="rounded-md bg-success/10 p-3 text-sm text-success-foreground">
           {message}
         </p>
       )}

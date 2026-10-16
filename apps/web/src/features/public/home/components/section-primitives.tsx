@@ -33,7 +33,7 @@ export function SectionHeading({
 
 export function EmptyPreview({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div className="rounded-xl border border-dashed border-border bg-white/70 px-5 py-7 text-center sm:px-8">
+    <div className="rounded-xl border border-dashed border-border bg-surface/70 px-5 py-7 text-center sm:px-8">
       <p className="font-heading text-base font-semibold text-primary">{title}</p>
       <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-muted">{children}</p>
     </div>
@@ -42,7 +42,7 @@ export function EmptyPreview({ title, children }: { title: string; children: Rea
 
 export function DemoDataNote() {
   return (
-    <p className="mb-4 inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-950">
+    <p className="mb-4 inline-flex rounded-full bg-warning/15 px-3 py-1 text-xs font-semibold text-warning-foreground">
       Contoh visual · bukan data resmi
     </p>
   );

@@ -20,7 +20,7 @@ export function RegistrationSection({
           description="Informasi pendaftaran yang sedang dibuka akan ditampilkan di sini."
         />
         {demoMode ? (
-          <p className="mb-4 text-xs font-semibold text-amber-900">
+          <p className="mb-4 text-xs font-semibold text-warning-foreground">
             Contoh visual · status dan jadwal bukan informasi resmi
           </p>
         ) : null}
@@ -29,10 +29,10 @@ export function RegistrationSection({
             {registrations.map((registration) => (
               <article
                 key={registration.id}
-                className="grid h-full w-full min-w-0 gap-5 rounded-2xl border border-primary/10 bg-white p-5 shadow-card sm:p-7 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+                className="grid h-full w-full min-w-0 gap-5 rounded-2xl border border-primary/10 bg-surface p-5 shadow-card sm:p-7 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
               >
                 <div>
-                  <span className="inline-flex rounded-full bg-amber-100 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-950">
+                  <span className="inline-flex rounded-full bg-warning/15 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-warning-foreground">
                     {registration.status}
                   </span>
                   <h3 className="mt-3 font-heading text-xl font-bold leading-snug text-primary sm:text-2xl">

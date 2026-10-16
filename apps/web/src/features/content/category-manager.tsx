@@ -83,7 +83,7 @@ export function CategoryManager() {
       {canManage ? (
         <form
           onSubmit={submit}
-          className="mt-6 grid gap-3 rounded-xl border border-border/70 bg-white p-5 shadow-card md:grid-cols-2"
+          className="mt-6 grid gap-3 rounded-xl border border-border/70 bg-surface p-5 shadow-card md:grid-cols-2"
         >
           <h2 className="md:col-span-2 font-heading text-lg font-bold text-primary">
             {editing ? "Edit kategori" : "Tambah kategori"}
@@ -121,7 +121,7 @@ export function CategoryManager() {
             <button
               type="submit"
               disabled={busy}
-              className="min-h-10 rounded-md bg-primary px-4 text-sm font-semibold text-white"
+              className="min-h-10 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground"
             >
               {editing ? "Simpan perubahan" : "Simpan kategori"}
             </button>
@@ -140,7 +140,7 @@ export function CategoryManager() {
           </div>
         </form>
       ) : null}
-      <section className="mt-5 rounded-xl border border-border/70 bg-white shadow-card">
+      <section className="mt-5 rounded-xl border border-border/70 bg-surface shadow-card">
         <h2 className="border-b border-border/70 p-4 font-semibold text-primary">Daftar kategori</h2>
         {busy ? (
           <p className="p-5 text-sm text-muted">Memuat kategori...</p>

@@ -1,4 +1,4 @@
-import { AboutSection, VisionMissionSection } from "./components/about-section";
+import { AboutSection } from "./components/about-section";
 import { AnnouncementSection } from "./components/announcement-section";
 import { AspirationSection, ContactSection } from "./components/contact-sections";
 import { GallerySection } from "./components/gallery-section";
@@ -15,13 +15,10 @@ export function PublicHome({ content }: { content: LandingPageContent }) {
       <HeroSection hero={content.hero} demoMode={content.demoMode} />
       <DemoStatistics items={content.statistics} />
       <FadeContent>
-        <AboutSection about={content.about} />
-      </FadeContent>
-      <FadeContent>
-        <VisionMissionSection
+        <AboutSection
+          about={content.about}
           vision={content.visionMission.vision}
           mission={content.visionMission.mission}
-          demoMode={content.demoMode}
         />
       </FadeContent>
       <FadeContent>

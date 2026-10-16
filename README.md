@@ -1,6 +1,6 @@
 # BEM FMIKOM UNUGHA Portal
 
-Monorepo for the BEM FMIKOM UNUGHA portal. Phases 0–9 are implemented. Phase 9 adds landing settings, user management, Activity Log, and role/division-scoped operational dashboard metrics; visitor/pageview analytics are deferred post-MVP. Verification status and browser-review limitations are recorded in `docs/codex/PHASE_9_REPORT.md`.
+Monorepo for the BEM FMIKOM UNUGHA public portal and role-based admin dashboard. The campus deployment handoff is documented in `docs/codex/V1_0_1_CAMPUS_HANDOFF.md`; this repository does not deploy production infrastructure.
 
 ## Source of truth
 
@@ -27,7 +27,7 @@ design_reference/          Read-only Stitch screenshots and references
 ## Prerequisites
 
 - Node.js 24.19.0, pnpm 11.25.0
-- Go 1.26.1
+- Go toolchain declared in `apps/api/go.mod`
 - Docker Desktop with Docker Compose
 - MariaDB 11.4 for local development and database integration tests
 
@@ -41,7 +41,7 @@ Copy the template and replace its local placeholders. The example credentials ar
 Copy-Item .env.example .env
 ```
 
-The public landing page reads no content API yet. Dynamic teaser sections show an empty state by default in production. For local visual review only, set `BEM_DEMO_CONTENT=true` in the web process; all fixture content and sample statistics are visibly marked as examples. Do not enable this flag in a production runtime. The brand currently uses a text mark because no approved logo asset or public contact/social details were found in the source package. Set `NEXT_PUBLIC_SITE_URL` to the approved public origin before relying on absolute canonical, sitemap, or robots sitemap URLs.
+The public landing page reads `/api/v1/public/settings` and public content endpoints. Administrators can configure the Hero image, organization/cabinet branding, social links, and landing content; visitors can choose among the supported themes. Missing content uses explicit empty/fallback states. For local visual review only, set `BEM_DEMO_CONTENT=true`; do not enable this flag in production. Set `NEXT_PUBLIC_SITE_URL` to the approved public origin before relying on absolute canonical, sitemap, or robots sitemap URLs.
 
 The root `.env` supplies Docker Compose and Go commands. Go commands also load `apps/api/.env` if present. Existing process environment variables take precedence. Never commit local `.env` files or production credentials.
 
@@ -179,6 +179,13 @@ Public announcement archive visibility for scheduled/expired entries still needs
 - `/admin/users` provides SUPER_ADMIN-only user management without hard delete, guarded status changes, and password reset. The API validates active division assignment for KEPALA_BIDANG and revokes refresh sessions on deactivation/reset.
 - `/admin/activity-logs` is SUPER_ADMIN-only and read-only, with list/detail, filters, recursive sensitive-key redaction, and no IP/User-Agent output.
 - Reversible migration `00007_system_management.sql` adds landing content storage. `/admin` loads scoped operational aggregates from `/api/v1/admin/dashboard`; visitor/pageview collection is deferred post-MVP and no tracking data is collected. See `docs/codex/PHASE_9_REPORT.md`.
+
+## Campus handoff v1.0.1
+
+- The public and admin UI share configurable branding and a multi-theme presentation. Public organization assets, cabinet identity, social links, and Hero documentation media are managed through landing settings.
+- The dedicated `/tentang` page shows a centered cabinet identity followed by organization details, vision, and mission.
+- The current source includes migrations 00012–00013 for brand identity and presentation controls. Deploy the frontend and backend independently using their included README and `.env.example` files, alongside the release notes.
+- The campus deployment operator provisions production database, DNS/TLS, durable storage, secrets, backups, monitoring, and post-deployment UAT. No production deployment or credential is included in the handoff.
 
 ## Production security notes (Phase 10)
 

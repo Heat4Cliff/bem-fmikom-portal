@@ -30,7 +30,7 @@ export default function AspirationPage() {
           </div>
 
           <aside className="space-y-4 lg:sticky lg:top-24">
-            <section className="rounded-2xl border border-border bg-white p-5 shadow-card sm:p-6">
+            <section className="rounded-2xl border border-border bg-surface p-5 shadow-card sm:p-6">
               <span className="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary">
                 <LockKeyhole aria-hidden="true" className="size-5" />
               </span>
@@ -41,7 +41,7 @@ export default function AspirationPage() {
               </p>
             </section>
 
-            <section className="rounded-2xl border border-border bg-white p-5 shadow-card sm:p-6">
+            <section className="rounded-2xl border border-border bg-surface p-5 shadow-card sm:p-6">
               <h2 className="font-heading text-lg font-bold text-primary">Alur aspirasi</h2>
               <ol className="mt-5 space-y-4">
                 {[

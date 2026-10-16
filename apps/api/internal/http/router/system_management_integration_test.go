@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-func runSystemManagementIntegration(t *testing.T, ctx context.Context, db *sql.DB, engine http.Handler, adminToken, bphToken, kepalaToken string, divisionA, divisionB int64) {
+func runSystemManagementIntegration(t *testing.T, ctx context.Context, db *sql.DB, engine http.Handler, adminToken, bphToken, kepalaToken string, divisionA, divisionB int64, media contentMediaFixtures) {
 	t.Helper()
 	public := getWithToken(engine, "/api/v1/public/settings", "")
 	if public.Code != http.StatusOK || !strings.Contains(public.Body.String(), `"hero_headline"`) || strings.Contains(public.Body.String(), `"updated_by"`) {
@@ -32,11 +32,20 @@ func runSystemManagementIntegration(t *testing.T, ctx context.Context, db *sql.D
 	}
 	settings := map[string]any{
 		"hero_headline": "Headline Uji Phase 9", "hero_subheadline": "Subheadline yang diperbarui untuk integrasi.",
-		"hero_primary_cta_label": "Lihat berita", "hero_primary_cta_url": "/berita", "hero_secondary_cta_label": nil, "hero_secondary_cta_url": nil,
-		"hero_image_url": "https://example.test/hero.jpg", "about_title": "Tentang Uji", "about_description": "Deskripsi konten biasa.",
+		"hero_primary_cta_label": "Lihat berita", "hero_primary_cta_url": "#berita", "hero_secondary_cta_label": nil, "hero_secondary_cta_url": nil,
+		"hero_image_url": media.LandingHero, "navbar_logo_url": media.LandingBranding, "footer_logo_url": media.LandingBranding,
+		"brand_logo_shape": "circle", "brand_logo_fit": "cover", "footer_use_brand_logo": false,
+		"footer_logo_shape": "rounded", "footer_logo_fit": "contain", "cabinet_logo_shape": "circle", "cabinet_logo_fit": "contain",
+		"cabinet_logo_url": media.LandingBranding, "cabinet_name": "Kabinet Uji", "cabinet_period": "2026", "cabinet_tagline": "Tagline uji",
+		"about_title": "Tentang Uji", "about_description": "Deskripsi konten biasa.",
 		"vision": "Visi uji", "missions": []string{"Misi satu", "Misi dua"}, "contact_email": "bem@example.test", "contact_phone": nil,
-		"contact_address": nil, "location_url": nil, "instagram_url": "https://instagram.com/example", "youtube_url": nil,
+		"contact_address": nil, "location_url": nil, "instagram_url": nil, "youtube_url": nil,
 		"tiktok_url": nil, "other_social_url": nil,
+		"social_links": []map[string]any{
+			{"platform": "instagram", "label": "Instagram", "url": "https://instagram.com/example", "order": 1, "active": true},
+			{"platform": "tiktok", "label": "TikTok", "url": "https://tiktok.com/@example", "order": 2, "active": true},
+			{"platform": "future-platform", "label": "Kanal mendatang", "url": "https://example.test/channel", "order": 3, "active": false},
+		},
 	}
 	encoded, _ := json.Marshal(settings)
 	if got := contentRequest(engine, http.MethodPatch, "/api/v1/admin/settings", string(encoded), bphToken); got.Code != http.StatusOK || !strings.Contains(got.Body.String(), "Perubahan Landing Page berhasil disimpan.") {
@@ -44,6 +53,29 @@ func runSystemManagementIntegration(t *testing.T, ctx context.Context, db *sql.D
 	}
 	if got := getWithToken(engine, "/api/v1/public/settings", ""); got.Code != http.StatusOK || !strings.Contains(got.Body.String(), "Headline Uji Phase 9") {
 		t.Fatalf("public settings did not reflect saved value: %d %s", got.Code, got.Body.String())
+	}
+	publicSettings := getWithToken(engine, "/api/v1/public/settings", "").Body.String()
+	for _, expected := range []string{`"hero_image_url":"/api/v1/public/media/`, `"navbar_logo_url":"/api/v1/public/media/`, `"footer_logo_url":"/api/v1/public/media/`, `"cabinet_logo_url":"/api/v1/public/media/`, `"cabinet_name":"Kabinet Uji"`, `"hero_primary_cta_url":"#berita"`, `"brand_logo_shape":"circle"`, `"brand_logo_fit":"cover"`, `"footer_use_brand_logo":false`, `"footer_logo_shape":"rounded"`, `"social_links":[`} {
+		if !strings.Contains(publicSettings, expected) {
+			t.Fatalf("public settings missing expected normalized image/reference %s", expected)
+		}
+	}
+	if !strings.Contains(publicSettings, `"platform":"future-platform"`) || !strings.Contains(publicSettings, `"url":"https://tiktok.com/@example"`) {
+		t.Fatalf("dynamic social settings did not persist: %s", publicSettings)
+	}
+	updatedSettings := map[string]any{}
+	for key, field := range settings {
+		updatedSettings[key] = field
+	}
+	updatedSettings["navbar_logo_url"] = media.LandingBrandingReplacement
+	updatedSettings["brand_logo_shape"] = "rounded"
+	updatedSettingsBody, _ := json.Marshal(updatedSettings)
+	if got := contentRequest(engine, http.MethodPatch, "/api/v1/admin/settings", string(updatedSettingsBody), adminToken); got.Code != http.StatusOK {
+		t.Fatalf("branding logo replacement failed: %d %s", got.Code, got.Body.String())
+	}
+	updatedPublicSettings := getWithToken(engine, "/api/v1/public/settings", "").Body.String()
+	if !strings.Contains(updatedPublicSettings, strings.TrimPrefix(media.LandingBrandingReplacement, "/api/v1/public/media/")) || !strings.Contains(updatedPublicSettings, `"brand_logo_shape":"rounded"`) {
+		t.Fatalf("replacement global logo did not persist: %s", updatedPublicSettings)
 	}
 	unsafe := map[string]any{}
 	for k, v := range settings {
@@ -55,6 +87,18 @@ func runSystemManagementIntegration(t *testing.T, ctx context.Context, db *sql.D
 		t.Fatalf("unsafe landing URL accepted: %d %s", got.Code, got.Body.String())
 	}
 	unsafe["hero_image_url"] = "https://example.test/hero.jpg"
+	unsafe["brand_logo_shape"] = "oval"
+	unsafeBody, _ = json.Marshal(unsafe)
+	if got := contentRequest(engine, http.MethodPatch, "/api/v1/admin/settings", string(unsafeBody), adminToken); got.Code != http.StatusUnprocessableEntity {
+		t.Fatalf("unsupported brand logo shape accepted: %d %s", got.Code, got.Body.String())
+	}
+	unsafe["brand_logo_shape"] = "circle"
+	unsafe["social_links"] = []map[string]any{{"platform": "instagram", "label": "Instagram", "url": "http://instagram.com/example", "order": 0, "active": true}}
+	unsafeBody, _ = json.Marshal(unsafe)
+	if got := contentRequest(engine, http.MethodPatch, "/api/v1/admin/settings", string(unsafeBody), adminToken); got.Code != http.StatusUnprocessableEntity {
+		t.Fatalf("insecure social URL accepted: %d %s", got.Code, got.Body.String())
+	}
+	unsafe["social_links"] = settings["social_links"]
 	unsafe["missions"] = []string{""}
 	unsafeBody, _ = json.Marshal(unsafe)
 	if got := contentRequest(engine, http.MethodPatch, "/api/v1/admin/settings", string(unsafeBody), adminToken); got.Code != http.StatusUnprocessableEntity {
@@ -68,7 +112,7 @@ func runSystemManagementIntegration(t *testing.T, ctx context.Context, db *sql.D
 		t.Fatalf("landing settings is not a singleton: count=%d err=%v", singleton, err)
 	}
 	var changedFields string
-	if err := db.QueryRowContext(ctx, `SELECT CAST(details_json AS CHAR) FROM activity_logs WHERE entity_type='LANDING_PAGE_SETTINGS' ORDER BY id DESC LIMIT 1`).Scan(&changedFields); err != nil || strings.Contains(changedFields, "Subheadline yang diperbarui") || !strings.Contains(changedFields, "hero_headline") {
+	if err := db.QueryRowContext(ctx, `SELECT CAST(details_json AS CHAR) FROM activity_logs WHERE entity_type='LANDING_PAGE_SETTINGS' AND CAST(details_json AS CHAR) LIKE '%hero_headline%' ORDER BY id DESC LIMIT 1`).Scan(&changedFields); err != nil || strings.Contains(changedFields, "Subheadline yang diperbarui") || !strings.Contains(changedFields, "hero_headline") {
 		t.Fatalf("settings audit details contain payload or omit changed fields: %s err=%v", changedFields, err)
 	}
 

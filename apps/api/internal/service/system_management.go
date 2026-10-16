@@ -27,26 +27,48 @@ var (
 )
 
 type LandingSettings struct {
-	HeroHeadline          string     `json:"hero_headline"`
-	HeroSubheadline       string     `json:"hero_subheadline"`
-	HeroPrimaryCTALabel   string     `json:"hero_primary_cta_label"`
-	HeroPrimaryCTAURL     string     `json:"hero_primary_cta_url"`
-	HeroSecondaryCTALabel *string    `json:"hero_secondary_cta_label"`
-	HeroSecondaryCTAURL   *string    `json:"hero_secondary_cta_url"`
-	HeroImageURL          *string    `json:"hero_image_url"`
-	AboutTitle            string     `json:"about_title"`
-	AboutDescription      string     `json:"about_description"`
-	Vision                string     `json:"vision"`
-	Missions              []string   `json:"missions"`
-	ContactEmail          *string    `json:"contact_email"`
-	ContactPhone          *string    `json:"contact_phone"`
-	ContactAddress        *string    `json:"contact_address"`
-	LocationURL           *string    `json:"location_url"`
-	InstagramURL          *string    `json:"instagram_url"`
-	YouTubeURL            *string    `json:"youtube_url"`
-	TikTokURL             *string    `json:"tiktok_url"`
-	OtherSocialURL        *string    `json:"other_social_url"`
-	UpdatedAt             *time.Time `json:"updated_at,omitempty"`
+	HeroHeadline          string       `json:"hero_headline"`
+	HeroSubheadline       string       `json:"hero_subheadline"`
+	HeroPrimaryCTALabel   string       `json:"hero_primary_cta_label"`
+	HeroPrimaryCTAURL     string       `json:"hero_primary_cta_url"`
+	HeroSecondaryCTALabel *string      `json:"hero_secondary_cta_label"`
+	HeroSecondaryCTAURL   *string      `json:"hero_secondary_cta_url"`
+	HeroImageURL          *string      `json:"hero_image_url"`
+	NavbarLogoURL         *string      `json:"navbar_logo_url"`
+	FooterLogoURL         *string      `json:"footer_logo_url"`
+	CabinetLogoURL        *string      `json:"cabinet_logo_url"`
+	CabinetName           *string      `json:"cabinet_name"`
+	CabinetPeriod         *string      `json:"cabinet_period"`
+	CabinetTagline        *string      `json:"cabinet_tagline"`
+	BrandLogoShape        string       `json:"brand_logo_shape"`
+	BrandLogoFit          string       `json:"brand_logo_fit"`
+	FooterUseBrandLogo    *bool        `json:"footer_use_brand_logo"`
+	FooterLogoShape       string       `json:"footer_logo_shape"`
+	FooterLogoFit         string       `json:"footer_logo_fit"`
+	CabinetLogoShape      string       `json:"cabinet_logo_shape"`
+	CabinetLogoFit        string       `json:"cabinet_logo_fit"`
+	AboutTitle            string       `json:"about_title"`
+	AboutDescription      string       `json:"about_description"`
+	Vision                string       `json:"vision"`
+	Missions              []string     `json:"missions"`
+	ContactEmail          *string      `json:"contact_email"`
+	ContactPhone          *string      `json:"contact_phone"`
+	ContactAddress        *string      `json:"contact_address"`
+	LocationURL           *string      `json:"location_url"`
+	InstagramURL          *string      `json:"instagram_url"`
+	YouTubeURL            *string      `json:"youtube_url"`
+	TikTokURL             *string      `json:"tiktok_url"`
+	OtherSocialURL        *string      `json:"other_social_url"`
+	SocialLinks           []SocialLink `json:"social_links"`
+	UpdatedAt             *time.Time   `json:"updated_at,omitempty"`
+}
+
+type SocialLink struct {
+	Platform string `json:"platform"`
+	Label    string `json:"label"`
+	URL      string `json:"url"`
+	Order    int    `json:"order"`
+	Active   bool   `json:"active"`
 }
 
 type UserRecord struct {
@@ -112,10 +134,10 @@ func NewSystemManagementService(db *sql.DB, bcryptCost int) *SystemManagementSer
 
 func (s *SystemManagementService) GetLandingSettings(ctx context.Context) (LandingSettings, error) {
 	var value LandingSettings
-	var missions []byte
+	var missions, socialLinks []byte
 	var updated sql.NullTime
-	err := s.db.QueryRowContext(ctx, `SELECT hero_headline,hero_subheadline,hero_primary_cta_label,hero_primary_cta_url,hero_secondary_cta_label,hero_secondary_cta_url,hero_image_url,about_title,about_description,vision,missions_json,contact_email,contact_phone,contact_address,location_url,instagram_url,youtube_url,tiktok_url,other_social_url,updated_at FROM landing_settings WHERE id=1`).Scan(
-		&value.HeroHeadline, &value.HeroSubheadline, &value.HeroPrimaryCTALabel, &value.HeroPrimaryCTAURL, &value.HeroSecondaryCTALabel, &value.HeroSecondaryCTAURL, &value.HeroImageURL, &value.AboutTitle, &value.AboutDescription, &value.Vision, &missions, &value.ContactEmail, &value.ContactPhone, &value.ContactAddress, &value.LocationURL, &value.InstagramURL, &value.YouTubeURL, &value.TikTokURL, &value.OtherSocialURL, &updated)
+	err := s.db.QueryRowContext(ctx, `SELECT hero_headline,hero_subheadline,hero_primary_cta_label,hero_primary_cta_url,hero_secondary_cta_label,hero_secondary_cta_url,hero_image_url,navbar_logo_url,footer_logo_url,cabinet_logo_url,cabinet_name,cabinet_period,cabinet_tagline,brand_logo_shape,brand_logo_fit,footer_use_brand_logo,footer_logo_shape,footer_logo_fit,cabinet_logo_shape,cabinet_logo_fit,about_title,about_description,vision,missions_json,contact_email,contact_phone,contact_address,location_url,instagram_url,youtube_url,tiktok_url,other_social_url,social_links_json,updated_at FROM landing_settings WHERE id=1`).Scan(
+		&value.HeroHeadline, &value.HeroSubheadline, &value.HeroPrimaryCTALabel, &value.HeroPrimaryCTAURL, &value.HeroSecondaryCTALabel, &value.HeroSecondaryCTAURL, &value.HeroImageURL, &value.NavbarLogoURL, &value.FooterLogoURL, &value.CabinetLogoURL, &value.CabinetName, &value.CabinetPeriod, &value.CabinetTagline, &value.BrandLogoShape, &value.BrandLogoFit, &value.FooterUseBrandLogo, &value.FooterLogoShape, &value.FooterLogoFit, &value.CabinetLogoShape, &value.CabinetLogoFit, &value.AboutTitle, &value.AboutDescription, &value.Vision, &missions, &value.ContactEmail, &value.ContactPhone, &value.ContactAddress, &value.LocationURL, &value.InstagramURL, &value.YouTubeURL, &value.TikTokURL, &value.OtherSocialURL, &socialLinks, &updated)
 	if errors.Is(err, sql.ErrNoRows) {
 		return LandingSettings{}, ErrSystemNotFound
 	}
@@ -128,6 +150,32 @@ func (s *SystemManagementService) GetLandingSettings(ctx context.Context) (Landi
 	if value.Missions == nil {
 		value.Missions = []string{}
 	}
+	if len(socialLinks) > 0 {
+		if err := json.Unmarshal(socialLinks, &value.SocialLinks); err != nil {
+			return LandingSettings{}, fmt.Errorf("decode landing social links")
+		}
+	}
+	if value.SocialLinks == nil {
+		value.SocialLinks = legacySocialLinks(value)
+	}
+	if value.BrandLogoShape == "" {
+		value.BrandLogoShape = "original"
+	}
+	if value.BrandLogoFit == "" {
+		value.BrandLogoFit = "contain"
+	}
+	if value.FooterLogoShape == "" {
+		value.FooterLogoShape = "original"
+	}
+	if value.FooterLogoFit == "" {
+		value.FooterLogoFit = "contain"
+	}
+	if value.CabinetLogoShape == "" {
+		value.CabinetLogoShape = "original"
+	}
+	if value.CabinetLogoFit == "" {
+		value.CabinetLogoFit = "contain"
+	}
 	if updated.Valid {
 		t := updated.Time.UTC()
 		value.UpdatedAt = &t
@@ -139,6 +187,47 @@ func (s *SystemManagementService) SaveLandingSettings(ctx context.Context, actor
 	if !RoleAllowed(actor.Role, domain.RoleSuperAdmin, domain.RoleBPH) {
 		return LandingSettings{}, ErrSystemForbidden
 	}
+	mediaService := &ContentService{db: s.db}
+	var err error
+	for _, image := range []struct {
+		value   **string
+		field   string
+		purpose MediaPurpose
+	}{{&in.HeroImageURL, "hero_image_url", MediaLandingHero}, {&in.NavbarLogoURL, "navbar_logo_url", MediaLandingBranding}, {&in.FooterLogoURL, "footer_logo_url", MediaLandingBranding}, {&in.CabinetLogoURL, "cabinet_logo_url", MediaLandingBranding}} {
+		*image.value, err = mediaService.normalizeImageReference(ctx, *image.value, image.purpose, image.field)
+		if err != nil {
+			return LandingSettings{}, ErrSystemInvalid
+		}
+	}
+	if in.FooterUseBrandLogo == nil {
+		useGlobal := true
+		in.FooterUseBrandLogo = &useGlobal
+	}
+	if in.BrandLogoShape == "" {
+		in.BrandLogoShape = "original"
+	}
+	if in.BrandLogoFit == "" {
+		in.BrandLogoFit = "contain"
+	}
+	if in.FooterLogoShape == "" {
+		in.FooterLogoShape = "original"
+	}
+	if in.FooterLogoFit == "" {
+		in.FooterLogoFit = "contain"
+	}
+	if in.CabinetLogoShape == "" {
+		in.CabinetLogoShape = "original"
+	}
+	if in.CabinetLogoFit == "" {
+		in.CabinetLogoFit = "contain"
+	}
+	if in.SocialLinks == nil {
+		in.SocialLinks = legacySocialLinks(in)
+	}
+	if err := validateSocialLinks(in.SocialLinks); err != nil {
+		return LandingSettings{}, err
+	}
+	syncLegacySocialURLs(&in)
 	if err := validateLandingSettings(in); err != nil {
 		return LandingSettings{}, err
 	}
@@ -147,12 +236,13 @@ func (s *SystemManagementService) SaveLandingSettings(ctx context.Context, actor
 		return LandingSettings{}, err
 	}
 	missions, _ := json.Marshal(in.Missions)
+	socialLinks, _ := json.Marshal(in.SocialLinks)
 	tx, err := s.db.BeginTx(ctx, nil)
 	if err != nil {
 		return LandingSettings{}, fmt.Errorf("begin settings update")
 	}
 	defer tx.Rollback()
-	_, err = tx.ExecContext(ctx, `UPDATE landing_settings SET hero_headline=?,hero_subheadline=?,hero_primary_cta_label=?,hero_primary_cta_url=?,hero_secondary_cta_label=?,hero_secondary_cta_url=?,hero_image_url=?,about_title=?,about_description=?,vision=?,missions_json=?,contact_email=?,contact_phone=?,contact_address=?,location_url=?,instagram_url=?,youtube_url=?,tiktok_url=?,other_social_url=?,updated_by=? WHERE id=1`, in.HeroHeadline, in.HeroSubheadline, in.HeroPrimaryCTALabel, in.HeroPrimaryCTAURL, in.HeroSecondaryCTALabel, in.HeroSecondaryCTAURL, in.HeroImageURL, in.AboutTitle, in.AboutDescription, in.Vision, missions, in.ContactEmail, in.ContactPhone, in.ContactAddress, in.LocationURL, in.InstagramURL, in.YouTubeURL, in.TikTokURL, in.OtherSocialURL, actor.ID)
+	_, err = tx.ExecContext(ctx, `UPDATE landing_settings SET hero_headline=?,hero_subheadline=?,hero_primary_cta_label=?,hero_primary_cta_url=?,hero_secondary_cta_label=?,hero_secondary_cta_url=?,hero_image_url=?,navbar_logo_url=?,footer_logo_url=?,cabinet_logo_url=?,cabinet_name=?,cabinet_period=?,cabinet_tagline=?,brand_logo_shape=?,brand_logo_fit=?,footer_use_brand_logo=?,footer_logo_shape=?,footer_logo_fit=?,cabinet_logo_shape=?,cabinet_logo_fit=?,about_title=?,about_description=?,vision=?,missions_json=?,contact_email=?,contact_phone=?,contact_address=?,location_url=?,instagram_url=?,youtube_url=?,tiktok_url=?,other_social_url=?,social_links_json=?,updated_by=? WHERE id=1`, in.HeroHeadline, in.HeroSubheadline, in.HeroPrimaryCTALabel, in.HeroPrimaryCTAURL, in.HeroSecondaryCTALabel, in.HeroSecondaryCTAURL, in.HeroImageURL, in.NavbarLogoURL, in.FooterLogoURL, in.CabinetLogoURL, in.CabinetName, in.CabinetPeriod, in.CabinetTagline, in.BrandLogoShape, in.BrandLogoFit, *in.FooterUseBrandLogo, in.FooterLogoShape, in.FooterLogoFit, in.CabinetLogoShape, in.CabinetLogoFit, in.AboutTitle, in.AboutDescription, in.Vision, missions, in.ContactEmail, in.ContactPhone, in.ContactAddress, in.LocationURL, in.InstagramURL, in.YouTubeURL, in.TikTokURL, in.OtherSocialURL, socialLinks, actor.ID)
 	if err != nil {
 		return LandingSettings{}, fmt.Errorf("update landing settings")
 	}
@@ -174,6 +264,14 @@ func validateLandingSettings(v LandingSettings) error {
 	if !bounded(v.HeroHeadline, 180) || !bounded(v.HeroSubheadline, 500) || !bounded(v.HeroPrimaryCTALabel, 80) || !validActionURL(v.HeroPrimaryCTAURL) || !bounded(v.AboutTitle, 180) || utf8.RuneCountInString(v.AboutDescription) > 5000 || utf8.RuneCountInString(v.Vision) > 3000 || v.Missions == nil || len(v.Missions) > 10 {
 		return ErrSystemInvalid
 	}
+	if !validLogoShape(v.BrandLogoShape) || !validLogoShape(v.FooterLogoShape) || !validLogoShape(v.CabinetLogoShape) || !validLogoFit(v.BrandLogoFit) || !validLogoFit(v.FooterLogoFit) || !validLogoFit(v.CabinetLogoFit) {
+		return ErrSystemInvalid
+	}
+	for _, field := range []*string{v.CabinetName, v.CabinetPeriod, v.CabinetTagline} {
+		if field != nil && (strings.TrimSpace(*field) == "" || utf8.RuneCountInString(*field) > 180) {
+			return ErrSystemInvalid
+		}
+	}
 	if (v.HeroSecondaryCTALabel == nil) != (v.HeroSecondaryCTAURL == nil) {
 		return ErrSystemInvalid
 	}
@@ -185,7 +283,7 @@ func validateLandingSettings(v LandingSettings) error {
 			return ErrSystemInvalid
 		}
 	}
-	if !validExternalURL(v.HeroImageURL) || !validExternalURL(v.LocationURL) || !validExternalURL(v.InstagramURL) || !validExternalURL(v.YouTubeURL) || !validExternalURL(v.TikTokURL) || !validExternalURL(v.OtherSocialURL) {
+	if !validExternalURL(v.LocationURL) || !validExternalURL(v.InstagramURL) || !validExternalURL(v.YouTubeURL) || !validExternalURL(v.TikTokURL) || !validExternalURL(v.OtherSocialURL) {
 		return ErrSystemInvalid
 	}
 	if v.ContactEmail != nil {
@@ -203,13 +301,92 @@ func validateLandingSettings(v LandingSettings) error {
 	}
 	return nil
 }
+
+func validLogoShape(shape string) bool {
+	return shape == "original" || shape == "rounded" || shape == "circle"
+}
+
+func validLogoFit(fit string) bool {
+	return fit == "contain" || fit == "cover"
+}
+
+func validateSocialLinks(links []SocialLink) error {
+	if len(links) > 20 {
+		return ErrSystemInvalid
+	}
+	seen := make(map[string]struct{}, len(links))
+	for _, link := range links {
+		platform := strings.ToLower(strings.TrimSpace(link.Platform))
+		if platform == "" || len(platform) > 40 || strings.Trim(platform, "abcdefghijklmnopqrstuvwxyz0123456789-") != "" {
+			return ErrSystemInvalid
+		}
+		if _, exists := seen[platform]; exists {
+			return ErrSystemInvalid
+		}
+		seen[platform] = struct{}{}
+		if strings.TrimSpace(link.Label) == "" || utf8.RuneCountInString(link.Label) > 80 || link.Order < 0 || link.Order > 1000 {
+			return ErrSystemInvalid
+		}
+		if link.Active && strings.TrimSpace(link.URL) == "" {
+			return ErrSystemInvalid
+		}
+		if strings.TrimSpace(link.URL) != "" && !validExternalURL(&link.URL) {
+			return ErrSystemInvalid
+		}
+	}
+	return nil
+}
+
+func legacySocialLinks(v LandingSettings) []SocialLink {
+	links := make([]SocialLink, 0, 4)
+	for _, entry := range []struct {
+		platform string
+		label    string
+		url      *string
+	}{
+		{"instagram", "Instagram", v.InstagramURL},
+		{"youtube", "YouTube", v.YouTubeURL},
+		{"tiktok", "TikTok", v.TikTokURL},
+		{"website", "Website", v.OtherSocialURL},
+	} {
+		if entry.url != nil && strings.TrimSpace(*entry.url) != "" {
+			links = append(links, SocialLink{Platform: entry.platform, Label: entry.label, URL: strings.TrimSpace(*entry.url), Order: len(links), Active: true})
+		}
+	}
+	return links
+}
+
+func syncLegacySocialURLs(v *LandingSettings) {
+	v.InstagramURL = nil
+	v.YouTubeURL = nil
+	v.TikTokURL = nil
+	v.OtherSocialURL = nil
+	for _, link := range v.SocialLinks {
+		if !link.Active || strings.TrimSpace(link.URL) == "" {
+			continue
+		}
+		value := strings.TrimSpace(link.URL)
+		switch strings.ToLower(link.Platform) {
+		case "instagram":
+			v.InstagramURL = &value
+		case "youtube":
+			v.YouTubeURL = &value
+		case "tiktok":
+			v.TikTokURL = &value
+		case "website":
+			v.OtherSocialURL = &value
+		}
+	}
+}
+
 func validActionURL(raw string) bool {
 	raw = strings.TrimSpace(raw)
-	if raw == "" || len(raw) > 500 || strings.HasPrefix(raw, "//") {
+	if raw == "" || len(raw) > 500 || strings.Contains(raw, `\`) || strings.HasPrefix(raw, "//") {
 		return false
 	}
 	if strings.HasPrefix(raw, "/") || strings.HasPrefix(raw, "#") {
-		return true
+		parsed, err := url.Parse(raw)
+		return err == nil && parsed.Scheme == "" && parsed.Host == "" && parsed.User == nil && (parsed.Path != "" || parsed.Fragment != "")
 	}
 	return validURLString(raw)
 }
@@ -232,7 +409,7 @@ func changedLandingFields(a, b LandingSettings) []string {
 	checks := []struct {
 		name    string
 		changed bool
-	}{{"hero_headline", a.HeroHeadline != b.HeroHeadline}, {"hero_subheadline", a.HeroSubheadline != b.HeroSubheadline}, {"hero_primary_cta_label", a.HeroPrimaryCTALabel != b.HeroPrimaryCTALabel}, {"hero_primary_cta_url", a.HeroPrimaryCTAURL != b.HeroPrimaryCTAURL}, {"hero_secondary_cta_label", !sameString(a.HeroSecondaryCTALabel, b.HeroSecondaryCTALabel)}, {"hero_secondary_cta_url", !sameString(a.HeroSecondaryCTAURL, b.HeroSecondaryCTAURL)}, {"hero_image_url", !sameString(a.HeroImageURL, b.HeroImageURL)}, {"about_title", a.AboutTitle != b.AboutTitle}, {"about_description", a.AboutDescription != b.AboutDescription}, {"vision", a.Vision != b.Vision}, {"missions", !sameMissions(a.Missions, b.Missions)}, {"contact_email", !sameString(a.ContactEmail, b.ContactEmail)}, {"contact_phone", !sameString(a.ContactPhone, b.ContactPhone)}, {"contact_address", !sameString(a.ContactAddress, b.ContactAddress)}, {"location_url", !sameString(a.LocationURL, b.LocationURL)}, {"instagram_url", !sameString(a.InstagramURL, b.InstagramURL)}, {"youtube_url", !sameString(a.YouTubeURL, b.YouTubeURL)}, {"tiktok_url", !sameString(a.TikTokURL, b.TikTokURL)}, {"other_social_url", !sameString(a.OtherSocialURL, b.OtherSocialURL)}}
+	}{{"hero_headline", a.HeroHeadline != b.HeroHeadline}, {"hero_subheadline", a.HeroSubheadline != b.HeroSubheadline}, {"hero_primary_cta_label", a.HeroPrimaryCTALabel != b.HeroPrimaryCTALabel}, {"hero_primary_cta_url", a.HeroPrimaryCTAURL != b.HeroPrimaryCTAURL}, {"hero_secondary_cta_label", !sameString(a.HeroSecondaryCTALabel, b.HeroSecondaryCTALabel)}, {"hero_secondary_cta_url", !sameString(a.HeroSecondaryCTAURL, b.HeroSecondaryCTAURL)}, {"hero_image_url", !sameString(a.HeroImageURL, b.HeroImageURL)}, {"navbar_logo_url", !sameString(a.NavbarLogoURL, b.NavbarLogoURL)}, {"brand_logo_shape", a.BrandLogoShape != b.BrandLogoShape}, {"brand_logo_fit", a.BrandLogoFit != b.BrandLogoFit}, {"footer_logo_url", !sameString(a.FooterLogoURL, b.FooterLogoURL)}, {"footer_use_brand_logo", !sameBool(a.FooterUseBrandLogo, b.FooterUseBrandLogo)}, {"footer_logo_shape", a.FooterLogoShape != b.FooterLogoShape}, {"footer_logo_fit", a.FooterLogoFit != b.FooterLogoFit}, {"cabinet_logo_url", !sameString(a.CabinetLogoURL, b.CabinetLogoURL)}, {"cabinet_logo_shape", a.CabinetLogoShape != b.CabinetLogoShape}, {"cabinet_logo_fit", a.CabinetLogoFit != b.CabinetLogoFit}, {"cabinet_name", !sameString(a.CabinetName, b.CabinetName)}, {"cabinet_period", !sameString(a.CabinetPeriod, b.CabinetPeriod)}, {"cabinet_tagline", !sameString(a.CabinetTagline, b.CabinetTagline)}, {"about_title", a.AboutTitle != b.AboutTitle}, {"about_description", a.AboutDescription != b.AboutDescription}, {"vision", a.Vision != b.Vision}, {"missions", !sameMissions(a.Missions, b.Missions)}, {"contact_email", !sameString(a.ContactEmail, b.ContactEmail)}, {"contact_phone", !sameString(a.ContactPhone, b.ContactPhone)}, {"contact_address", !sameString(a.ContactAddress, b.ContactAddress)}, {"location_url", !sameString(a.LocationURL, b.LocationURL)}, {"instagram_url", !sameString(a.InstagramURL, b.InstagramURL)}, {"youtube_url", !sameString(a.YouTubeURL, b.YouTubeURL)}, {"tiktok_url", !sameString(a.TikTokURL, b.TikTokURL)}, {"other_social_url", !sameString(a.OtherSocialURL, b.OtherSocialURL)}, {"social_links", !sameSocialLinks(a.SocialLinks, b.SocialLinks)}}
 	for _, c := range checks {
 		if c.changed {
 			out = append(out, c.name)
@@ -247,6 +424,25 @@ func sameString(a, b *string) bool {
 	return *a == *b
 }
 func sameMissions(a, b []string) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i := range a {
+		if a[i] != b[i] {
+			return false
+		}
+	}
+	return true
+}
+
+func sameBool(a, b *bool) bool {
+	if a == nil || b == nil {
+		return a == nil && b == nil
+	}
+	return *a == *b
+}
+
+func sameSocialLinks(a, b []SocialLink) bool {
 	if len(a) != len(b) {
 		return false
 	}

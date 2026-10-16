@@ -34,7 +34,9 @@ export function AnnouncementSection({
           }
         />
         {demoMode ? (
-          <p className="mb-4 text-xs font-semibold text-amber-900">Contoh visual · bukan pengumuman resmi</p>
+          <p className="mb-4 text-xs font-semibold text-warning-foreground">
+            Contoh visual · bukan pengumuman resmi
+          </p>
         ) : null}
         {announcements.length ? (
           <div className="grid gap-3">
@@ -44,7 +46,7 @@ export function AnnouncementSection({
                 className="flex flex-col gap-4 rounded-xl border-l-4 border-secondary bg-surface-muted p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6"
               >
                 <div className="flex min-w-0 items-start gap-3">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-amber-100 text-secondary">
+                  <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-warning/15 text-secondary">
                     <BellRing aria-hidden="true" className="size-5" />
                   </span>
                   <div className="min-w-0">

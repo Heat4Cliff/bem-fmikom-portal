@@ -17,14 +17,14 @@ export function NewsSection({ news, demoMode }: { news: NewsPreview[]; demoMode:
           action={
             <Link
               href="/berita"
-              className="inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary hover:bg-white focus-visible:outline-2 focus-visible:outline-secondary"
+              className="inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary hover:bg-surface focus-visible:outline-2 focus-visible:outline-secondary"
             >
               Semua berita <ArrowRight aria-hidden="true" className="size-4" />
             </Link>
           }
         />
         {demoMode ? (
-          <p className="mb-4 text-xs font-semibold text-amber-900">
+          <p className="mb-4 text-xs font-semibold text-warning-foreground">
             Contoh visual · kartu berita bukan publikasi resmi
           </p>
         ) : null}
@@ -33,7 +33,7 @@ export function NewsSection({ news, demoMode }: { news: NewsPreview[]; demoMode:
             {news.map((item, index) => (
               <article
                 key={item.id}
-                className="group overflow-hidden rounded-xl border border-border/70 bg-white shadow-card transition-shadow hover:shadow-raised"
+                className="group relative isolate overflow-hidden rounded-xl border border-border/70 bg-surface shadow-card transition-shadow hover:shadow-raised"
               >
                 <div
                   role="img"

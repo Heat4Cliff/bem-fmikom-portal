@@ -87,7 +87,7 @@ export type ContactInfo = {
   email?: string;
   phone?: string;
   locationUrl?: string;
-  socialLinks: { label: string; href: string }[];
+  socialLinks: { platform: string; label: string; href: string }[];
 };
 
 export type LandingPageContent = {

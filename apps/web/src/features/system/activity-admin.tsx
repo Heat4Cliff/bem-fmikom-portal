@@ -115,11 +115,11 @@ export function ActivityAdmin() {
         title="Activity Log / Audit Trail"
         description="Riwayat operasi administrator. Data hanya dapat dibaca dan tidak memiliki kontrol ubah atau hapus."
       />
-      <div className="flex items-center gap-3 rounded-xl bg-primary p-4 text-white shadow-card">
+      <div className="flex items-center gap-3 rounded-xl bg-primary p-4 text-primary-foreground shadow-card">
         <ShieldCheck className="size-7 shrink-0 text-secondary-container" />
         <div>
           <p className="text-sm font-bold">Audit event ledger · akses baca saja</p>
-          <p className="mt-1 text-xs text-blue-100">
+          <p className="mt-1 text-xs text-primary-foreground/80">
             Metadata sensitif disensor pada respons. IP dan User-Agent tidak ditampilkan.
           </p>
         </div>

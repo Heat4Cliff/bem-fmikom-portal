@@ -62,7 +62,7 @@ function Confirm({
         role="dialog"
         aria-modal="true"
         aria-labelledby="organization-confirm-title"
-        className="w-full max-w-md rounded-xl border border-border bg-white p-6 shadow-floating"
+        className="w-full max-w-md rounded-xl border border-border bg-surface p-6 shadow-floating"
       >
         <h2 id="organization-confirm-title" className="font-heading text-lg font-bold text-primary">
           {title}
@@ -80,7 +80,7 @@ function Confirm({
 }
 
 function TableFrame({ children }: { children: React.ReactNode }) {
-  return <div className="overflow-x-auto rounded-lg border border-border/70 bg-white">{children}</div>;
+  return <div className="overflow-x-auto rounded-lg border border-border/70 bg-surface">{children}</div>;
 }
 
 function Status({ value }: { value: string }) {
@@ -121,7 +121,7 @@ function PeriodEditor({
   return (
     <form
       onSubmit={submit}
-      className="mb-5 grid gap-4 rounded-lg border border-border bg-white p-4 md:grid-cols-4 md:items-end md:p-5"
+      className="mb-5 grid gap-4 rounded-lg border border-border bg-surface p-4 md:grid-cols-4 md:items-end md:p-5"
     >
       <div className={fieldClass}>
         <Label htmlFor="period-name">Nama Periode</Label>
@@ -250,7 +250,7 @@ export function PeriodManager() {
           }}
         />
       ) : null}
-      <div className="mb-4 grid gap-3 rounded-lg border border-border/70 bg-white p-3 md:grid-cols-[minmax(16rem,1fr)_12rem]">
+      <div className="mb-4 grid gap-3 rounded-lg border border-border/70 bg-surface p-3 md:grid-cols-[minmax(16rem,1fr)_12rem]">
         <div className="relative">
           <span className="sr-only">Cari periode</span>
           <Search aria-hidden="true" className="absolute left-3 top-3 size-4 text-muted" />
@@ -534,7 +534,7 @@ export function DivisionManager() {
       {draft && editable ? (
         <form
           onSubmit={(e) => void submit(e)}
-          className="mb-5 grid gap-4 rounded-lg border border-border bg-white p-4 md:grid-cols-2 md:p-5"
+          className="mb-5 grid gap-4 rounded-lg border border-border bg-surface p-4 md:grid-cols-2 md:p-5"
         >
           <div className={fieldClass}>
             <Label htmlFor="division-name">Nama Divisi</Label>
@@ -630,7 +630,7 @@ export function DivisionManager() {
           </div>
         </form>
       ) : null}
-      <div className="mb-4 grid gap-3 rounded-lg border border-border/70 bg-white p-3 md:grid-cols-3">
+      <div className="mb-4 grid gap-3 rounded-lg border border-border/70 bg-surface p-3 md:grid-cols-3">
         <div className="relative">
           <span className="sr-only">Cari divisi</span>
           <Search aria-hidden="true" className="absolute left-3 top-3 size-4 text-muted" />
@@ -822,7 +822,7 @@ export function MemberManager() {
     }
   }
   const filters = (
-    <div className="mb-4 grid gap-3 rounded-lg border border-border/70 bg-white p-3 sm:grid-cols-2 xl:grid-cols-5">
+    <div className="mb-4 grid gap-3 rounded-lg border border-border/70 bg-surface p-3 sm:grid-cols-2 xl:grid-cols-5">
       <div className="relative">
         <span className="sr-only">Cari pengurus</span>
         <Search aria-hidden="true" className="absolute left-3 top-3 size-4 text-muted" />
@@ -1321,7 +1321,7 @@ export function OrganizationStructureManager() {
             const head = items.find((m) => m.position === "KEPALA_BIDANG");
             const group = items.filter((m) => m.position === "ANGGOTA");
             return (
-              <li key={division.id} className="min-w-0 rounded-xl border border-border/70 bg-white p-4">
+              <li key={division.id} className="min-w-0 rounded-xl border border-border/70 bg-surface p-4">
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="break-words font-heading text-base font-bold text-primary">
                     {division.name}
@@ -1333,7 +1333,7 @@ export function OrganizationStructureManager() {
                     <MemberHierarchyCard member={head} />
                   </ul>
                 ) : (
-                  <p className="mt-3 rounded-md bg-warning/10 p-3 text-sm text-amber-900">
+                  <p className="mt-3 rounded-md bg-warning/10 p-3 text-sm text-warning-foreground">
                     Kepala Bidang belum ditetapkan.
                   </p>
                 )}
@@ -1349,7 +1349,7 @@ export function OrganizationStructureManager() {
           })}
         </ul>
         {!members.length ? (
-          <p className="rounded-lg bg-white p-6 text-center text-sm text-muted">
+          <p className="rounded-lg bg-surface p-6 text-center text-sm text-muted">
             Belum ada pengurus aktif pada periode ini.
           </p>
         ) : null}
@@ -1384,7 +1384,7 @@ export function OrganizationStructureManager() {
 
 function MemberHierarchyCard({ member }: { member: OrganizationMember }) {
   return (
-    <li className="flex min-w-0 items-center gap-3 rounded-lg border border-border/70 bg-white p-3">
+    <li className="flex min-w-0 items-center gap-3 rounded-lg border border-border/70 bg-surface p-3">
       <MediaImage
         value={member.photo_url}
         alt={`Foto ${member.name}`}

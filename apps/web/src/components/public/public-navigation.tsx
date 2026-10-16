@@ -16,10 +16,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Drawer } from "@/components/ui/overlays";
 import { cn } from "@/lib/utils/cn";
+import { ThemeSwitcher } from "@/components/ui/theme-switcher";
+import { BrandLogo } from "@/components/ui/brand-logo";
+import type { LogoFit, LogoShape } from "@/features/content/api";
 
 const primaryLinks = [
   { label: "Beranda", href: "/", icon: Home },
-  { label: "Tentang", href: "/#tentang" },
+  { label: "Tentang", href: "/tentang" },
   { label: "Struktur", href: "/struktur", icon: Network },
   { label: "Berita", href: "/#berita", icon: BookOpenText },
   { label: "Galeri", href: "/#galeri", icon: Camera },
@@ -65,7 +68,15 @@ export function PublicNavigation({
   );
 }
 
-export function PublicHeader() {
+export function PublicHeader({
+  logoUrl = null,
+  logoShape = "original",
+  logoFit = "contain",
+}: {
+  logoUrl?: string | null;
+  logoShape?: LogoShape;
+  logoFit?: LogoFit;
+}) {
   const [open, setOpen] = React.useState(false);
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/95 backdrop-blur">
@@ -75,16 +86,15 @@ export function PublicHeader() {
           className="flex min-w-0 items-center gap-2.5 rounded-md"
           aria-label="BEM FMIKOM UNUGHA, beranda"
         >
-          <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-primary font-heading text-xs font-extrabold text-primary-foreground">
-            BEM
-          </span>
+          <BrandLogo src={logoUrl} shape={logoShape} fit={logoFit} alt="" className="size-9" />
           <span className="flex min-w-0 flex-col leading-tight">
             <span className="truncate font-heading text-sm font-bold text-primary">BEM FMIKOM</span>
             <span className="text-[10px] font-medium tracking-wide text-muted">UNUGHA CILACAP</span>
           </span>
         </Link>
-        <div className="hidden flex-1 justify-end xl:flex">
+        <div className="hidden flex-1 items-center justify-end gap-3 xl:flex">
           <PublicNavigation />
+          <ThemeSwitcher className="shrink-0" />
         </div>
         <div className="flex items-center gap-2 xl:hidden">
           <Button
@@ -107,6 +117,9 @@ export function PublicHeader() {
       >
         <div className="p-4">
           <PublicNavigation mobile onNavigate={() => setOpen(false)} />
+          <div className="mt-4 border-t border-border pt-4">
+            <ThemeSwitcher className="w-full justify-between" />
+          </div>
         </div>
       </Drawer>
     </header>
@@ -118,7 +131,7 @@ const mobileLinks = [
   { label: "Berita", href: "/#berita", icon: BookOpenText },
   { label: "Daftar", href: "/#pendaftaran", icon: CalendarDays },
   { label: "Aspirasi", href: "/aspirasi", icon: MessageSquareText },
-  { label: "Profil", href: "/#tentang", icon: Network },
+  { label: "Profil", href: "/tentang", icon: Network },
 ] as const;
 
 export function MobileNavigation() {
@@ -151,7 +164,15 @@ export function MobileNavigation() {
   );
 }
 
-export function PublicFooter() {
+export function PublicFooter({
+  logoUrl = null,
+  logoShape = "original",
+  logoFit = "contain",
+}: {
+  logoUrl?: string | null;
+  logoShape?: LogoShape;
+  logoFit?: LogoFit;
+}) {
   return (
     <footer className="border-t border-border/70 bg-surface-soft px-4 pb-24 pt-10 md:px-8 md:pb-10 lg:px-12">
       <div className="mx-auto grid max-w-[var(--container-public)] gap-8 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
@@ -160,9 +181,7 @@ export function PublicFooter() {
             href="/"
             className="flex w-fit items-center gap-2.5 rounded-md focus-visible:outline-2 focus-visible:outline-secondary"
           >
-            <span className="grid size-10 place-items-center rounded-lg bg-primary font-heading text-xs font-extrabold text-white">
-              BEM
-            </span>
+            <BrandLogo src={logoUrl} shape={logoShape} fit={logoFit} alt="" />
             <span>
               <strong className="block font-heading text-sm font-bold text-primary">BEM FMIKOM</strong>
               <span className="text-[10px] font-medium tracking-wide text-muted">UNUGHA CILACAP</span>
@@ -176,7 +195,7 @@ export function PublicFooter() {
           <h2 className="font-heading text-sm font-bold text-primary">Tautan cepat</h2>
           <ul className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2 text-sm text-muted">
             <li>
-              <Link className="hover:text-primary" href="/#tentang">
+              <Link className="hover:text-primary" href="/tentang">
                 Tentang
               </Link>
             </li>

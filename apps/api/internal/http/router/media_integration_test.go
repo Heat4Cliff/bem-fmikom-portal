@@ -25,9 +25,12 @@ import (
 )
 
 type contentMediaFixtures struct {
-	AnnouncementImage string
-	GalleryPreview    string
-	ArticleCovers     []articleCoverFixture
+	AnnouncementImage          string
+	GalleryPreview             string
+	LandingHero                string
+	LandingBranding            string
+	LandingBrandingReplacement string
+	ArticleCovers              []articleCoverFixture
 }
 
 type articleCoverFixture struct {
@@ -78,8 +81,23 @@ func runMediaIntegration(t *testing.T, ctx context.Context, db *sql.DB, engine h
 	if response := upload("", "ARTICLE_COVER", pngData.Bytes()); response.Code != http.StatusUnauthorized {
 		t.Fatalf("anonymous media upload=%d %s", response.Code, response.Body.String())
 	}
-	if response := upload(superToken, "LANDING_HERO", pngData.Bytes()); response.Code != http.StatusCreated {
-		t.Fatalf("SUPER_ADMIN media upload=%d %s", response.Code, response.Body.String())
+	heroUpload := upload(superToken, "LANDING_HERO", pngData.Bytes())
+	if heroUpload.Code != http.StatusCreated {
+		t.Fatalf("SUPER_ADMIN media upload=%d %s", heroUpload.Code, heroUpload.Body.String())
+	}
+	brandingUpload := upload(superToken, "LANDING_BRANDING", pngData.Bytes())
+	if brandingUpload.Code != http.StatusCreated {
+		t.Fatalf("SUPER_ADMIN branding media upload=%d %s", brandingUpload.Code, brandingUpload.Body.String())
+	}
+	replacementPixels := image.NewRGBA(image.Rect(0, 0, 2, 2))
+	replacementPixels.Set(0, 0, color.RGBA{R: 80, G: 120, B: 160, A: 255})
+	var replacementPNG bytes.Buffer
+	if err := png.Encode(&replacementPNG, replacementPixels); err != nil {
+		t.Fatal(err)
+	}
+	brandingReplacementUpload := upload(superToken, "LANDING_BRANDING", replacementPNG.Bytes())
+	if brandingReplacementUpload.Code != http.StatusCreated {
+		t.Fatalf("SUPER_ADMIN replacement branding media upload=%d %s", brandingReplacementUpload.Code, brandingReplacementUpload.Body.String())
 	}
 	bphUpload := upload(bphToken, "ANNOUNCEMENT_IMAGE", pngData.Bytes())
 	if bphUpload.Code != http.StatusCreated {
@@ -130,13 +148,32 @@ func runMediaIntegration(t *testing.T, ctx context.Context, db *sql.DB, engine h
 			PublicURL string `json:"public_url"`
 		} `json:"data"`
 	}
+	var hero, branding struct {
+		Data struct {
+			PublicURL string `json:"public_url"`
+		} `json:"data"`
+	}
+	var brandingReplacement struct {
+		Data struct {
+			PublicURL string `json:"public_url"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(heroUpload.Body.Bytes(), &hero); err != nil || hero.Data.PublicURL == "" {
+		t.Fatalf("parse landing hero media response: %v %s", err, heroUpload.Body.String())
+	}
+	if err := json.Unmarshal(brandingUpload.Body.Bytes(), &branding); err != nil || branding.Data.PublicURL == "" {
+		t.Fatalf("parse landing branding media response: %v %s", err, brandingUpload.Body.String())
+	}
+	if err := json.Unmarshal(brandingReplacementUpload.Body.Bytes(), &brandingReplacement); err != nil || brandingReplacement.Data.PublicURL == "" || brandingReplacement.Data.PublicURL == branding.Data.PublicURL {
+		t.Fatalf("parse replacement landing branding media response: %v %s", err, brandingReplacementUpload.Body.String())
+	}
 	if err := json.Unmarshal(bphUpload.Body.Bytes(), &announcement); err != nil || announcement.Data.PublicURL == "" {
 		t.Fatalf("parse announcement media response: %v %s", err, bphUpload.Body.String())
 	}
 	if err := json.Unmarshal(galleryUpload.Body.Bytes(), &gallery); err != nil || gallery.Data.PublicURL == "" {
 		t.Fatalf("parse gallery media response: %v %s", err, galleryUpload.Body.String())
 	}
-	return contentMediaFixtures{AnnouncementImage: announcement.Data.PublicURL, GalleryPreview: gallery.Data.PublicURL, ArticleCovers: articleCovers}
+	return contentMediaFixtures{AnnouncementImage: announcement.Data.PublicURL, GalleryPreview: gallery.Data.PublicURL, LandingHero: hero.Data.PublicURL, LandingBranding: branding.Data.PublicURL, LandingBrandingReplacement: brandingReplacement.Data.PublicURL, ArticleCovers: articleCovers}
 }
 
 type mediaUploadFunc func(token, purpose, filename, contentType string, file []byte) *httptest.ResponseRecorder

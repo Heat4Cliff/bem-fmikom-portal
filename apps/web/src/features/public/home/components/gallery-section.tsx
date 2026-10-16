@@ -29,7 +29,7 @@ export function GallerySection({ gallery, demoMode }: { gallery: GalleryPreview[
           }
         />
         {demoMode ? (
-          <p className="mb-4 text-xs font-semibold text-amber-900">
+          <p className="mb-4 text-xs font-semibold text-warning-foreground">
             Contoh visual · dokumentasi bukan foto kegiatan
           </p>
         ) : null}

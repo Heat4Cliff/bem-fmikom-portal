@@ -15,7 +15,7 @@ const titles: Record<string, string> = {
 
 function MemberCard({ member }: { member: OrganizationMemberPreview }) {
   return (
-    <li className="flex min-w-0 items-center gap-3 rounded-lg border border-border/70 bg-white p-3 shadow-card">
+    <li className="flex min-w-0 items-center gap-3 rounded-lg border border-border/70 bg-surface p-3 shadow-card">
       <MediaImage
         value={member.photoUrl}
         alt={`Foto ${member.name}`}
@@ -68,7 +68,7 @@ export function OrganizationSection({
           }
         />
         {demoMode ? (
-          <p className="mb-4 text-xs font-semibold text-amber-900">
+          <p className="mb-4 text-xs font-semibold text-warning-foreground">
             Contoh visual · nama dan periode bukan data resmi
           </p>
         ) : null}

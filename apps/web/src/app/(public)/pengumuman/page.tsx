@@ -27,7 +27,7 @@ export default async function AnnouncementsPage({
         <div className="mx-auto max-w-[var(--container-public)]">
           <form
             action="/pengumuman"
-            className="mb-6 flex flex-col gap-3 rounded-xl border border-border/70 bg-white p-4 sm:flex-row"
+            className="mb-6 flex flex-col gap-3 rounded-xl border border-border/70 bg-surface p-4 sm:flex-row"
           >
             <label className="sr-only" htmlFor="announcement-search">
               Cari pengumuman
@@ -41,7 +41,7 @@ export default async function AnnouncementsPage({
             />
             <button
               type="submit"
-              className="min-h-11 rounded-md bg-primary px-5 text-sm font-semibold text-white"
+              className="min-h-11 rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground"
             >
               Cari pengumuman
             </button>
@@ -53,7 +53,7 @@ export default async function AnnouncementsPage({
               ))}
             </div>
           ) : (
-            <p className="rounded-xl border border-border bg-white p-8 text-sm text-muted">
+            <p className="rounded-xl border border-border bg-surface p-8 text-sm text-muted">
               Belum ada pengumuman yang dipublikasikan.
             </p>
           )}

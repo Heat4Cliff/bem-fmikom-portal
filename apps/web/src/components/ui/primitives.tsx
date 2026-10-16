@@ -126,9 +126,9 @@ export function RadioOption({
 const badgeStyles: Record<"neutral" | "info" | "success" | "warning" | "danger", string> = {
   neutral: "bg-surface-muted text-primary",
   info: "bg-info/10 text-info",
-  success: "bg-success/10 text-emerald-800",
-  warning: "bg-warning/15 text-amber-900",
-  danger: "bg-danger/10 text-red-800",
+  success: "bg-success/10 text-success-foreground",
+  warning: "bg-warning/15 text-warning-foreground",
+  danger: "bg-danger/10 text-danger-foreground",
 };
 
 export function Badge({
@@ -156,9 +156,9 @@ export function Card({ className, ...props }: React.HTMLAttributes<HTMLDivElemen
 
 const alertTone = {
   info: { className: "border-info/25 bg-info/5 text-info", Icon: Info },
-  success: { className: "border-success/25 bg-success/5 text-emerald-900", Icon: CheckCircle2 },
-  warning: { className: "border-warning/30 bg-warning/10 text-amber-950", Icon: AlertCircle },
-  danger: { className: "border-danger/25 bg-danger/5 text-red-900", Icon: XCircle },
+  success: { className: "border-success/25 bg-success/5 text-success-foreground", Icon: CheckCircle2 },
+  warning: { className: "border-warning/30 bg-warning/10 text-warning-foreground", Icon: AlertCircle },
+  danger: { className: "border-danger/25 bg-danger/5 text-danger-foreground", Icon: XCircle },
 } as const;
 
 export function Alert({
@@ -225,7 +225,7 @@ export const AvatarFallback = React.forwardRef<
   <AvatarPrimitive.Fallback
     ref={ref}
     className={cn(
-      "grid size-full place-items-center bg-primary-container text-xs font-bold text-white",
+      "grid size-full place-items-center bg-primary-container text-xs font-bold text-primary-container-foreground",
       className,
     )}
     {...props}
@@ -364,8 +364,8 @@ export function ErrorState({
 }) {
   return (
     <div role="alert" className={cn("rounded-lg border border-danger/25 bg-danger/5 p-5", className)}>
-      <p className="font-semibold text-red-900">{title}</p>
-      {description ? <p className="mt-1 text-sm leading-6 text-red-800">{description}</p> : null}
+      <p className="font-semibold text-danger-foreground">{title}</p>
+      {description ? <p className="mt-1 text-sm leading-6 text-danger-foreground">{description}</p> : null}
       {retry ? <div className="mt-4">{retry}</div> : null}
     </div>
   );

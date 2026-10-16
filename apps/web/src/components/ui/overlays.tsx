@@ -179,7 +179,7 @@ export function Tooltip({ content, children }: { content: string; children: Reac
         <TooltipPrimitive.Portal>
           <TooltipPrimitive.Content
             sideOffset={6}
-            className="z-50 rounded-md bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-float"
+            className="z-50 rounded-md bg-primary px-2.5 py-1.5 text-xs font-medium text-primary-foreground shadow-float"
           >
             {content}
             <TooltipPrimitive.Arrow className="fill-primary" />
